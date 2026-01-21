@@ -1,3 +1,42 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes: light --default;
+};
+
+@theme {
+  --color-menu-bg: #4A148C;
+  --color-menu-text: #F8F9FA; 
+
+  --color-page-bg: #F8F9FA;
+  --color-page-text: #212529;
+
+  --color-primary-btn: #00897B;
+  --color-primary-text: #F8F9FA;
+
+  --color-footer-bg: #1A1A1A;
+  --color-footer-text: #F8F9FA;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Chrome, Safari */
+body::-webkit-scrollbar{
+  display: none !important;
+}
+
+html::-webkit-scrollbar{
+  display: none !important;
+}
+
+/* Para Firefox */
+body {
+  scrollbar-width: none !important; 
+}
+
+html {
+  scrollbar-width: none !important; 
+}
