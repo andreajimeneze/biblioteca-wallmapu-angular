@@ -10,7 +10,15 @@ export const routes: Routes = [
       {
         path: '',
         loadChildren: () => import('@features/public/home/home.routes').then(m => m.HOME_ROUTES),
-      }
+      },
+      {
+        path: 'library',
+        loadChildren: () => import('@features/public/library/library.routes').then(m => m.LIBRARY_ROUTES),
+      },
+      {
+        path: 'news',
+        loadChildren: () => import('@features/public/news/news.routes').then(m => m.NEWS_ROUTES),
+      },      
     ]
   },
   {

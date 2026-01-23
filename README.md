@@ -22,12 +22,18 @@ project
 │   │   ├─ features/
 │   │   │   ├─ admin/
 │   │   │   ├─ public/
-│   │   │   │   ├─ about/
-│   │   │   │   ├─ contact/
-│   │   │   │   └─ home/
-│   │   │   │       ├─ components/
+│   │   │   │   ├─ about/     <- sin implementar
+│   │   │   │   ├─ contact/   <- sin implementar
+│   │   │   │   ├─ home/
+│   │   │   │   │   ├─ components/
+│   │   │   │   │   ├─ pages/
+│   │   │   │   │   └─ home.routes.ts
+│   │   │   │   ├─ library/
+│   │   │   │   │   ├─ pages/
+│   │   │   │   │   └─ library.routes.ts
+│   │   │   │   └─ news/
 │   │   │   │       ├─ pages/
-│   │   │   │       └─ home.routes.ts
+│   │   │   │       └─ news.routes.ts
 │   │   │   └─ user/
 │   │   │
 │   │   ├─ layouts/
@@ -154,7 +160,8 @@ ng g interface shared/models/news
 ng g interface shared/models/book
 
 ng g c features/public/home/pages/home-page --skip-tests --style=none
-ng g c features/public/home/pages/palette-page --skip-tests --style=none
+ng g c features/public/library/pages/library-page --skip-tests --style=none
+ng g c features/public/news/pages/news-page --skip-tests --style=none
 ng g c features/public/home/components/banner-component --skip-tests --style=none
 ng g c features/public/home/components/latest-news-component --skip-tests --style=none
 ng g c features/public/home/components/recommended-books-component --skip-tests --style=none
