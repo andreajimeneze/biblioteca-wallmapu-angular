@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { ColorComponent } from '@shared/components/color-component/color-component';
 import { BannerComponent } from '@features/public/home/components/banner-component/banner-component';
-import { NewsComponent } from "../../components/news-component/news-component";
+import { RecommendedBooksComponent } from "@features//public/home/components/recommended-books-component/recommended-books-component";
+import { LatestNewsComponent } from '../../components/latest-news-component/latest-news-component';
 
 @Component({
   selector: 'app-home-page',
   imports: [
     BannerComponent,
-    ColorComponent,
-    NewsComponent
+    LatestNewsComponent,
+    RecommendedBooksComponent
 ],
   templateUrl: './home-page.html',
 })

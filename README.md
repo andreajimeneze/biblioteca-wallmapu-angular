@@ -5,197 +5,55 @@
 
 ### Structure
 ```
-src/
-├── app/
-│   ├── core/
-│   │   ├── services/
-│   │   │   ├── api.service.ts
-│   │   │   ├── auth.service.ts
-│   │   │   └── error-handler.service.ts
-│   │   ├── guards/
-│   │   │   ├── auth.guard.ts
-│   │   │   ├── admin.guard.ts
-│   │   │   └── user.guard.ts
-│   │   └── interceptors/
-│   │       └── auth.interceptor.ts
-│   │
-│   ├── shared/
-│   │   ├── components/
-│   │   │   ├── modal/
-│   │   │   └── spinner/
-│   │   ├── pipes/
-│   │   │   └── currency.pipe.ts
-│   │   └── directives/
-│   │       └── highlight.directive.ts
-│   │
-│   ├── layouts/
-│   │   ├── public/
-│   │   │   ├── public.layout.ts
-│   │   │   ├── public.layout.html
-│   │   │   ├── components/
-│   │   │   │   ├── navbar/
-│   │   │   │   ├── footer/
-│   │   │   │   └── sidebar-public/
-│   │   │   └── public.routes.ts
-│   │   │
-│   │   ├── admin/
-│   │   │   ├── admin.layout.ts
-│   │   │   ├── admin.layout.html
-│   │   │   ├── components/
-│   │   │   │   ├── navbar-admin/
-│   │   │   │   ├── sidebar-admin/
-│   │   │   │   └── breadcrumb/
-│   │   │   └── admin.routes.ts
-│   │   │
-│   │   └── user/
-│   │       ├── user.layout.ts
-│   │       ├── user.layout.html
-│   │       ├── components/
-│   │       │   ├── navbar-user/
-│   │       │   ├── sidebar-user/
-│   │       │   └── profile-card/
-│   │       └── user.routes.ts
-│   │
-│   ├── features/
-│   │   ├── public/
-│   │   │   ├── library/
-│   │   │   │   ├── pages/
-│   │   │   │   │   ├── library-home/
-│   │   │   │   │   ├── book-list/
-│   │   │   │   │   ├── book-detail/
-│   │   │   │   │   └── search-results/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── book-card/
-│   │   │   │   │   ├── book-filter/
-│   │   │   │   │   └── book-search-bar/
-│   │   │   │   ├── services/
-│   │   │   │   │   └── book.service.ts       ← Extiende CrudService
-│   │   │   │   ├── models/
-│   │   │   │   │   └── book.model.ts
-│   │   │   │   └── library.routes.ts
-│   │   │   │
-│   │   │   ├── home/
-│   │   │   │   ├── pages/
-│   │   │   │   │   └── home/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── hero-banner/
-│   │   │   │   │   └── featured-books/
-│   │   │   │   └── home.routes.ts
-│   │   │   │
-│   │   │   ├── home/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── hero-banner/
-│   │   │   │   │   └── featured-books/
-│   │   │   │   ├── components/
-│   │   │   │   ├── components/
-│   │   │   │   └── home.routes.ts
-│   │   │   │
-│   │   │   └── auth/
-│   │   │       ├── pages/
-│   │   │       │   ├── login/
-│   │   │       │   ├── register/
-│   │   │       │   └── forgot-password/
-│   │   │       ├── services/
-│   │   │       │   └── auth-public.service.ts ← Extiende CrudService
-│   │   │       ├── models/
-│   │   │       │   └── auth.model.ts
-│   │   │       └── auth.routes.ts
-│   │   │
-│   │   ├── admin/
-│   │   │   ├── books-management/
-│   │   │   │   ├── pages/
-│   │   │   │   │   ├── books-list/
-│   │   │   │   │   ├── book-create/
-│   │   │   │   │   ├── book-edit/
-│   │   │   │   │   └── book-detail-admin/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── book-form/
-│   │   │   │   │   └── books-table/
-│   │   │   │   ├── services/
-│   │   │   │   │   └── book-admin.service.ts ← Extiende CrudService
-│   │   │   │   ├── models/
-│   │   │   │   │   └── book-admin.model.ts
-│   │   │   │   └── books-management.routes.ts
-│   │   │   │
-│   │   │   ├── users-management/
-│   │   │   │   ├── pages/
-│   │   │   │   │   ├── users-list/
-│   │   │   │   │   ├── user-create/
-│   │   │   │   │   ├── user-edit/
-│   │   │   │   │   └── user-detail/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── user-form/
-│   │   │   │   │   └── users-table/
-│   │   │   │   ├── services/
-│   │   │   │   │   └── user-admin.service.ts ← Extiende CrudService
-│   │   │   │   ├── models/
-│   │   │   │   │   └── user-admin.model.ts
-│   │   │   │   └── users-management.routes.ts
-│   │   │   │
-│   │   │   ├── dashboard-admin/
-│   │   │   │   ├── pages/
-│   │   │   │   │   └── admin-dashboard/
-│   │   │   │   ├── components/
-│   │   │   │   │   ├── stats-card/
-│   │   │   │   │   ├── sales-chart/
-│   │   │   │   │   └── recent-activities/
-│   │   │   │   ├── services/
-│   │   │   │   │   └── dashboard-admin.service.ts
-│   │   │   │   └── dashboard-admin.routes.ts
-│   │   │   │
-│   │   │   └── admin.routes.ts
-│   │   │
-│   │   └── user/
-│   │       ├── profile/
-│   │       │   ├── pages/
-│   │       │   │   ├── profile-view/
-│   │       │   │   └── profile-edit/
-│   │       │   ├── components/
-│   │       │   │   ├── profile-card/
-│   │       │   │   └── edit-profile-form/
-│   │       │   ├── services/
-│   │       │   │   └── profile.service.ts     ← Extiende CrudService
-│   │       │   ├── models/
-│   │       │   │   └── profile.model.ts
-│   │       │   └── profile.routes.ts
-│   │       │
-│   │       ├── my-library/
-│   │       │   ├── pages/
-│   │       │   │   ├── my-books/
-│   │       │   │   ├── my-favorites/
-│   │       │   │   ├── my-readings/
-│   │       │   │   └── borrowed-books/
-│   │       │   ├── components/
-│   │       │   │   ├── book-card-user/
-│   │       │   │   └── reading-progress/
-│   │       │   ├── services/
-│   │       │   │   └── user-library.service.ts ← Extiende CrudService
-│   │       │   ├── models/
-│   │       │   │   └── user-library.model.ts
-│   │       │   └── my-library.routes.ts
-│   │       │
-│   │       ├── dashboard-user/
-│   │       │   ├── pages/
-│   │       │   │   └── user-dashboard/
-│   │       │   ├── components/
-│   │       │   │   ├── reading-stats/
-│   │       │   │   ├── recommendations/
-│   │       │   │   └── recent-activity/
-│   │       │   ├── services/
-│   │       │   │   └── dashboard-user.service.ts
-│   │       │   └── dashboard-user.routes.ts
-│   │       │
-│   │       └── user.routes.ts
-│   │
-│   ├── app.routes.ts
-│   ├── app.component.ts
-│   └── app.config.ts
+project
 │
-├── environments/
-│   ├── environment.ts
-│   └── environment.prod.ts
+├─ public/
+│   ├─ images/
+│   └─ favicon.ico
 │
-└── main.ts
+├─ src/
+│   ├─ app/
+│   │   ├─ core/
+│   │   │   ├─ guards/        <- sin implementar
+│   │   │   ├─ helpers/
+│   │   │   ├─ interceptors/ 
+│   │   │   └─ services/      <- sin implementar
+│   │   │
+│   │   ├─ features/
+│   │   │   ├─ admin/
+│   │   │   ├─ public/
+│   │   │   │   ├─ about/
+│   │   │   │   ├─ contact/
+│   │   │   │   └─ home/
+│   │   │   │       ├─ components/
+│   │   │   │       ├─ pages/
+│   │   │   │       └─ home.routes.ts
+│   │   │   └─ user/
+│   │   │
+│   │   ├─ layouts/
+│   │   │   ├─ admin-layout/  <- sin implementar
+│   │   │   ├─ public-layout/
+│   │   │   └─ user-layout/   <- sin implementar
+│   │   │
+│   │   ├─ shared/
+│   │   │   ├─ components/
+│   │   │   └─ models/
+│   │   │
+│   │   ├─ app.config.ts
+│   │   ├─ app.html
+│   │   ├─ app.routes.ts
+│   │   └─ app.ts
+│   │
+│   ├── environments/
+│   │   ├── environment.ts
+│   │   └── environment.prod.ts
+│   │
+│   ├─ index.html
+│   ├─ main.ts
+│   └─ styles.css
+│
+├─ LICENSE.txt
+└─ README.md
 ```
 
 ## Interceptors
@@ -290,11 +148,15 @@ ng g c layouts/admin-layout --skip-tests --style=none
 ng g c shared/components/navbar-component --skip-tests --style=none
 ng g c shared/components/footer-component --skip-tests --style=none
 ng g c shared/components/arrow-up-component --skip-tests --style=none
+ng g c shared/pages/not-found-page --skip-tests --style=none
 ng g interface shared/models/news
+ng g interface shared/models/book
 
 ng g c features/public/home/pages/home-page --skip-tests --style=none
+ng g c features/public/home/pages/palette-page --skip-tests --style=none
 ng g c features/public/home/components/banner-component --skip-tests --style=none
-ng g c features/public/home/components/news-component --skip-tests --style=none
+ng g c features/public/home/components/latest-news-component --skip-tests --style=none
+ng g c features/public/home/components/recommended-books-component --skip-tests --style=none
 ```
 
 ## To keep your Fork updated
