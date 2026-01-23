@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
-import { ColorComponent } from '@shared/components/color-component/color-component';
+import { PaletteComponent } from '@shared/components/palette-component/palette-component';
+import { HeaderComponent } from "@shared/components/header-component/header-component";
 
 @Component({
   selector: 'app-palette-page',
   imports: [
-    ColorComponent
-  ],
+    PaletteComponent,
+    HeaderComponent
+],
   templateUrl: './palette-page.html',
 })
 export class PalettePage {
