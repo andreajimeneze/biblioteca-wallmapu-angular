@@ -152,6 +152,7 @@ export class NavbarComponent {
 ng g s core/helpers/api-response-service --skip-tests
 ng generate interceptor core/interceptors/auth --skip-tests
 ng g s core/services/book-service --skip-tests
+ng g s core/services/news-service --skip-tests
 
 ng g c layouts/public-layout --skip-tests --style=none
 ng g c layouts/user-layout --skip-tests --style=none
@@ -173,8 +174,13 @@ ng g c features/public/home/components/recommended-books-component --skip-tests 
 
 ng g c features/public/library/pages/books-page --skip-tests --style=none
 ng g c features/public/library/pages/book-details-page --skip-tests --style=none
+ng g c features/public/library/components/book-card-component --skip-tests --style=none
+ng g c features/public/library/components/book-list-component --skip-tests --style=none
 
 ng g c features/public/news/pages/news-page --skip-tests --style=none
+ng g c features/public/news/pages/news-details-page --skip-tests --style=none
+ng g c features/public/news/components/news-list-component --skip-tests --style=none
+ng g c features/public/news/components/news-details-component --skip-tests --style=none
 
 ```
 

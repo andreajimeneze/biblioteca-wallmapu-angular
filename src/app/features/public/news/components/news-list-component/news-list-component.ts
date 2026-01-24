@@ -5,14 +5,14 @@ import { News } from '@shared/models/news';
 import { RouterLink } from "@angular/router";
 
 @Component({
-  selector: 'app-latest-news-component',
+  selector: 'app-news-list-component',
   imports: [
     NgOptimizedImage,
     RouterLink
 ],
-  templateUrl: './latest-news-component.html',
+  templateUrl: './news-list-component.html',
 })
-export class LatestNewsComponent implements OnInit {
+export class NewsListComponent implements OnInit {
   private newsService = inject(NewsService);
   
   news = signal<News[]>([]);
@@ -21,8 +21,7 @@ export class LatestNewsComponent implements OnInit {
   ngOnInit() {
     this.loading.set(true);
     
-    // Llamar al servicio
-    this.newsService.getLast3().subscribe({
+    this.newsService.getAll().subscribe({
       next: (news) => {
         this.news.set(news);
         this.loading.set(false);

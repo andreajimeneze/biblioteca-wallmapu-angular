@@ -9,6 +9,19 @@ import { Observable, of } from 'rxjs';
 export class BookService {
   private apiService = inject(ApiResponseService<Book>);
 
+  getTop12(): Observable<Book[]> {
+    return of(this.books.slice(0, 12));
+  }
+
+  getAll(): Observable<Book[]> {
+    return of(this.books);
+  }
+
+  getById(id: number): Observable<Book> {
+    const book = this.books.find(b => b.id === id);
+    return of(book!);
+  }
+    
   private books: Book[] = [
     {
       id: 1,
@@ -131,20 +144,4 @@ export class BookService {
       stars: 5.0
     }
   ];
-
-    // Método 1: Obtener los 12 mejores
-    getTop12(): Observable<Book[]> {
-      return of(this.books.slice(0, 12));
-    }
-  
-    // Método 2: Obtener todos
-    getAll(): Observable<Book[]> {
-      return of(this.books);
-    }
-  
-    // Método 3: Obtener por ID
-    getById(id: number): Observable<Book> {
-      const book = this.books.find(b => b.id === id);
-      return of(book!);
-    }
 }

@@ -1,4 +1,9 @@
-<section class="bg-my-light p-4">
+<div class="bg-my-light pt-12 pb-12 p-4 text-center">
+  <h2 class="text-3xl font-bold text-my-purple tracking-tight">Historial</h2>
+  <p class="text-my-dark mt-2">Talleres de velas, de papelería, caja del tiempo y actividades varias.</p>
+</div>
+
+<section class="p-4">
   <div class="max-w-7xl mx-auto">
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -24,7 +29,7 @@
             <div class="mt-6 pt-4 border-t border-gray-50 flex justify-between items-center">
               <span class="text-xs text-my-dark/50">{{ item.date }}</span>
               <a 
-                routerLink="news/{{ item.id }}"
+                routerLink="{{ item.id }}" 
                 class="text-primary font-bold text-sm inline-flex items-center group/link"
               >
                 Leer noticia
