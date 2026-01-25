@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { PublicLayout } from '@layouts/public-layout/public-layout';
 import { NotFoundPage } from '@shared/pages/not-found-page/not-found-page';
+import { TestPage } from '@shared/pages/test-page/test-page';
 
 export const routes: Routes = [
   {
@@ -21,7 +22,7 @@ export const routes: Routes = [
       },
       {
         path: 'palette',
-        loadChildren: () => import('@features/public/palette/palette.routes').then(m => m.PALETTE_ROUTES),
+        component: TestPage
       },
     ]
   },

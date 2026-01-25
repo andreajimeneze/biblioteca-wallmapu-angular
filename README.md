@@ -19,7 +19,8 @@ project
 │   │   │   │   └─ api-response-service.ts
 │   │   │   ├─ interceptors/ 
 │   │   │   └─ services/
-│   │   │       └─ book-service.ts
+│   │   │       ├─ book-service.ts
+│   │   │       └─ news-service.ts
 │   │   │
 │   │   ├─ features/
 │   │   │   ├─ admin/
@@ -28,16 +29,28 @@ project
 │   │   │   │   ├─ contact/   <- sin implementar
 │   │   │   │   ├─ home/
 │   │   │   │   │   ├─ components/
+│   │   │   │   │   │   ├─ banner-component/
+│   │   │   │   │   │   ├─ latest-news-component/
+│   │   │   │   │   │   ├─ recommended-books-component/
+│   │   │   │   │   │   └─ title-component/
 │   │   │   │   │   ├─ pages/
+│   │   │   │   │   │   └─ home-page/
 │   │   │   │   │   └─ home.routes.ts
 │   │   │   │   ├─ library/
 │   │   │   │   │   ├─ components/
+│   │   │   │   │   │   ├─ book-details-component/
+│   │   │   │   │   │   └─ book-list-component/
 │   │   │   │   │   ├─ pages/
 │   │   │   │   │   │   ├─ book-details-page/
 │   │   │   │   │   │   └─ books-page/
 │   │   │   │   │   └─ library.routes.ts
 │   │   │   │   └─ news/
+│   │   │   │       ├─ components/
+│   │   │   │       │   ├─ news-details-component/
+│   │   │   │       │   └─ news-list-component/
 │   │   │   │       ├─ pages/
+│   │   │   │       │   ├─ news-details-page/
+│   │   │   │       │   └─ news-page/
 │   │   │   │       └─ news.routes.ts
 │   │   │   └─ user/
 │   │   │
@@ -48,7 +61,22 @@ project
 │   │   │
 │   │   ├─ shared/
 │   │   │   ├─ components/
-│   │   │   └─ models/
+│   │   │   │   ├─ arrow-up-component/
+│   │   │   │   ├─ book-card-component/
+│   │   │   │   ├─ footer-component/
+│   │   │   │   ├─ header-component/
+│   │   │   │   ├─ newmessage-error-component/
+│   │   │   │   ├─ message-success-component/
+│   │   │   │   ├─ navbar-component/
+│   │   │   │   ├─ news-card-component/
+│   │   │   │   └─ palette-component/
+│   │   │   ├─ models/
+│   │   │   │   ├─ book.ts
+│   │   │   │   ├─ news-image.ts
+│   │   │   │   └─ news.ts
+│   │   │   └─ pages/
+│   │   │       ├─ not-found-page/
+│   │   │       └─ test-page/
 │   │   │
 │   │   ├─ app.config.ts
 │   │   ├─ app.html
@@ -56,8 +84,7 @@ project
 │   │   └─ app.ts
 │   │
 │   ├── environments/
-│   │   ├── environment.ts
-│   │   └── environment.prod.ts
+│   │   └── environment.ts
 │   │
 │   ├─ index.html
 │   ├─ main.ts
