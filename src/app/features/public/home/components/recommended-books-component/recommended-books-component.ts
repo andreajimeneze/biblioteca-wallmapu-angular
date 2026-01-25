@@ -1,37 +1,32 @@
-import { NgOptimizedImage } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
 import { BookService } from '@core/services/book-service';
 import { Book } from '@shared/models/book';
+import { catchError, of } from 'rxjs';
+import { BookCardComponent } from "@shared/components/book-card-component/book-card-component";
 
 @Component({
   selector: 'app-recommended-books-component',
   imports: [
-    NgOptimizedImage,
     RouterModule,
-  ],
+    BookCardComponent
+],
   templateUrl: './recommended-books-component.html',
 })
-export class RecommendedBooksComponent implements OnInit {
+export class RecommendedBooksComponent {
   private bookService = inject(BookService);
   
-  books = signal<Book[]>([]);
-  loading = signal(false);
+  private booksResult = toSignal(
+    this.bookService.getTop12().pipe(
+      catchError((err) => {
+        console.error('Error cargando libros:', err); // ✅ Solo en consola
+        return of([] as Book[]); // ✅ Devuelve array vacío silenciosamente
+      })
+    ),
+    { initialValue: undefined } // ✅ valor inicial vacío
+  );
 
-  ngOnInit() {
-    this.loading.set(true);
-    
-    // Llamar al servicio
-    this.bookService.getTop12().subscribe({
-      next: (books) => {
-        this.books.set(books);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        console.error('Error cargando libros:', err);
-        this.loading.set(false);
-      }
-    });
-  }
-
+  books = computed(() => this.booksResult() ?? []);  // ✅ siempre retorna [] o [libro1, libro2...]
+  loading = computed(() => this.booksResult() === undefined); // ✅ true al inicio, false cuando lleg ala respuesta
 }

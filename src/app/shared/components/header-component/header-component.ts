@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, computed, Input } from '@angular/core';
 
 @Component({
   selector: 'app-header-component',
@@ -6,11 +6,9 @@ import { Component, Input } from '@angular/core';
   templateUrl: './header-component.html',
 })
 export class HeaderComponent {
-  @Input() title: string = 'Sin Titulo';
-  @Input() description: string = 'Sin Sescripción';
-  @Input() image: string= '/images/header.webp'
+  @Input({ required: true }) title!: string;
+  @Input({ required: true }) description!: string;
+  @Input() image: string = '/images/header.webp';
 
-  getBackgroundImage() {
-    return `url(${this.image})`;
-  }
+  backgroundImage = computed(() => `url(${this.image})`);
 }

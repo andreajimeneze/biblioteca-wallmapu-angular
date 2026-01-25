@@ -1,36 +1,36 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { NewsService } from '@core/services/news-service';
 import { News } from '@shared/models/news';
 import { RouterLink } from "@angular/router";
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-latest-news-component',
   imports: [
     NgOptimizedImage,
     RouterLink
-],
+  ],
   templateUrl: './latest-news-component.html',
 })
-export class LatestNewsComponent implements OnInit {
+export class LatestNewsComponent {
   private newsService = inject(NewsService);
   
-  news = signal<News[]>([]);
-  loading = signal(false);
+  private errorMessage = signal<string | null>(null);
+  
+  private newsResult = toSignal(
+    this.newsService.getLast3().pipe(
+      catchError((err) => {
+        console.error('Error cargando noticias:', err);
+        this.errorMessage.set('No se pudieron cargar las noticias. Por favor, intenta más tarde.');
+        return of([] as News[]);
+      })
+    ),
+    { initialValue: [] as News[] }
+  );
 
-  ngOnInit() {
-    this.loading.set(true);
-    
-    // Llamar al servicio
-    this.newsService.getLast3().subscribe({
-      next: (news) => {
-        this.news.set(news);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        console.error('Error cargando libros:', err);
-        this.loading.set(false);
-      }
-    });
-  }  
+  news = computed(() => this.newsResult() ?? []);
+  loading = computed(() => this.newsResult() === undefined);
+  error = computed(() => this.errorMessage());
 }

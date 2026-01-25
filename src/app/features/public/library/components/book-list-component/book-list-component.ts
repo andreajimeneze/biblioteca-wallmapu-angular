@@ -1,7 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { BookService } from '@core/services/book-service';
+import { BookCardComponent } from '@shared/components/book-card-component/book-card-component';
 import { Book } from '@shared/models/book';
-import { BookCardComponent } from '../book-card-component/book-card-component';
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-book-list-component',
@@ -10,25 +12,19 @@ import { BookCardComponent } from '../book-card-component/book-card-component';
   ],
   templateUrl: './book-list-component.html',
 })
-export class BookListComponent implements OnInit {
+export class BookListComponent {
   private bookService = inject(BookService);
   
-  books = signal<Book[]>([]);
-  loading = signal(false);
-
-  ngOnInit() {
-    this.loading.set(true);
-    
-    // Llamar al servicio
-    this.bookService.getAll().subscribe({
-      next: (books) => {
-        this.books.set(books);
-        this.loading.set(false);
-      },
-      error: (err) => {
+  private booksResult = toSignal(
+    this.bookService.getAll().pipe(
+      catchError((err) => {
         console.error('Error cargando libros:', err);
-        this.loading.set(false);
-      }
-    });
-  }
+        return of([] as Book[]);
+      })
+    ),
+    { initialValue: undefined }
+  );
+
+  books = computed(() => this.booksResult() ?? []);
+  loading = computed(() => this.booksResult() === undefined);
 }

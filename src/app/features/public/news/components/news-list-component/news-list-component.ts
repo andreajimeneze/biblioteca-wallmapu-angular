@@ -1,35 +1,36 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { toSignal } from '@angular/core/rxjs-interop';
 import { NewsService } from '@core/services/news-service';
 import { News } from '@shared/models/news';
 import { RouterLink } from "@angular/router";
+import { catchError, of } from 'rxjs';
 
 @Component({
   selector: 'app-news-list-component',
   imports: [
     NgOptimizedImage,
     RouterLink
-],
+  ],
   templateUrl: './news-list-component.html',
 })
-export class NewsListComponent implements OnInit {
+export class NewsListComponent {
   private newsService = inject(NewsService);
   
-  news = signal<News[]>([]);
-  loading = signal(false);
+  private errorMessage = signal<string | null>(null);
+  
+  private newsResult = toSignal(
+    this.newsService.getAll().pipe(
+      catchError((err) => {
+        console.error('Error cargando noticias:', err);
+        this.errorMessage.set('No se pudieron cargar las noticias. Por favor, intenta más tarde.');
+        return of([] as News[]);
+      })
+    ),
+    { initialValue: [] as News[] }
+  );
 
-  ngOnInit() {
-    this.loading.set(true);
-    
-    this.newsService.getAll().subscribe({
-      next: (news) => {
-        this.news.set(news);
-        this.loading.set(false);
-      },
-      error: (err) => {
-        console.error('Error cargando libros:', err);
-        this.loading.set(false);
-      }
-    });
-  }  
+  news = computed(() => this.newsResult() ?? []);
+  loading = computed(() => this.newsResult() === undefined);
+  error = computed(() => this.errorMessage());
 }

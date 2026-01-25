@@ -150,7 +150,7 @@ export class NavbarComponent {
 - Shortcut
 ```bash
 ng g s core/helpers/api-response-service --skip-tests
-ng generate interceptor core/interceptors/auth --skip-tests
+ng g interceptor core/interceptors/auth --skip-tests
 ng g s core/services/book-service --skip-tests
 ng g s core/services/news-service --skip-tests
 
@@ -162,8 +162,12 @@ ng g c shared/components/navbar-component --skip-tests --style=none
 ng g c shared/components/footer-component --skip-tests --style=none
 ng g c shared/components/arrow-up-component --skip-tests --style=none
 ng g c shared/components/header-component --skip-tests --style=none
+ng g c shared/components/book-card-component --skip-tests --style=none
+ng g c shared/components/message-error-component --skip-tests --style=none
+ng g c shared/components/message-success-component --skip-tests --style=none
 ng g c shared/pages/not-found-page --skip-tests --style=none
 ng g interface shared/models/news
+ng g interface shared/models/news-image
 ng g interface shared/models/book
 
 ng g c features/public/home/pages/home-page --skip-tests --style=none
@@ -174,8 +178,8 @@ ng g c features/public/home/components/recommended-books-component --skip-tests 
 
 ng g c features/public/library/pages/books-page --skip-tests --style=none
 ng g c features/public/library/pages/book-details-page --skip-tests --style=none
-ng g c features/public/library/components/book-card-component --skip-tests --style=none
 ng g c features/public/library/components/book-list-component --skip-tests --style=none
+ng g c features/public/library/components/book-details-component --skip-tests --style=none
 
 ng g c features/public/news/pages/news-page --skip-tests --style=none
 ng g c features/public/news/pages/news-details-page --skip-tests --style=none

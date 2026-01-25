@@ -1,14 +1,22 @@
 <section class="bg-my-light p-4">
   <div class="max-w-7xl mx-auto">
-
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      @for (item of news(); track item.id) {
+    @if (loading()) {
+      <div class="flex justify-center py-8">
+        <span class="loading loading-spinner loading-lg"></span>
+      </div>
+    } @else if (error()) {
+      <div class="alert alert-error">
+        <span>{{ error() }}</span>
+      </div>
+    } @else {
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        @for (item of news(); track item.id) {
         <article class="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
           
           <div class="relative overflow-hidden h-52">
             <img 
-              [ngSrc]="item.image" 
-              [alt]="item.title"
+              [ngSrc]="item.images[0].url" 
+              [alt]="item.images[0].alt"
               fill
               class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500" />
           </div>
@@ -18,7 +26,7 @@
               {{ item.title }}
             </h3>
             <p class="text-my-dark mt-3 line-clamp-3 text-sm leading-relaxed">
-              {{ item.description }}
+              {{ item.subtitle }}
             </p>
             
             <div class="mt-6 pt-4 border-t border-gray-50 flex justify-between items-center">
@@ -36,8 +44,8 @@
           </div>
 
         </article>
-      }
-    </div>
-    
+        }
+      </div>
+    }
   </div>
 </section>
