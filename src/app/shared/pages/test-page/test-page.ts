@@ -9,6 +9,7 @@ import { NewsService } from '@core/services/news-service';
 import { News } from '@shared/models/news';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
+import { AuthButtonComponent } from "@features/auth/components/auth-button-component/auth-button-component";
 
 @Component({
   selector: 'app-test-page',
@@ -16,7 +17,8 @@ import { catchError, of } from 'rxjs';
     CommonModule,
     HeaderComponent,
     MessageErrorComponent,
-    MessageSuccessComponent
+    MessageSuccessComponent,
+    AuthButtonComponent
 ],
   templateUrl: './test-page.html',
 })

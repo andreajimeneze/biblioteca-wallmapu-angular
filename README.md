@@ -198,6 +198,10 @@ ng g interface shared/models/news
 ng g interface shared/models/news-image
 ng g interface shared/models/book
 
+ng g s features/auth/services/auth-service --skip-tests
+ng g c features/auth/components/auth-button-component --skip-tests --style=none
+ng g c features/auth/components/google-signin-component --skip-tests --style=none
+
 ng g c features/public/home/pages/home-page --skip-tests --style=none
 ng g c features/public/home/components/title-component --skip-tests --style=none
 ng g c features/public/home/components/banner-component --skip-tests --style=none

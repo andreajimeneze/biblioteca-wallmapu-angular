@@ -1,0 +1,45 @@
+<!-- auth-button-component.html -->
+@if (loading()) {
+  <!-- Estado cargando -->
+  <button class="btn btn-ghost" disabled>
+    <span class="loading loading-spinner loading-xs"></span>
+    Cargando...
+  </button>
+} @else if (isAuthenticated()) {
+  <!-- Usuario logueado - Avatar con dropdown -->
+  <div class="dropdown dropdown-end">
+    <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
+      <div class="ring-primary ring-offset-base-100 w-10 rounded-full ring-2 ring-offset-2">
+        <img 
+          [src]="user()?.picture" 
+          [alt]="user()?.name" 
+          class="rounded-full" 
+          onerror="this.src='https://img.daisyui.com/images/profile/demo/spiderperson@192.webp'" />
+      </div>
+    </div>
+    
+    <ul tabindex="0" class="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow mt-3">
+      <li class="menu-title text-sm">Hola, {{ user()?.name }}</li>
+      <li><a class="text-sm">{{ user()?.email }}</a></li>
+      <li><hr class="my-1"></li>
+      <li><a class="text-sm">📚 Mi Biblioteca</a></li>
+      <li><a class="text-sm">⚙️ Configuración</a></li>
+      <li><hr class="my-1"></li>
+      <li>
+        <button 
+          (click)="logout()" 
+          class="text-error text-sm font-medium">
+          👋 Cerrar Sesión
+        </button>
+      </li>
+    </ul>
+  </div>
+} @else {
+  <!-- No logueado - Botón de login -->
+  <button 
+    (click)="login()"
+    class="btn bg-my-pink text-my-light hover:bg-my-pink/90 
+           transition-all duration-300 hover:scale-105">
+    Login Google
+  </button>
+}

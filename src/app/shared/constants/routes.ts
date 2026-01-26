@@ -2,8 +2,8 @@ export const ROUTES = {
   HOME: '/',
   LIBRARY: {
     BASE: '/library',
-    BOOK: (id: number) => `/library/book/${id}`,
-    BOOKS: '/library/books'
+    BOOKS: '/library/books',    
+    BOOK: (id: number) => `/library/book/${id}`
   },
   NEWS: {
     BASE: '/news',
@@ -14,6 +14,10 @@ export const ROUTES = {
     ADMIN: '/admin'
   },
   PAGES: [
+    {
+      URI: "/",
+      NAME: "Inicio"
+    },
     {
       URI: "/library",
       NAME: "Biblioteca"
