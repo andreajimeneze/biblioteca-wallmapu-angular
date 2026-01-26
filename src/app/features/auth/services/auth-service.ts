@@ -1,5 +1,6 @@
 import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from '@environments/environment';
 
 export interface User {
   id: string;
@@ -24,8 +25,8 @@ export class AuthService {
   loading = computed(() => this.isLoading());
   
   // ✅ Client ID de Google
-  private clientId: string = '';
-  
+  private clientId = environment.googleClientId;
+
   // ✅ Obtener usuario del localStorage
   private getStoredUser(): User | null {
     const saved = localStorage.getItem('user');
@@ -33,7 +34,7 @@ export class AuthService {
   }
   
   // ✅ Inicializar Google Identity Services
-  initializeGoogleAuth(clientId: string): void {
+  initializeGoogleAuth(): void {
     // Declarar google como any porque es un script externo
     const google = (window as any).google;
     
@@ -42,13 +43,10 @@ export class AuthService {
       return;
     }
     
-    // Guardar el clientId para usarlo en el login manual
-    this.clientId = clientId;
-    
     // Inicializar para One Tap (opcional)
     if (google.accounts.id) {
       google.accounts.id.initialize({
-        client_id: clientId,
+        client_id: this.clientId,
         callback: (response: any) => this.handleGoogleResponse(response),
         auto_select: false,
         cancel_on_tap_outside: true,

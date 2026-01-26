@@ -17,7 +17,7 @@ export class AuthButtonComponent implements OnInit {
   ngOnInit(): void {
     // ✅ Esperar a que el script de Google se cargue antes de inicializar
     this.waitForGoogleScript().then(() => {
-      this.auth.initializeGoogleAuth('529904203616-e3rl4utugk5ktbeqbv0ou3itj477gsvd.apps.googleusercontent.com');
+      this.auth.initializeGoogleAuth();
     });
   }
   

@@ -262,6 +262,9 @@ jobs:
           git push origin main --force
 ```
 
+## Google Auth
+- [Google Credentials](https://console.cloud.google.com/apis/credentials)
+
 ## Prompt
 ```text
 
