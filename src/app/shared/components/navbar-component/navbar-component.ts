@@ -16,7 +16,6 @@ import { ROUTES } from '@shared/constants/routes';
 export class NavbarComponent {
   router = inject(Router);
   isScrolled = signal(false);
-  isMenuOpen = signal(false);
   ROUTES_PAGES = ROUTES.PAGES;
   ROUTES_HOME = ROUTES.HOME;
 
@@ -37,13 +36,11 @@ export class NavbarComponent {
     }
   }
 
-  // ✅ Cierra el menú móvil al hacer click en un link
-  closeMenu(): void {
-    this.isMenuOpen.set(false);
-    // También removemos el focus del botón del dropdown
-    const dropdownButton = document.querySelector('[tabindex="0"]') as HTMLElement;
-    if (dropdownButton) {
-      dropdownButton.blur();
+  closeDropdown(event: Event): void {
+    const target = event?.target as HTMLElement;
+
+    if (target && target.blur) {
+      target.blur();
     }
   }
 }

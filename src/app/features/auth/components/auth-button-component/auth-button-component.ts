@@ -16,7 +16,6 @@ export class AuthButtonComponent {
   
   ngOnInit(): void {
     // ✅ Inicializar Google Auth con tu Client ID
-    // REEMPLAZA ESTO con tu Client ID real de Google Cloud Console
     this.auth.initializeGoogleAuth('529904203616-e3rl4utugk5ktbeqbv0ou3itj477gsvd.apps.googleusercontent.com');
   }
   
