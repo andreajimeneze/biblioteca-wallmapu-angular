@@ -17,12 +17,19 @@ project
 │   │   │   ├─ guards/        <- sin implementar
 │   │   │   ├─ helpers/
 │   │   │   │   └─ api-response-service.ts
-│   │   │   ├─ interceptors/ 
+│   │   │   ├─ interceptors/
+│   │   │   │   ├─ auth-interceptor.ts
+│   │   │   │   └─ error-interceptor.ts
 │   │   │   └─ services/
 │   │   │       ├─ book-service.ts
 │   │   │       └─ news-service.ts
 │   │   │
 │   │   ├─ features/
+│   │   │   ├─ auth/
+│   │   │   │   ├─ components/
+│   │   │   │   │   └─ auth-button-component/
+│   │   │   │   └─ services/
+│   │   │   │       └─ auth-service.ts
 │   │   │   ├─ admin/
 │   │   │   ├─ public/
 │   │   │   │   ├─ about/     <- sin implementar
@@ -70,6 +77,8 @@ project
 │   │   │   │   ├─ navbar-component/
 │   │   │   │   ├─ news-card-component/
 │   │   │   │   └─ palette-component/
+│   │   │   ├─ constants/
+│   │   │   │   └─ routes.ts
 │   │   │   ├─ models/
 │   │   │   │   ├─ book.ts
 │   │   │   │   ├─ news-image.ts
@@ -172,12 +181,18 @@ export class NavbarComponent {
 <img ngSrc="images/logo.webp" alt="Logo" height="40" width="40">
 ```
 
+## Recursos y Referencias
+- [Angular Style Guide](https://angular.dev/style-guide)
+- [Angular Signals](https://angular.dev/guide/signals)
+- [Angular HTTP Best Practices](https://angular.dev/guide/http)
+- [RxJS Best Practices](https://rxjs.dev/guide/overview)
 
 ## Components
 - Shortcut
 ```bash
 ng g s core/helpers/api-response-service --skip-tests
 ng g interceptor core/interceptors/auth --skip-tests
+ng g interceptor core/interceptors/error --skip-tests
 ng g s core/services/book-service --skip-tests
 ng g s core/services/news-service --skip-tests
 
@@ -218,6 +233,7 @@ ng g c features/public/news/pages/news-details-page --skip-tests --style=none
 ng g c features/public/news/components/news-list-component --skip-tests --style=none
 ng g c features/public/news/components/news-details-component --skip-tests --style=none
 
+ng g c features/admin/dashboard/pages/dashboard-page --skip-tests --style=none
 ```
 
 ## To keep your Fork updated
