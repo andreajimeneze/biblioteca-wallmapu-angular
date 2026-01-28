@@ -1,4 +1,4 @@
-import { ROUTES } from './routes';
+import { ROUTES } from '@shared/constants/routes';
 
 export interface AdminNavigationItem {
   label: string;

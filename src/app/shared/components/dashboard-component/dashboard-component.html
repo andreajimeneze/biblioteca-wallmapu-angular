@@ -1,0 +1,51 @@
+<div class="drawer lg:drawer-open">
+  <input id="my-drawer-4" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content">
+    <!-- Navbar -->
+    <nav class="navbar w-full bg-my-light">
+      <div class="navbar-start">
+        <label for="my-drawer-4" aria-label="open sidebar" class="btn btn-square btn-ghost">
+          <!-- Sidebar toggle icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="my-1.5 inline-block size-6">
+            <path d="M4 4m0 2a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2z"></path><path d="M9 4v16"></path><path d="M14 10l2 2l-2 2"></path>
+          </svg>
+        </label>
+        <div class="px-4">Wallmapu</div>
+      </div>
+
+      <span class="navbar-end">
+        <app-auth-button-component/>
+      </span>
+    </nav>
+    <!-- Page content here -->
+    <div class="p-4">
+      <router-outlet /> 
+    </div>
+  </div>
+
+  <div class="drawer-side is-drawer-close:overflow-visible">
+    <label for="my-drawer-4" aria-label="close sidebar" class="drawer-overlay"></label>
+    <div class="flex min-h-full flex-col items-start bg-my-light is-drawer-close:w-16 is-drawer-open:w-64">  
+      
+      <!-- Sidebar content here -->
+      <ul class="menu w-full grow">
+        @for (item of navigationItems(); track item.route) {
+          <li>
+            <a 
+              [routerLink]="item.route"
+              class="is-drawer-close:tooltip is-drawer-close:tooltip-right" 
+              [attr.data-tip]="item.tooltip || item.label"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="my-1.5 inline-block size-6">
+                @for (path of item.iconPaths; track path) {
+                  <path [attr.d]="path" />
+                }
+              </svg>
+              <span class="is-drawer-close:hidden">{{ item.label }}</span>
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</div>

@@ -36,13 +36,28 @@ export const routes: Routes = [
         path: '',
         loadChildren: () => import('@features/admin/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES),
       },
+      {
+        path: 'books',
+        loadChildren: () => import('@features/admin/book/book.routes').then(m => m.BOOK_ROUTES),
+      },
+      {
+        path: 'news',
+        loadChildren: () => import('@features/admin/news/news.routes').then(m => m.NEWS_ROUTES),
+      },
     ]
   },
   {
     path: 'user',
     component: UserLayout,
     children: [
-      
+      {
+        path: '',
+        loadChildren: () => import('@features/user/dashboard/user-dashboard.routes').then(m => m.USER_DASHBOARD_ROUTES),        
+      },
+      {
+        path: 'profile',
+        loadChildren: () => import('@features/user/profile/user-profile.routes').then(m => m.USER_PROFILE_ROUTES),
+      }
     ]
   },
   {

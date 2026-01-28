@@ -10,7 +10,11 @@ export const ROUTES = {
     DETAIL: (id: number) => `/news/${id}`
   },
   PROTECTED: {
-    USER: '/user',
+    USER: {
+      BASE: '/user',
+      DASHBOARD: '/user',
+      PROFILE: '/user/profile',
+    },
     ADMIN: {
       BASE: '/admin',
       DASHBOARD: '/admin',
