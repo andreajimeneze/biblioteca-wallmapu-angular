@@ -25,12 +25,26 @@ project
 │   │   │       └─ news-service.ts
 │   │   │
 │   │   ├─ features/
+│   │   │   ├─ admin/
+│   │   │   │   ├─ book/
+│   │   │   │   │   ├─ pages/
+│   │   │   │   │   │   └─ book-page/
+│   │   │   │   │   └─ home.routes.ts
+│   │   │   │   ├─ dashboard/
+│   │   │   │   │   ├─ pages/
+│   │   │   │   │   │   └─ dashboard-page/
+│   │   │   │   │   └─ dashboard.routes.ts
+│   │   │   │   └─ news/
+│   │   │   │       ├─ pages/
+│   │   │   │       │   └─ news-page/
+│   │   │   │       └─ news.routes.ts
 │   │   │   ├─ auth/
 │   │   │   │   ├─ components/
 │   │   │   │   │   └─ auth-button-component/
+│   │   │   │   ├─ models/
+│   │   │   │   │   └─ user-google.ts
 │   │   │   │   └─ services/
 │   │   │   │       └─ auth-service.ts
-│   │   │   ├─ admin/
 │   │   │   ├─ public/
 │   │   │   │   ├─ about/     <- sin implementar
 │   │   │   │   ├─ contact/   <- sin implementar
@@ -215,6 +229,9 @@ ng g interface shared/models/news
 ng g interface shared/models/news-image
 ng g interface shared/models/book
 
+ng g interface features/auth/models/user-google
+ng g interface features/auth/models/api-auth-request
+ng g interface features/auth/models/api-auth-response
 ng g s features/auth/services/auth-service --skip-tests
 ng g c features/auth/components/auth-button-component --skip-tests --style=none
 ng g c features/auth/components/google-signin-component --skip-tests --style=none

@@ -82,8 +82,6 @@ export class AuthService {
     } catch (error) {
       console.error('Error al decodificar el token JWT de Google:', error);
       this.isLoading.set(false);
-    } finally {
-
     }
   }
   
@@ -115,6 +113,9 @@ export class AuthService {
           callback: (response: any) => {
             if (response.access_token) {
               // Obtener información del usuario usando el access token
+
+              console.log(response.access_token);
+
               this.getUserInfo(response.access_token);
             } else if (response.error) {
               console.error('Error en login de Google:', response.error);
