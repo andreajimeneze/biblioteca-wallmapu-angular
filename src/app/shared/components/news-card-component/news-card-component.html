@@ -3,7 +3,7 @@
   <!-- [ngSrc]="news().images[0].url"  -->
   <div class="relative overflow-hidden h-52">
     <img 
-      ngSrc="https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fimages.hdqwalls.com%2Fdownload%2Fhorizon-zero-dawn-aloy-game-cc-3840x2160.jpg&f=1&nofb=1&ipt=92a48f38fa6ff624a09a9f22f431eaa2bb1431718e51f347699f473bdd650731"
+      [ngSrc]="news().images[0]?.url || '/images/layout.webp'"
       placeholder="/images/layout.webp"
       [alt]="news().images[0].alt"
       fill
