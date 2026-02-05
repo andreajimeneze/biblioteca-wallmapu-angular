@@ -9,7 +9,6 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { News } from '@shared/models/news';
 import { PaginationModel } from '@shared/models/pagination-model';
 import { NewsListComponent } from "@shared/components/news-list-component/news-list-component";
-import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-home-page',
@@ -18,7 +17,6 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
     HeaderComponent,
     SectionHeaderComponent,
     NewsListComponent,
-    LoadingComponent
 ],
   templateUrl: './home-page.html',
 })

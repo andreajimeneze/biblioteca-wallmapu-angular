@@ -11,6 +11,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { AuthButtonComponent } from "@features/auth/components/auth-button-component/auth-button-component";
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
+import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-test-page',
@@ -20,7 +21,8 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
     MessageErrorComponent,
     MessageSuccessComponent,
     AuthButtonComponent,
-    SectionHeaderComponent
+    SectionHeaderComponent,
+    LoadingComponent
 ],
   templateUrl: './test-page.html',
 })
@@ -41,7 +43,7 @@ export class TestPage {
 
   // Convertir Observables a Signals
   private newsResult = toSignal(
-    this.newsService.getLast3().pipe(
+    this.newsService.getTop3().pipe(
       catchError((err) => {
         console.error('Error cargando noticias:', err);
         return of([] as News[]);

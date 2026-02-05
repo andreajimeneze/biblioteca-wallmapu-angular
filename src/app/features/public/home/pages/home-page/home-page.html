@@ -12,17 +12,12 @@
     [route]="ROUTES.NEWS.BASE"
   />
 
-  @if (loading()) {
-    <app-loading-component />
-  } @else {
-    <app-news-list-component [newsList]="newsResult()" />
-  }
+  <app-news-list-component [loading]="loading()" [newsList]="newsResult()" />
 
   <app-section-header-component
     title="Libros..."
     description="Joyas de papel, títulos que no puedes dejar pasar."
     searchPlaceholder="Buscar libro..."
-    [route]="ROUTES.LIBRARY.BASE"
   />
 
   <app-recommended-books-component/>

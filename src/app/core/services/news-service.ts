@@ -15,10 +15,6 @@ export class NewsService {
     return this.apiResponseService.getAll(this.endpoint + "/?page=1&page_size=3");
   }
 
-  getLast3(): Observable<News[]> {
-    return of(this.news.slice(0, 3));
-  }
-
   getAll(): Observable<News[]> {
     return of(this.news);
   }
