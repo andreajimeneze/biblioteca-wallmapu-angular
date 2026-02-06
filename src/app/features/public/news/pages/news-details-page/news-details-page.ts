@@ -22,14 +22,14 @@ export class NewsDetailsPage {
       switchMap(params => {
         const id = Number(params.get('id'));
         return this.newsService.getById(id).pipe(
-          catchError(() => of(null))
+          catchError(() => of(undefined))
         );
       })
     ),
-    { initialValue: null }
+    { initialValue: undefined }
   );
   
   // ✅ Estados computados claros
   news = computed(() => this.newsResult());
-  loading = computed(() => this.newsResult() === null);
+  loading = computed(() => this.newsResult() === undefined);
 }

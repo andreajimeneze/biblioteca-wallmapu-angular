@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApiResponseService } from '@core/helpers/api-response-service';
 import { News } from '@shared/models/news';
 import { PaginationModel } from '@shared/models/pagination-model';
-import { Observable, of } from 'rxjs';
+import { Observable, of, retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -12,16 +12,20 @@ export class NewsService {
   private readonly endpoint = 'news';
 
   getTop3(): Observable<PaginationModel<News[]>> {
-    return this.apiResponseService.getAll(this.endpoint + "/?page=1&page_size=3");
+    return this.apiResponseService.getAll(`${this.endpoint}/?page=1&page_size=3`);
   }
 
-  getAll(): Observable<News[]> {
-    return of(this.news);
+  getAll(currentPage: number, offset:number, search: string): Observable<PaginationModel<News[]>> {
+    return this.apiResponseService.getAll(`${this.endpoint}/?page=${currentPage}&page_size=${offset}&search=${search}`);
   }
 
   getById(id: number): Observable<News> {
     const news = this.news.find(n => n.id_news === id);
     return of(news!);
+  }
+  
+  getAllTemp(): Observable<News[]> {
+    return of(this.news);
   }
 
   news: News[] = [
@@ -32,9 +36,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-01-01",
       "images": [
-        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 },
-        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 },
-        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 }
+        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 },
+        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 },
+        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 }
       ]
     },
     {
@@ -44,9 +48,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-02-02",
       "images": [
-        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 },
-        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 }
+        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 },
+        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 }
       ]
     },
     {
@@ -56,9 +60,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-03-03",
       "images": [
-        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 },
-        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 }
+        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 },
+        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 }
       ]
     },
     {
@@ -68,9 +72,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-04-04",
       "images": [
-        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 }
+        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 }
       ]
     },
     {
@@ -80,9 +84,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-05-05",
       "images": [
-        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 },
-        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 },
-        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 }
+        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 },
+        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 },
+        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 }
       ]
     },
     {
@@ -92,9 +96,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-06-06",
       "images": [
-        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 },
-        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 }
+        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 },
+        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 }
       ]
     }
   ]

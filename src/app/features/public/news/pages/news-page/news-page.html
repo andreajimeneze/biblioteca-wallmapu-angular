@@ -1,6 +1,25 @@
-<app-header-component
-  title="Noticias"
-  description="Explora las últimas novedades, eventos culturales y actualizaciones de nuestra comunidad bibliotecaria."
-/>
+<div class="flex flex-col justify-between min-h-full">
 
-<app-news-list-component />
+  <section>
+    <app-header-component
+      title="Noticias"
+      description="Explora las últimas novedades, eventos culturales y actualizaciones de nuestra comunidad bibliotecaria."
+    />
+
+    <app-section-header-component 
+      title="Historial"
+      description="Talleres de velas, de papelería, caja del tiempo y actividades varias."
+      searchPlaceholder="Buscar Noticia..."
+      (searchChange)="searchText($event)"
+    />
+
+    <app-news-list-component [loading]="loading()" [newsList]="newsResult()" />
+  </section>
+
+  <app-pagination-component 
+    [currentPage]="currentPage()"
+    [totalPages]="totalPages()"
+    (prevPage)="prevPage()"
+    (nextPage)="nextPage()"
+  />
+</div>

@@ -1,0 +1,11 @@
+<div class="bg-my-green py-8 px-4 flex justify-center">
+  <button class="join-item btn">1</button>
+
+  <div class="join mx-2">
+    <button (click)="onClickPrev()" class="join-item btn">«</button>
+    <button class="join-item btn">Pagina {{ currentPage() }}</button>
+    <button (click)="onClickNext()" class="join-item btn">»</button>
+  </div>
+
+  <button class="join-item btn">{{ totalPages() }}</button>
+</div>

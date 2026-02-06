@@ -236,6 +236,7 @@ ng g c shared/components/navbar-component --skip-tests --style=none
 ng g c shared/components/news-card-component --skip-tests --style=none
 ng g c shared/components/news-list-component --skip-tests --style=none
 ng g c shared/components/news-skeleton-component --skip-tests --style=none
+ng g c shared/components/Pagination-component --skip-tests --style=none
 ng g c shared/components/section-header-component --skip-tests --style=none
 ng g interface shared/models/book
 ng g interface shared/models/NavigationItem

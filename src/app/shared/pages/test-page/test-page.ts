@@ -43,7 +43,7 @@ export class TestPage {
 
   // Convertir Observables a Signals
   private newsResult = toSignal(
-    this.newsService.getTop3().pipe(
+    this.newsService.getAll(1,10,'').pipe(
       catchError((err) => {
         console.error('Error cargando noticias:', err);
         return of([] as News[]);

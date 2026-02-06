@@ -18,7 +18,7 @@ export class NewsPage {
   private newsService = inject(NewsService);
   
   private newsResult = toSignal(
-    this.newsService.getAll().pipe(
+    this.newsService.getAllTemp().pipe(
       catchError((err) => {
         console.error('Error cargando noticias:', err);
         return of([] as News[]);
