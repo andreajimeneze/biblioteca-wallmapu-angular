@@ -218,6 +218,10 @@ ng g s core/helpers/api-response-service --skip-tests
 ng g s core/services/book-service --skip-tests
 ng g s core/services/news-service --skip-tests
 ng g interface core/models/api-response-model
+ng g interface core/models/pagination-model
+ng g interface core/models/news-gallery-model
+ng g interface core/models/news-model
+ng g interface core/models/book-model
 ng g interceptor core/interceptors/auth --skip-tests
 ng g interceptor core/interceptors/error --skip-tests
 
@@ -239,11 +243,7 @@ ng g c shared/components/news-list-component --skip-tests --style=none
 ng g c shared/components/news-skeleton-component --skip-tests --style=none
 ng g c shared/components/Pagination-component --skip-tests --style=none
 ng g c shared/components/section-header-component --skip-tests --style=none
-ng g interface shared/models/book
 ng g interface shared/models/NavigationItem
-ng g interface shared/models/news-gallery
-ng g interface shared/models/news
-ng g interface shared/models/pagination-model
 ng g c shared/pages/not-found-page --skip-tests --style=none
 
 ng g interface features/auth/models/user

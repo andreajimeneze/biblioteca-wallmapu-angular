@@ -6,11 +6,11 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { NewsService } from '@core/services/news-service';
 import { catchError, of } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
-import { News } from '@shared/models/news';
-import { PaginationModel } from '@shared/models/pagination-model';
 import { NewsListComponent } from "@shared/components/news-list-component/news-list-component";
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { NewsModel } from '@core/models/news-model';
+import { PaginationModel } from '@core/models/pagination-model';
 
 @Component({
   selector: 'app-home-page',
@@ -27,11 +27,11 @@ export class HomePage {
   protected readonly ROUTES = ROUTES;
   private newsService = inject(NewsService);
   
-  private readonly defaultApiResponse: ApiResponseModel<PaginationModel<News[]>> = {
+  private readonly defaultApiResponse: ApiResponseModel<PaginationModel<NewsModel[]>> = {
     isSuccess: true,
     statusCode: 0,
     message: "",
-    data: {
+    result: {
       count: 0,
       pages: 0,
       next: '',

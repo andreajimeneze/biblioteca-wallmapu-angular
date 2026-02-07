@@ -1,7 +1,7 @@
 import { Component, input } from '@angular/core';
-import { News } from '@shared/models/news';
 import { NewsCardComponent } from "@shared/components/news-card-component/news-card-component";
-import { NewsSkeletonComponent } from "../news-skeleton-component/news-skeleton-component";
+import { NewsSkeletonComponent } from "@shared/components/news-skeleton-component/news-skeleton-component";
+import { NewsModel } from '@core/models/news-model';
 
 @Component({
   selector: 'app-news-list-component',
@@ -12,6 +12,6 @@ import { NewsSkeletonComponent } from "../news-skeleton-component/news-skeleton-
   templateUrl: './news-list-component.html',
 })
 export class NewsListComponent {
-  readonly newsList = input.required<News[]>();
+  readonly newsList = input.required<NewsModel[]>();
   readonly loading = input<boolean | null>(false);
 }

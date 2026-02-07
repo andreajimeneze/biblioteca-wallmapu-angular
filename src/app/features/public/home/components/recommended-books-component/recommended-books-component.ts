@@ -2,9 +2,9 @@ import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterModule } from '@angular/router';
 import { BookService } from '@core/services/book-service';
-import { Book } from '@shared/models/book';
 import { catchError, of } from 'rxjs';
 import { BookCardComponent } from "@shared/components/book-card-component/book-card-component";
+import { BookModel } from '@core/models/book-model';
 
 @Component({
   selector: 'app-recommended-books-component',
@@ -21,7 +21,7 @@ export class RecommendedBooksComponent {
     this.bookService.getTop12().pipe(
       catchError((err) => {
         console.error('Error cargando libros:', err); // ✅ Solo en consola
-        return of([] as Book[]); // ✅ Devuelve array vacío silenciosamente
+        return of([] as BookModel[]); // ✅ Devuelve array vacío silenciosamente
       })
     ),
     { initialValue: undefined } // ✅ valor inicial vacío

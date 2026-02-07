@@ -1,34 +1,34 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiResponseService } from '@core/helpers/api-response-service';
 import { ApiResponseModel } from '@core/models/api-response-model';
-import { News } from '@shared/models/news';
-import { PaginationModel } from '@shared/models/pagination-model';
+import { NewsModel } from '@core/models/news-model';
+import { PaginationModel } from '@core/models/pagination-model';
 import { Observable, of, retry } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class NewsService {
-  private apiResponseService = inject(ApiResponseService<News>)
+  private apiResponseService = inject(ApiResponseService<NewsModel>)
   private readonly endpoint = 'news';
 
-  getTop3(): Observable<ApiResponseModel<PaginationModel<News[]>>> {
-    return this.apiResponseService.getAll(`${this.endpoint}/?page=1&page_size=3`);
+  getTop3(): Observable<ApiResponseModel<PaginationModel<NewsModel[]>>> {
+    return this.apiResponseService.getAll(`${this.endpoint}/?page=1&items=3`);
   }
 
-  getAll(currentPage: number, offset:number, search: string): Observable<ApiResponseModel<PaginationModel<News[]>>> {
-    return this.apiResponseService.getAll(`${this.endpoint}/?page=${currentPage}&page_size=${offset}&search=${search}`);
+  getAll(currentPage: number, offset:number, search: string): Observable<ApiResponseModel<PaginationModel<NewsModel[]>>> {
+    return this.apiResponseService.getAll(`${this.endpoint}/?page=${currentPage}&items=${offset}&search=${search}`);
   }
 
-  getById(id: number): Observable<ApiResponseModel<News | null>> {
+  getById(id: number): Observable<ApiResponseModel<NewsModel | null>> {
     return this.apiResponseService.getById(this.endpoint, id);
   }
   
-  getAllTemp(): Observable<News[]> {
+  getAllTemp(): Observable<NewsModel[]> {
     return of(this.news);
   }
 
-  news: News[] = [
+  news: NewsModel[] = [
     {
       "id_news": 1,
       "title": "Título Noticia 1",

@@ -1,28 +1,28 @@
 import { inject, Injectable } from '@angular/core';
-import { Book } from '@shared/models/book';
 import { ApiResponseService } from '@core/helpers/api-response-service';
 import { Observable, of } from 'rxjs';
+import { BookModel } from '@core/models/book-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class BookService {
-  private apiService = inject(ApiResponseService<Book>);
+  private apiService = inject(ApiResponseService<BookModel>);
 
-  getTop12(): Observable<Book[]> {
+  getTop12(): Observable<BookModel[]> {
     return of(this.books.slice(0, 12));
   }
 
-  getAll(): Observable<Book[]> {
+  getAll(): Observable<BookModel[]> {
     return of(this.books);
   }
 
-  getById(id: number): Observable<Book> {
+  getById(id: number): Observable<BookModel> {
     const book = this.books.find(b => b.id === id);
     return of(book!);
   }
     
-  private books: Book[] = [
+  private books: BookModel[] = [
     {
       "id": 1,
       "title": "Papelucho",

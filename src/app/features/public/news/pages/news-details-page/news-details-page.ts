@@ -5,10 +5,10 @@ import { NewsService } from '@core/services/news-service';
 import { catchError, of, switchMap } from 'rxjs';
 import { NewsDetailsComponent } from "../../components/news-details-component/news-details-component";
 import { ApiResponseModel } from '@core/models/api-response-model';
-import { News } from '@shared/models/news';
 import { CommonModule } from '@angular/common';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { NewsModel } from '@core/models/news-model';
 
 @Component({
   selector: 'app-news-details-page',
@@ -24,11 +24,11 @@ export class NewsDetailsPage {
   private newsService = inject(NewsService);
   private route = inject(ActivatedRoute);
   
-  private readonly defaultApiResponse: ApiResponseModel<News | null> = {
+  private readonly defaultApiResponse: ApiResponseModel<NewsModel | null> = {
     isSuccess: true,
     statusCode: 0,
     message: "",
-    data: null
+    result: null
   }
 
   // ✅ Reactividad moderna con toSignal

@@ -2,9 +2,9 @@ import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NewsService } from '@core/services/news-service';
-import { News } from '@shared/models/news';
 import { catchError, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { NewsModel } from '@core/models/news-model';
 
 @Component({
   selector: 'app-news-page',
@@ -21,7 +21,7 @@ export class NewsPage {
     this.newsService.getAllTemp().pipe(
       catchError((err) => {
         console.error('Error cargando noticias:', err);
-        return of([] as News[]);
+        return of([] as NewsModel[]);
       })
     ),
     { initialValue: undefined }

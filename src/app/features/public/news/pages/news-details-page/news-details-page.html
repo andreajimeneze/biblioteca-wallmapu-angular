@@ -6,7 +6,7 @@
     </div>
   } @else {
     @if (newsResult().isSuccess) {
-      <app-news-details-component [news]="newsResult().data!"/>
+      <app-news-details-component [news]="newsResult().result!"/>
     } @else {
       <div class="pt-48">
         <app-message-error-component [message]="newsResult().message" />

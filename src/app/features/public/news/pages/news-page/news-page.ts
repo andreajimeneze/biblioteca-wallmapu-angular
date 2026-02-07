@@ -4,13 +4,13 @@ import { NewsListComponent } from "@shared/components/news-list-component/news-l
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { NewsService } from '@core/services/news-service';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { catchError, defer, finalize, of, switchMap, tap } from 'rxjs';
-import { PaginationModel } from '@shared/models/pagination-model';
-import { News } from '@shared/models/news';
+import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { CommonModule } from '@angular/common';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { NewsModel } from '@core/models/news-model';
+import { PaginationModel } from '@core/models/pagination-model';
 
 @Component({
   selector: 'app-news-page',
@@ -35,11 +35,11 @@ export class NewsPage {
   readonly totalPages = signal<number>(1);
   readonly loading = signal(false);
 
-  private readonly defaultApiResponse: ApiResponseModel<PaginationModel<News[]>> = {
+  private readonly defaultApiResponse: ApiResponseModel<PaginationModel<NewsModel[]>> = {
     isSuccess: true,
     statusCode: 0,
-    message: "",
-    data: {
+    message: "ERROR",
+    result: {
       count: 0,
       pages: 0,
       next: '',
@@ -65,9 +65,8 @@ export class NewsPage {
           params.offset,
           params.search
         ).pipe(
-          tap(result => this.totalPages.set(result.data.pages || 1)),
+          tap(result => this.totalPages.set(result.result.pages || 1)),
           catchError(err => {
-            console.error('Error cargando noticias:', err);
             return of(this.defaultApiResponse);
           }),
           finalize(() => this.loading.set(false)) 

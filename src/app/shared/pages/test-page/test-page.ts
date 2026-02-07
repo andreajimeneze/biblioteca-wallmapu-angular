@@ -1,12 +1,10 @@
 import { Component, computed, inject } from '@angular/core';
 import { BookService } from '@core/services/book-service';
-import { Book } from '@shared/models/book';
 import { HeaderComponent } from "@shared/components/header-component/header-component";
 import { CommonModule } from '@angular/common';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { NewsService } from '@core/services/news-service';
-import { News } from '@shared/models/news';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { catchError, of } from 'rxjs';
 import { AuthButtonComponent } from "@features/auth/components/auth-button-component/auth-button-component";
@@ -35,7 +33,7 @@ export class TestPage {
     this.bookService.getTop12().pipe(
       catchError((err) => {
         console.error('Error cargando libros:', err);
-        return of([] as Book[]);
+        return of([] as any);
       })
     ),
     { initialValue: undefined }
@@ -46,7 +44,7 @@ export class TestPage {
     this.newsService.getAll(1,10,'').pipe(
       catchError((err) => {
         console.error('Error cargando noticias:', err);
-        return of([] as News[]);
+        return of([] as any);
       })
     ),
     { initialValue: undefined }
