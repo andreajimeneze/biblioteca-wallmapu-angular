@@ -22,7 +22,7 @@ export const ROUTES = {
       NEWS: '/admin/news',
       USERS: '/admin/users',
       PROFILE: '/admin/profile',
-      SETTINGS: '/admin/settings'
+      SETTINGS: '/admin/settings',
     }
   },
   PAGES: [
@@ -43,4 +43,4 @@ export const ROUTES = {
       NAME: "Test"
     }   
   ],
-} as const;
+}

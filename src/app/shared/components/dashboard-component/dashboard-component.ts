@@ -1,17 +1,20 @@
 import { Component, input } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
-import { AuthButtonComponent } from "@features/auth/components/auth-button-component/auth-button-component";
-import { NavigationItem } from '@shared/models/NavigationItem';
+import { RouterOutlet } from '@angular/router';
+import { DashboardNavbarComponent } from '@shared/components/dashboard-navbar-component/dashboard-navbar-component';
+import { DashboardSidebarComponent } from '@shared/components/dashboard-sidebar-component/dashboard-sidebar-component';
+import { ArrowUpComponent } from '@shared/components/arrow-up-component/arrow-up-component';
+import { NavigationModel } from '@shared/models/navigation-model';
 
 @Component({
   selector: 'app-dashboard-component',
   imports: [
     RouterOutlet,
-    RouterLink,
-    AuthButtonComponent
+    DashboardNavbarComponent,
+    DashboardSidebarComponent,
+    ArrowUpComponent,
 ],
   templateUrl: './dashboard-component.html',
 })
 export class DashboardComponent {
-  navigationItems = input.required<NavigationItem[]>();
+  navigation = input.required<NavigationModel[]>();
 }

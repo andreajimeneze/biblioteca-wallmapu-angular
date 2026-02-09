@@ -1,13 +1,7 @@
 import { ROUTES } from '@shared/constants/routes';
+import { NavigationModel } from '@shared/models/navigation-model';
 
-export interface AdminNavigationItem {
-  label: string;
-  route: string;
-  iconPaths: string[]; // Array de paths SVG (algunos iconos tienen múltiples paths)
-  tooltip?: string;
-}
-
-export const NAVIGATION_ADMIN: AdminNavigationItem[] = [
+export const NAVIGATION_ADMIN: NavigationModel[] = [
   {
     label: 'Panel',
     route: ROUTES.PROTECTED.ADMIN.DASHBOARD,
@@ -59,5 +53,5 @@ export const NAVIGATION_ADMIN: AdminNavigationItem[] = [
       'M7 7a3 3 0 1 1-6 0a3 3 0 0 1 6 0z'
     ],
     tooltip: 'Configuración'
-  }
-] as const;
+  },
+]

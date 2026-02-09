@@ -12,7 +12,7 @@ import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 export class SectionHeaderComponent {
   // Inputs obligatorios
   readonly title = input.required<string>();
-  readonly description = input.required<string>();
+  readonly description = input<string>('');
 
   // Inputs opcionales
   readonly route = input<string | null>();          // Para el caso 2 (botón "Ver todas")

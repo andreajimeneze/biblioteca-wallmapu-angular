@@ -11,14 +11,44 @@ export const API_RESPONSE_PAGINATION_NEWS_LIST: ApiResponseModel<PaginationModel
     pages: 0,
     next: '',
     prev: '',
-    result: [] 
+    result: [
+      {
+        id_news: 0,
+        title: '',
+        subtitle: '',
+        body: '',
+        date: '',
+        images: [
+          {
+            id_news_gallery: 0,
+            alt: 'Imagen por defecto',
+            url: '/images/layout.webp',
+            news_id: 0
+          }
+        ]
+      }
+    ] 
   }
 }
 
-export const API_RESPONSE_NEWS: ApiResponseModel<NewsModel | null> = {
+export const API_RESPONSE_NEWS: ApiResponseModel<NewsModel> = {
   isSuccess: true,
   statusCode: 0,
   message: "",
-  result: null
+  result: {
+    id_news: 0,
+    title: '',
+    subtitle: '',
+    body: '',
+    date: '',
+    images: [
+      {
+        id_news_gallery: 0,
+        alt: 'Imagen por defecto',
+        url: '/images/layout.webp',
+        news_id: 0
+      }
+    ]
+  }
 }
 

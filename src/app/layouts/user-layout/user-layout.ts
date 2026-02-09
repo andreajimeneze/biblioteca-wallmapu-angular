@@ -10,5 +10,5 @@ import { NAVIGATION_USER } from '@shared/constants/navigation-user';
   templateUrl: './user-layout.html',
 })
 export class UserLayout {
-  protected readonly navigationItems = NAVIGATION_USER;
+  protected readonly navigation = NAVIGATION_USER;
 }

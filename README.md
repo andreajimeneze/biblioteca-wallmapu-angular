@@ -233,6 +233,8 @@ ng g c layouts/admin-layout --skip-tests --style=none
 ng g c shared/components/arrow-up-component --skip-tests --style=none
 ng g c shared/components/book-card-component --skip-tests --style=none
 ng g c shared/components/dashboard-component --skip-tests --style=none
+ng g c shared/components/dashboard-navbar-component --skip-tests --style=none
+ng g c shared/components/dashboard-sidebar-component --skip-tests --style=none
 ng g c shared/components/footer-component --skip-tests --style=none
 ng g c shared/components/header-component --skip-tests --style=none
 ng g c shared/components/loading-component --skip-tests --style=none
@@ -246,8 +248,8 @@ ng g c shared/components/news-list-component --skip-tests --style=none
 ng g c shared/components/news-skeleton-component --skip-tests --style=none
 ng g c shared/components/Pagination-component --skip-tests --style=none
 ng g c shared/components/section-header-component --skip-tests --style=none
-ng g interface shared/models/NavigationItem
 ng g c shared/pages/not-found-page --skip-tests --style=none
+ng g interface shared/models/navigation-model
 
 ng g interface features/auth/models/user
 ng g interface features/auth/models/user-google
@@ -270,7 +272,8 @@ ng g c features/public/news/pages/news-details-page --skip-tests --style=none
 ng g c features/public/news/pages/news-page --skip-tests --style=none
 
 ng g c features/admin/book/pages/book-page --skip-tests --style=none
-ng g c features/admin/news/pages/news-page --skip-tests --style=none
+ng g c features/admin/news/pages/news-list-page --skip-tests --style=none
+ng g c features/admin/news/pages/news-form-page --skip-tests --style=none
 
 ng g c features/user/dashboard/pages/dashboard-page --skip-tests --style=none
 ng g c features/user/profile/pages/profile-page --skip-tests --style=none

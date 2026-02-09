@@ -1,0 +1,18 @@
+<ul class="menu w-full grow">
+  @for (item of navigation(); track item.route) {
+    <li>
+      <a 
+        class="is-drawer-close:tooltip is-drawer-close:tooltip-right" 
+        [routerLink]="item.route"        
+        [attr.data-tip]="item.tooltip || item.label"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="my-1.5 inline-block size-6">
+          @for (path of item.iconPaths; track path) {
+            <path [attr.d]="path" />
+          }
+        </svg>
+        <span class="is-drawer-close:hidden">{{ item.label }}</span>
+      </a>
+    </li>
+  }
+</ul>

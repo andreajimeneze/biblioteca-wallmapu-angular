@@ -10,7 +10,7 @@ import { NewsModel } from '@core/models/news-model';
   selector: 'app-news-page',
   imports: [
     NgOptimizedImage,
-    LoadingComponent
+    LoadingComponent,
 ],
   templateUrl: './news-page.html',
 })
