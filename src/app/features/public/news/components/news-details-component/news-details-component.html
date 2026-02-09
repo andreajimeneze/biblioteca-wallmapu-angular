@@ -7,7 +7,7 @@
     <figure class="w-full h-96 relative overflow-hidden">
       <img 
         placeholder="/images/layout.webp"
-        [ngSrc]="news().images.length > 0 ? news().images[0].img : '/images/layout.webp'"
+        [ngSrc]="news().images.length > 0 ? news().images[0].url : '/images/layout.webp'"
         [alt]="news().images.length > 0 ? news().images[0].alt : 'Imagen por defecto'"
         fill
         priority
@@ -84,7 +84,7 @@
         <div class="relative group cursor-pointer overflow-hidden rounded-xl shadow-lg">
           <figure class="aspect-4/3">
             <img 
-              [ngSrc]="img.img" 
+              [ngSrc]="img.url" 
               [alt]="img.alt"
               fill
               priority

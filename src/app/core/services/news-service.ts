@@ -36,9 +36,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-01-01",
       "images": [
-        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 },
-        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 },
-        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 }
+        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 },
+        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 },
+        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 }
       ]
     },
     {
@@ -48,9 +48,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-02-02",
       "images": [
-        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 },
-        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 }
+        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 },
+        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 }
       ]
     },
     {
@@ -60,9 +60,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-03-03",
       "images": [
-        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 },
-        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 }
+        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 },
+        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 }
       ]
     },
     {
@@ -72,9 +72,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-04-04",
       "images": [
-        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 }
+        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 }
       ]
     },
     {
@@ -84,9 +84,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-05-05",
       "images": [
-        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 },
-        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 },
-        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 }
+        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 },
+        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 },
+        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 }
       ]
     },
     {
@@ -96,9 +96,9 @@ export class NewsService {
       "body": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
       "date": "2026-06-06",
       "images": [
-        { "id_news_gallery": 3, "alt": "news-03", "img": "images/test/news-03.jpg", "news_id": 0 },
-        { "id_news_gallery": 2, "alt": "news-02", "img": "images/test/news-02.jpg", "news_id": 0 },
-        { "id_news_gallery": 1, "alt": "news-01", "img": "images/test/news-01.jpg", "news_id": 0 }
+        { "id_news_gallery": 3, "alt": "news-03", "url": "images/test/news-03.jpg", "news_id": 0 },
+        { "id_news_gallery": 2, "alt": "news-02", "url": "images/test/news-02.jpg", "news_id": 0 },
+        { "id_news_gallery": 1, "alt": "news-01", "url": "images/test/news-01.jpg", "news_id": 0 }
       ]
     }
   ]

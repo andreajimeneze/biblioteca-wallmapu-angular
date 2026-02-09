@@ -1,6 +1,6 @@
 export interface NewsGalleryModel {
   id_news_gallery: number
   alt: string
-  img: string
+  url: string
   news_id: number
 }
