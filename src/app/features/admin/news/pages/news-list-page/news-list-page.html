@@ -4,15 +4,27 @@
   (searchChange)="($event)"
 />
 
+<div class="flex justify-between m-4">
+  <button class="btn max-w-48 bg-my-purple text-my-light">
+    Refrescar
+  </button>  
+
+  <button class="btn max-w-48 bg-my-pink text-my-light">
+    Crear Noticia
+  </button>
+</div>
+
 @if (newsResult().isSuccess) {
   <app-news-list-component viewMode="table" [loading]="loading()" [newsList]="newsResult().result.result" />
 } @else {
   <app-message-error-component [message]="newsResult().message"/>
 }
 
-<app-pagination-component 
-  [currentPage]=1
-  [totalPages]=1
-  (prevPage)="($event)"
-  (nextPage)="($event)" 
-/>  
+@if (!loading()) {
+  <app-pagination-component 
+    [currentPage]=1
+    [totalPages]=1
+    (prevPage)="($event)"
+    (nextPage)="($event)" 
+  />
+}

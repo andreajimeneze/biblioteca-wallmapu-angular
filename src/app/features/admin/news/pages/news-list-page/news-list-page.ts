@@ -2,8 +2,6 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { NewsService } from '@core/services/news-service';
-import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { NgOptimizedImage } from '@angular/common';
 import { API_RESPONSE_PAGINATION_NEWS_LIST } from '@shared/constants/default-api-result';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { catchError, finalize, of, switchMap, tap } from 'rxjs';
@@ -13,10 +11,8 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 @Component({
   selector: 'app-news-list-page',
   imports: [
-    NgOptimizedImage,
     SectionHeaderComponent,
     PaginationComponent,
-    LoadingComponent,
     NewsListComponent,
     MessageErrorComponent
 ],
@@ -30,7 +26,7 @@ export class NewsListPage {
 
   readonly currentPage = signal(1);
   readonly totalPages = signal<number>(1);
-  readonly loading = signal(false);
+  readonly loading = signal(true);
 
   private readonly params = computed(() => ({
     page: this.currentPage(),
