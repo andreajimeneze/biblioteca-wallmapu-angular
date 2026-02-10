@@ -6,30 +6,30 @@
 
 <pre>{{ news() | json }}</pre>
 
-<section class="p-4">
-  <form class="fieldset bg-my-light border-base-300 rounded-box w-xs border p-4">
+<section class="p-4 flex flex-wrap gap-4 justify-center">
+  <form class="fieldset bg-my-light rounded-box border p-4 w-sm">
     <fieldset class="fieldset">
       <label class="label">Título</label>
-      <input type="text" class="input validator" placeholder="Título" required />
+      <input type="text" class="input validator w-full" placeholder="Título" required />
       <p class="validator-hint hidden mt-0">Requerido</p>
     </fieldset>
   
     <fieldset class="fieldset">
       <label class="label">Subtítulo</label>
-      <input type="text" class="input validator" placeholder="Subtítulo" required />
+      <input type="text" class="input validator w-full" placeholder="Subtítulo" required />
       <p class="validator-hint hidden mt-0">Requerido</p>
     </fieldset>
   
     <fieldset class="fieldset">
       <label class="label">Descripción</label>
-      <textarea class="textarea validator mt-2" required placeholder="Descripción"></textarea>
+      <textarea class="textarea validator mt-2 w-full" required placeholder="Descripción"></textarea>
       <p class="validator-hint hidden mt-0">Requerido</p>
     </fieldset>
   
     <fieldset class="fieldset">
       <label class="label">Cargar imagenes 1 hasta 3</label>
       <input
-        type="file" class="file-input validator mt-2" accept="image/*" multiple required 
+        type="file" class="file-input validator mt-2 w-full" accept="image/*" multiple required 
         (change)="onChangeImages($event)"
       />
       <p class="validator-hint hidden mt-0">Requerido</p>
@@ -43,11 +43,11 @@
   
     <button class="btn bg-my-purple text-my-light mt-4" type="submit">Submit form</button>
   </form>
-  
+
   @if (selectedImages().length > 0) {
-    <div class="flex gap-4 mt-4 flex-wrap">
+    <div class="flex gap-4 flex-wrap max-w-5xl">
       @for (file of selectedImages(); track file.name) {
-        <div class="relative w-full aspect-video overflow-hidden rounded-lg border border-base-300">
+        <div class="relative w-full aspect-video overflow-hidden rounded-lg border max-w-md">
           <img
             [src]="createPreview(file)"
             alt="{{ file.name }}"
