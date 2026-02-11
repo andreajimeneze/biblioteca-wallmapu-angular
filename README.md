@@ -230,6 +230,7 @@ ng g c layouts/public-layout --skip-tests --style=none
 ng g c layouts/user-layout --skip-tests --style=none
 ng g c layouts/admin-layout --skip-tests --style=none
 
+ng g c shared/components/about-component --skip-tests --style=none
 ng g c shared/components/arrow-up-component --skip-tests --style=none
 ng g c shared/components/book-card-component --skip-tests --style=none
 ng g c shared/components/dashboard-component --skip-tests --style=none
@@ -261,7 +262,6 @@ ng g c features/auth/components/auth-button-component --skip-tests --style=none
 ng g c features/auth/components/google-signin-component --skip-tests --style=none
 
 ng g c features/public/home/pages/home-page --skip-tests --style=none
-ng g c features/public/home/components/latest-news-component --skip-tests --style=none
 ng g c features/public/home/components/recommended-books-component --skip-tests --style=none
 
 ng g c features/public/library/pages/books-page --skip-tests --style=none

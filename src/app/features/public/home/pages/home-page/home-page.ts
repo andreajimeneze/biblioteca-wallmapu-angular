@@ -9,6 +9,7 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { NewsListComponent } from "@shared/components/news-list-component/news-list-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { API_RESPONSE_PAGINATION_NEWS_LIST } from '@shared/constants/default-api-result';
+import { AboutComponent } from "@shared/components/about-component/about-component";
 
 @Component({
   selector: 'app-home-page',
@@ -17,7 +18,8 @@ import { API_RESPONSE_PAGINATION_NEWS_LIST } from '@shared/constants/default-api
     HeaderComponent,
     SectionHeaderComponent,
     NewsListComponent,
-    MessageErrorComponent
+    MessageErrorComponent,
+    AboutComponent
 ],
   templateUrl: './home-page.html',
 })
