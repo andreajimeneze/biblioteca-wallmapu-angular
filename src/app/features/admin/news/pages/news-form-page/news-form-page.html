@@ -1,90 +1,94 @@
-<app-section-header-component
-  [title]="actionText()" 
-  [route]="ROUTES.PROTECTED.ADMIN.NEWS"
-  routeText="Volver"
-/>
+@if (isLoading()) {
+  <app-loading-component />
+} @else {
+  <app-section-header-component
+    [title]="actionText()" 
+    [route]="ROUTES.PROTECTED.ADMIN.NEWS"
+    routeText="Volver"
+  />
 
-<section 
-  class="p-4 flex flex-wrap justify-center gap-4"
-  [class.justify-center]="selectedImages().length > 0"
->
+  <section 
+    class="p-4 flex flex-wrap justify-center gap-4"
+    [class.justify-center]="selectedImages().length > 0"
+  >
 
-  <!-- Formulario -->
-  <div class="w-full max-w-xl">
-    <form 
-      (submit)="onSubmit($event)"
-      class="fieldset bg-my-light rounded-box border p-6 flex flex-col gap-4">
-      
-      <!-- Título -->
-      <fieldset class="fieldset flex flex-col">
-        <label class="label font-semibold mb-1">Título</label>
-        <input 
-          type="text" class="input validator w-full" placeholder="Título" required 
-          [value]="formData().title"
-          (input)="updateTitle($any($event.target).value)"
-        />
-        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
-      </fieldset>
-      
-      <!-- Subtítulo -->
-      <fieldset class="fieldset flex flex-col">
-        <label class="label font-semibold mb-1">Subtítulo</label>
-        <input 
-          type="text" class="input validator w-full" placeholder="Subtítulo" required
-          [value]="formData().subtitle"
-          (input)="updateSubtitle($any($event.target).value)"
-        />
-        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
-      </fieldset>
-      
-      <!-- Descripción -->
-      <fieldset class="fieldset flex flex-col">
-        <label class="label font-semibold">Descripción</label>
-        <textarea 
-          class="textarea validator mt-2 w-full min-h-56" placeholder="Descripción" required
-          [value]="formData().body"
-          (input)="updateBody($any($event.target).value)"
-        ></textarea>
-        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
-      </fieldset>
-      
-      <!-- Carga de imágenes -->
-      <fieldset class="fieldset flex flex-col">
-        <label class="label font-semibold">Cargar imágenes (1 a 3)</label>
-        <input
-          type="file" class="file-input validator mt-2 w-full" accept="image/*" multiple required 
-          (change)="onChangeImages($event)"
-        />
-        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
-      </fieldset>
-      
-      <!-- Botón de envío -->
-      <button class="btn bg-my-purple text-my-light mt-4 self-start px-6 py-2 rounded-lg font-semibold" type="submit">
-        {{ actionText() }}
-      </button>
-
-    </form>
-
-    @if (errorMessage()) {
-      <div class="mt-4">
-        <app-message-error-component [message]="errorMessage()"/>
-      </div>
-    }
-  </div>
-
-  <!-- Previsualización de imágenes -->
-  @if (selectedImages().length > 0) {
-    <div class="grid gap-4 w-full max-w-2xl">
-      @for (file of selectedImages(); track file.name) {
-        <div class="relative w-full aspect-video overflow-hidden rounded-lg border">
-          <img
-            [src]="createPreview(file)"
-            [alt]="file.name"
-            class="object-cover w-full h-full"
+    <!-- Formulario -->
+    <div class="w-full max-w-xl">
+      <form 
+        (submit)="onSubmit($event)"
+        class="fieldset bg-my-light rounded-box border p-6 flex flex-col gap-4">
+        
+        <!-- Título -->
+        <fieldset class="fieldset flex flex-col">
+          <label class="label font-semibold mb-1">Título</label>
+          <input 
+            type="text" class="input validator w-full" placeholder="Título" required 
+            [value]="formData().title"
+            (input)="updateTitle($any($event.target).value)"
           />
+          <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+        </fieldset>
+        
+        <!-- Subtítulo -->
+        <fieldset class="fieldset flex flex-col">
+          <label class="label font-semibold mb-1">Subtítulo</label>
+          <input 
+            type="text" class="input validator w-full" placeholder="Subtítulo" required
+            [value]="formData().subtitle"
+            (input)="updateSubtitle($any($event.target).value)"
+          />
+          <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+        </fieldset>
+        
+        <!-- Descripción -->
+        <fieldset class="fieldset flex flex-col">
+          <label class="label font-semibold">Descripción</label>
+          <textarea 
+            class="textarea validator mt-2 w-full min-h-56" placeholder="Descripción" required
+            [value]="formData().body"
+            (input)="updateBody($any($event.target).value)"
+          ></textarea>
+          <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+        </fieldset>
+        
+        <!-- Carga de imágenes -->
+        <fieldset class="fieldset flex flex-col">
+          <label class="label font-semibold">Cargar imágenes (1 a 3)</label>
+          <input
+            type="file" class="file-input validator mt-2 w-full" accept="image/*" multiple required 
+            (change)="onChangeImages($event)"
+          />
+          <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+        </fieldset>
+        
+        <!-- Botón de envío -->
+        <button class="btn bg-my-purple text-my-light mt-4 self-start px-6 py-2 rounded-lg font-semibold" type="submit">
+          {{ actionText() }}
+        </button>
+
+      </form>
+
+      @if (errorMessage()) {
+        <div class="mt-4">
+          <app-message-error-component [message]="errorMessage()"/>
         </div>
       }
     </div>
-  }
-  
-</section>
+
+    <!-- Previsualización de imágenes -->
+    @if (selectedImages().length > 0) {
+      <div class="grid gap-4 w-full max-w-2xl">
+        @for (item of selectedImages(); track item.file.name) {
+          <div class="relative w-full aspect-video overflow-hidden rounded-lg border">
+            <img
+              [src]="item.preview"
+              [alt]="item.file.name"
+              class="object-cover w-full h-full"
+            />
+          </div>
+        }
+      </div>
+    }
+    
+  </section>
+}

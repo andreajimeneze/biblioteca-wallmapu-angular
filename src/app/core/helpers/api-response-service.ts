@@ -6,27 +6,27 @@ import { environment } from '@environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class ApiResponseService<T> {
+export class ApiResponseService {
   private http = inject(HttpClient);
   private apiUrl = environment.apiUrl;
 
-  getAll(endpoint: string): Observable<T> {
-    return this.http.get<T>(`${this.apiUrl}/${endpoint}`);
+  getAll<TResponse>(endpoint: string): Observable<TResponse> {
+    return this.http.get<TResponse>(`${this.apiUrl}/${endpoint}`);
   }
 
-  getById(endpoint: string, id: string | number): Observable<T> {
-    return this.http.get<T>(`${this.apiUrl}/${endpoint}/${id}`);
+  getById<TResponse>(endpoint: string, id: string | number): Observable<TResponse> {
+    return this.http.get<TResponse>(`${this.apiUrl}/${endpoint}/${id}`);
   }
 
-  create(endpoint: string, data: T): Observable<T> {
-    return this.http.post<T>(`${this.apiUrl}/${endpoint}`, data);
+  create<TResponse, TBody>(endpoint: string, data: TBody): Observable<TResponse> {
+    return this.http.post<TResponse>(`${this.apiUrl}/${endpoint}`, data);
   }
 
-  update(endpoint: string, id: string | number, data: T): Observable<T> {
-    return this.http.put<T>(`${this.apiUrl}/${endpoint}/${id}`, data);
+  update<TResponse, TBody>(endpoint: string, id: string | number, data: TBody): Observable<TResponse> {
+    return this.http.put<TResponse>(`${this.apiUrl}/${endpoint}/${id}`, data);
   }
 
-  delete(endpoint: string, id: string | number): Observable<T> {
-    return this.http.delete<T>(`${this.apiUrl}/${endpoint}/${id}`);
+  delete<TResponse>(endpoint: string, id: string | number): Observable<TResponse> {
+    return this.http.delete<TResponse>(`${this.apiUrl}/${endpoint}/${id}`);
   }
 }

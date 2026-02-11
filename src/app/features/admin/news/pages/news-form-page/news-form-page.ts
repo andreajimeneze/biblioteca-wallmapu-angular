@@ -7,13 +7,15 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { NewsService } from '@core/services/news-service';
 import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
+import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-news-form-page',
   imports: [
     CommonModule,
     SectionHeaderComponent,
-    MessageErrorComponent
+    MessageErrorComponent,
+    LoadingComponent
 ],
   templateUrl: './news-form-page.html',
 })
@@ -24,9 +26,9 @@ export class NewsFormPage {
   
   readonly ROUTES = ROUTES;
   readonly news = signal<NewsWithImagesModel | null>(this.initialUrl);
-  readonly isEditMode = computed(() => this.news() !== null);
-  readonly actionText = computed(() => this.news() ? "Modificar Noticia" : "Crear Noticia");
-  readonly selectedImages = signal<File[]>([]);
+  readonly isEditMode = computed(() => this.news()?.id_news);
+  readonly actionText = computed(() => this.isEditMode() ? "Modificar Noticia" : "Crear Noticia");
+  readonly selectedImages = signal<{ file: File; preview: string }[]>([]);
   readonly isLoading = signal(false);
   readonly errorMessage = signal<string | null>(null);
 
@@ -76,7 +78,7 @@ export class NewsFormPage {
     const isEdit = this.isEditMode();
 
     const payload: FormNewsModel = {
-      id_news: isEdit ? this.news()?.id_news ?? 0 : 0,
+      id_news: isEdit ? this.news()!.id_news : 0,
       title: title,
       subtitle: subtitle,
       body: body
@@ -111,6 +113,13 @@ export class NewsFormPage {
       return;
     }
 
+    // minimo 1
+    if (files.length < 1) {
+      this.errorMessage.set('Minimo 1 imagen permitido');
+      input.value = '';
+      return;
+    }
+
     // máximo 3
     if (files.length > 3) {
       this.errorMessage.set('Máximo 3 imágenes permitidas');
@@ -126,9 +135,14 @@ export class NewsFormPage {
         return;
       }
     }
+  
+    const filesWithPreview = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file)
+    }));
 
     this.errorMessage.set(null);
-    this.selectedImages.set(files);
+    this.selectedImages.set(filesWithPreview);
   }
 
   protected createPreview(file: File): string {

@@ -7,7 +7,7 @@ import { BookModel } from '@core/models/book-model';
   providedIn: 'root',
 })
 export class BookService {
-  private apiService = inject(ApiResponseService<BookModel>);
+  private apiService = inject(ApiResponseService);
 
   getTop12(): Observable<BookModel[]> {
     return of(this.books.slice(0, 12));

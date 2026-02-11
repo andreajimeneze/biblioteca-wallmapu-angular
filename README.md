@@ -218,6 +218,7 @@ export class NavbarComponent {
 ng g s core/helpers/api-response-service --skip-tests
 ng g s core/services/book-service --skip-tests
 ng g s core/services/news-service --skip-tests
+ng g s core/services/news-gallery-service --skip-tests
 ng g interface core/models/api-response-model
 ng g interface core/models/pagination-model
 ng g interface core/models/news-gallery-model
