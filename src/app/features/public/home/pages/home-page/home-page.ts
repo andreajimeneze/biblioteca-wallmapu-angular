@@ -10,6 +10,7 @@ import { NewsListComponent } from "@shared/components/news-list-component/news-l
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { API_RESPONSE_PAGINATION_NEWS_LIST } from '@shared/constants/default-api-result';
 import { AboutComponent } from "@shared/components/about-component/about-component";
+import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 
 @Component({
   selector: 'app-home-page',
@@ -19,7 +20,8 @@ import { AboutComponent } from "@shared/components/about-component/about-compone
     SectionHeaderComponent,
     NewsListComponent,
     MessageErrorComponent,
-    AboutComponent
+    AboutComponent,
+    PaginationComponent
 ],
   templateUrl: './home-page.html',
 })
