@@ -57,6 +57,7 @@ export class NewsFormPage {
 
   protected onSubmit(event: Event): void {
     event.preventDefault();
+    this.isLoading.set(true);
     this.errorMessage.set(null);
 
     const data = this.formData();
@@ -89,8 +90,6 @@ export class NewsFormPage {
     //const request = isEdit
     //  ? this.newsService.update(payload)
     //  : this.newsService.create(payload);
-
-    //this.isLoading.set(true);
 
     //request.subscribe({
     //  next: () => {

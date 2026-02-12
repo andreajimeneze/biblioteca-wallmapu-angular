@@ -23,7 +23,7 @@ export class NewsGalleryService {
     });
     
     return this.apiResponseService.create<ApiResponseModel<NewsGalleryModel[]>, FormData>(
-      `${this.endpoint}/news/${news_id}/gallery`, formData
+      `${this.endpoint}/news/${news_id}`, formData
     );
   }
 }
