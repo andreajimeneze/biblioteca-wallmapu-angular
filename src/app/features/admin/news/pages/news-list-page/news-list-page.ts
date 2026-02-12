@@ -27,6 +27,7 @@ export class NewsListPage {
   private readonly defaultApiResponse = API_RESPONSE_PAGINATION_NEWS_LIST;
   private readonly items = signal(10);
   private readonly search = signal('');
+  private readonly refreshTrigger = signal(0);
 
   readonly currentPage = signal(1);
   readonly totalPages = signal<number>(1);
@@ -35,7 +36,8 @@ export class NewsListPage {
   private readonly params = computed(() => ({
     page: this.currentPage(),
     items: this.items(),
-    search: this.search()
+    search: this.search(),
+    refresh: this.refreshTrigger(),
   }));  
   
   private readonly newsSignal = toSignal(
@@ -79,10 +81,22 @@ export class NewsListPage {
   }
 
   refreshList() {
-   this.search.set('')
+    this.refreshTrigger.update(v => v + 1);
   }
 
   onCreate() {
     this.router.navigate([ROUTES.PROTECTED.ADMIN.NEWS, 'form']);
+  }
+
+  onDelete(item: NewsModel) {
+    this.loading.set(true);
+
+    this.newsService.delete(item.id_news).subscribe({
+      next: () => {
+        // volver a cargar datos
+        this.refreshTrigger.update(v => v + 1); // dispara recarga
+      },
+      error: err => console.error(err)
+    });
   }
 }

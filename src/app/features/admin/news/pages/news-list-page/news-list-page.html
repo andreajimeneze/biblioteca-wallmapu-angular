@@ -22,6 +22,7 @@
           viewMode="table" 
           [loading]="loading()" 
           [newsList]="newsResult().result.result"
+          (delete)="onDelete($event)"
         />
       } @else {
         <app-message-error-component [message]="newsResult().message"/>

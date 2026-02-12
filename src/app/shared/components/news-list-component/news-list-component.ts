@@ -1,4 +1,4 @@
-import { Component, input } from '@angular/core';
+import { Component, input, output } from '@angular/core';
 import { NewsCardComponent } from "@shared/components/news-card-component/news-card-component";
 import { NewsSkeletonComponent } from "@shared/components/news-skeleton-component/news-skeleton-component";
 import { NewsWithImagesModel } from '@core/models/news-model';
@@ -21,4 +21,5 @@ export class NewsListComponent {
   readonly newsList = input.required<NewsWithImagesModel[]>();
   readonly loading = input<boolean | null>(true);
   readonly viewMode = input<ViewMode>('card');
+  readonly delete = output<NewsWithImagesModel>();
 }

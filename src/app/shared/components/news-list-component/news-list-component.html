@@ -25,7 +25,10 @@
         <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Lista de Noticias</li>
       
         @for (news of newsList(); track news.id_news) {
-          <app-news-table-row-component [news]="news" />
+          <app-news-table-row-component 
+            [news]="news" 
+            (delete)="delete.emit($event)"
+          />
         }
       </ul>
     }
