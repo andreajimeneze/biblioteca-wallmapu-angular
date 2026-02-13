@@ -85,8 +85,8 @@ export class NewsFormPage {
     if (!trimmed.body) { return this.handleError(null, 'La descripción es obligatoria'); }
 
     // Validaciones de longitud según BD
-    if (trimmed.title.length > 45) { return this.handleError(null, 'El título no puede superar 45 caracteres'); }
-    if (trimmed.subtitle.length > 45) { return this.handleError(null, 'El subtítulo no puede superar 45 caracteres'); }
+    if (trimmed.title.length > 100) { return this.handleError(null, 'El título no puede superar 45 caracteres'); }
+    if (trimmed.subtitle.length > 256) { return this.handleError(null, 'El subtítulo no puede superar 45 caracteres'); }
 
     const payload: FormNewsModel = {
       id_news: this.isEditMode() ? this.news()!.id_news : 0,

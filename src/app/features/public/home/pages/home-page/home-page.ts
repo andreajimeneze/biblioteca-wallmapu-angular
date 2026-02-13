@@ -11,6 +11,7 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { API_RESPONSE_PAGINATION_NEWS_LIST } from '@shared/constants/default-api-result';
 import { AboutComponent } from "@shared/components/about-component/about-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
+import { NewsFeaturedComponent } from "@shared/components/news-featured-component/news-featured-component";
 
 @Component({
   selector: 'app-home-page',
@@ -21,18 +22,18 @@ import { PaginationComponent } from "@shared/components/pagination-component/pag
     NewsListComponent,
     MessageErrorComponent,
     AboutComponent,
-    PaginationComponent
+    PaginationComponent,
+    NewsFeaturedComponent
 ],
   templateUrl: './home-page.html',
 })
 export class HomePage {
   protected readonly ROUTES = ROUTES;
   private newsService = inject(NewsService);
-  
   private readonly defaultApiResponse = API_RESPONSE_PAGINATION_NEWS_LIST;
 
   private newsSignal = toSignal(
-    this.newsService.getAll(1,3,'').pipe(
+    this.newsService.getAll(1,4,'').pipe(
       catchError((err) => {
         console.error('Error cargando noticia:', err);
         return of(this.defaultApiResponse);
@@ -41,6 +42,18 @@ export class HomePage {
     { initialValue: undefined }
   );
 
+  // ✅ Noticia destacada
+  newsFeatured = computed(() => {
+    const newsResult = this.newsSignal() ?? this.defaultApiResponse;
+    return newsResult.result.result[0]; // solo la primera noticia
+  });
+
+  // ✅ Listado de noticias restantes
+  newsList = computed(() => {
+    const newsResult = this.newsSignal() ?? this.defaultApiResponse;
+    return newsResult.result.result.slice(1); // todas menos la primera
+  });
+  
   newsResult = computed(() => this.newsSignal() ?? this.defaultApiResponse);
   loading = computed(() => this.newsSignal() === undefined);  
 }

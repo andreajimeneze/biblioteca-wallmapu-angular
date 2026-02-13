@@ -12,7 +12,11 @@
   />
 
   @if (newsResult().isSuccess) {
-    <app-news-list-component [loading]="loading()" [newsList]="newsResult().result.result" />
+    <section class="p-4 pb-0">
+      <app-news-featured-component [loading]="loading()" [news]="newsFeatured()"/>
+    </section>
+  
+    <app-news-list-component [loading]="loading()" [newsList]="newsList()" />
   } @else {
     <app-message-error-component [message]="newsResult().message" />
   }

@@ -246,6 +246,7 @@ ng g c shared/components/message-success-component --skip-tests --style=none
 ng g c shared/components/navbar-component --skip-tests --style=none
 ng g c shared/components/news-card-component --skip-tests --style=none
 ng g c shared/components/news-details-component --skip-tests --style=none
+ng g c shared/components/news-featured-component --skip-tests --style=none
 ng g c shared/components/news-gallery-component --skip-tests --style=none
 ng g c shared/components/news-list-component --skip-tests --style=none
 ng g c shared/components/news-skeleton-component --skip-tests --style=none
