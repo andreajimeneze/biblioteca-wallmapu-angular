@@ -26,21 +26,9 @@ export const ROUTES = {
     }
   },
   PAGES: [
-    {
-      URI: "/",
-      NAME: "Inicio"
-    },
-    {
-      URI: "/library",
-      NAME: "Biblioteca"
-    },
-    {
-      URI: "/news",
-      NAME: "Noticias"
-    },
-    {
-      URI: "/test",
-      NAME: "Test"
-    }   
+    { URI: "/", NAME: "Inicio" },
+    { URI: "/library", NAME: "Biblioteca" },
+    { URI: "/news", NAME: "Noticias" },
+    { URI: "/test", NAME: "Test" }   
   ],
 }

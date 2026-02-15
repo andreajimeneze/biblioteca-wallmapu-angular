@@ -56,18 +56,6 @@ export const routes: Routes = [
   {
     path: 'user',
     component: UserLayout,
-    canActivate: [authGuard],
-    data: { roles: ['Lector']},
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('@features/user/dashboard/user-dashboard.routes').then(m => m.USER_DASHBOARD_ROUTES),        
-      },
-      {
-        path: 'profile',
-        loadChildren: () => import('@features/user/profile/user-profile.routes').then(m => m.USER_PROFILE_ROUTES),
-      }
-    ]
   },
   {
     path: '**',

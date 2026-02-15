@@ -57,10 +57,10 @@ export class AuthStore {
 
       switch(user.role) {
         case 'Lector':
-          navigateTo = user.profileComplete ? ROUTES.PROTECTED.USER.DASHBOARD : ROUTES.PROTECTED.USER.PROFILE ;
+          navigateTo = user.profileComplete ? ROUTES.PROTECTED.USER.DASHBOARD : ROUTES.PROTECTED.USER.PROFILE;
           break;
         case 'Admin':
-          navigateTo = user.profileComplete ? ROUTES.PROTECTED.ADMIN.DASHBOARD : ROUTES.PROTECTED.ADMIN.PROFILE ;
+          navigateTo = user.profileComplete ? ROUTES.PROTECTED.ADMIN.DASHBOARD : ROUTES.PROTECTED.ADMIN.PROFILE;
           break;
         default:
           navigateTo = ROUTES.HOME

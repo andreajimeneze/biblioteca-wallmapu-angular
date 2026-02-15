@@ -25,6 +25,16 @@ project
 │   │   │       └─ news-service.ts
 │   │   │
 │   │   ├─ features/
+│   │   │   ├─ user/
+│   │   │   │   ├─ models/
+│   │   │   │   │   └─ user-model.ts
+│   │   │   │   ├─ pages/
+│   │   │   │   │   ├─ user-edit.page/
+│   │   │   │   │   ├─ user-list.page/
+│   │   │   │   │   └─ user-profile.page/
+│   │   │   │   ├─ services/
+│   │   │   │   │   └─ user-service.ts
+│   │   │   │   └─ user.routes.ts
 │   │   │   ├─ admin/
 │   │   │   │   ├─ book/
 │   │   │   │   │   ├─ pages/
@@ -323,11 +333,16 @@ ng g interface features/admin/news/models/image-item
 ng g c features/admin/users/pages/users-list-page --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
-# FEATURES USER DASHBOARD
-ng g c features/user/dashboard/pages/dashboard-page --skip-tests --style=none
+# FEATURES USER
+ng g interface features/user/models/user-model
 
-# FEATURES USER PROFILE
-ng g c features/user/profile/pages/profile-page --skip-tests --style=none
+ng g s features/user/services/user-service --skip-tests
+
+ng g c features/user/pages/user-profile.page --skip-tests --style=none
+ng g c features/user/pages/user-list.page --skip-tests --style=none
+ng g c features/user/pages/user-edit.page --skip-tests --style=none
+
+ng g c features/user/components/user-card.page --skip-tests --style=none
 # ---------------------------------------------------------------------------------
 ```
 
