@@ -47,6 +47,10 @@ export const routes: Routes = [
         path: 'news',
         loadChildren: () => import('@features/admin/news/news.routes').then(m => m.NEWS_ROUTES),
       },
+      {
+        path: 'profile',
+        loadChildren: () => import('@features/admin/profile/profile.routes').then(m => m.PROFILE_ROUTES)
+      },
     ]
   },
   {

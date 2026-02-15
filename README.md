@@ -34,10 +34,16 @@ project
 │   │   │   │   │   ├─ pages/
 │   │   │   │   │   │   └─ dashboard-page/
 │   │   │   │   │   └─ dashboard.routes.ts
-│   │   │   │   └─ news/
+│   │   │   │   ├─ news/
+│   │   │   │   │   ├─ models/
+│   │   │   │   │   │   └─ image-item.ts
+│   │   │   │   │   ├─ pages/
+│   │   │   │   │   │   └─ news-page/
+│   │   │   │   │   └─ news.routes.ts
+│   │   │   │   └─ profile/
 │   │   │   │       ├─ pages/
-│   │   │   │       │   └─ news-page/
-│   │   │   │       └─ news.routes.ts
+│   │   │   │       │   └─ profile-page/
+│   │   │   │       └─ profile.routes.ts
 │   │   │   ├─ auth/
 │   │   │   │   ├─ components/
 │   │   │   │   │   └─ auth-button-component/
@@ -77,6 +83,14 @@ project
 │   │   │   │       │   └─ news-page/
 │   │   │   │       └─ news.routes.ts
 │   │   │   └─ user/
+│   │   │       ├─ dashboard/
+│   │   │       │   ├─ pages/
+│   │   │       │   │   └─ dashboard-page/
+│   │   │       │   └─ dashboard.routes.ts
+│   │   │       └─ profile/
+│   │   │           ├─ pages/
+│   │   │           │   └─ profile-page/
+│   │   │           └─ profile.routes.ts
 │   │   │
 │   │   ├─ layouts/
 │   │   │   ├─ admin-layout/  <- sin implementar
@@ -215,6 +229,8 @@ export class NavbarComponent {
 ## Components
 - Shortcut
 ```bash
+# ---------------------------------------------------------------------------------
+# CORE
 ng g guard core/guards/auth --skip-tests
 ng g s core/helpers/api-response-service --skip-tests
 ng g s core/services/book-service --skip-tests
@@ -228,10 +244,14 @@ ng g interface core/models/book-model
 ng g interceptor core/interceptors/auth --skip-tests
 ng g interceptor core/interceptors/error --skip-tests
 
+# ---------------------------------------------------------------------------------
+# LAYOUT
 ng g c layouts/public-layout --skip-tests --style=none
 ng g c layouts/user-layout --skip-tests --style=none
 ng g c layouts/admin-layout --skip-tests --style=none
 
+# ---------------------------------------------------------------------------------
+# SHARED
 ng g c shared/components/about-component --skip-tests --style=none
 ng g c shared/components/arrow-up-component --skip-tests --style=none
 ng g c shared/components/book-card-component --skip-tests --style=none
@@ -258,6 +278,8 @@ ng g c shared/components/section-header-component --skip-tests --style=none
 ng g c shared/pages/not-found-page --skip-tests --style=none
 ng g interface shared/models/navigation-model
 
+# ---------------------------------------------------------------------------------
+# FEATURES AUTH
 ng g interface features/auth/models/user
 ng g interface features/auth/models/user-google
 ng g interface features/auth/models/api-auth-request
@@ -270,27 +292,43 @@ ng g s features/auth/services/auth-google-service --skip-tests
 ng g c features/auth/components/auth-button-component --skip-tests --style=none
 ng g c features/auth/components/google-signin-component --skip-tests --style=none
 
+# ---------------------------------------------------------------------------------
+# FEATURES PUBLIC HOME 
 ng g c features/public/home/pages/home-page --skip-tests --style=none
 ng g c features/public/home/components/recommended-books-component --skip-tests --style=none
 
+# FEATURES PUBLIC LIBRARY
 ng g c features/public/library/pages/books-page --skip-tests --style=none
 ng g c features/public/library/pages/book-details-page --skip-tests --style=none
 ng g c features/public/library/components/book-list-component --skip-tests --style=none
 ng g c features/public/library/components/book-details-component --skip-tests --style=none
 
+# FEATURES PUBLIC NEWS
 ng g c features/public/news/pages/news-details-page --skip-tests --style=none
 ng g c features/public/news/pages/news-page --skip-tests --style=none
 
+# ---------------------------------------------------------------------------------
+# FEATURES ADMIN BOOK
 ng g c features/admin/book/pages/book-page --skip-tests --style=none
 
-ng g interface features/admin/news/models/image-item
+# FEATURES ADMIN PROFILE
+ng g c features/admin/profile/pages/profile-admin-page --skip-tests --style=none
+
+# FEATURES ADMIN NEWS
 ng g c features/admin/news/pages/news-list-page --skip-tests --style=none
 ng g c features/admin/news/pages/news-form-page --skip-tests --style=none
-ng g c features/admin/user/pages/user-panel-page --skip-tests --style=none
+ng g interface features/admin/news/models/image-item
 
+# FEATURES ADMIN USERS
+ng g c features/admin/users/pages/users-list-page --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
+# FEATURES USER DASHBOARD
 ng g c features/user/dashboard/pages/dashboard-page --skip-tests --style=none
-ng g c features/user/profile/pages/profile-page --skip-tests --style=none
 
+# FEATURES USER PROFILE
+ng g c features/user/profile/pages/profile-page --skip-tests --style=none
+# ---------------------------------------------------------------------------------
 ```
 
 ## To keep your Fork updated
