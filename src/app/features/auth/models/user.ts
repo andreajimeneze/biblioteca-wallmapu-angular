@@ -4,5 +4,5 @@ export interface User {
   name?: string,
   picture?: string,
   profileComplete: boolean,
-  user_role_id: number
+  role: string,
 }

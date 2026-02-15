@@ -23,7 +23,7 @@
       <li><a class="text-sm">{{ user()?.email }}</a></li>
       <li><hr class="my-1"></li>
       <li><a routerLink="/" class="text-sm">⚙️ Inicio</a></li>
-      <li><a routerLink="/user" class="text-sm">⚙️ Panel</a></li>
+      <li><a [routerLink]="navigateTo()" class="text-sm">⚙️ Panel</a></li>
       <li><hr class="my-1"></li>
       <li>
         <button 

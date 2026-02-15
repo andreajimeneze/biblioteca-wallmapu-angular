@@ -215,6 +215,7 @@ export class NavbarComponent {
 ## Components
 - Shortcut
 ```bash
+ng g guard core/guards/auth --skip-tests
 ng g s core/helpers/api-response-service --skip-tests
 ng g s core/services/book-service --skip-tests
 ng g s core/services/news-service --skip-tests

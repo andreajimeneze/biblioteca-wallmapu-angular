@@ -6,6 +6,7 @@ import { User } from '@features/auth/models/user';
 import { ApiAuthGoogleRequest } from '@features/auth/models/api-auth-google-request';
 import { ApiAuthGoogleResponse } from '@features/auth/models/api-auth-google-response';
 import { firstValueFrom } from 'rxjs';
+import { ROUTES } from '@shared/constants/routes';
 
 @Injectable({
   providedIn: 'root',
@@ -30,13 +31,13 @@ export class AuthStore {
   }
 
    // 🔹 Login principal
-   async login(): Promise<void> {
+  async login(): Promise<void> {
     try {
       this.isLoading.set(true);
 
       // 1️⃣ Obtener access_token de Google
       const googleToken = await this.googleAuth.getAccessToken();
-
+      
       // 2️⃣ Enviar token al backend
       const request: ApiAuthGoogleRequest = { googleToken };
       const response: ApiAuthGoogleResponse = await firstValueFrom(
@@ -52,11 +53,20 @@ export class AuthStore {
       localStorage.setItem('user', JSON.stringify(user));
 
       // 5️⃣ Redirigir según profileComplete
-      if (!user.profileComplete) {
-        this.router.navigate(['/user/profile']);
-      } else {
-        this.router.navigate(['/']);
+      let navigateTo = '';
+
+      switch(user.role) {
+        case 'Lector':
+          navigateTo = user.profileComplete ? ROUTES.PROTECTED.USER.DASHBOARD : ROUTES.PROTECTED.USER.PROFILE ;
+          break;
+        case 'Admin':
+          navigateTo = user.profileComplete ? ROUTES.PROTECTED.ADMIN.DASHBOARD : ROUTES.PROTECTED.ADMIN.PROFILE ;
+          break;
+        default:
+          navigateTo = ROUTES.HOME
       }
+
+      this.router.navigate([navigateTo]);
     } catch (error: any) {
       console.error('Error en login:', error);
       alert(error?.message || 'Error al iniciar sesión. Intenta nuevamente.');
@@ -70,6 +80,6 @@ export class AuthStore {
     this.currentUser.set(null);
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    this.router.navigate(['/']);
+    this.router.navigate([ROUTES.HOME]);
   }
 }

@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '@core/guards/auth-guard';
 import { AdminLayout } from '@layouts/admin-layout/admin-layout';
 import { PublicLayout } from '@layouts/public-layout/public-layout';
 import { UserLayout } from '@layouts/user-layout/user-layout';
@@ -31,6 +32,8 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayout,
+    canActivate: [authGuard],
+    data: { roles: ['Admin']},
     children: [
       {
         path: '',
@@ -49,6 +52,8 @@ export const routes: Routes = [
   {
     path: 'user',
     component: UserLayout,
+    canActivate: [authGuard],
+    data: { roles: ['Lector']},
     children: [
       {
         path: '',
