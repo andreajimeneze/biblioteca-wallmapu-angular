@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { authGuard } from '@core/guards/auth-guard';
 import { AdminLayout } from '@layouts/admin-layout/admin-layout';
 import { PublicLayout } from '@layouts/public-layout/public-layout';
 import { UserLayout } from '@layouts/user-layout/user-layout';
@@ -31,6 +32,8 @@ export const routes: Routes = [
   {
     path: 'admin',
     component: AdminLayout,
+    canActivate: [authGuard],
+    data: { roles: ['Admin']},
     children: [
       {
         path: '',
@@ -44,21 +47,15 @@ export const routes: Routes = [
         path: 'news',
         loadChildren: () => import('@features/admin/news/news.routes').then(m => m.NEWS_ROUTES),
       },
+      {
+        path: 'profile',
+        loadChildren: () => import('@features/admin/profile/profile.routes').then(m => m.PROFILE_ROUTES)
+      },
     ]
   },
   {
     path: 'user',
     component: UserLayout,
-    children: [
-      {
-        path: '',
-        loadChildren: () => import('@features/user/dashboard/user-dashboard.routes').then(m => m.USER_DASHBOARD_ROUTES),        
-      },
-      {
-        path: 'profile',
-        loadChildren: () => import('@features/user/profile/user-profile.routes').then(m => m.USER_PROFILE_ROUTES),
-      }
-    ]
   },
   {
     path: '**',

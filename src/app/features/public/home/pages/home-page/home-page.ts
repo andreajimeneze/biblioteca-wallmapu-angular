@@ -36,7 +36,12 @@ export class HomePage {
     this.newsService.getAll(1,4,'').pipe(
       catchError((err) => {
         console.error('Error cargando noticia:', err);
-        return of(this.defaultApiResponse);
+        return of({
+          ...this.defaultApiResponse,
+          isSuccess: false,
+          statusCode: 500,
+          message: err?.message || String(err)
+        });
       })
     ),
     { initialValue: undefined }
