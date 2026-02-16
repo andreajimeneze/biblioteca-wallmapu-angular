@@ -45,7 +45,7 @@ export class AuthStore {
       ).then(res => res.result);
 
       // 3️⃣ Guardar JWT
-      localStorage.setItem('token', response.token);
+      localStorage.setItem('jwt_token', response.token);
 
       // 4️⃣ Guardar usuario
       const user: User = response.user;
@@ -79,7 +79,7 @@ export class AuthStore {
   logout(): void {
     this.currentUser.set(null);
     localStorage.removeItem('user');
-    localStorage.removeItem('token');
+    localStorage.removeItem('jwt_token');
     this.router.navigate([ROUTES.HOME]);
   }
 }
