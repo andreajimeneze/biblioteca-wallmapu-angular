@@ -348,6 +348,30 @@ ng g interface features/admin/news/models/image-item
 ng g c features/admin/users/pages/users-list-page --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
+# FEATURES USER ROL
+ng g interface features/user-role/models/user-role-model
+
+ng g s features/user-role/services/user-role-service --skip-tests
+
+ng g c features/user-role/components/user-role-select-components --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
+# FEATURES USER STATUS
+ng g interface features/user-status/models/user-status-model
+
+ng g s features/user-status/services/user-status-service --skip-tests
+
+ng g c features/user-status/components/user-status-select-components --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
+# FEATURES COMMUNE
+ng g interface features/commune/models/commune-model
+
+ng g s features/commune/services/commune-service --skip-tests
+
+ng g c features/commune/components/commune-select-components --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
 # FEATURES USER
 ng g interface features/user/models/user-model
 
@@ -357,7 +381,8 @@ ng g c features/user/pages/user-profile.page --skip-tests --style=none
 ng g c features/user/pages/user-list.page --skip-tests --style=none
 ng g c features/user/pages/user-edit.page --skip-tests --style=none
 
-ng g c features/user/components/user-card.page --skip-tests --style=none
+ng g c features/user/components/user-card-components --skip-tests --style=none
+
 # ---------------------------------------------------------------------------------
 ```
 

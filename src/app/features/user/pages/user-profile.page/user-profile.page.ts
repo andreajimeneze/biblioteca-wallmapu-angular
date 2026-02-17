@@ -3,12 +3,13 @@ import { toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { UserService } from '@features/user/services/user-service';
 import { catchError, finalize, of, switchMap, tap } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { CommonModule, DatePipe, NgOptimizedImage } from '@angular/common';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { UserModel } from '@features/user/models/user-model';
 import { AuthStore } from '@features/auth/services/auth-store';
 import { AuthUser } from '@features/auth/models/auth-user';
+import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
 
 @Component({
   selector: 'app-user-profile.page',
@@ -17,7 +18,9 @@ import { AuthUser } from '@features/auth/models/auth-user';
     LoadingComponent,
     MessageErrorComponent,
     SectionHeaderComponent,
-    NgOptimizedImage
+    NgOptimizedImage,
+    DatePipe,
+    CommuneSelectComponents
 ],
   templateUrl: './user-profile.page.html',
 })
@@ -61,6 +64,8 @@ export class UserProfilePage {
   readonly formData = signal<Partial<UserModel>>({
     name: this.userResult()?.result?.name ?? '',
     lastname: this.userResult()?.result?.lastname ?? '',
+    rut: this.userResult()?.result?.rut ?? '',
+    address: this.userResult()?.result?.address ?? '',
     phone: this.userResult()?.result?.phone ?? ''
   });
 
@@ -69,6 +74,8 @@ export class UserProfilePage {
 
   protected updateName(value: string) { this.updateField('name', value); }
   protected updateLastname(value: string) { this.updateField('lastname', value); }
+  protected updateRut(value: string) { this.updateField('rut', value); }
+  protected updateAddress(value: string) { this.updateField('address', value); }
   protected updatePhone(value: string) { this.updateField('phone', value); }
   
   private updateField<K extends keyof UserModel>(key: K, value: string) {
@@ -83,6 +90,8 @@ export class UserProfilePage {
       this.formData.set({
         name: result.result.name ?? '',
         lastname: result.result.lastname ?? '',
+        rut: result.result.rut ?? '',
+        address: result.result.address ?? '',
         phone: result.result.phone ?? ''
       });
     }

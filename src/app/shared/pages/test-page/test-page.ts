@@ -10,6 +10,9 @@ import { catchError, of } from 'rxjs';
 import { AuthButtonComponent } from "@features/auth/components/auth-button-component/auth-button-component";
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { UserStatusSelectComponents } from "@features/user-status/components/user-status-select-components/user-status-select-components";
+import { UserRoleSelectComponents } from "@features/user-role/components/user-role-select-components/user-role-select-components";
+import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
 
 @Component({
   selector: 'app-test-page',
@@ -21,6 +24,9 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
     AuthButtonComponent,
     SectionHeaderComponent,
     LoadingComponent,
+    UserStatusSelectComponents,
+    UserRoleSelectComponents,
+    CommuneSelectComponents
 ],
   templateUrl: './test-page.html',
 })

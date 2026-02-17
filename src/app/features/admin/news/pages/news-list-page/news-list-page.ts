@@ -49,11 +49,7 @@ export class NewsListPage {
     toObservable(this.params).pipe( 
       tap(() => this.loading.set(true)),
       switchMap(params => 
-        this.newsService.getAll(
-          params.page,
-          params.items,
-          params.search
-        ).pipe(
+        this.newsService.getAll(params.page, params.items, params.search).pipe(
           tap(result => this.totalPages.set(result.result.pages || 1)),
           catchError(err => {
             console.error('Error cargando noticia:', err);
