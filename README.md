@@ -377,11 +377,10 @@ ng g interface features/user/models/user-model
 
 ng g s features/user/services/user-service --skip-tests
 
-ng g c features/user/pages/user-profile.page --skip-tests --style=none
 ng g c features/user/pages/user-list.page --skip-tests --style=none
-ng g c features/user/pages/user-edit.page --skip-tests --style=none
+ng g c features/user/pages/user-profile.page --skip-tests --style=none
 
-ng g c features/user/components/user-card-components --skip-tests --style=none
+ng g c features/user/components/user-form-components --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
 ```

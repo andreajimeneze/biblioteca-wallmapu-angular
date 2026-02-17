@@ -10,6 +10,7 @@ import { UserModel } from '@features/user/models/user-model';
 import { AuthStore } from '@features/auth/services/auth-store';
 import { AuthUser } from '@features/auth/models/auth-user';
 import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
+import { UserFormComponents } from "@features/user/components/user-form-components/user-form-components";
 
 @Component({
   selector: 'app-user-profile.page',
@@ -20,7 +21,8 @@ import { CommuneSelectComponents } from "@features/commune/components/commune-se
     SectionHeaderComponent,
     NgOptimizedImage,
     DatePipe,
-    CommuneSelectComponents
+    CommuneSelectComponents,
+    UserFormComponents
 ],
   templateUrl: './user-profile.page.html',
 })

@@ -1,3 +1,5 @@
+<app-user-form-components [loading]="loading()" [user]="userResult()?.result!" [authUser]="authUser()!"/>
+
 <app-section-header-component
   title="Perfil" 
   routeText="Volver"
@@ -112,3 +114,4 @@
 
 <pre>{{ authUser() | json }}</pre>
 <pre>{{ userResult() | json }}</pre>
+

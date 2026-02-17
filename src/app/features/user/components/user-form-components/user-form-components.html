@@ -1,0 +1,109 @@
+@if (loading()) {
+  <div class="flex max-w-2xl flex-col gap-4">
+    <div class="flex items-center gap-4">
+      <div class="skeleton h-28 w-28 shrink-0 rounded-full m-4 bg-my-light/50"></div>
+
+      <div class="flex flex-col gap-4 w-full">
+        <div class="skeleton h-4 w-1/2 bg-my-light/50"></div>
+        <div class="skeleton h-4 w-full bg-my-light/50"></div>
+        <div class="skeleton h-4 w-full bg-my-light/50"></div>
+      </div>
+    </div>
+
+    <div class="skeleton h-96 w-full bg-my-light/50"></div>
+  </div>
+} @else {
+
+  <!-- Formulario -->
+  <div class="w-full max-w-2xl">
+    <form 
+      (submit)="onSubmit($event)"
+      class="fieldset bg-my-light rounded-box border p-6 flex flex-col gap-4">
+      
+      <section class="flex gap-4 flex-wrap">
+        <img [ngSrc]="authUser().picture || 'images/book.png'" [alt]="authUser().name" width="100" height="100" class="rounded-full" priority>
+        <div class="grid w-md">
+          <input [value]="'Rol: ' + authUser().role" type="text" placeholder="Sin Rol" class="text-my-purple font-bold" disabled />
+          <input [value]="'ID: ' + authUser().id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="(user().created_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Creado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="(user().updated_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Modificado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="user().email" type="text" placeholder="Sin Email" class="text-my-purple text-xl font-bold" disabled />
+        </div>
+      </section>
+  
+      <input [value]="'Estado: ' + user().user_status_id" type="text" placeholder="Estado" class="text-my-purple text-xl" disabled />
+
+      <fieldset class="fieldset flex flex-col">
+        <label class="label font-semibold mb-1">Teléfono</label>
+        <div class="flex">
+          <input value="+ 56" type="text" class="text-my-purple text-base w-12 text-center" disabled />
+          <div>
+            <input 
+              #phoneInput
+              type="text" class="input validator" placeholder="987654321" required
+              [value]="formData().phone"
+              (input)="updatePhone($any($event.target).value, phoneInput)"
+            />
+            <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+          </div>
+        </div>
+      </fieldset>
+      
+      <fieldset class="fieldset flex flex-col">
+        <label class="label font-semibold mb-1">Nombre</label>
+        <input 
+          type="text" class="input validator w-full" placeholder="Nombre" required 
+          [value]="formData().name"
+          (input)="updateName($any($event.target).value)"
+        />
+        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+      </fieldset>
+      
+      <fieldset class="fieldset flex flex-col">
+        <label class="label font-semibold mb-1">Apellido</label>
+        <input 
+          type="text" class="input validator w-full" placeholder="Apellido" required
+          [value]="formData().lastname"
+          (input)="updateLastname($any($event.target).value)"
+        />
+        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+      </fieldset>
+
+      <fieldset class="fieldset flex flex-col">
+        <label class="label font-semibold mb-1">Rut</label>
+        <input 
+          type="text" class="input validator w-full" placeholder="12345678-9" required
+          [value]="formData().rut"
+          (input)="updateRut($any($event.target).value)"
+        />
+        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+      </fieldset>
+      
+      <fieldset class="fieldset flex flex-col">
+        <label class="label font-semibold mb-1">Dirección</label>
+        <input 
+          type="text" class="input validator w-full" placeholder="Dirección" required
+          [value]="formData().address"
+          (input)="updateAddress($any($event.target).value)"
+        />
+        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+      </fieldset>
+
+      <fieldset class="fieldset flex flex-col">
+        <label class="label font-semibold mb-1">Comuna</label>
+        <app-commune-select-components/>
+        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+      </fieldset>
+
+      @if (errorMessage()) {
+        <app-message-error-component [message]="errorMessage()"/>
+      }
+
+      <!-- Botón de envío -->
+      <button class="btn bg-my-purple text-my-light mt-4 self-start px-6 py-2 rounded-lg font-semibold" type="submit">
+        Modificar
+      </button>
+    </form>
+  </div>
+
+}
