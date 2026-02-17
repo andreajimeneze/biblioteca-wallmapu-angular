@@ -20,7 +20,7 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
     MessageSuccessComponent,
     AuthButtonComponent,
     SectionHeaderComponent,
-    LoadingComponent
+    LoadingComponent,
 ],
   templateUrl: './test-page.html',
 })

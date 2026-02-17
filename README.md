@@ -35,6 +35,18 @@ project
 │   │   │   │   ├─ services/
 │   │   │   │   │   └─ user-service.ts
 │   │   │   │   └─ user.routes.ts
+│   │   │   ├─ auth/
+│   │   │   │   ├─ components/
+│   │   │   │   │   └─ auth-button-component/
+│   │   │   │   ├─ models/
+│   │   │   │   │   ├─ api-auth-request.ts
+│   │   │   │   │   ├─ api-auth-response.ts
+│   │   │   │   │   ├─ user-google.ts
+│   │   │   │   │   └─ user.ts
+│   │   │   │   └─ services/
+│   │   │   │       ├─ auth-google-service.ts
+│   │   │   │       ├─ auth-service.ts
+│   │   │   │       └─ auth-store.ts
 │   │   │   ├─ admin/
 │   │   │   │   ├─ book/
 │   │   │   │   │   ├─ pages/
@@ -93,14 +105,15 @@ project
 │   │   │   │       │   └─ news-page/
 │   │   │   │       └─ news.routes.ts
 │   │   │   └─ user/
-│   │   │       ├─ dashboard/
-│   │   │       │   ├─ pages/
-│   │   │       │   │   └─ dashboard-page/
-│   │   │       │   └─ dashboard.routes.ts
-│   │   │       └─ profile/
-│   │   │           ├─ pages/
-│   │   │           │   └─ profile-page/
-│   │   │           └─ profile.routes.ts
+│   │   │       ├─ models/
+│   │   │       │   └─ user-model.ts
+│   │   │       ├─ pages/
+│   │   │       │   ├─ user-edit.page/
+│   │   │       │   ├─ user-list.page/
+│   │   │       │   └─ user-profile.page/
+│   │   │       ├─ services/
+│   │   │       │   └─ user-service.ts
+│   │   │       └─ user.routes.ts
 │   │   │
 │   │   ├─ layouts/
 │   │   │   ├─ admin-layout/  <- sin implementar
@@ -246,6 +259,7 @@ ng g s core/helpers/api-response-service --skip-tests
 ng g s core/services/book-service --skip-tests
 ng g s core/services/news-service --skip-tests
 ng g s core/services/news-gallery-service --skip-tests
+ng g s core/services/error-modal-service --skip-tests
 ng g interface core/models/api-response-model
 ng g interface core/models/pagination-model
 ng g interface core/models/news-gallery-model
@@ -274,6 +288,7 @@ ng g c shared/components/loading-component --skip-tests --style=none
 ng g c shared/components/message-error-component --skip-tests --style=none
 ng g c shared/components/message-success-component --skip-tests --style=none
 ng g c shared/components/modal-delete-component --skip-tests --style=none
+ng g c shared/components/modal-error-component --skip-tests --style=none
 ng g c shared/components/modal-image-component --skip-tests --style=none
 ng g c shared/components/navbar-component --skip-tests --style=none
 ng g c shared/components/news-card-component --skip-tests --style=none

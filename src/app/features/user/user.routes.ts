@@ -11,7 +11,7 @@ export const USER_ROUTES: Routes = [
     data: { roles: ['Admin', 'Lector'] },
   },
   {
-    path: 'profile/:id',
+    path: 'profile',
     component: UserProfilePage,
     canActivate: [authGuard],
     data: { roles: ['Admin', 'Lector']},

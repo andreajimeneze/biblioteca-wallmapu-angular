@@ -2,7 +2,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthGoogleService } from '@features/auth/services/auth-google-service';
 import { AuthService } from '@features/auth/services/auth-service';
-import { User } from '@features/auth/models/user';
+import { AuthUser } from '@features/auth/models/auth-user';
 import { ApiAuthGoogleRequest } from '@features/auth/models/api-auth-google-request';
 import { ApiAuthGoogleResponse } from '@features/auth/models/api-auth-google-response';
 import { firstValueFrom } from 'rxjs';
@@ -17,7 +17,7 @@ export class AuthStore {
   private apiAuth = inject(AuthService);
   
   // 🔹 Signals internas
-  private currentUser = signal<User | null>(this.getStoredUser());
+  private currentUser = signal<AuthUser | null>(this.getStoredUser());
   private isLoading = signal(false);
 
   // 🔹 Signals públicas
@@ -25,7 +25,7 @@ export class AuthStore {
   isAuthenticated = computed(() => !!this.currentUser());
   loading = computed(() => this.isLoading());
 
-  private getStoredUser(): User | null {
+  private getStoredUser(): AuthUser | null {
     const saved = localStorage.getItem('user');
     return saved ? JSON.parse(saved) : null;
   }
@@ -48,7 +48,7 @@ export class AuthStore {
       localStorage.setItem('jwt_token', response.token);
 
       // 4️⃣ Guardar usuario
-      const user: User = response.user;
+      const user: AuthUser = response.user;
       this.currentUser.set(user);
       localStorage.setItem('user', JSON.stringify(user));
 

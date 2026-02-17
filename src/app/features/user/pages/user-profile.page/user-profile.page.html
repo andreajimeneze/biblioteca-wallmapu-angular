@@ -1,1 +1,75 @@
-<p>user-profile.page works!</p>
+<app-section-header-component
+  title="Perfil" 
+  routeText="Volver"
+/>
+
+@if (loading()) {
+  <app-loading-component/>
+} @else {
+  @if (!userResult()?.isSuccess) {
+    <div class="ps-4">
+      <app-message-error-component [message]="userResult()?.message"/>
+    </div>
+  }
+}
+
+@if (formErrorMessage()) {
+  <div class="mt-4">
+    <app-message-error-component [message]="formErrorMessage()"/>
+  </div>
+}
+
+<!-- Formulario -->
+<div class="w-full max-w-2xl m-auto p-4">
+  <form 
+    (submit)="onSubmit($event)"
+    class="fieldset bg-my-light rounded-box border p-6 flex flex-col gap-4">
+    
+    <section class="flex gap-4 flex-wrap">
+      <img [ngSrc]="authUser()?.picture || 'images/book.png'" [alt]="authUser()?.name" width="100" height="100">
+      <div class="grid">
+        <input [value]="'Rol: ' + authUser()?.role" type="text" placeholder="Id Usuario" class="text-my-purple text-md font-bold" disabled />
+        <input [value]="'ID: ' + authUser()?.id_user"  type="text" placeholder="Id Usuario" class="text-my-purple text-md font-bold" disabled />
+        <input [value]="'Email: ' + authUser()?.email" type="text" placeholder="Id Usuario" class="text-my-purple text-xl" disabled />
+      </div>
+    </section>
+ 
+    <fieldset class="fieldset flex flex-col">
+      <label class="label font-semibold mb-1">Nombre</label>
+      <input 
+        type="text" class="input validator w-full" placeholder="Nombre" required 
+        [value]="formData().name"
+        (input)="updateName($any($event.target).value)"
+      />
+      <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+    </fieldset>
+    
+    <fieldset class="fieldset flex flex-col">
+      <label class="label font-semibold mb-1">Apellido</label>
+      <input 
+        type="text" class="input validator w-full" placeholder="Apellido" required
+        [value]="formData().lastname"
+        (input)="updateLastname($any($event.target).value)"
+      />
+      <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+    </fieldset>
+    
+    <fieldset class="fieldset flex flex-col">
+      <label class="label font-semibold">Descripción</label>
+      <textarea 
+        class="textarea validator mt-2 w-full min-h-56" placeholder="Descripción" required
+        [value]="formData().phone"
+        (input)="updatePhone($any($event.target).value)"
+      ></textarea>
+      <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+    </fieldset>
+                
+    <!-- Botón de envío -->
+    <button class="btn bg-my-purple text-my-light mt-4 self-start px-6 py-2 rounded-lg font-semibold" type="submit">
+      Modificar
+    </button>
+  </form>
+</div>
+
+<pre>{{ authUser() | json }}</pre>
+<pre>{{ userResult() | json }}</pre>
