@@ -1,0 +1,24 @@
+@if (isOpen()) {
+  <div class="modal modal-open bg-my-dark/70 text-my-pink" role="dialog">
+    <div class="modal-box max-w-md relative">
+
+      <h3 class="font-bold text-lg text-error">
+        Error {{ statusCode() }}
+      </h3>
+
+      <p class="py-4 wrap-break-word text-my-dark">
+        {{ message() }}
+      </p>
+
+      <div class="modal-action">
+        <button 
+          (click)="close()"
+          class="btn bg-my-pink hover:bg-my-pink/80 text-my-light"
+        >
+          Cerrar
+        </button>
+      </div>
+
+    </div>
+  </div>
+}

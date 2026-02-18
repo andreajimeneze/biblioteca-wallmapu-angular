@@ -49,7 +49,7 @@ export const routes: Routes = [
       },
       {
         path: 'profile',
-        loadChildren: () => import('@features/admin/profile/profile.routes').then(m => m.PROFILE_ROUTES)
+        loadChildren: () => import('@features/user/user.routes').then(m => m.USER_ROUTES)
       },
     ]
   },

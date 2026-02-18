@@ -4,6 +4,7 @@ import { provideRouter, withInMemoryScrolling, withViewTransitions } from '@angu
 import { routes } from './app.routes';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth-interceptor';
+import { errorInterceptor } from '@core/interceptors/error-interceptor';
 //import { provideCloudinaryLoader } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {
@@ -16,7 +17,8 @@ export const appConfig: ApplicationConfig = {
       //withRouterConfig({onSameUrlNavigation: 'reload'}),
     ),
     provideHttpClient(withInterceptors([
-      authInterceptor
+      authInterceptor,
+      errorInterceptor,
     ])),
     //provideCloudinaryLoader('https://res.cloudinary.com/dsvkbe0mc')
   ]

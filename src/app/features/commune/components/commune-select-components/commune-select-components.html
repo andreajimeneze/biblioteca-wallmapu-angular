@@ -1,0 +1,64 @@
+<!-- commune-select-components.html -->
+@if (loading()) {
+  <app-loading-component/>
+} @else {
+  @if (communeResult()?.isSuccess) {
+
+    <div class="dropdown " [class.dropdown-open]="isOpen()">
+
+      <!-- Input -->
+      <label class="input input-bordered flex items-center gap-2 w-full">
+        <svg class="w-4 h-4 text-base-content/50 shrink-0" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"/>
+        </svg>
+
+        <input
+          #searchInput
+          type="text"
+          class="grow"
+          [placeholder]="selected() ? selected()!.commune : 'Buscar comuna...'"
+          [value]="searchTerm()"
+          (input)="onSearch($any($event.target).value)"
+          (focus)="isOpen.set(true)"
+          (blur)="onBlur()"
+        />
+
+        @if (selected()) {
+          <button class="btn btn-ghost btn-xs btn-circle" (mousedown)="clear($event)">✕</button>
+        }
+      </label>
+
+      <!-- Lista -->
+      <ul class="dropdown-content menu bg-base-100 rounded-box z-50 w-full shadow-lg
+                 border border-base-300 max-h-60 overflow-y-auto flex-nowrap p-0 mt-1">
+
+        @if (filtered().length === 0) {
+          <li>
+            <span class="text-base-content/50 text-sm py-3 justify-center pointer-events-none">
+              Sin resultados para "{{ searchTerm() }}"
+            </span>
+          </li>
+        }
+
+        @for (item of filtered(); track item.id_commune) {
+          <li>
+            <button
+              type="button"
+              class="rounded-none"
+              [class.active]="selected()?.id_commune === item.id_commune"
+              (mousedown)="select(item, $event)"
+              [innerHTML]="highlight(item.commune)"
+            >
+            </button>
+          </li>
+        }
+
+      </ul>
+    </div>
+
+  } @else {
+    <app-message-error-component [message]="communeResult()?.message || 'Error cargando comunas'"/>
+  }
+}

@@ -47,6 +47,12 @@
   <app-message-error-component message="Mensaje de Error"/>
 </section>
 
+<section class="p-4">
+  <app-user-status-select-components/>
+  <app-user-role-select-components/>
+  <app-commune-select-components/>
+</section>
+
 <div class="container mx-auto py-8 px-4 flex gap-4 flex-wrap">
   @if (loading()) {
     <span class="loading loading-spinner loading-lg"></span>

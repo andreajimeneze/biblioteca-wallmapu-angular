@@ -1,6 +1,6 @@
-import { User } from "./user";
+import { AuthUser } from "./auth-user";
 
 export interface ApiAuthGoogleResponse {
   token: string,
-  user: User
+  user: AuthUser
 }
