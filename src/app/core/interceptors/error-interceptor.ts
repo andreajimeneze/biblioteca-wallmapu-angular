@@ -7,9 +7,10 @@ import { catchError, throwError } from 'rxjs';
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const modalService = inject(ErrorModalService);
   const authStore = inject(AuthStore);
-  
+
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+
       let statusCode = error.status;
       let message = 'Error inesperado';
 
@@ -23,10 +24,10 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
       if (statusCode === 401) {
         modalService.openError(401, 'Tu sesión ha expirado. Serás redirigido al inicio.');
         
-        //setTimeout(() => {
-        //  modalService.close();
-        //  authStore.logout();
-        //}, 3000); // 3 segundos para que el usuario lea el mensaje
+        setTimeout(() => {
+          modalService.close();
+          authStore.logout();
+        }, 3000); // 3 segundos para que el usuario lea el mensaje
 
         return throwError(() => error);
       }
