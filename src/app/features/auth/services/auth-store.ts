@@ -60,7 +60,7 @@ export class AuthStore {
           navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.USER.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.USER.PROFILE;
           break;
         case 'Admin':
-          navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE;
+          navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT;
           break;
         default:
           navigateTo = ROUTES_CONSTANTS.HOME

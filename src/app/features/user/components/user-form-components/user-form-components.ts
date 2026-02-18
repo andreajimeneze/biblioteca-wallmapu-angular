@@ -16,10 +16,11 @@ import { DatePipe, NgOptimizedImage } from '@angular/common';
   templateUrl: './user-form-components.html',
 })
 export class UserFormComponents {
+  readonly user = input<UserModel | null>(null);
+  readonly authUser = input<AuthUser | null>(null)
+  readonly loading = input<boolean>(true);  
   readonly formSubmit = output<Partial<UserModel>>();
-  readonly user = input.required<UserModel>();
-  readonly authUser = input.required<AuthUser>()
-  readonly loading = input<boolean>(true);
+
   readonly errorMessage = signal<string | null>(null);
 
   /* -- Form data ----------------------------------------- */

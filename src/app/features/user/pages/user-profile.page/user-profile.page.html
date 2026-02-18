@@ -1,9 +1,9 @@
-<app-user-form-components [loading]="loading()" [user]="userResult()?.result!" [authUser]="authUser()!"/>
-
 <app-section-header-component
   title="Perfil" 
   routeText="Volver"
 />
+
+<app-user-form-components [loading]="loading()" [user]="userResult()?.result!" [authUser]="authUser()!"/>
 
 @if (loading()) {
   <section class="p-4 flex justify-center">

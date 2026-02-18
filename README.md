@@ -383,8 +383,10 @@ ng g c features/commune/components/commune-select-components --skip-tests --styl
 # FEATURES USER
 ng g interface features/user/models/user-model
 
+ng g s features/user/services/user-feature-service --skip-tests
 ng g s features/user/services/user-service --skip-tests
 
+ng g c features/user/pages/user-form.page --skip-tests --style=none
 ng g c features/user/pages/user-list.page --skip-tests --style=none
 ng g c features/user/pages/user-profile.page --skip-tests --style=none
 

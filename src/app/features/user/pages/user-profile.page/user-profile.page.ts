@@ -11,6 +11,7 @@ import { AuthStore } from '@features/auth/services/auth-store';
 import { AuthUser } from '@features/auth/models/auth-user';
 import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
 import { UserFormComponents } from "@features/user/components/user-form-components/user-form-components";
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 
 @Component({
   selector: 'app-user-profile.page',
@@ -22,11 +23,12 @@ import { UserFormComponents } from "@features/user/components/user-form-componen
     NgOptimizedImage,
     DatePipe,
     CommuneSelectComponents,
-    UserFormComponents
+    UserFormComponents,
 ],
   templateUrl: './user-profile.page.html',
 })
 export class UserProfilePage {
+  ROUTES_CONSTANTS=ROUTES_CONSTANTS
   private readonly authStore = inject(AuthStore);
   private readonly userService = inject(UserService);
 

@@ -1,0 +1,17 @@
+
+<app-section-header-component 
+  title="Modificar Perfil"
+  routeText="Volver a Perfil"
+  [route]=ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT
+/>
+
+<section class="p-4 flex justify-center">
+
+  <app-user-form-components 
+    [user]="userResult().user"
+    [authUser]="userResult().authUser"
+    [loading]="isLoading()"
+    (formSubmit)="onUserFormSubmit($event)"
+  />
+
+</section>

@@ -24,7 +24,7 @@ export class CommuneSelectComponents {
   ///>
 
   readonly communeSelected = output<number | null>();
-  readonly communeId = input<number | null>(null);
+  readonly communeId = input<number>();
 
   private readonly communeService = inject(CommuneService);
   readonly loading = signal(true);

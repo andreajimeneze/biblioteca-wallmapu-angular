@@ -1,1 +1,10 @@
-<p>user-list.page works!</p>
+<app-section-header-component 
+  title="Perfil"
+  routeText="Modificar Perfil"
+  [route]=ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.FORM
+/>
+
+<pre>{{ userResult().user | json }}</pre>
+<pre>{{ userResult().authUser | json }}</pre>
+<pre>{{ userResult().userRole | json }}</pre>
+<pre>{{ userResult().userStatus | json }}</pre>

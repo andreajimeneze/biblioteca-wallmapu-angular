@@ -22,7 +22,10 @@ export const ROUTES_CONSTANTS = {
       BOOKS: '/admin/books',
       NEWS: '/admin/news',
       USERS: '/admin/users',
-      PROFILE: '/admin/profile',
+      PROFILE: {
+        ROOT: '/admin/profile',
+        FORM: '/admin/profile/form'
+      },
       SETTINGS: '/admin/settings',
     }
   },
