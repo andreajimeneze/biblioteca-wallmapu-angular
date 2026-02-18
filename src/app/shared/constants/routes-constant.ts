@@ -1,5 +1,6 @@
-export const ROUTES = {
+export const ROUTES_CONSTANTS = {
   HOME: '/',
+  FORBIDDEN: '/forbidden',
   LIBRARY: {
     BASE: '/library',
     BOOKS: '/library/books',    

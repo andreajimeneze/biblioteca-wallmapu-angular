@@ -9,7 +9,7 @@ import { NewsListComponent } from "@shared/components/news-list-component/news-l
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { Router } from '@angular/router';
 import { NewsModel } from '@core/models/news-model';
-import { ROUTES } from '@shared/constants/routes';
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
 
 @Component({
@@ -86,7 +86,7 @@ export class NewsListPage {
   }
 
   onCreate() {
-    this.router.navigate([ROUTES.PROTECTED.ADMIN.NEWS, 'form']);
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS, 'form']);
   }
 
   onDelete(item: NewsModel) {

@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormNewsModel, NewsWithImagesModel } from '@core/models/news-model';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
-import { ROUTES } from '@shared/constants/routes';
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { NewsService } from '@core/services/news-service';
 import { Router } from '@angular/router';
@@ -32,7 +32,7 @@ export class NewsFormPage {
   private readonly newsGalleryService = inject(NewsGalleryService);
   private readonly router = inject(Router);
 
-  readonly ROUTES = ROUTES;
+  readonly ROUTES = ROUTES_CONSTANTS;
   readonly news = signal<NewsWithImagesModel | null>(this.initialUrl);
   readonly isEditMode = computed(() => !!this.news()?.id_news);
   readonly actionText = computed(() => this.isEditMode() ? 'Modificar Noticia' : 'Crear Noticia');
@@ -167,7 +167,7 @@ private saveNews(payload: FormNewsModel) {
 
   /* ------------------- Navigation & Errors ------------------- */
   private navigateBack() {
-    this.router.navigate([ROUTES.PROTECTED.ADMIN.NEWS]);
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS]);
   }
 
   /* ------------------- Manejo de errores ------------------- */

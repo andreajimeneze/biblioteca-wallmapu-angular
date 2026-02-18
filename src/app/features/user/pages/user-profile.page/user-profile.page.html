@@ -30,10 +30,15 @@
     class="fieldset bg-my-light rounded-box border p-6 flex flex-col gap-4">
     
     <section class="flex gap-4 flex-wrap">
-      <img [ngSrc]="authUser()?.picture || 'images/book.png'" [alt]="authUser()?.name" width="100" height="100" class="rounded-full" priority>
+      <img 
+        class="rounded-full"
+        [ngSrc]="authUser()?.picture || 'images/book.png'" 
+        [alt]="authUser()?.name"
+        onerror="this.src='images/book.png'"
+        width="100" height="100" priority>
       <div class="grid w-md">
-        <input [value]="'Rol: ' + authUser()?.role" type="text" placeholder="Sin Rol" class="text-my-purple font-bold" disabled />
-        <input [value]="'ID: ' + authUser()?.id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
+        <input [value]="authUser()?.role" type="text" placeholder="Sin Rol" class="text-my-purple font-bold" disabled />
+        <input [value]="authUser()?.id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
         <input [value]="(userResult()?.result?.created_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Creado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
         <input [value]="(userResult()?.result?.updated_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Modificado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
         <input [value]="authUser()?.email" type="text" placeholder="Sin Email" class="text-my-purple text-xl font-bold" disabled />

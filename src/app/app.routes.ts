@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth-guard';
+import { ForbiddenPage } from '@core/pages/forbidden-page/forbidden-page';
+import { NotFoundPage } from '@core/pages/not-found-page/not-found-page';
+import { TestPage } from '@core/pages/test-page/test-page';
 import { AdminLayout } from '@layouts/admin-layout/admin-layout';
 import { PublicLayout } from '@layouts/public-layout/public-layout';
 import { UserLayout } from '@layouts/user-layout/user-layout';
-import { NotFoundPage } from '@shared/pages/not-found-page/not-found-page';
-import { TestPage } from '@shared/pages/test-page/test-page';
+import { Role } from '@shared/constants/roles-enum';
 
 export const routes: Routes = [
   {
@@ -33,7 +35,7 @@ export const routes: Routes = [
     path: 'admin',
     component: AdminLayout,
     canActivate: [authGuard],
-    data: { roles: ['Admin']},
+    data: { roles: [Role.Admin]},
     children: [
       {
         path: '',
@@ -56,6 +58,12 @@ export const routes: Routes = [
   {
     path: 'user',
     component: UserLayout,
+    canActivate: [authGuard],
+    data: { roles: [Role.Reader]},
+  },
+  {
+    path: 'forbidden',
+    component: ForbiddenPage
   },
   {
     path: '**',

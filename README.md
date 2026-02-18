@@ -255,16 +255,24 @@ export class NavbarComponent {
 # ---------------------------------------------------------------------------------
 # CORE
 ng g guard core/guards/auth --skip-tests
+
+ng g c core/pages/forbidden-page --skip-tests --style=none
+ng g c core/pages/not-found-page --skip-tests --style=none
+ng g c core/pages/test-page --skip-tests --style=none
+
 ng g s core/helpers/api-response-service --skip-tests
+
 ng g s core/services/book-service --skip-tests
 ng g s core/services/news-service --skip-tests
 ng g s core/services/news-gallery-service --skip-tests
 ng g s core/services/error-modal-service --skip-tests
+
 ng g interface core/models/api-response-model
 ng g interface core/models/pagination-model
 ng g interface core/models/news-gallery-model
 ng g interface core/models/news-model
 ng g interface core/models/book-model
+
 ng g interceptor core/interceptors/auth --skip-tests
 ng g interceptor core/interceptors/error --skip-tests
 
@@ -300,7 +308,7 @@ ng g c shared/components/news-skeleton-component --skip-tests --style=none
 ng g c shared/components/news-table-row-component --skip-tests --style=none
 ng g c shared/components/Pagination-component --skip-tests --style=none
 ng g c shared/components/section-header-component --skip-tests --style=none
-ng g c shared/pages/not-found-page --skip-tests --style=none
+
 ng g interface shared/models/navigation-model
 
 # ---------------------------------------------------------------------------------
