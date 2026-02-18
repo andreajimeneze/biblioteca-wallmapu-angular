@@ -37,61 +37,68 @@
         <label class="label font-semibold mb-1">Teléfono</label>
         <div class="flex">
           <input value="+ 56" type="text" class="text-my-purple text-base w-12 text-center" disabled />
-          <div>
+          <div class="flex gap-4">
             <input 
               #phoneInput
               type="text" class="input validator" placeholder="987654321" required
               [value]="formData().phone"
               (input)="updatePhone($any($event.target).value, phoneInput)"
             />
-            <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+            <p class="validator-hint hidden text-sm text-red-500">Requerido</p>
           </div>
         </div>
       </fieldset>
       
       <fieldset class="fieldset flex flex-col">
         <label class="label font-semibold mb-1">Nombre</label>
-        <input 
+        <input
+          #nameInput 
           type="text" class="input validator w-full" placeholder="Nombre" required 
           [value]="formData().name"
-          (input)="updateName($any($event.target).value)"
+          (input)="updateName($any($event.target).value, nameInput)"
         />
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>
       
       <fieldset class="fieldset flex flex-col">
         <label class="label font-semibold mb-1">Apellido</label>
-        <input 
+        <input
+          #lastnameInput
           type="text" class="input validator w-full" placeholder="Apellido" required
           [value]="formData().lastname"
-          (input)="updateLastname($any($event.target).value)"
+          (input)="updateLastname($any($event.target).value, lastnameInput)"
         />
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>
 
-      <fieldset class="fieldset flex flex-col">
+      <fieldset class="fieldset flex flex-col max-w-">
         <label class="label font-semibold mb-1">Rut</label>
         <input 
-          type="text" class="input validator w-full" placeholder="12345678-9" required
+          #rutInput
+          type="text" class="input validator max-w-52" placeholder="12345678-9" required
           [value]="formData().rut"
-          (input)="updateRut($any($event.target).value)"
+          (input)="updateRut($any($event.target).value, rutInput)"
         />
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>
       
       <fieldset class="fieldset flex flex-col">
         <label class="label font-semibold mb-1">Dirección</label>
-        <input 
+        <input
+          #addressInput
           type="text" class="input validator w-full" placeholder="Dirección" required
           [value]="formData().address"
-          (input)="updateAddress($any($event.target).value)"
+          (input)="updateAddress($any($event.target).value, addressInput)"
         />
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>
 
       <fieldset class="fieldset flex flex-col">
         <label class="label font-semibold mb-1">Comuna</label>
-        <app-commune-select-components/>
+        <app-commune-select-components
+          [communeId]="user().commune_id" 
+          (communeSelected)="updateCommune($event)"
+        />
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>
 
