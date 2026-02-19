@@ -64,6 +64,12 @@ export const routes: Routes = [
     component: UserLayout,
     canActivate: [authGuard],
     data: { roles: [Role.Reader]},
+    children: [
+      {
+        path: 'profile',
+        loadChildren: () => import('@features/user/profile.route').then(m => m.PROFILE_ROUTES)
+      },
+    ]
   },
   {
     path: 'forbidden',

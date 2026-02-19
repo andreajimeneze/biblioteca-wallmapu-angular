@@ -391,6 +391,8 @@ ng g c features/user/pages/user-list.page --skip-tests --style=none
 ng g c features/user/pages/user-profile.page --skip-tests --style=none
 
 ng g c features/user/components/user-form-components --skip-tests --style=none
+ng g c features/user/components/user-list-components --skip-tests --style=none
+ng g c features/user/components/user-list-row-component --skip-tests --style=none
 ng g c features/user/components/user-profile-components --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------

@@ -1,43 +1,59 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { UserFeatureService } from '@features/user/services/user-feature-service';
+import { UserProfileVM } from '@features/user/models/user-profile.vm';
 import { UserService } from '@features/user/services/user-service';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
-import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { map } from 'rxjs';
+import { UserListComponents } from "@features/user/components/user-list-components/user-list-components";
+import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
+import { Role } from '@shared/constants/roles-enum';
 
 @Component({
   selector: 'app-user-list.page',
   imports: [
     CommonModule,
     SectionHeaderComponent,
-  ],
+    UserListComponents,
+    MessageErrorComponent,
+    PaginationComponent
+],
   templateUrl: './user-list.page.html',
 })
 export class UserListPage {
-  // RUTAS
-  ROUTES_CONSTANTS=ROUTES_CONSTANTS
-
-  // SERVICIOS DE OTRAS FEATURES
-  private readonly feature = inject(UserFeatureService);
-  readonly isLoading = this.feature.isLoading;
-  readonly errorMessage = this.feature.errorMessage;
-  readonly userResult = this.feature.userResult;
-
-  // SERVICIO DE ESTA FEATURE
+  // SERVICIO DE FEATURE
   private readonly userService = inject(UserService);
 
-  private readonly data = rxResource({
-    stream: () =>
-      this.userService.getAll().pipe(
+  private readonly dataRX = rxResource({
+    stream: () => {    
+      return this.userService.getAll().pipe(
         map(response => {
-          if (!response.isSuccess) throw new Error("que");
-
-          return response;
+          if (!response.isSuccess) throw new Error(response.message);
+  
+          return response.result; // 👈 devolvemos solo el UserModel
         })
-      ),
+      );
+    },
+  });
+
+  // ESPERA QUE FINALICE RX
+  readonly isLoading = this.dataRX.isLoading;
+
+  // CONTROL DE ERROES
+  readonly backendError = computed(() => this.dataRX.error()?.message ?? null);
+
+  // PROCESAR USER
+  readonly userProfileVMList = computed<UserProfileVM[] | []>(() => {
+    const users = this.dataRX.value();
+  
+    if (!users) return [];
+
+    return users.map(user => ({
+      ...user,
+      role: Role.Reader,
+      picture: null
+    }));
   });
   
-
 }

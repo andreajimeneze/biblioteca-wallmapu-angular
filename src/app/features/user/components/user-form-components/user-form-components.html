@@ -40,12 +40,17 @@
       <section class="flex gap-2 flex-wrap">
         <div class="flex">
           <input value="Rol:" type="text" class="text-my-purple text-sm w-14 text-center" disabled />
-          <app-user-role-select-components [disabled]="true"/>
+          <app-user-role-select-components
+            [selectedId]="userProfileVM()?.user_role_id || 3"
+            [disabled]="true"
+          />
         </div>
   
         <div class="flex">
           <input value="Estado:" type="text" class="text-my-purple text-sm w-14 text-center" disabled />
-          <app-user-status-select-components [disabled]="true"/>
+          <app-user-status-select-components 
+            [disabled]="true"
+          />
         </div>
       </section>
 
@@ -132,5 +137,4 @@
       </button>
     </form>
   </div>
-
 }

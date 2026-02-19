@@ -5,10 +5,12 @@ import { UserRoleService } from '@features/user-role/services/user-role-service'
 import { catchError, finalize, of } from 'rxjs';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-user-role-select-components',
   imports: [
+    CommonModule,
     MessageErrorComponent, 
     LoadingComponent
   ],
@@ -16,26 +18,19 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 })
 export class UserRoleSelectComponents {
   readonly disabled = input<boolean>(false);
-  readonly selectedId = input<number>(0);
+  readonly selectedId = input<number>(3);
   
   private readonly userRoleService = inject(UserRoleService);
-  readonly loading = signal(true);
 
-  private userRoleSignal = toSignal(
+  readonly userRoleResult = toSignal(
     this.userRoleService.getAll().pipe(
-      catchError((err) => {
-        return of({
-          isSuccess: false,
-          statusCode: 500,
-          message: err?.message || String(err),
-          result: null
-        } as ApiResponseModel<null> );
-      }), finalize(() => {
-        this.loading.set(false);
-      })
+      catchError(err => of({
+        isSuccess: false,
+        statusCode: 500,
+        message: err?.message || String(err),
+        result: null
+      } as ApiResponseModel<null>))
     ),
     { initialValue: undefined }
   );
-
-  userRoleResult = computed(() => this.userRoleSignal());
 }

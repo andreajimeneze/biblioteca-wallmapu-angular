@@ -9,7 +9,9 @@
     >
       <option disabled selected>Seleccióne un Rol</option>
       @for (item of userStatusResult()?.result; track $index) {
-        <option [value]="item.id_user_status">{{ item.status }}</option>
+        <option [value]="item.id_user_status" [selected]="item.id_user_status === selectedId()">
+          {{ item.status }}
+        </option>
       }
     </select>
   } @else {

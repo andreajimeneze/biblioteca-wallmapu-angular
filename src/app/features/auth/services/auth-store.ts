@@ -57,7 +57,7 @@ export class AuthStore {
 
       switch(user.role) {
         case 'Lector':
-          navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.USER.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.USER.PROFILE;
+          navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.USER.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.USER.PROFILE.ROOT;
           break;
         case 'Admin':
           navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT;

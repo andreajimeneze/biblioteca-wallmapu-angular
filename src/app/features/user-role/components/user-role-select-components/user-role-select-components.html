@@ -1,16 +1,17 @@
-@if(loading()) {
+@if(!userRoleResult()) {
   <app-loading-component/>
 } @else {
   @if (userRoleResult()?.isSuccess) {
     <select 
       [disabled]="disabled()"
-      [value]="selectedId()"    
+      [value]="selectedId()"
       class="select text-my-pink"
-    >
-      
-      <option disabled selected>Seleccióne un Rol</option>
+    >      
+      <option disabled>Seleccióne un Rol</option>
       @for (item of userRoleResult()?.result; track $index) {
-        <option [value]="item.id_user_role">{{ item.role }}</option>
+        <option [value]="item.id_user_role" [selected]="item.id_user_role === selectedId()">
+          {{ item.role }}
+        </option>
       }
     </select>
   } @else {

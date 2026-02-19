@@ -2,7 +2,7 @@ import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
 import { UserModel } from '@features/user/models/user-model';
-import { DatePipe, NgOptimizedImage } from '@angular/common';
+import { CommonModule, DatePipe, NgOptimizedImage } from '@angular/common';
 import { UserStatusSelectComponents } from "@features/user-status/components/user-status-select-components/user-status-select-components";
 import { UserRoleSelectComponents } from "@features/user-role/components/user-role-select-components/user-role-select-components";
 import { UserProfileVM } from '@features/user/models/user-profile.vm';
@@ -10,6 +10,7 @@ import { UserProfileVM } from '@features/user/models/user-profile.vm';
 @Component({
   selector: 'app-user-form-components',
   imports: [
+    CommonModule,
     NgOptimizedImage,
     DatePipe,
     MessageErrorComponent,

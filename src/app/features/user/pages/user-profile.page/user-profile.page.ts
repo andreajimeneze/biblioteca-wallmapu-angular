@@ -9,6 +9,7 @@ import { map, of } from 'rxjs';
 import { UserProfileVM } from '@features/user/models/user-profile.vm';
 import { UserProfileComponents } from "@features/user/components/user-profile-components/user-profile-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { Role } from '@shared/constants/roles-enum';
 
 @Component({
   selector: 'app-user-profile.page',
@@ -27,9 +28,9 @@ export class UserProfilePage {
   private readonly authStore = inject(AuthStore);
   private readonly authUser = computed(() => ({
     userId: this.authStore.user()?.id_user,
-    picture: this.authStore.user()?.picture
+    role: this.authStore.user()?.role,
+    picture: this.authStore.user()?.picture,
   }));
-
 
   // SERVICIO DE FEATURE
   private readonly userService = inject(UserService);
@@ -59,6 +60,12 @@ export class UserProfilePage {
     this.userData.error()?.message ?? null
   );
   
+  readonly errorMessage = computed(() => {
+    if (this.backendError()) return this.backendError();
+    if (this.isProfileIncomplete()) return "Debes completar tu perfil";
+    return null;
+  });
+
   readonly isProfileIncomplete = computed(() => {
     const user = this.userData.value();
     if (!user) return false;
@@ -71,12 +78,6 @@ export class UserProfilePage {
       user.phone
     );
   });
-  
-  readonly errorMessage = computed(() => {
-    if (this.backendError()) return this.backendError();
-    if (this.isProfileIncomplete()) return "Debes completar tu perfil";
-    return null;
-  });
 
   // PROCESAR USER A USER PROFILE TYPE
   readonly userProfileVM = computed<UserProfileVM | null>(() => {
@@ -87,6 +88,7 @@ export class UserProfilePage {
 
     return {
       ...user,
+      role: auth.role ?? Role.Reader,
       picture: auth.picture ?? null 
     };
   });
