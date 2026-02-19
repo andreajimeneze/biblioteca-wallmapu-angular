@@ -5,15 +5,11 @@
   [route]=ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT
 />
 
-<section class="p-4 flex justify-center">
-
-  <!--
-  <app-user-form-components 
-    [user]="userResult().user"
-    [authUser]="userResult().authUser"
-    [loading]="isLoading()"
-    (formSubmit)="onUserFormSubmit($event)"
-  />
-  -->
-
+<section class="p-4">
+  <div class="max-w-4xl mx-auto">
+    <app-user-form-components 
+      [isLoading]="isLoading()" 
+      [userProfileVM]="userProfileVM()!"
+    />
+  </div>
 </section>

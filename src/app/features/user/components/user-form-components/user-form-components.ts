@@ -20,8 +20,8 @@ import { UserProfileVM } from '@features/user/models/user-profile.vm';
   templateUrl: './user-form-components.html',
 })
 export class UserFormComponents {
-  readonly loading = input<boolean>(true);  
-  readonly user = input<UserProfileVM | null>(null);
+  readonly isLoading = input<boolean>(true);  
+  readonly userProfileVM = input<UserProfileVM | null>(null);
   readonly formSubmit = output<Partial<UserModel>>();
 
   readonly errorMessage = signal<string | null>(null);
@@ -30,7 +30,7 @@ export class UserFormComponents {
   readonly formData = signal<Partial<UserProfileVM>>({});
 
   private readonly syncFormEffect = effect(() => {
-    const user = this.user();
+    const user = this.userProfileVM();
     if (!user) return; 
 
     this.formData.set({

@@ -3,9 +3,20 @@
   routeText="Modificar Perfil"
 />
 
-<app-user-form-components 
-  [loading]="isLoading()" 
-  [user]="userViewModel()!"
-/>
 
-<pre>{{ userViewModel() | json}}</pre>
+@if(errorMessage()) {
+  <section class="p-4">
+    <app-message-error-component 
+      [message]="errorMessage()"
+    />
+  </section>  
+}
+
+<section class="p-4">
+  <div class="max-w-4xl mx-auto">
+    <app-user-profile-components
+      [isLoading]="isLoading()"
+      [userProfileVM]="userProfileVM()"
+    />
+  </div>
+</section>

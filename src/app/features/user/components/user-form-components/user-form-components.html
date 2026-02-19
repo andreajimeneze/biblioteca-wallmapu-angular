@@ -1,4 +1,4 @@
-@if (loading()) {
+@if (isLoading()) {
   <div class="flex max-w-2xl flex-col gap-4">
     <div class="flex items-center gap-4">
       <div class="skeleton h-28 w-28 shrink-0 rounded-full m-4 bg-my-light/50"></div>
@@ -15,22 +15,22 @@
 } @else {
 
   <!-- Formulario -->
-  <div class="w-full max-w-2xl">
+  <div class="w-full max-w-4xl">
     <form 
       (submit)="onSubmit($event)"
       class="fieldset bg-my-light rounded-box border p-6 flex flex-col gap-4">
       
       <section class="flex gap-4 flex-wrap">
         <img 
-          [ngSrc]="user()?.picture || 'images/book.png'" 
-          [alt]="user()?.name ?? 'User image'" 
+          [ngSrc]="userProfileVM()?.picture || 'images/book.png'" 
+          [alt]="userProfileVM()?.name ?? 'User image'" 
           width="100" height="100" class="rounded-full" priority
         />
         <div class="grid w-md">
-          <input [value]="user()?.id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="(user()?.created_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Creado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="(user()?.updated_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Modificado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="user()?.email" type="text" placeholder="Sin Email" class="text-my-purple text-xl font-bold" disabled />
+          <input [value]="userProfileVM()?.id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="(userProfileVM()?.created_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Creado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="(userProfileVM()?.updated_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Modificado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="userProfileVM()?.email" type="text" placeholder="Sin Email" class="text-my-purple text-xl font-bold" disabled />
         </div>
       </section>
 
@@ -116,7 +116,7 @@
         <label class="label font-semibold mb-1">Comuna</label>
         <!-- COMPONENTE FEATURE COMMUNE-->
         <app-commune-select-components
-          [communeId]="user()?.commune_id" 
+          [communeId]="userProfileVM()?.commune_id" 
           (communeSelected)="updateCommune($event)"
         />
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
