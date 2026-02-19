@@ -2,29 +2,32 @@ import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
 import { UserModel } from '@features/user/models/user-model';
-import { AuthUser } from '@features/auth/models/auth-user';
 import { DatePipe, NgOptimizedImage } from '@angular/common';
+import { UserStatusSelectComponents } from "@features/user-status/components/user-status-select-components/user-status-select-components";
+import { UserRoleSelectComponents } from "@features/user-role/components/user-role-select-components/user-role-select-components";
+import { UserProfileVM } from '@features/user/models/user-profile.vm';
 
 @Component({
   selector: 'app-user-form-components',
   imports: [
     NgOptimizedImage,
     DatePipe,
-    MessageErrorComponent, 
-    CommuneSelectComponents
-  ],
+    MessageErrorComponent,
+    CommuneSelectComponents,
+    UserStatusSelectComponents,
+    UserRoleSelectComponents
+],
   templateUrl: './user-form-components.html',
 })
 export class UserFormComponents {
-  readonly user = input<UserModel | null>(null);
-  readonly authUser = input<AuthUser | null>(null)
   readonly loading = input<boolean>(true);  
+  readonly user = input<UserProfileVM | null>(null);
   readonly formSubmit = output<Partial<UserModel>>();
 
   readonly errorMessage = signal<string | null>(null);
 
   /* -- Form data ----------------------------------------- */
-  readonly formData = signal<Partial<UserModel>>({});
+  readonly formData = signal<Partial<UserProfileVM>>({});
 
   private readonly syncFormEffect = effect(() => {
     const user = this.user();

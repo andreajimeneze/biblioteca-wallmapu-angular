@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { UserStatusService } from '@features/user-status/services/user-status-service';
@@ -12,8 +12,10 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
   templateUrl: './user-status-select-components.html',
 })
 export class UserStatusSelectComponents {
+  readonly disabled = input<boolean>(false);
+  readonly selectedId = input<number>(0);
+  
   private readonly userStatusService = inject(UserStatusService);
-
   readonly loading = signal(true);
 
   private userStatusSignal = toSignal(

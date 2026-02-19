@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, input, signal } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { UserRoleService } from '@features/user-role/services/user-role-service';
@@ -8,12 +8,17 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 
 @Component({
   selector: 'app-user-role-select-components',
-  imports: [MessageErrorComponent, LoadingComponent],
+  imports: [
+    MessageErrorComponent, 
+    LoadingComponent
+  ],
   templateUrl: './user-role-select-components.html',
 })
 export class UserRoleSelectComponents {
+  readonly disabled = input<boolean>(false);
+  readonly selectedId = input<number>(0);
+  
   private readonly userRoleService = inject(UserRoleService);
-
   readonly loading = signal(true);
 
   private userRoleSignal = toSignal(

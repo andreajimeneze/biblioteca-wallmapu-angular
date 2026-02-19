@@ -8,7 +8,7 @@ import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 @Component({
   selector: 'app-user-form.page',
   imports: [
-    UserFormComponents,
+    //UserFormComponents,
     SectionHeaderComponent
 ],
   templateUrl: './user-form.page.html',

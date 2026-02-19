@@ -2,7 +2,11 @@
   <app-loading-component/>
 } @else {
   @if (userStatusResult()?.isSuccess) {
-    <select class="select">
+    <select 
+      [disabled]="disabled()"
+      [value]="selectedId()"
+      class="select text-my-pink"
+    >
       <option disabled selected>Seleccióne un Rol</option>
       @for (item of userStatusResult()?.result; track $index) {
         <option [value]="item.id_user_status">{{ item.status }}</option>

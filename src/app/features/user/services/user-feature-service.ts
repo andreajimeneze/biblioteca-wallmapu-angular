@@ -1,8 +1,7 @@
 import { computed, inject, Injectable } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthStore } from '@features/auth/services/auth-store';
-import { UserService } from '@features/user/services/user-service';
-import { forkJoin, of } from 'rxjs';
+import { forkJoin, map, of } from 'rxjs';
 import { UserRoleService } from '@features/user-role/services/user-role-service';
 import { UserStatusService } from '@features/user-status/services/user-status-service';
 
@@ -10,23 +9,23 @@ import { UserStatusService } from '@features/user-status/services/user-status-se
   providedIn: 'root',
 })
 export class UserFeatureService {
-  private readonly authStore = inject(AuthStore);
-  private readonly userService = inject(UserService);
   private readonly userRoleService = inject(UserRoleService);
   private readonly userStatusService = inject(UserStatusService);
 
-  private readonly userId = computed(() => this.authStore.user()?.id_user);
-
   private readonly data = rxResource({
-    params: () => this.userId(),
-    stream: ({ params: id }) => {
-      if (!id) return of(null);
-
+    stream: () => {
       return forkJoin({
-        user: this.userService.getById(id),
         userRoleList: this.userRoleService.getAll(),
         userStatusList: this.userStatusService.getAll(),
-      });
+      }).pipe(
+        map(response => {
+          // Validamos cada ApiResponseModel
+          if (!response.userRoleList.isSuccess) throw new Error(response.userRoleList.message);
+          if (!response.userStatusList.isSuccess) throw new Error(response.userStatusList.message); 
+
+          return response;
+        })
+      );
     },
   });
 
@@ -39,9 +38,55 @@ export class UserFeatureService {
   });
 
   readonly userResult   = computed(() => ({
-    authUser: this.authStore.user(),
-    user: this.data.value()?.user?.result       ?? null,
-    userRole: this.data.value()?.userRoleList?.result   ?? [],
+    userRole: this.data.value()?.userRoleList?.result ?? [],
     userStatus: this.data.value()?.userStatusList?.result ?? [],
   }));
+
+  //private readonly data = rxResource({
+  //  params: () => this.userId(),
+  //  stream: ({ params: id }) => {
+  //    if (!id) return of(null);
+  //
+  //    return forkJoin({
+  //      user: this.userService.getById(id),
+  //      userRoleList: this.userRoleService.getAll(),
+  //      userStatusList: this.userStatusService.getAll(),
+  //    }).pipe(
+  //      map(response => {
+  //        // Validamos cada ApiResponseModel
+  //        if (!response.user.isSuccess)  throw new Error(response.user.message);  
+  //        if (!response.userRoleList.isSuccess) throw new Error(response.userRoleList.message);
+  //        if (!response.userStatusList.isSuccess) throw new Error(response.userStatusList.message); 
+
+  //        return response;
+  //      })
+  //    );
+  //  },
+  //}); 
+  
+  //private readonly data = rxResource({
+  //  params: () => this.userId(),
+  //  stream: ({ params: id }) => {
+  //    if (!id) return of(null);
+
+  //    return forkJoin({
+  //      user: this.userService.getById(id),
+  //      userRoleList: this.userRoleService.getAll(),
+  //      userStatusList: this.userStatusService.getAll(),
+  //    });
+  //  },
+  //});
+
+  //private readonly data = rxResource({
+  //  params: () => this.userId(),
+  //  stream: ({ params: id }) => {
+  //    if (!id) return of(null);
+  
+  //     return this.userService.getById(id);
+  //  },
+  //});
+ 
+  //private readonly data = rxResource({
+  //  stream: () => this.userService.getAll(),
+  //});
 }
