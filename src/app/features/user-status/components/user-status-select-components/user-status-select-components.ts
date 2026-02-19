@@ -1,8 +1,8 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { UserStatusService } from '@features/user-status/services/user-status-service';
-import { catchError, finalize, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
@@ -16,9 +16,8 @@ export class UserStatusSelectComponents {
   readonly selectedId = input<number>(0);
   
   private readonly userStatusService = inject(UserStatusService);
-  readonly loading = signal(true);
 
-  private userStatusSignal = toSignal(
+  readonly userStatusSignal = toSignal(
     this.userStatusService.getAll().pipe(
       catchError((err) => {
         return of({
@@ -27,12 +26,8 @@ export class UserStatusSelectComponents {
           message: err?.message || String(err),
           result: null
         } as ApiResponseModel<null> );
-      }), finalize(() => {
-        this.loading.set(false);
       })
     ),
     { initialValue: undefined }
   );
-
-  userStatusResult = computed(() => this.userStatusSignal());
 }

@@ -27,7 +27,6 @@ export class CommuneSelectComponents {
   readonly communeId = input<number>();
 
   private readonly communeService = inject(CommuneService);
-  readonly loading = signal(true);
 
   private communeSignal = toSignal(
     this.communeService.getAll().pipe(
@@ -38,8 +37,6 @@ export class CommuneSelectComponents {
           message: err?.message || String(err),
           result: null
         } as ApiResponseModel<null> );
-      }), finalize(() => {
-        this.loading.set(false);
       })
     ),
     { initialValue: undefined }

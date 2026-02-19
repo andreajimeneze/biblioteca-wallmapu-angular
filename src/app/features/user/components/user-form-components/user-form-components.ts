@@ -21,7 +21,6 @@ import { UserProfileVM } from '@features/user/models/user-profile.vm';
   templateUrl: './user-form-components.html',
 })
 export class UserFormComponents {
-  readonly isLoading = input<boolean>(true);  
   readonly userProfileVM = input<UserProfileVM | null>(null);
   readonly formSubmit = output<Partial<UserModel>>();
 

@@ -23,7 +23,6 @@ throw new Error('Method not implemented.');
   readonly userProfileVM = input<UserProfileVM | null>(null);
 
   protected onEdit(item: UserProfileVM | null): void {
-    console.log(item)
     if (item) {
       const isAdmin = item.role === Role.Admin;
 

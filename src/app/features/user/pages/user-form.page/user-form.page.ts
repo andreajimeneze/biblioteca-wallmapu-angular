@@ -1,4 +1,4 @@
-import { Component, computed, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { UserFormComponents } from "@features/user/components/user-form-components/user-form-components";
 import { UserModel } from '@features/user/models/user-model';
 import { UserProfileVM } from '@features/user/models/user-profile.vm';
@@ -7,9 +7,8 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 @Component({
   selector: 'app-user-form.page',
   imports: [
-    //UserFormComponents,
     SectionHeaderComponent,
-    UserFormComponents
+    UserFormComponents,
 ],
   templateUrl: './user-form.page.html',
 })
@@ -25,9 +24,10 @@ export class UserFormPage {
   readonly userProfileVM = signal<UserProfileVM | null>(this.initialData);
   readonly navigateGoBack = signal<string>(this.navigateBack);
 
-  readonly isLoading = computed(() => this.userProfileVM() === null);
+  readonly isLoading = signal(false);
 
   protected onUserFormSubmit(data: Partial<UserModel>) {
+    this.isLoading.set(true);
     console.log('Datos recibidos del hijo:', data);
   }
 }
