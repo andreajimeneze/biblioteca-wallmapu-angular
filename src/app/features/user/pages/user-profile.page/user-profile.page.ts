@@ -1,106 +1,96 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { UserService } from '@features/user/services/user-service';
-import { catchError, finalize, of, switchMap, tap } from 'rxjs';
-import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { CommonModule, DatePipe, NgOptimizedImage } from '@angular/common';
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
+import { Component, computed, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
-import { UserModel } from '@features/user/models/user-model';
+import { UserService } from '@features/user/services/user-service';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthStore } from '@features/auth/services/auth-store';
-import { AuthUser } from '@features/auth/models/auth-user';
-import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
-import { UserFormComponents } from "@features/user/components/user-form-components/user-form-components";
+import { map, of } from 'rxjs';
+import { UserProfileVM } from '@features/user/models/user-profile.vm';
+import { UserProfileComponents } from "@features/user/components/user-profile-components/user-profile-components";
+import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { Role } from '@shared/constants/roles-enum';
 
 @Component({
   selector: 'app-user-profile.page',
   imports: [
     CommonModule,
-    LoadingComponent,
-    MessageErrorComponent,
     SectionHeaderComponent,
-    NgOptimizedImage,
-    DatePipe,
-    CommuneSelectComponents,
-    UserFormComponents
+    UserProfileComponents,
+    MessageErrorComponent
 ],
   templateUrl: './user-profile.page.html',
 })
 export class UserProfilePage {
+  ROUTES_CONSTANTS=ROUTES_CONSTANTS
+
+  // SERVICIO USER OTRA FEATURE
   private readonly authStore = inject(AuthStore);
+  private readonly authUser = computed(() => ({
+    userId: this.authStore.user()?.id_user,
+    role: this.authStore.user()?.role,
+    picture: this.authStore.user()?.picture,
+  }));
+
+  // SERVICIO DE FEATURE
   private readonly userService = inject(UserService);
 
-  readonly loading = signal(true)
-  readonly authUser = signal<AuthUser | null>(null)
+  private readonly userData = rxResource({
+    params: () => this.authUser().userId,
+    stream: ({ params: id }) => {
+      if (!id) return of(null);
+  
+      return this.userService.getById(id).pipe(
+        map(response => {
+          if (!response.isSuccess) {
+            throw new Error(response.message);
+          }
+  
+          return response.result; // 👈 devolvemos solo el UserModel
+        })
+      );
+    },
+  });
 
-  private userSignal = toSignal(
-    toObservable(this.authStore.user).pipe(
-      tap(() => this.loading.set(true)),
-      switchMap(user => {
-        if (!user?.id_user) return of(undefined);
-        
-        this.authUser.set(user)
+  // ESPERA QUE FINALICE RX
+  readonly isLoading = this.userData.isLoading;
 
-        return this.userService.getById(user.id_user).pipe(
-          catchError((err) => {
-            this.loading.set(false)
-
-            return of({
-              isSuccess: false,
-              statusCode: 500,
-              message: err?.message || String(err),
-              result: null
-            });
-          }),
-          finalize(() => this.loading.set(false)),
-        );
-      })
-    ),
-    { initialValue: undefined }
+  // CONTROL DE ERROES
+  readonly backendError = computed(() => 
+    this.userData.error()?.message ?? null
   );
   
-  // ✅ Estados computados
-  userResult = computed(() => this.userSignal());
-
-  /* -- Form data ----------------------------------------- */
-  readonly formData = signal<Partial<UserModel>>({
-    name: this.userResult()?.result?.name ?? '',
-    lastname: this.userResult()?.result?.lastname ?? '',
-    rut: this.userResult()?.result?.rut ?? '',
-    address: this.userResult()?.result?.address ?? '',
-    phone: this.userResult()?.result?.phone ?? ''
+  readonly errorMessage = computed(() => {
+    if (this.backendError()) return this.backendError();
+    if (this.isProfileIncomplete()) return "Debes completar tu perfil";
+    return null;
   });
 
-  /* -- Form Updates -------------------------------------- */
-  readonly formErrorMessage = signal<string | null>(null);
-
-  protected updateName(value: string) { this.updateField('name', value); }
-  protected updateLastname(value: string) { this.updateField('lastname', value); }
-  protected updateRut(value: string) { this.updateField('rut', value); }
-  protected updateAddress(value: string) { this.updateField('address', value); }
-  protected updatePhone(value: string) { this.updateField('phone', value); }
+  readonly isProfileIncomplete = computed(() => {
+    const user = this.userData.value();
+    if (!user) return false;
   
-  private updateField<K extends keyof UserModel>(key: K, value: string) {
-    this.formData.update(data => ({ ...data, [key]: value }));
-    this.formErrorMessage.set(null);
-  }
-
-  private readonly syncFormEffect = effect(() => {
-    const result = this.userResult();
-  
-    if (result?.isSuccess && result.result) {
-      this.formData.set({
-        name: result.result.name ?? '',
-        lastname: result.result.lastname ?? '',
-        rut: result.result.rut ?? '',
-        address: result.result.address ?? '',
-        phone: result.result.phone ?? ''
-      });
-    }
+    return !(
+      user.name &&
+      user.lastname &&
+      user.address &&
+      user.rut &&
+      user.phone
+    );
   });
 
-  /* -- Submit -------------------------------------------- */
-  onSubmit(event: Event) {
+  // PROCESAR USER A USER PROFILE TYPE
+  readonly userProfileVM = computed<UserProfileVM | null>(() => {
+    const user = this.userData.value();
+    const auth = this.authUser();
+  
+    if (!user) return null;
 
-  }
+    return {
+      ...user,
+      role: auth.role ?? Role.Reader,
+      picture: auth.picture ?? null 
+    };
+  });
+  
 }

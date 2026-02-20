@@ -3,7 +3,7 @@ import { Component, inject, signal } from '@angular/core';
 import { fromEvent } from 'rxjs';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
-import { ROUTES } from '@shared/constants/routes';
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { AuthButtonComponent } from "@features/auth/components/auth-button-component/auth-button-component";
 
 @Component({
@@ -18,8 +18,8 @@ import { AuthButtonComponent } from "@features/auth/components/auth-button-compo
 export class NavbarComponent {
   router = inject(Router);
   isScrolled = signal(false);
-  ROUTES_PAGES = ROUTES.PAGES;
-  ROUTES_HOME = ROUTES.HOME;
+  ROUTES_PAGES = ROUTES_CONSTANTS.PAGES;
+  ROUTES_HOME = ROUTES_CONSTANTS.HOME;
 
 
   constructor() {

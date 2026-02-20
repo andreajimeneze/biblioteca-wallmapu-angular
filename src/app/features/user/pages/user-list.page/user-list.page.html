@@ -1,1 +1,29 @@
-<p>user-list.page works!</p>
+<section class="flex flex-col justify-between h-full">
+
+  <div>
+    <app-section-header-component 
+      title="Usuarios"
+    />
+
+    @if (backendError()) {
+      <section class="p-4">
+        <app-message-error-component 
+          [message]="backendError()"
+        />
+      </section>
+    }
+
+    <section class="p-4">
+      <app-user-list-components 
+        [isLoading]="isLoading()" 
+        [userProfileVMList]="userProfileVMList()"
+      />
+    </section>
+  </div>
+
+  <app-pagination-component
+    [totalPages]="1"
+    [currentPage]="1"
+  />
+
+</section>

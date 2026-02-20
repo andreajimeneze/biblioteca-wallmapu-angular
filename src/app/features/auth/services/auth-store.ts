@@ -6,7 +6,7 @@ import { AuthUser } from '@features/auth/models/auth-user';
 import { ApiAuthGoogleRequest } from '@features/auth/models/api-auth-google-request';
 import { ApiAuthGoogleResponse } from '@features/auth/models/api-auth-google-response';
 import { firstValueFrom } from 'rxjs';
-import { ROUTES } from '@shared/constants/routes';
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 
 @Injectable({
   providedIn: 'root',
@@ -57,13 +57,13 @@ export class AuthStore {
 
       switch(user.role) {
         case 'Lector':
-          navigateTo = user.profileComplete ? ROUTES.PROTECTED.USER.DASHBOARD : ROUTES.PROTECTED.USER.PROFILE;
+          navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.USER.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.USER.PROFILE.ROOT;
           break;
         case 'Admin':
-          navigateTo = user.profileComplete ? ROUTES.PROTECTED.ADMIN.DASHBOARD : ROUTES.PROTECTED.ADMIN.PROFILE;
+          navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT;
           break;
         default:
-          navigateTo = ROUTES.HOME
+          navigateTo = ROUTES_CONSTANTS.HOME
       }
 
       this.router.navigate([navigateTo]);
@@ -80,6 +80,6 @@ export class AuthStore {
     this.currentUser.set(null);
     localStorage.removeItem('user');
     localStorage.removeItem('jwt_token');
-    this.router.navigate([ROUTES.HOME]);
+    this.router.navigate([ROUTES_CONSTANTS.HOME]);
   }
 }

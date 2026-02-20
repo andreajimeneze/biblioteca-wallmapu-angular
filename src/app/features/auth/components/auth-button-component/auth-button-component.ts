@@ -1,7 +1,7 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from "@angular/router";
 import { AuthStore } from '@features/auth/services/auth-store';
-import { ROUTES } from '@shared/constants/routes'
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant'
 
 @Component({
   selector: 'app-auth-button-component',
@@ -19,11 +19,11 @@ export class AuthButtonComponent {
   navigateTo = computed(() => {
     switch(this.user()?.role) { 
       case 'Admin':
-        return ROUTES.PROTECTED.ADMIN.DASHBOARD
+        return ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD
       case 'Lector':
-        return ROUTES.PROTECTED.USER.DASHBOARD 
+        return ROUTES_CONSTANTS.PROTECTED.USER.DASHBOARD 
       default:
-        return ROUTES.HOME;
+        return ROUTES_CONSTANTS.HOME;
     }
   });
 

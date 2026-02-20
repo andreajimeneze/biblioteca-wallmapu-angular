@@ -1,5 +1,6 @@
-export const ROUTES = {
+export const ROUTES_CONSTANTS = {
   HOME: '/',
+  FORBIDDEN: '/forbidden',
   LIBRARY: {
     BASE: '/library',
     BOOKS: '/library/books',    
@@ -13,15 +14,24 @@ export const ROUTES = {
     USER: {
       BASE: '/user',
       DASHBOARD: '/user',
-      PROFILE: '/user/profile',
+      PROFILE: {
+        ROOT: '/user/profile',
+        FORM: '/user/profile/form',
+      },
     },
     ADMIN: {
       BASE: '/admin',
       DASHBOARD: '/admin',
       BOOKS: '/admin/books',
       NEWS: '/admin/news',
-      USERS: '/admin/users',
-      PROFILE: '/admin/profile',
+      USERS: {
+        ROOT: '/admin/users',
+        FORM: '/admin/users/form',
+      },
+      PROFILE: {
+        ROOT: '/admin/profile',
+        FORM: '/admin/profile/form',
+      },
       SETTINGS: '/admin/settings',
     }
   },

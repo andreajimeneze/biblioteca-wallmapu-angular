@@ -2,7 +2,7 @@ import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, inject, input, output } from '@angular/core';
 import { Router } from '@angular/router';
 import { NewsWithImagesModel } from '@core/models/news-model';
-import { ROUTES } from '@shared/constants/routes';
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 
 @Component({
   selector: 'app-news-table-row-component',
@@ -23,6 +23,6 @@ export class NewsTableRowComponent {
   }
 
   protected onEdit(item: NewsWithImagesModel): void {
-    this.router.navigate([ROUTES.PROTECTED.ADMIN.NEWS, 'form'], { state: { url: item } });
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS, 'form'], { state: { url: item } });
   }
 }

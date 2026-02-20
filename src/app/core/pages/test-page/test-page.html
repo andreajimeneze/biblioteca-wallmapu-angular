@@ -54,10 +54,8 @@
 </section>
 
 <div class="container mx-auto py-8 px-4 flex gap-4 flex-wrap">
-  @if (loading()) {
-    <span class="loading loading-spinner loading-lg"></span>
-  } @else {
-    <pre class="bg-gray-100 p-6 rounded-lg overflow-auto h-60">{{ news() | json }}</pre>
-    <pre class="bg-gray-100 p-6 rounded-lg overflow-auto h-60">{{ books() | json }}</pre>
-  }
+  <!-- 
+ <pre class="bg-gray-100 p-6 rounded-lg overflow-auto h-60">{{ user() | json }}</pre>
+  -->
+ <pre class="bg-gray-100 p-6 rounded-lg overflow-auto">{{ user() | json }}</pre>
 </div>

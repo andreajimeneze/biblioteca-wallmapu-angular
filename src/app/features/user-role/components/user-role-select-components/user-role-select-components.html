@@ -1,14 +1,20 @@
-@if(loading()) {
+@if(!userRoleSignal()) {
   <app-loading-component/>
 } @else {
-  @if (userRoleResult()?.isSuccess) {
-    <select class="select">
-      <option disabled selected>Seleccióne un Rol</option>
-      @for (item of userRoleResult()?.result; track $index) {
-        <option [value]="item.id_user_role">{{ item.role }}</option>
+  @if (userRoleSignal()?.isSuccess) {
+    <select 
+      [disabled]="disabled()"
+      [value]="selectedId()"
+      class="select text-my-pink"
+    >      
+      <option disabled>Seleccióne un Rol</option>
+      @for (item of userRoleSignal()?.result; track $index) {
+        <option [value]="item.id_user_role" [selected]="item.id_user_role === selectedId()">
+          {{ item.role }}
+        </option>
       }
     </select>
   } @else {
-    <app-message-error-component [message]="userRoleResult()?.message || 'Error en Select Role'"/>
+    <app-message-error-component [message]="userRoleSignal()?.message || 'Error en Select Role'"/>
   }
 }

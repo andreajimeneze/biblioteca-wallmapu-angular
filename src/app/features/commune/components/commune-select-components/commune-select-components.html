@@ -1,5 +1,5 @@
 <!-- commune-select-components.html -->
-@if (loading()) {
+@if (!communeResult()) {
   <app-loading-component/>
 } @else {
   @if (communeResult()?.isSuccess) {

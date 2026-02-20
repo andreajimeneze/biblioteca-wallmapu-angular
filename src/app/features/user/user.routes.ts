@@ -1,24 +1,20 @@
 import { Routes } from "@angular/router";
-import { UserProfilePage } from "@features/user/pages/user-profile.page/user-profile.page";
-import { UserListPage } from "@features/user/pages/user-list.page/user-list.page";
 import { authGuard } from "@core/guards/auth-guard";
+import { UserFormPage } from "@features/user/pages/user-form.page/user-form.page";
+import { UserListPage } from "@features/user/pages/user-list.page/user-list.page";
+import { Role } from "@shared/constants/roles-enum";
 
 export const USER_ROUTES: Routes = [
   {
     path: '',
-    component: UserProfilePage,
-    data: { roles: ['Admin', 'Lector'] },
-  },
-  {
-    path: 'profile',
-    component: UserProfilePage,
-    canActivate: [authGuard],
-    data: { roles: ['Admin', 'Lector']},
-  },
-  {
-    path: 'list',
     component: UserListPage,
     canActivate: [authGuard],
-    data: { roles: ['Admin']},
-  }
+    data: { roles: [Role.Admin]},
+  },
+  {
+    path: 'form',
+    component: UserFormPage,
+    canActivate: [authGuard],
+    data: { roles: [Role.Admin]},
+  },
 ]

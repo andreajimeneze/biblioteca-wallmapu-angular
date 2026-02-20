@@ -1,4 +1,4 @@
-@if (loading()) {
+@if (!userProfileVM()) {
   <div class="flex max-w-2xl flex-col gap-4">
     <div class="flex items-center gap-4">
       <div class="skeleton h-28 w-28 shrink-0 rounded-full m-4 bg-my-light/50"></div>
@@ -15,23 +15,47 @@
 } @else {
 
   <!-- Formulario -->
-  <div class="w-full max-w-2xl">
+  <div class="w-full max-w-4xl">
     <form 
       (submit)="onSubmit($event)"
       class="fieldset bg-my-light rounded-box border p-6 flex flex-col gap-4">
       
       <section class="flex gap-4 flex-wrap">
-        <img [ngSrc]="authUser().picture || 'images/book.png'" [alt]="authUser().name" width="100" height="100" class="rounded-full" priority>
+        <img 
+          [ngSrc]="userProfileVM()?.picture || 'images/book.png'" 
+          [alt]="userProfileVM()?.name ?? 'User image'" 
+          width="100" height="100" class="rounded-full" priority
+        />
         <div class="grid w-md">
-          <input [value]="'Rol: ' + authUser().role" type="text" placeholder="Sin Rol" class="text-my-purple font-bold" disabled />
-          <input [value]="'ID: ' + authUser().id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="(user().created_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Creado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="(user().updated_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Modificado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="user().email" type="text" placeholder="Sin Email" class="text-my-purple text-xl font-bold" disabled />
+          <input [value]="userProfileVM()?.id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="(userProfileVM()?.created_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Creado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="(userProfileVM()?.updated_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Modificado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="userProfileVM()?.email" type="text" placeholder="Sin Email" class="text-my-purple text-xl font-bold" disabled />
         </div>
       </section>
+
+      <!-- Separador -->
+      <div class="divider text-base-content/40 mb-0">Bienvenido</div>
+
+      <section class="flex gap-2 flex-wrap">
+        <div class="flex">
+          <input value="Rol:" type="text" class="text-my-purple text-sm w-14 text-center" disabled />
+          <app-user-role-select-components
+            [selectedId]="userProfileVM()?.user_role_id || 3"
+            [disabled]="true"
+          />
+        </div>
   
-      <input [value]="'Estado: ' + user().user_status_id" type="text" placeholder="Estado" class="text-my-purple text-xl" disabled />
+        <div class="flex">
+          <input value="Estado:" type="text" class="text-my-purple text-sm w-14 text-center" disabled />
+          <app-user-status-select-components 
+            [disabled]="true"
+          />
+        </div>
+      </section>
+
+      <!-- Separador -->
+      <div class="divider text-base-content/40 mt-0">Datos</div>
 
       <fieldset class="fieldset flex flex-col">
         <label class="label font-semibold mb-1">Teléfono</label>
@@ -95,8 +119,9 @@
 
       <fieldset class="fieldset flex flex-col">
         <label class="label font-semibold mb-1">Comuna</label>
+        <!-- COMPONENTE FEATURE COMMUNE-->
         <app-commune-select-components
-          [communeId]="user().commune_id" 
+          [communeId]="userProfileVM()?.commune_id" 
           (communeSelected)="updateCommune($event)"
         />
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
@@ -112,5 +137,4 @@
       </button>
     </form>
   </div>
-
 }

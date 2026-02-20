@@ -1,0 +1,13 @@
+<ul class="list bg-base-100 rounded-box shadow-md">
+  <li class="p-4 pb-2 text-xs opacity-60 tracking-wide">Lista de Lectores</li>
+
+  @if (isLoading()) {
+    <section class="mx-auto p-4">
+      <app-loading-component/>
+    </section>
+  } @else {
+    @for (userProfileVM of userProfileVMList(); track $index ) {
+      <app-user-list-row-component [userProfileVM]="userProfileVM"/>
+    }
+  }
+</ul>

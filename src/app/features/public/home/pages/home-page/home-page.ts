@@ -1,6 +1,6 @@
 import { Component, computed, inject } from '@angular/core';
 import { RecommendedBooksComponent } from "@features/public/home/components/recommended-books-component/recommended-books-component";
-import { ROUTES } from '@shared/constants/routes';
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { catchError, of } from 'rxjs';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { NewsService } from '@core/services/news-service';
@@ -28,7 +28,7 @@ import { NewsFeaturedComponent } from "@shared/components/news-featured-componen
   templateUrl: './home-page.html',
 })
 export class HomePage {
-  protected readonly ROUTES = ROUTES;
+  protected readonly ROUTES = ROUTES_CONSTANTS;
   private newsService = inject(NewsService);
   private readonly defaultApiResponse = API_RESPONSE_PAGINATION_NEWS_LIST;
 
