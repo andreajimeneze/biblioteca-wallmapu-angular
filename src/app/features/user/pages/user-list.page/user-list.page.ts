@@ -8,7 +8,6 @@ import { map } from 'rxjs';
 import { UserListComponents } from "@features/user/components/user-list-components/user-list-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
-import { Role } from '@shared/constants/roles-enum';
 
 @Component({
   selector: 'app-user-list.page',
@@ -51,7 +50,7 @@ export class UserListPage {
 
     return users.map(user => ({
       ...user,
-      role: Role.Reader,
+      role: null,
       picture: null
     }));
   });

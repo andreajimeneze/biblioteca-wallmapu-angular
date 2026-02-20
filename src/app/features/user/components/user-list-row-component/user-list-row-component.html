@@ -13,7 +13,7 @@
     <div class="text-xs uppercase font-semibold opacity-60">
       {{ userProfileVM()?.name }} {{ userProfileVM()?.lastname }}
     </div>
-    <div>{{ 'Alun Estado Adicional' }}</div>
+    <div>{{ userProfileVM()?.role }}</div>
   </div>
 
   <button     
@@ -22,3 +22,8 @@
     Ver Perfil
   </button>
 </li>
+
+<!--
+JsonPipe
+<pre>{{ userProfileVM() | json}}</pre>
+-->

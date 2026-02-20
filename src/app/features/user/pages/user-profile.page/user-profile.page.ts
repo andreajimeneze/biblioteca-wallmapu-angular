@@ -1,4 +1,3 @@
-import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { Component, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
@@ -22,8 +21,6 @@ import { Role } from '@shared/constants/roles-enum';
   templateUrl: './user-profile.page.html',
 })
 export class UserProfilePage {
-  ROUTES_CONSTANTS=ROUTES_CONSTANTS
-
   // SERVICIO USER OTRA FEATURE
   private readonly authStore = inject(AuthStore);
   private readonly authUser = computed(() => ({

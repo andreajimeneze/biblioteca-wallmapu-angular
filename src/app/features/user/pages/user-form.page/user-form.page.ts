@@ -27,12 +27,12 @@ export class UserFormPage {
     navigateBack?: string;
   };
 
-  readonly userProfileVM  = signal<UserProfileVM | null>(this.state.userProfileVM ?? null);
+  readonly userProfileVM = signal<UserProfileVM | null>(this.state.userProfileVM ?? null);
   readonly navigateGoBack = signal<string>(this.state.navigateBack ?? '/');
 
   // ─── SERVICIOS ────────────────────────────────────────────────────────────────
   private readonly userService = inject(UserService);
-  private readonly router      = inject(Router);
+  private readonly router = inject(Router);
 
   // ─── TRIGGER MUTACIÓN ─────────────────────────────────────────────────────────
   private readonly submitPayload = signal<{ id: string; dto: UserUpdateModel } | null>(null);
@@ -55,17 +55,20 @@ export class UserFormPage {
   });
 
   // ─── ESTADO DERIVADO ──────────────────────────────────────────────────────────
-  readonly isLoading    = this.updateRX.isLoading;
+  readonly isLoading = this.updateRX.isLoading;
   readonly errorMessage = computed(() => this.updateRX.error()?.message ?? null);
 
   // ─── EFECTO NAVEGACIÓN ────────────────────────────────────────────────────────
   private readonly onUpdateSuccess = effect(() => {
-    if (
-      this.submitPayload() !== null &&
-      this.updateRX.value() !== undefined &&
-      !this.updateRX.isLoading() &&
-      !this.updateRX.error()
-    ) {
+    const payload = this.submitPayload();
+
+    if (!payload) return;                    // 👈 nunca navegar si no hubo submit
+    if (this.updateRX.isLoading()) return;   // 👈 evitar mientras carga
+    if (this.updateRX.error()) return;       // 👈 no navegar si hay error
+  
+    const value = this.updateRX.value();
+  
+    if (value) {
       this.router.navigateByUrl(this.navigateGoBack());
     }
   });
@@ -77,11 +80,11 @@ export class UserFormPage {
     this.submitPayload.set({
       id: vm.id_user,
       dto: {
-        name:       vm.name       ?? '',
-        lastname:   vm.lastname   ?? '',
-        rut:        vm.rut        ?? '',
-        address:    vm.address    ?? '',
-        phone:      vm.phone      ?? '',
+        name: vm.name ?? '',
+        lastname: vm.lastname ?? '',
+        rut: vm.rut ?? '',
+        address: vm.address ?? '',
+        phone: vm.phone ?? '',
         commune_id: vm.commune_id ?? 0,
       }
     });
