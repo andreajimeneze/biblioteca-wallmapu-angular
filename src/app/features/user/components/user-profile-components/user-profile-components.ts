@@ -19,7 +19,6 @@ throw new Error('Method not implemented.');
 }
   ROUTES_CONSTANTS=ROUTES_CONSTANTS
   private router = inject(Router);
-  readonly isLoading = input<boolean>(true);  
   readonly userProfileVM = input<UserProfileVM | null>(null);
 
   protected onEdit(item: UserProfileVM | null): void {

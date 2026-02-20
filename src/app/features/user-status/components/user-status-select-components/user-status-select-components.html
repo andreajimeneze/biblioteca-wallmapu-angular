@@ -1,4 +1,4 @@
-@if(userStatusSignal()) {
+@if(!userStatusSignal()) {
   <app-loading-component/>
 } @else {
   @if (userStatusSignal()?.isSuccess) {

@@ -5,7 +5,13 @@
   [route]=navigateGoBack()
 />
 
-@if (isLoading()) {
+@if (errorMessage()) {
+  <section class="p-4">
+    <app-message-error-component [message]="errorMessage()"/>
+  </section>
+}
+
+@if (!userProfileVM()) {
   <div class="flex max-w-4xl flex-col gap-4 mx-auto">
     <div class="flex items-center gap-4">
       <div class="skeleton h-28 w-28 shrink-0 rounded-full m-4 bg-my-light/50"></div>
@@ -27,5 +33,11 @@
         (formSubmit)="onUserFormSubmit($event)"
       />
     </div>
+  </section>
+}
+
+@if (errorMessage()) {
+  <section class="p-4">
+    <app-message-error-component [message]="errorMessage()"/>
   </section>
 }

@@ -1,7 +1,6 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
-import { UserModel } from '@features/user/models/user-model';
 import { CommonModule, DatePipe, NgOptimizedImage } from '@angular/common';
 import { UserStatusSelectComponents } from "@features/user-status/components/user-status-select-components/user-status-select-components";
 import { UserRoleSelectComponents } from "@features/user-role/components/user-role-select-components/user-role-select-components";
@@ -22,7 +21,7 @@ import { UserProfileVM } from '@features/user/models/user-profile.vm';
 })
 export class UserFormComponents {
   readonly userProfileVM = input<UserProfileVM | null>(null);
-  readonly formSubmit = output<Partial<UserModel>>();
+  readonly formSubmit = output<UserProfileVM>();
 
   readonly errorMessage = signal<string | null>(null);
 
@@ -63,7 +62,7 @@ export class UserFormComponents {
     this.formData.update(data => ({ ...data, commune_id: id ?? 0 }));
   }
 
-  private updateField<K extends keyof UserModel>(key: K, value: string, input?: HTMLInputElement) {
+  private updateField<K extends keyof UserProfileVM>(key: K, value: string, input?: HTMLInputElement) {
     const sanitized = this.sanitize(key, value);
 
     if (sanitized === null) {
@@ -75,7 +74,7 @@ export class UserFormComponents {
     this.errorMessage.set(null);
   }
 
-  private sanitize(key: keyof UserModel, value: string): string | null {
+  private sanitize(key: keyof UserProfileVM, value: string): string | null {
     switch (key){
       case 'phone':
         if (!/^\d*$/.test(value)) return null; // solo números
@@ -119,11 +118,23 @@ export class UserFormComponents {
       return;
     }
 
+    const original = this.userProfileVM(); // 👈 VM completo del input
+    
+    if (!original) {
+      this.errorMessage.set('No se encontró el usuario original');
+      return;
+    }
+
+    const completeVM: UserProfileVM = {
+      ...original,
+      ...data,
+    };
+
     this.errorMessage.set(null)
-    this.formSubmit.emit(data); // ✅ emite al padre
+    this.formSubmit.emit(completeVM); // ✅ emite al padre
   }
   
-  private validateFormOnSubmit(data: Partial<UserModel>): string | null {
+  private validateFormOnSubmit(data: Partial<UserProfileVM>): string | null {
     if (!data.name?.trim())           return 'El nombre es requerido';
     if (data.name.length < 2)         return 'El nombre debe tener al menos 2 caracteres';
   

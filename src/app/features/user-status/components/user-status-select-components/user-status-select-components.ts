@@ -8,7 +8,10 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 
 @Component({
   selector: 'app-user-status-select-components',
-  imports: [LoadingComponent, MessageErrorComponent],
+  imports: [
+    LoadingComponent, 
+    MessageErrorComponent
+  ],
   templateUrl: './user-status-select-components.html',
 })
 export class UserStatusSelectComponents {
@@ -19,14 +22,12 @@ export class UserStatusSelectComponents {
 
   readonly userStatusSignal = toSignal(
     this.userStatusService.getAll().pipe(
-      catchError((err) => {
-        return of({
-          isSuccess: false,
-          statusCode: 500,
-          message: err?.message || String(err),
-          result: null
-        } as ApiResponseModel<null> );
-      })
+      catchError(err => of({
+        isSuccess: false,
+        statusCode: 500,
+        message: err?.message || String(err),
+        result: null
+      } as ApiResponseModel<null>))
     ),
     { initialValue: undefined }
   );

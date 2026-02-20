@@ -1,8 +1,8 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { UserRoleService } from '@features/user-role/services/user-role-service';
-import { catchError, finalize, of } from 'rxjs';
+import { catchError, of } from 'rxjs';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { CommonModule } from '@angular/common';
@@ -18,11 +18,11 @@ import { CommonModule } from '@angular/common';
 })
 export class UserRoleSelectComponents {
   readonly disabled = input<boolean>(false);
-  readonly selectedId = input<number>(3);
+  readonly selectedId = input<number>(0);
   
   private readonly userRoleService = inject(UserRoleService);
 
-  readonly userRoleResult = toSignal(
+  readonly userRoleSignal = toSignal(
     this.userRoleService.getAll().pipe(
       catchError(err => of({
         isSuccess: false,

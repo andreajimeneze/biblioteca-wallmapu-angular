@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { UserModel } from '@features/user/models/user-model';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { ApiResponseService } from '@core/helpers/api-response-service';
+import { UserUpdateModel } from '../models/user-update-model';
 
 @Injectable({
   providedIn: 'root',
@@ -23,9 +24,9 @@ export class UserService {
     );
   }
 
-  update(item: UserModel): Observable<ApiResponseModel<UserModel>> {
-    return this.apiResponseService.update<ApiResponseModel<UserModel>, UserModel>(
-      this.endpoint, item.id_user, item
+  update(id_user: string, item: UserUpdateModel): Observable<ApiResponseModel<UserModel>> {
+    return this.apiResponseService.update<ApiResponseModel<UserModel>, UserUpdateModel>(
+      this.endpoint, id_user, item
     );
   }
 }
