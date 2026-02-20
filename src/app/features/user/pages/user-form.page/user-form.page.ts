@@ -7,12 +7,13 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { EMPTY, map, NEVER } from 'rxjs';
-
+import { map, of } from 'rxjs';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-form.page',
   imports: [
+    JsonPipe,
     SectionHeaderComponent,
     UserFormComponents,
     MessageErrorComponent
@@ -20,46 +21,72 @@ import { EMPTY, map, NEVER } from 'rxjs';
   templateUrl: './user-form.page.html',
 })
 export class UserFormPage {
-// ─────────────────────────────────────────────────────────────────────────────
-// ─── NAVEGACIÓN
- private readonly state = history.state as {
-  userProfileVM?: UserProfileVM;
-  navigateBack?: string;
-};
-
-readonly userProfileVM  = signal<UserProfileVM | null>(this.state.userProfileVM ?? null);
-readonly navigateGoBack = signal<string>(this.state.navigateBack ?? '/');
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SERVICIOS
-private readonly userService = inject(UserService);
-private readonly router = inject(Router);
-
-// ─────────────────────────────────────────────────────────────────────────────
-// ESTADO DERIVADO
-readonly isLoading = signal<boolean>(false);
-readonly errorMessage = signal<string | null>(null);
-
-// ─────────────────────────────────────────────────────────────────────────────
-// SUBMIT
-protected onUserFormSubmit(vm: UserProfileVM): void {
-  console.log(vm)
-
-  if (!vm.id_user) {
-    this.errorMessage.set('ID de usuario no encontrado');
-    return;
-  }
-
-  const dto: UserUpdateModel = {
-    name: vm.name ?? '',
-    lastname: vm.lastname ?? '',
-    rut: vm.rut ?? '',
-    address: vm.address ?? '',
-    phone: vm.phone ?? '',
-    commune_id: vm.commune_id ?? 0,
+  // ─── NAVEGACIÓN ───────────────────────────────────────────────────────────────
+  private readonly state = history.state as {
+    userProfileVM?: UserProfileVM;
+    navigateBack?: string;
   };
 
-  console.log(dto)
+  readonly userProfileVM  = signal<UserProfileVM | null>(this.state.userProfileVM ?? null);
+  readonly navigateGoBack = signal<string>(this.state.navigateBack ?? '/');
+
+  // ─── SERVICIOS ────────────────────────────────────────────────────────────────
+  private readonly userService = inject(UserService);
+  private readonly router      = inject(Router);
+
+  // ─── TRIGGER MUTACIÓN ─────────────────────────────────────────────────────────
+  private readonly submitPayload = signal<{ id: string; dto: UserUpdateModel } | null>(null);
+
+  // ─── RX RESOURCE ──────────────────────────────────────────────────────────────
+  private readonly updateRX = rxResource({
+    params: () => this.submitPayload(),
+    stream: ({ params: payload }) => {
+      if (!payload) return of(null);
+
+      return this.userService.update(payload.id, payload.dto).pipe(
+        map(response => {
+          // Error de negocio → va a errorMessage
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        })
+        // Errores HTTP → interceptor los maneja globalmente con modal
+      );
+    },
+  });
+
+  // ─── ESTADO DERIVADO ──────────────────────────────────────────────────────────
+  readonly isLoading    = this.updateRX.isLoading;
+  readonly errorMessage = computed(() => this.updateRX.error()?.message ?? null);
+
+  // ─── EFECTO NAVEGACIÓN ────────────────────────────────────────────────────────
+  private readonly onUpdateSuccess = effect(() => {
+    if (
+      this.submitPayload() !== null &&
+      this.updateRX.value() !== undefined &&
+      !this.updateRX.isLoading() &&
+      !this.updateRX.error()
+    ) {
+      this.router.navigateByUrl(this.navigateGoBack());
+    }
+  });
+
+  // ─── SUBMIT ───────────────────────────────────────────────────────────────────
+  protected onUserFormSubmit(vm: UserProfileVM): void {
+    if (!vm.id_user) return;
+
+    this.submitPayload.set({
+      id: vm.id_user,
+      dto: {
+        name:       vm.name       ?? '',
+        lastname:   vm.lastname   ?? '',
+        rut:        vm.rut        ?? '',
+        address:    vm.address    ?? '',
+        phone:      vm.phone      ?? '',
+        commune_id: vm.commune_id ?? 0,
+      }
+    });
+  }
+
 }
 
   //protected onUserFormSubmit(data: Partial<UserModel>) {
@@ -81,5 +108,3 @@ protected onUserFormSubmit(vm: UserProfileVM): void {
   //  });
   //}
   
-
-}
