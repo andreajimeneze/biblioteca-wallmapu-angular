@@ -7,6 +7,8 @@ import { UserListComponents } from "@features/user/components/user-list-componen
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { UserDetailModel } from '@features/user/models/user-detail-model';
+import { AuthStore } from '@features/auth/services/auth-store';
+import { Role } from '@shared/constants/roles-enum';
 
 @Component({
   selector: 'app-user-list.page',
@@ -20,9 +22,12 @@ import { UserDetailModel } from '@features/user/models/user-detail-model';
 })
 export class UserListPage {
   // SERVICIO DE FEATURE
+  private readonly authStore = inject(AuthStore);
   private readonly userService = inject(UserService);
   
-  // TRIBUTOS
+  readonly editRole = signal<Role>(this.authStore.user()?.role || Role.Reader);
+
+  // ATRIBUTOS
   readonly currentPage = signal(1);
   private readonly items = signal<number>(10);
   readonly search = signal('');
@@ -61,7 +66,7 @@ export class UserListPage {
   readonly backendError = computed(() => this.dataResourceRX.error()?.message ?? null);
   
   // PROCESAR USER
-  readonly userDetailComputed = computed<UserDetailModel[]>(() => {
+  readonly userDetailListComputed = computed<UserDetailModel[]>(() => {
     const users = this.dataResourceRX.value();
     if (!users) 
       return [];

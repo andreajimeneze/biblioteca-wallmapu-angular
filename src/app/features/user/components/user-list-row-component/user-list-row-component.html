@@ -9,17 +9,17 @@
     />
   </div>
   <div>
-    <div>{{ userDetail()?.email }}</div>
+    <div>{{ userDetailModel()?.email }}</div>
     <div class="text-xs uppercase font-semibold opacity-60">
-      {{ `(${userDetail()?.user_role?.role})` }} {{ userDetail()?.name }} {{ userDetail()?.lastname }}
+      {{ `(${userDetailModel()?.user_role?.role})` }} {{ userDetailModel()?.name }} {{ userDetailModel()?.lastname }}
     </div>
     <div class="text-my-pink">
-      {{ userDetail()?.user_status?.status }}
+      {{ userDetailModel()?.user_status?.status }}
     </div>
   </div>
 
   <button     
-    (click)="onEdit(userDetail()!)"
+    (click)="onEdit(userDetailModel()!)"
     class="btn bg-my-green text-my-light">
     Ver Perfil
   </button>

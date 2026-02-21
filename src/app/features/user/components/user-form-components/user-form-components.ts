@@ -20,8 +20,8 @@ import { UserModel } from '@features/user/models/user-model';
   templateUrl: './user-form-components.html',
 })
 export class UserFormComponents {
-  readonly editRol = input.required<Role>();
-  readonly picture = input.required<string>();
+  readonly editRol = input<Role>(Role.Reader);
+  readonly picture = input<string>();
   readonly userModel = input<UserModel | null>(null);
   readonly formSubmit = output<UserModel>();
 
