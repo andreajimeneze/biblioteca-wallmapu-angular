@@ -9,15 +9,17 @@
     />
   </div>
   <div>
-    <div>{{ userProfileVM()?.email }}</div>
+    <div>{{ userDetail()?.email }}</div>
     <div class="text-xs uppercase font-semibold opacity-60">
-      {{ userProfileVM()?.name }} {{ userProfileVM()?.lastname }}
+      {{ `(${userDetail()?.user_role?.role})` }} {{ userDetail()?.name }} {{ userDetail()?.lastname }}
     </div>
-    <div>{{ 'Alun Estado Adicional' }}</div>
+    <div class="text-my-pink">
+      {{ userDetail()?.user_status?.status }}
+    </div>
   </div>
 
   <button     
-    (click)="onEdit(userProfileVM()!)"
+    (click)="onEdit(userDetail()!)"
     class="btn bg-my-green text-my-light">
     Ver Perfil
   </button>

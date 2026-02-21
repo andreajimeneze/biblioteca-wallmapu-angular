@@ -3,6 +3,8 @@
   <div>
     <app-section-header-component 
       title="Usuarios"
+      searchPlaceholder="Buscar Usuario"
+      (searchChange)="searchText($event)"
     />
 
     @if (backendError()) {
@@ -16,14 +18,16 @@
     <section class="p-4">
       <app-user-list-components 
         [isLoading]="isLoading()" 
-        [userProfileVMList]="userProfileVMList()"
+        [userDetailList]="userDetailComputed()"
       />
     </section>
   </div>
 
   <app-pagination-component
-    [totalPages]="1"
-    [currentPage]="1"
+    [totalPages]="totalPages()"
+    [currentPage]="currentPage()"
+    (prevPage)="prevPage()"
+    (nextPage)="nextPage()" 
   />
 
 </section>

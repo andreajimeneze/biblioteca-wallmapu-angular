@@ -6,8 +6,8 @@
       <app-loading-component/>
     </section>
   } @else {
-    @for (userProfileVM of userProfileVMList(); track $index ) {
-      <app-user-list-row-component [userProfileVM]="userProfileVM"/>
+    @for (userDetail of userDetailList(); track $index ) {
+      <app-user-list-row-component [userDetail]="userDetail"/>
     }
   }
 </ul>
