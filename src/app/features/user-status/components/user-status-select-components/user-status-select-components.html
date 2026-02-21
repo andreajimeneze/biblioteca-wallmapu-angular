@@ -5,11 +5,15 @@
     <select 
       [disabled]="disabled()"
       [value]="selectedId()"
+      (change)="onChange($event)"
       class="select text-my-pink"
     >
       <option disabled selected>Seleccióne un Rol</option>
       @for (item of userStatusSignal()?.result; track $index) {
-        <option [value]="item.id_user_status" [selected]="item.id_user_status === selectedId()">
+        <option 
+          [value]="item.id_user_status" 
+          [selected]="item.id_user_status === selectedId()">
+          
           {{ item.status }}
         </option>
       }

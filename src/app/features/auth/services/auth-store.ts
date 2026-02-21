@@ -37,7 +37,7 @@ export class AuthStore {
 
       // 1️⃣ Obtener access_token de Google
       const googleToken = await this.googleAuth.getAccessToken();
-      
+
       // 2️⃣ Enviar token al backend
       const request: ApiAuthGoogleRequest = { googleToken };
       const response: ApiAuthGoogleResponse = await firstValueFrom(

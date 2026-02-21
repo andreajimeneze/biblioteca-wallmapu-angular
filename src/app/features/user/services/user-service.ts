@@ -26,9 +26,15 @@ export class UserService {
     );
   }
 
-  update(id_user: string, item: UserUpdateModel): Observable<ApiResponseModel<UserModel>> {
+  update_user(id_user: string, item: UserUpdateModel): Observable<ApiResponseModel<UserModel>> {
     return this.apiResponseService.update<ApiResponseModel<UserModel>, UserUpdateModel>(
       this.endpoint, id_user, item
+    );
+  }
+
+  update_admin(id_user: string, item: UserUpdateModel): Observable<ApiResponseModel<UserModel>> {
+    return this.apiResponseService.update<ApiResponseModel<UserModel>, UserUpdateModel>(
+      `${this.endpoint}/admin`, id_user, item
     );
   }
 }

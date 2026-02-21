@@ -21,7 +21,7 @@ export class UserListRowComponent {
   protected onEdit(item: UserDetailModel): void {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.USERS.FORM], { 
       state: { 
-        userProfileVM: item, 
+        userProfileVM: item,
         navigateBack: ROUTES_CONSTANTS.PROTECTED.ADMIN.USERS.ROOT,
       } 
     }); 

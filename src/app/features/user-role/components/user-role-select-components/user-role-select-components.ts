@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { UserRoleService } from '@features/user-role/services/user-role-service';
@@ -19,6 +19,7 @@ import { CommonModule } from '@angular/common';
 export class UserRoleSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
+  readonly newSelectedId = output<number>();
   
   private readonly userRoleService = inject(UserRoleService);
 
@@ -33,4 +34,10 @@ export class UserRoleSelectComponents {
     ),
     { initialValue: undefined }
   );
+
+  protected onChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const newId = Number(select.value); 
+    this.newSelectedId.emit(newId); 
+  }
 }

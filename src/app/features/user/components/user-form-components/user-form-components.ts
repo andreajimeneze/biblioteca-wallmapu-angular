@@ -4,7 +4,8 @@ import { CommuneSelectComponents } from "@features/commune/components/commune-se
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { UserStatusSelectComponents } from "@features/user-status/components/user-status-select-components/user-status-select-components";
 import { UserRoleSelectComponents } from "@features/user-role/components/user-role-select-components/user-role-select-components";
-import { UserFormVM } from '@features/user/models/user-form.vm';
+import { Role } from '@shared/constants/roles-enum';
+import { UserModel } from '@features/user/models/user-model';
 
 @Component({
   selector: 'app-user-form-components',
@@ -19,16 +20,19 @@ import { UserFormVM } from '@features/user/models/user-form.vm';
   templateUrl: './user-form-components.html',
 })
 export class UserFormComponents {
-  readonly userFormVM = input<UserFormVM | null>(null);
-  readonly formSubmit = output<UserFormVM>();
+  readonly editRol = input.required<Role>();
+  readonly picture = input.required<string>();
+  readonly userModel = input<UserModel | null>(null);
+  readonly formSubmit = output<UserModel>();
 
+  readonly Role = Role;
   readonly errorMessage = signal<string | null>(null);
 
   /* -- Form data ----------------------------------------- */
-  readonly formData = signal<Partial<UserFormVM>>({});
+  readonly formData = signal<Partial<UserModel>>({});
 
   private readonly syncFormEffect = effect(() => {
-    const user = this.userFormVM();
+    const user = this.userModel();
     if (!user) return; 
 
     this.formData.set({
@@ -61,7 +65,7 @@ export class UserFormComponents {
     this.formData.update(data => ({ ...data, commune_id: id ?? 0 }));
   }
 
-  private updateField<K extends keyof UserFormVM>(key: K, value: string, input?: HTMLInputElement) {
+  private updateField<K extends keyof UserModel>(key: K, value: string, input?: HTMLInputElement) {
     const sanitized = this.sanitize(key, value);
 
     if (sanitized === null) {
@@ -73,7 +77,7 @@ export class UserFormComponents {
     this.errorMessage.set(null);
   }
 
-  private sanitize(key: keyof UserFormVM, value: string): string | null {
+  private sanitize(key: keyof UserModel, value: string): string | null {
     switch (key){
       case 'phone':
         if (!/^\d*$/.test(value)) return null; // solo números
@@ -117,23 +121,23 @@ export class UserFormComponents {
       return;
     }
 
-    const completeData = this.userFormVM();
+    const completeData = this.userModel();
     
     if (!completeData) {
       this.errorMessage.set('No se encontró el usuario original');
       return;
     }
 
-    const SubmitData: UserFormVM = { 
+    const submitData: UserModel = { 
       ...completeData,
       ...data 
     }
 
     this.errorMessage.set(null)
-    this.formSubmit.emit(SubmitData); // ✅ emite al padre
+    this.formSubmit.emit(submitData); // ✅ emite al padre
   }
   
-  private validateFormOnSubmit(data: Partial<UserFormVM>): string | null {
+  private validateFormOnSubmit(data: Partial<UserModel>): string | null {
     if (!data.name?.trim())           return 'El nombre es requerido';
     if (data.name.length < 2)         return 'El nombre debe tener al menos 2 caracteres';
   
@@ -170,5 +174,13 @@ export class UserFormComponents {
     const expected = remainder === 11 ? '0' : remainder === 10 ? 'k' : String(remainder);
   
     return dv.toLowerCase() === expected;
+  }
+
+  protected onRoleChange(id: number) {
+    this.formData.update(data => ({ ...data, user_role_id: id }));
+  }
+
+  protected onStatusChange(id: number) {
+    this.formData.update(data => ({ ...data, user_status_id: id }));
   }
 }

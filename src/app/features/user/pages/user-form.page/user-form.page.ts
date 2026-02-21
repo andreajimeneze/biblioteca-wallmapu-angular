@@ -7,8 +7,9 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { map, of } from 'rxjs';
-import { UserFormVM } from '@features/user/models/user-form.vm';
-import { UserProfileVM } from '@features/user/models/user-profile.vm';
+import { Role } from '@shared/constants/roles-enum';
+import { UserModel } from '@features/user/models/user-model';
+import { UserDetailModel } from '@features/user/models/user-detail-model';
 
 @Component({
   selector: 'app-user-form.page',
@@ -22,37 +23,43 @@ import { UserProfileVM } from '@features/user/models/user-profile.vm';
 export class UserFormPage {
   // ─── NAVEGACIÓN ───────────────────────────────────────────────────────────────
   private readonly state = history.state as {
-    userProfileVM ?: UserProfileVM ;
-    navigateBack?: string;
+    editRole: Role;
+    picture: string;
+    userDetailModel: UserDetailModel ;
+    navigateBack: string;
   };
 
-  readonly userFormVM = signal<UserFormVM | null>(
-    this.state.userProfileVM
+  readonly editRole = signal<Role>(this.state.editRole);
+  readonly picture = signal<string>(this.state.picture);
+  readonly navigateGoBack = signal<string>(this.state.navigateBack);
+  readonly userModel = signal<UserModel | null>(
+    this.state.userDetailModel
     ? {
-        id_user: this.state.userProfileVM.id_user,
-        email: this.state.userProfileVM.email,
-        name: this.state.userProfileVM.name,
-        lastname: this.state.userProfileVM.lastname,
-        rut: this.state.userProfileVM.rut,
-        address: this.state.userProfileVM.address,
-        phone: this.state.userProfileVM.phone,
-        created_at: this.state.userProfileVM.created_at,
-        updated_at: this.state.userProfileVM.updated_at,
-        commune_id: this.state.userProfileVM.commune_id,
-        user_role_id: this.state.userProfileVM.user_role_id,
-        user_status_id: this.state.userProfileVM.user_status_id,
-        picture: this.state.userProfileVM.picture
+        id_user: this.state.userDetailModel.id_user,
+        email: this.state.userDetailModel.email,
+        name: this.state.userDetailModel.name,
+        lastname: this.state.userDetailModel.lastname,
+        rut: this.state.userDetailModel.rut,
+        address: this.state.userDetailModel.address,
+        phone: this.state.userDetailModel.phone,
+        created_at: this.state.userDetailModel.created_at,
+        updated_at: this.state.userDetailModel.updated_at,
+        commune_id: this.state.userDetailModel.commune_id,
+        user_role_id: this.state.userDetailModel.user_role_id,
+        user_status_id: this.state.userDetailModel.user_status_id,
       }
     : null
   );
-  readonly navigateGoBack = signal<string>(this.state.navigateBack ?? '/');
 
   // ─── SERVICIOS ────────────────────────────────────────────────────────────────
   private readonly userService = inject(UserService);
   private readonly router = inject(Router);
 
   // ─── TRIGGER MUTACIÓN ─────────────────────────────────────────────────────────
-  private readonly submitPayload = signal<{ id: string; dto: UserUpdateModel } | null>(null);
+  private readonly submitPayload = signal<{ 
+    id: string; 
+    userUpdateModel: UserUpdateModel; 
+  } | null>(null);
 
   // ─── RX RESOURCE ──────────────────────────────────────────────────────────────
   private readonly updateRX = rxResource({
@@ -60,13 +67,16 @@ export class UserFormPage {
     stream: ({ params: payload }) => {
       if (!payload) return of(null);
 
-      return this.userService.update(payload.id, payload.dto).pipe(
+      const request$ =
+      this.editRole() === Role.Admin
+        ? this.userService.update_admin(payload.id, payload.userUpdateModel)
+        : this.userService.update_user(payload.id, payload.userUpdateModel);
+
+      return request$.pipe(
         map(response => {
-          // Error de negocio → va a errorMessage
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
         })
-        // Errores HTTP → interceptor los maneja globalmente con modal
       );
     },
   });
@@ -91,18 +101,20 @@ export class UserFormPage {
   });
 
   // ─── SUBMIT ───────────────────────────────────────────────────────────────────
-  protected onUserFormSubmit(model: UserFormVM): void {
+  protected onUserFormSubmit(model: UserModel): void {
     if (!model.id_user) return;
 
     this.submitPayload.set({
       id: model.id_user,
-      dto: {
-        name: model.name ?? '',
-        lastname: model.lastname ?? '',
-        rut: model.rut ?? '',
-        address: model.address ?? '',
-        phone: model.phone ?? '',
-        commune_id: model.commune_id ?? 0,
+      userUpdateModel: {
+        name: model.name,
+        lastname: model.lastname,
+        rut: model.rut,
+        address: model.address,
+        phone: model.phone,
+        commune_id: model.commune_id,
+        user_role_id: model.user_role_id,
+        user_status_id: model.user_status_id
       }
     });
   }

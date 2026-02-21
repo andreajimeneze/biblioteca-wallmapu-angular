@@ -1,4 +1,4 @@
-import { Component, inject, input } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { UserStatusService } from '@features/user-status/services/user-status-service';
@@ -17,6 +17,7 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 export class UserStatusSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
+  readonly newSelectedId = output<number>();
   
   private readonly userStatusService = inject(UserStatusService);
 
@@ -31,5 +32,11 @@ export class UserStatusSelectComponents {
     ),
     { initialValue: undefined }
   );
+
+  protected onChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const newId = Number(select.value); 
+    this.newSelectedId.emit(newId); 
+  }
 }
 
