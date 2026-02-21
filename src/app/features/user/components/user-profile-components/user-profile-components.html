@@ -40,7 +40,10 @@
   
         <!-- Info principal -->
         <div class="mt-16">
-          <h2 class="card-title text-2xl">
+          <p class="text-base-content/70">
+            {{ userProfileVM()?.user_role?.role }}
+          </p>
+          <h2 class="card-title text-2xl text-my-purple">
             {{ userProfileVM()?.name }} {{ userProfileVM()?.lastname }}
           </h2>
           <p class="text-base-content/70">
@@ -49,7 +52,10 @@
           <p class="text-base-content/70">
             {{ userProfileVM()?.address }}
           </p>
-          
+          <p class="text-my-pink">
+            {{ userProfileVM()?.user_status?.status }}
+          </p>
+                    
           <!-- Separador -->
           <div class="divider text-base-content/40 mt-0">Estadísticas</div>
   

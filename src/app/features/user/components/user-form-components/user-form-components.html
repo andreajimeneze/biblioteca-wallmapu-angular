@@ -1,4 +1,4 @@
-@if (!userProfileVM()) {
+@if (!userFormVM()) {
   <div class="flex max-w-2xl flex-col gap-4">
     <div class="flex items-center gap-4">
       <div class="skeleton h-28 w-28 shrink-0 rounded-full m-4 bg-my-light/50"></div>
@@ -22,15 +22,15 @@
       
       <section class="flex gap-4 flex-wrap">
         <img 
-          [ngSrc]="userProfileVM()?.picture || 'images/book.png'" 
-          [alt]="userProfileVM()?.name ?? 'User image'" 
+          [ngSrc]="userFormVM()?.picture || 'images/book.png'" 
+          [alt]="userFormVM()?.name ?? 'User image'" 
           width="100" height="100" class="rounded-full" priority
         />
         <div class="grid w-md">
-          <input [value]="userProfileVM()?.id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="(userProfileVM()?.created_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Creado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="(userProfileVM()?.updated_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Modificado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
-          <input [value]="userProfileVM()?.email" type="text" placeholder="Sin Email" class="text-my-purple text-xl font-bold" disabled />
+          <input [value]="userFormVM()?.id_user"  type="text" placeholder="Sin Id" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="(userFormVM()?.created_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Creado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="(userFormVM()?.updated_at | date:'yyyy-MM-dd HH:mm:ss') + ' (Modificado)'" type="text" placeholder="Fecha" class="text-my-purple text-md font-bold" disabled />
+          <input [value]="userFormVM()?.email" type="text" placeholder="Sin Email" class="text-my-purple text-xl font-bold" disabled />
         </div>
       </section>
 
@@ -41,7 +41,7 @@
         <div class="flex">
           <input value="Rol:" type="text" class="text-my-purple text-sm w-14 text-center" disabled />
           <app-user-role-select-components
-            [selectedId]="userProfileVM()?.user_role_id || 3"
+            [selectedId]="userFormVM()?.user_role_id || 3"
             [disabled]="true"
           />
         </div>
@@ -121,7 +121,7 @@
         <label class="label font-semibold mb-1">Comuna</label>
         <!-- COMPONENTE FEATURE COMMUNE-->
         <app-commune-select-components
-          [communeId]="userProfileVM()?.commune_id" 
+          [communeId]="userFormVM()?.commune_id" 
           (communeSelected)="updateCommune($event)"
         />
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>

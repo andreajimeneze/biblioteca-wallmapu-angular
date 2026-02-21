@@ -1,7 +1,7 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserProfileVM } from '@features/user/models/user-profile.vm';
+import { UserDetailModel } from '@features/user/models/user-detail-model';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 
 @Component({
@@ -16,9 +16,9 @@ export class UserListRowComponent {
   ROUTES_CONSTANTS=ROUTES_CONSTANTS
   private router = inject(Router);
   
-  readonly userProfileVM = input<UserProfileVM>();
+  readonly userDetail = input<UserDetailModel>();
 
-  protected onEdit(item: UserProfileVM): void {
+  protected onEdit(item: UserDetailModel): void {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.USERS.FORM], { 
       state: { 
         userProfileVM: item, 

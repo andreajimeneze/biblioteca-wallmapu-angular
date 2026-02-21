@@ -1,6 +1,8 @@
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
+import { UserDetailModel } from '@features/user/models/user-detail-model';
+import { UserFormVM } from '@features/user/models/user-form.vm';
 import { UserProfileVM } from '@features/user/models/user-profile.vm';
 import { Role } from '@shared/constants/roles-enum';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
@@ -23,7 +25,7 @@ throw new Error('Method not implemented.');
 
   protected onEdit(item: UserProfileVM | null): void {
     if (item) {
-      const isAdmin = item.role === Role.Admin;
+      const isAdmin = item.user_role.role === Role.Admin;
 
       const formRoute = isAdmin
       ? ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.FORM

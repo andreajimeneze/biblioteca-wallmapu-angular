@@ -5,10 +5,9 @@ import { UserService } from '@features/user/services/user-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthStore } from '@features/auth/services/auth-store';
 import { map, of } from 'rxjs';
-import { UserProfileVM } from '@features/user/models/user-profile.vm';
 import { UserProfileComponents } from "@features/user/components/user-profile-components/user-profile-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { Role } from '@shared/constants/roles-enum';
+import { UserProfileVM } from '@features/user/models/user-profile.vm';
 
 @Component({
   selector: 'app-user-profile.page',
@@ -25,14 +24,13 @@ export class UserProfilePage {
   private readonly authStore = inject(AuthStore);
   private readonly authUser = computed(() => ({
     userId: this.authStore.user()?.id_user,
-    role: this.authStore.user()?.role,
     picture: this.authStore.user()?.picture,
   }));
 
   // SERVICIO DE FEATURE
   private readonly userService = inject(UserService);
 
-  private readonly userData = rxResource({
+  private readonly dataResourceRX = rxResource({
     params: () => this.authUser().userId,
     stream: ({ params: id }) => {
       if (!id) return of(null);
@@ -43,18 +41,18 @@ export class UserProfilePage {
             throw new Error(response.message);
           }
   
-          return response.result; // 👈 devolvemos solo el UserModel
+          return response.result;
         })
       );
     },
   });
 
   // ESPERA QUE FINALICE RX
-  readonly isLoading = this.userData.isLoading;
+  readonly isLoading = this.dataResourceRX.isLoading;
 
   // CONTROL DE ERROES
   readonly backendError = computed(() => 
-    this.userData.error()?.message ?? null
+    this.dataResourceRX.error()?.message ?? null
   );
   
   readonly errorMessage = computed(() => {
@@ -64,7 +62,7 @@ export class UserProfilePage {
   });
 
   readonly isProfileIncomplete = computed(() => {
-    const user = this.userData.value();
+    const user = this.dataResourceRX.value();
     if (!user) return false;
   
     return !(
@@ -77,15 +75,14 @@ export class UserProfilePage {
   });
 
   // PROCESAR USER A USER PROFILE TYPE
-  readonly userProfileVM = computed<UserProfileVM | null>(() => {
-    const user = this.userData.value();
+  readonly userDetailComputed = computed<UserProfileVM | null>(() => {
+    const user = this.dataResourceRX.value();
     const auth = this.authUser();
   
     if (!user) return null;
 
     return {
       ...user,
-      role: auth.role ?? Role.Reader,
       picture: auth.picture ?? null 
     };
   });

@@ -1,7 +1,5 @@
-import { UserModel } from "@features/user/models/user-model";
-import { Role } from "@shared/constants/roles-enum";
+import { UserDetailModel } from "@features/user/models/user-detail-model";
 
-export type UserProfileVM = UserModel & {
-  role: Role | null;
+export type UserProfileVM = UserDetailModel & {
   picture: string | null;
 };

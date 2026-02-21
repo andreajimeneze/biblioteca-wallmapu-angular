@@ -7,8 +7,8 @@ export const API_RESPONSE_PAGINATION_NEWS_LIST: ApiResponseModel<PaginationModel
   statusCode: 0,
   message: "",
   result: {
-    count: 0,
     pages: 0,
+    items: 0,
     next: '',
     prev: '',
     result: [] 

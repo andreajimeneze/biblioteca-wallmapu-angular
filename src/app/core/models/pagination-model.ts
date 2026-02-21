@@ -1,7 +1,7 @@
 export interface PaginationModel<T> {
-  count: number
-  pages: number
-  next: string
-  prev: string
-  result: T
+  pages: number;
+  items: number;
+  next: string | null;
+  prev: string | null;
+  result: T;
 }
