@@ -10,6 +10,8 @@
     @for (newsWithImages of newsWithImagesList(); track $index) {
       <app-news-list-row-component 
         [newsWithImages]="newsWithImages"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
       />
     }
   }  

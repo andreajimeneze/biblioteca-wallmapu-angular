@@ -25,7 +25,7 @@ export class NewsListPage {
   private router = inject(Router);
   private readonly newsService = inject(NewsService)
 
-  // ESTADOS
+  // ─── ESTADOS
   readonly selectedItem = signal<NewsModel | null>(null);
   readonly openDeleteModal = signal(false);
   private readonly isDeleting = signal(false);
@@ -42,7 +42,7 @@ export class NewsListPage {
     refresh: this.refreshTrigger(),
   }));  
   
-  // SERVICIO
+  // ─── SERVICIO
   private readonly dataResourceRX = rxResource({
     params: () => this.params(),
     stream: ({ params }) => {    
@@ -70,28 +70,27 @@ export class NewsListPage {
     this.dataResourceRX.isLoading() || this.isDeleting()
   );
 
-  // ACCIONES 
+  // ─── ACCIONES 
   refreshList() {
     this.refreshTrigger.update(v => v + 1);
   }
 
   onCreate(){
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS, 'form']);
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS.FORM]);
   }
 
-  // MODAL  
-  closeDeleteModal() {
-    this.openDeleteModal.set(false);
-    this.selectedItem.set(null);
+  onEdit(newsWithImagesModel: NewsWithImagesModel){
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS.FORM], 
+      { state : { newsWithImagesModel: newsWithImagesModel } }
+    );
   }
 
-  confirmDelete() {
-    const item = this.selectedItem();
-    if (!item) return;
-  
+  onDelete(newsWithImagesModel: NewsWithImagesModel) {
+    if (!newsWithImagesModel) return;
+
     this.isDeleting.set(true);
-  
-    this.newsService.delete(item.id_news).subscribe({
+      
+    this.newsService.delete(newsWithImagesModel.id_news).subscribe({
       next: () => {
         this.closeDeleteModal();
         this.refreshTrigger.update(v => v + 1);
@@ -101,8 +100,15 @@ export class NewsListPage {
         this.isDeleting.set(false);
       }
     });
-  }  
+  }
 
+  // ─── MODAL
+  closeDeleteModal() {
+    this.openDeleteModal.set(false);
+    this.selectedItem.set(null);
+  }
+
+  // ─── PAGINATION  
   searchText(text: string) {
     this.search.set(text);
     this.currentPage.set(1); 

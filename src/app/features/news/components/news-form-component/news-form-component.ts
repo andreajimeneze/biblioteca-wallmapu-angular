@@ -1,6 +1,6 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { NewsModel } from '@core/models/news-model';
+import { NewsFormModel } from '@features/news/models/news-form-model';
 
 @Component({
   selector: 'app-news-form-component',
@@ -12,17 +12,17 @@ import { NewsModel } from '@core/models/news-model';
 export class NewsFormComponent {
   // ─── IO
   readonly actionText = input<string>()
-  readonly newsModel = input<NewsModel>();
-  readonly formSubmit = output<NewsModel>();
+  readonly newsFormModel = input<NewsFormModel>();
+  readonly onFormSubmit = output<NewsFormModel>();
 
   // ─── ESTADO
   readonly errorMessage = signal<string | null>(null);
 
   // ─── FORM DATA
-  readonly formData = signal<Partial<NewsModel>>({});
+  readonly formData = signal<Partial<NewsFormModel>>({});
 
   private readonly syncFormEffect = effect(() => {
-    const news = this.newsModel();
+    const news = this.newsFormModel();
     if (!news) return; 
 
     this.formData.set({
@@ -30,7 +30,7 @@ export class NewsFormComponent {
       subtitle: news.subtitle ?? '',
       body: news.body ?? '',
     });
-  });
+  }, { allowSignalWrites: true });
 
   protected updateTitle(value: string, input: HTMLInputElement) { 
     this.updateField('title', value, input); 
@@ -42,7 +42,7 @@ export class NewsFormComponent {
     this.updateField('body', value, input); 
   }
 
-  private updateField<K extends keyof NewsModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
+  private updateField<K extends keyof NewsFormModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
     const sanitized = this.sanitize(key, value);
 
     if (sanitized === null) {
@@ -54,7 +54,7 @@ export class NewsFormComponent {
     this.errorMessage.set(null);
   }
 
-  private sanitize(key: keyof NewsModel, value: string): string | null {
+  private sanitize(key: keyof NewsFormModel, value: string): string | null {
     switch (key){
       case 'title':
         if (value.length > 100) return null;
@@ -68,8 +68,44 @@ export class NewsFormComponent {
   }
 
   // ─── SUBMIT
-  protected onSubmit(event: Event): void {
+  protected formSubmit(event: Event): void {
     event.preventDefault();
+
+    const data = this.formData();
+    const error = this.validateFormOnSubmit(data);
+
+    if (error) {
+      this.errorMessage.set(error);
+      return;
+    }
+
+    const completeData = this.newsFormModel();
+    
+    if (!completeData) {
+      this.errorMessage.set('No se encontró la noticia original');
+      return;
+    }
+
+    const submitData: NewsFormModel = { 
+      ...completeData,
+      ...data 
+    }
+
+    this.errorMessage.set(null)
+    this.onFormSubmit.emit(submitData);
+  }
+
+  private validateFormOnSubmit(data: Partial<NewsFormModel>): string | null {
+    if (!data.title?.trim())      return 'El titulo es requerido';
+    if (data.title.length < 2)    return 'El titulo debe tener al menos 2 caracteres';
+  
+    if (!data.subtitle?.trim())   return 'El subtitulo es requerido';
+    if (data.subtitle.length < 2) return 'El subtitulo debe tener al menos 2 caracteres';
+  
+    if (!data.body?.trim())       return 'La descripcion es requerido';
+    if (data.subtitle.length < 2) return 'El descripcion debe tener al menos 2 caracteres';
+    
+    return null; // ✅ sin errores
   }
 
   // ─── IMAGE HANDLING

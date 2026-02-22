@@ -17,12 +17,13 @@ export class NewsListRowComponent {
   
   readonly newsWithImages = input.required<NewsWithImagesModel>();
   readonly delete = output<NewsWithImagesModel>();
+  readonly edit = output<NewsWithImagesModel>();
 
   protected onDelete(item: NewsWithImagesModel): void {
     this.delete.emit(item);
   }
 
   protected onEdit(item: NewsWithImagesModel): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS, 'form'], { state: { url: item } });
+    this.edit.emit(item);
   }
 }

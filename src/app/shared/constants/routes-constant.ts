@@ -23,7 +23,10 @@ export const ROUTES_CONSTANTS = {
       BASE: '/admin',
       DASHBOARD: '/admin',
       BOOKS: '/admin/books',
-      NEWS: '/admin/news',
+      NEWS: {
+        ROOT: '/admin/news',
+        FORM: '/admin/news/form',
+      },
       USERS: {
         ROOT: '/admin/users',
         FORM: '/admin/users/form',

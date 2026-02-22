@@ -32,9 +32,9 @@ export class NewsService {
     );
   }
 
-  update(item: NewsFormModel): Observable<ApiResponseModel<NewsModel>> {
+  update(id: number, item: NewsFormModel): Observable<ApiResponseModel<NewsModel>> {
     return this.apiResponseService.update<ApiResponseModel<NewsModel>, NewsFormModel>(
-      this.endpoint, item.id_news, item
+      this.endpoint, id, item
     );
   }
 

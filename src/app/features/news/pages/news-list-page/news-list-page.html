@@ -19,6 +19,8 @@
     <app-news-list-component 
       [isLoading]="isLoading()"
       [newsWithImagesList]="newsWithImagesList()"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
     />
   </div>
 
@@ -35,6 +37,9 @@
   [isOpen]="openDeleteModal()"
   [loading]="isLoading()"
   [itemName]="selectedItem()?.title"
-  (confirm)="confirmDelete()"
+  (confirm)="false"
   (cancel)="closeDeleteModal()"
 />
+<!--
+  (confirm)="confirmDelete()"
+-->
