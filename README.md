@@ -277,12 +277,51 @@ ng g s core/services/news-gallery-service --skip-tests
 ng g s core/services/error-modal-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES AUTH
+ng g c features/auth/components/auth-button-component --skip-tests --style=none
+ng g c features/auth/components/google-signin-component --skip-tests --style=none
+
+ng g interface features/auth/models/api-auth-google-request
+ng g interface features/auth/models/api-auth-google-response
+ng g interface features/auth/models/auth-user
+
+ng g s features/auth/services/auth-google-service --skip-tests
+ng g s features/auth/services/auth-service --skip-tests
+ng g s features/auth/services/auth-store --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES COMMUNE
 ng g interface features/commune/models/commune-model
 
 ng g s features/commune/services/commune-service --skip-tests
 
 ng g c features/commune/components/commune-select-components --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
+# FEATURES NEWS
+ng g c features/news/components/news-form-component --skip-tests --style=none
+ng g c features/news/components/news-list-component --skip-tests --style=none
+ng g c features/news/components/news-list-row-component --skip-tests --style=none
+
+ng g interface features/news/models/news-form-model
+ng g interface features/news/models/news-model
+ng g interface features/news/models/news-with-images-model
+
+ng g c features/news/pages/news-card-list-page --skip-tests --style=none
+ng g c features/news/pages/news-details-page --skip-tests --style=none
+ng g c features/news/pages/news-form-page --skip-tests --style=none
+ng g c features/news/pages/news-list-page --skip-tests --style=none
+
+ng g s features/news/services/news-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES NEWS GALLERY
+ng g c features/news-gallery/components/news-gallery-component --skip-tests --style=none
+
+ng g interface features/news-gallery/models/news-gallery-model
+
+ng g s features/news-gallery/services/news-service --skip-tests
+
 
 # ---------------------------------------------------------------------------------
 # FEATURES USER
@@ -341,32 +380,11 @@ ng g c shared/components/modal-delete-component --skip-tests --style=none
 ng g c shared/components/modal-error-component --skip-tests --style=none
 ng g c shared/components/modal-image-component --skip-tests --style=none
 ng g c shared/components/navbar-component --skip-tests --style=none
-ng g c shared/components/news-card-component --skip-tests --style=none
-ng g c shared/components/news-details-component --skip-tests --style=none
-ng g c shared/components/news-featured-component --skip-tests --style=none
-ng g c shared/components/news-gallery-component --skip-tests --style=none
-ng g c shared/components/news-list-component --skip-tests --style=none
-ng g c shared/components/news-skeleton-component --skip-tests --style=none
-ng g c shared/components/news-table-row-component --skip-tests --style=none
 ng g c shared/components/Pagination-component --skip-tests --style=none
 ng g c shared/components/section-header-component --skip-tests --style=none
 
 # SHARED MODELS
 ng g interface shared/models/navigation-model
-
-# ---------------------------------------------------------------------------------
-# FEATURES AUTH
-ng g interface features/auth/models/user
-ng g interface features/auth/models/user-google
-ng g interface features/auth/models/api-auth-request
-ng g interface features/auth/models/api-auth-response
-ng g interface features/auth/models/api-auth-google-request
-ng g interface features/auth/models/api-auth-google-response
-ng g s features/auth/services/auth-service --skip-tests
-ng g s features/auth/services/auth-store --skip-tests
-ng g s features/auth/services/auth-google-service --skip-tests
-ng g c features/auth/components/auth-button-component --skip-tests --style=none
-ng g c features/auth/components/google-signin-component --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
 # FEATURES PUBLIC HOME 

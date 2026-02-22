@@ -17,12 +17,6 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
   templateUrl: './commune-select-components.html',
 })
 export class CommuneSelectComponents {
-  // USO
-  //<app-commune-select-components 
-  //  [communeId]="myId"
-  //  (communeSelected)="onCommuneSelected($event)"
-  ///>
-
   readonly communeSelected = output<number | null>();
   readonly communeId = input<number>();
 

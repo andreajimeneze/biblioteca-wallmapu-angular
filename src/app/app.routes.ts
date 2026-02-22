@@ -57,6 +57,10 @@ export const routes: Routes = [
         path: 'profile',
         loadChildren: () => import('@features/user/profile.route').then(m => m.PROFILE_ROUTES)
       },
+      {
+        path: 'settings',
+        loadChildren: () => import('@features/news/news.routes').then(m => m.NEWS_ROUTES)
+      },      
     ]
   },
   {

@@ -42,14 +42,12 @@ export class UserListPage {
   // FETCH
   private readonly dataResourceRX = rxResource({
     params: () => this.params(),
-    stream: ({ params  }) => {    
-      return this.userService
-      .getAllDetails( 
+    stream: ({ params }) => {    
+      return this.userService.getAllDetails( 
         params.currentPage, 
         params.items, 
         params.search
-      )
-      .pipe(
+      ).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.totalPages.set(response.result.pages);
