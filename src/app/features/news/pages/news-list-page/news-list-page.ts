@@ -1,15 +1,15 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { NewsService } from '@features/news/services/news-service';
-import { map } from 'rxjs';
+import { map, of, tap } from 'rxjs';
 import { NewsListComponent } from "@features/news/components/news-list-component/news-list-component";
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
-import { NewsModel } from '@features/news/models/news-model';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { Router } from '@angular/router';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
+import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
 @Component({
   selector: 'app-news-list-page',
@@ -17,7 +17,8 @@ import { PaginationComponent } from "@shared/components/pagination-component/pag
     NewsListComponent,
     ModalDeleteComponent,
     SectionHeaderComponent,
-    PaginationComponent
+    PaginationComponent,
+    MessageErrorComponent
 ],
   templateUrl: './news-list-page.html',
 })
@@ -26,15 +27,23 @@ export class NewsListPage {
   private readonly newsService = inject(NewsService)
 
   // ─── ESTADOS
-  readonly selectedItem = signal<NewsModel | null>(null);
+  readonly selectedNewsWithImagesModel = signal<NewsWithImagesModel | null>(null);
   readonly openDeleteModal = signal(false);
-  private readonly isDeleting = signal(false);
   readonly currentPage = signal(1);
   private readonly items = signal(10);
   private readonly search = signal('');
   readonly totalPages = signal<number>(0);
   private readonly refreshTrigger = signal(0);
-  
+  readonly isLoading = computed(() => 
+    this.dataResourceRX.isLoading() || this.deleteRX.isLoading()
+  );
+  readonly errorMessage = computed(() => {
+    if (this.dataResourceRX.error()?.message) return this.dataResourceRX.error()!.message;
+    if (this.deleteRX.error()?.message) return this.deleteRX.error()!.message;
+    return null;
+  });
+
+  // ─── GET RX
   private readonly params = computed(() => ({
     currentPage: this.currentPage(),
     items: this.items(),
@@ -42,7 +51,6 @@ export class NewsListPage {
     refresh: this.refreshTrigger(),
   }));  
   
-  // ─── SERVICIO
   private readonly dataResourceRX = rxResource({
     params: () => this.params(),
     stream: ({ params }) => {    
@@ -66,10 +74,29 @@ export class NewsListPage {
     return data
   });
 
-  readonly isLoading = computed(() => 
-    this.dataResourceRX.isLoading() || this.isDeleting()
-  );
+  // ─── DELETE RX
+  private readonly deleteIdPayload = signal<number | null>(null);
 
+  private readonly deleteRX = rxResource({
+    params: () => this.deleteIdPayload(),
+    stream: ({ params: payloadId }) => {
+      if (payloadId === null) return of(null);
+
+      return this.newsService.delete(payloadId).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        }),
+        tap(() => {
+          this.refreshList()
+          this.closeDeleteModal();
+          this.deleteIdPayload.set(null);
+          this.selectedNewsWithImagesModel.set(null);
+        }),
+      );
+    },
+  });
+ 
   // ─── ACCIONES 
   refreshList() {
     this.refreshTrigger.update(v => v + 1);
@@ -87,28 +114,23 @@ export class NewsListPage {
 
   onDelete(newsWithImagesModel: NewsWithImagesModel) {
     if (!newsWithImagesModel) return;
-
-    this.isDeleting.set(true);
-      
-    this.newsService.delete(newsWithImagesModel.id_news).subscribe({
-      next: () => {
-        this.closeDeleteModal();
-        this.refreshTrigger.update(v => v + 1);
-      },
-      error: err => {
-        console.error(err);
-        this.isDeleting.set(false);
-      }
-    });
+    this.selectedNewsWithImagesModel.set(newsWithImagesModel)
+    this.openDeleteModal.set(true);
   }
+
+  confirmDelete() {
+    console.log("CONFIRM")
+    const selectedNewsWithImagesModel = this.selectedNewsWithImagesModel();
+    if (!selectedNewsWithImagesModel) return;
+    this.deleteIdPayload.set(selectedNewsWithImagesModel.id_news);
+  } 
 
   // ─── MODAL
   closeDeleteModal() {
     this.openDeleteModal.set(false);
-    this.selectedItem.set(null);
   }
 
-  // ─── PAGINATION  
+  // ─── PAGINACION  
   searchText(text: string) {
     this.search.set(text);
     this.currentPage.set(1); 

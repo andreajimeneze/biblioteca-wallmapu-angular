@@ -1,16 +1,19 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { NewsFormModel } from '@features/news/models/news-form-model';
+import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-news-form-component',
   imports: [
-    MessageErrorComponent
+    MessageErrorComponent,
+    LoadingComponent
 ],
   templateUrl: './news-form-component.html',
 })
 export class NewsFormComponent {
   // ─── IO
+  readonly isLoading = input<boolean>(false);
   readonly actionText = input<string>()
   readonly newsFormModel = input<NewsFormModel>();
   readonly onFormSubmit = output<NewsFormModel>();

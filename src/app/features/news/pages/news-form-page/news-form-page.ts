@@ -5,8 +5,9 @@ import { NewsWithImagesModel } from '@features/news/models/news-with-images-mode
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { NewsFormModel } from '@features/news/models/news-form-model';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { map, of } from 'rxjs';
+import { map, of, tap } from 'rxjs';
 import { NewsService } from '@features/news/services/news-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-news-form-page',
@@ -19,7 +20,7 @@ export class NewsFormPage {
     newsWithImagesModel: NewsWithImagesModel ;
   };
   
-  ROUTES_CONSTANTS=ROUTES_CONSTANTS
+  private readonly router = inject(Router);
 
   // ─── ESTADOS
   readonly newsFormModel = signal<NewsFormModel>(
@@ -32,6 +33,7 @@ export class NewsFormPage {
   );
   readonly isEditMode = computed(() => !!this.newsFormModel()?.id_news);
   readonly actionText = computed(() => this.isEditMode() ? 'Modificar Noticia' : 'Crear Noticia');
+  readonly isLoading = computed(() => this.updateRX.isLoading());
 
   // ─── SERVICIOS
   private readonly newsService = inject(NewsService);
@@ -56,16 +58,23 @@ export class NewsFormPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
+        }),
+        tap(() => {
+          this.routeGoBack()
         })
       );
     },
   });
- 
+
   // ─── ACCIONES
   protected onFormSubmit(item: NewsFormModel) {
     this.submitPayload.set({
       id: item.id_news,
       newsFormModel: item,
     })
+  }
+
+  protected routeGoBack() {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS.ROOT]);
   }
 }

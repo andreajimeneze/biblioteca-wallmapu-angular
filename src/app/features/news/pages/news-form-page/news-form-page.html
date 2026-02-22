@@ -1,11 +1,12 @@
 <app-section-header-component
   [title]="actionText()" 
-  [route]="ROUTES_CONSTANTS.PROTECTED.ADMIN.NEWS.ROOT"
   routeText="Volver"
+  (click)="routeGoBack()"
 />
 
 <section class="flex max-w-4xl flex-col gap-4 mx-auto p-4">
   <app-news-form-component 
+    [isLoading]="isLoading()"
     [actionText]="actionText()"
     [newsFormModel]="newsFormModel()"
     (onFormSubmit)="onFormSubmit($event)"
