@@ -5,7 +5,7 @@ import { NewsWithImagesModel } from '@features/news/models/news-with-images-mode
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { NewsFormModel } from '@features/news/models/news-form-model';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { map, NEVER, of, tap } from 'rxjs';
+import { map, of, tap } from 'rxjs';
 import { NewsService } from '@features/news/services/news-service';
 import { Router } from '@angular/router';
 import { ImageListComponent } from "@features/news-gallery/components/image-list-component/image-list-component";

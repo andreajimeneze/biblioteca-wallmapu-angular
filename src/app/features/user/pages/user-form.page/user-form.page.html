@@ -1,8 +1,8 @@
 
 <app-section-header-component 
-  title="Modificar Perfil"
-  routeText="Volver a Perfil"
-  [route]=navigateGoBack()
+  [title]="'Modificar Perfil'"
+  [actionText]="'Volver a Perfil'"
+  (actionClicked)="actionClicked()"
 />
 
 @if (errorMessage()) {

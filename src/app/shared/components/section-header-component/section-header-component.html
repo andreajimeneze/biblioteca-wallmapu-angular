@@ -6,11 +6,14 @@
       <p class="text-my-dark mt-2">{{ description() }}</p>
     </div>
 
-    <button 
-      [routerLink]="route()"
-      class="btn btn-outline bg-my-green text-my-light">
-      {{ routeText() }}
-    </button>
+    @if (actionText()) {
+      <button
+        class="btn btn-outline bg-my-green text-my-light"
+        (click)="onActionClick()">
+
+        {{ actionText() }}
+      </button>
+    }
   </div>
 
   @if (searchPlaceholder()) {

@@ -1,5 +1,8 @@
 export const ROUTES_CONSTANTS = {
-  HOME: '/',
+  HOME: {
+    ROOT: '/',
+    NEWS: '/news'
+  },
   FORBIDDEN: '/forbidden',
   LIBRARY: {
     BASE: '/library',

@@ -10,6 +10,7 @@ import { map, of } from 'rxjs';
 import { Role } from '@shared/constants/roles-enum';
 import { UserModel } from '@features/user/models/user-model';
 import { UserDetailModel } from '@features/user/models/user-detail-model';
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 
 @Component({
   selector: 'app-user-form.page',
@@ -119,4 +120,9 @@ export class UserFormPage {
     });
   }
 
+  protected actionClicked() {
+    this.editRole() === Role.Admin
+    ? this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT])
+    : this.router.navigate([ROUTES_CONSTANTS.PROTECTED.USER.PROFILE.ROOT])
+  }
 }

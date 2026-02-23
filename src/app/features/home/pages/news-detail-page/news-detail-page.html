@@ -1,0 +1,29 @@
+<section class="min-h-dvh bg-linear-to-b from-my-green/60 from-0% via-my-light via-25% to-my-light/60">
+
+  <article class="p-4 max-w-5xl mx-auto">
+    @if (errorMessage()) {
+      <app-message-error-component 
+        [message]="errorMessage()" 
+      />
+    }
+
+    @if (isLoading()) {
+      <div class="skeleton h-96 w-full bg-my-light/50"></div>
+      <div class="flex gap-4 pt-4">
+        <div class="skeleton aspect-video w-full bg-my-light/50"></div>
+        <div class="skeleton aspect-video w-full bg-my-light/50"></div>
+        <div class="skeleton aspect-video w-full bg-my-light/50"></div>
+      </div>
+    } @else {
+
+      @if (newsWithImages()) {
+        <app-news-detail-component [newsWithImages]="newsWithImages()!" />
+
+        <div class="divider my-12 text-base-content/40">Galería de Imágenes</div>
+  
+        <app-news-detail-gallery-component [newsWithImages]="newsWithImages()!"/>  
+      }
+    }
+  </article>
+
+</section>

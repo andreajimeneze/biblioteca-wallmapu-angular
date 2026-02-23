@@ -298,7 +298,18 @@ ng g s features/commune/services/commune-service --skip-tests
 ng g c features/commune/components/commune-select-components --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
+# FEATURES HOME
+ng g c features/home/pages/home-page --skip-tests --style=none
+ng g c features/home/pages/news-page --skip-tests --style=none
+ng g c features/home/pages/news-detail-page --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
 # FEATURES NEWS
+ng g c features/news/components/news-card-component --skip-tests --style=none
+ng g c features/news/components/news-card-list-component --skip-tests --style=none
+ng g c features/news/components/news-detail-component --skip-tests --style=none
+ng g c features/news/components/news-detail-gallery-component --skip-tests --style=none
+ng g c features/news/components/news-featured-component --skip-tests --style=none
 ng g c features/news/components/news-form-component --skip-tests --style=none
 ng g c features/news/components/news-list-component --skip-tests --style=none
 ng g c features/news/components/news-list-row-component --skip-tests --style=none
@@ -323,7 +334,6 @@ ng g interface features/news-gallery/models/news-gallery-model
 ng g interface features/news-gallery/models/create-news-gallery-model
 
 ng g s features/news-gallery/services/news-gallery-service --skip-tests
-
 
 # ---------------------------------------------------------------------------------
 # FEATURES USER

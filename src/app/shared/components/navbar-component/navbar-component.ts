@@ -32,7 +32,7 @@ export class NavbarComponent {
   }
 
   handleLogoClick(event: Event): void {
-    if (this.router.url === this.ROUTES_HOME) {
+    if (this.router.url === this.ROUTES_HOME.ROOT) {
       event.preventDefault();
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }

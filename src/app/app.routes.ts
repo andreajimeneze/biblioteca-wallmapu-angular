@@ -15,7 +15,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('@features/public/home/home.routes').then(m => m.HOME_ROUTES),
+        loadChildren: () => import('@features/home/home.routes').then(m => m.HOME_ROUTES),
       },
       {
         path: 'library',
@@ -47,7 +47,6 @@ export const routes: Routes = [
       },
       {
         path: 'news',
-        //loadChildren: () => import('@features/admin/news/news.routes').then(m => m.NEWS_ROUTES),
         loadChildren: () => import('@features/news/news.routes').then(m => m.NEWS_ROUTES),
       },
       {
@@ -60,7 +59,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        loadChildren: () => import('@features/news/news.routes').then(m => m.NEWS_ROUTES),
+        loadChildren: () => import('@features/home/home.routes').then(m => m.HOME_ROUTES),
       },      
     ]
   },

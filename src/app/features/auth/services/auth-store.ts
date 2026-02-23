@@ -63,7 +63,7 @@ export class AuthStore {
           navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT;
           break;
         default:
-          navigateTo = ROUTES_CONSTANTS.HOME
+          navigateTo = ROUTES_CONSTANTS.HOME.ROOT
       }
 
       this.router.navigate([navigateTo]);

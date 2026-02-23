@@ -1,7 +1,7 @@
 <app-section-header-component
   [title]="actionText()" 
-  routeText="Volver"
-  (click)="routeGoBack()"
+  [actionText]="'Volver a Noticias'"
+  (actionClicked)="routeGoBack()"
 />
 
 @if (errorMessage()) {

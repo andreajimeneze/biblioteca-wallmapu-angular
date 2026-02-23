@@ -1,8 +1,8 @@
 <section class="flex flex-col justify-between h-full">
   <div>
     <app-section-header-component 
-      title="Noticias" 
-      searchPlaceholder="Buscar Noticia"
+      [title]="'Noticias'" 
+      [searchPlaceholder]="'Buscar Noticia'"
       (searchChange)="searchText($event)"
     />
     
