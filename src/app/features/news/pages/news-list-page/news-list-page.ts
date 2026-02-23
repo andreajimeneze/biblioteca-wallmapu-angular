@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { NewsGalleryService } from '@features/news-gallery/services/news-gallery-service';
 
 @Component({
   selector: 'app-news-list-page',
@@ -25,6 +26,7 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 export class NewsListPage {
   private router = inject(Router);
   private readonly newsService = inject(NewsService)
+  private readonly newsGalleryService = inject(NewsGalleryService)
 
   // ─── ESTADOS
   readonly selectedNewsWithImagesModel = signal<NewsWithImagesModel | null>(null);
@@ -35,11 +37,12 @@ export class NewsListPage {
   readonly totalPages = signal<number>(0);
   private readonly refreshTrigger = signal(0);
   readonly isLoading = computed(() => 
-    this.dataResourceRX.isLoading() || this.deleteRX.isLoading()
+    this.dataResourceRX.isLoading() || this.deleteRX.isLoading() || this.deleteAllGalleryRX.isLoading()
   );
   readonly errorMessage = computed(() => {
     if (this.dataResourceRX.error()?.message) return this.dataResourceRX.error()!.message;
     if (this.deleteRX.error()?.message) return this.deleteRX.error()!.message;
+    if (this.deleteAllGalleryRX.error()?.message) return this.deleteAllGalleryRX.error()!.message;
     return null;
   });
 
@@ -74,11 +77,32 @@ export class NewsListPage {
     return data
   });
 
-  // ─── DELETE RX
-  private readonly deleteIdPayload = signal<number | null>(null);
+  // DELETE ALL GALLERY IMAGES BY ID NEWS
+  private readonly deleteAllGalleryByIdNewsPayload = signal<number | null>(null);
+
+  private readonly deleteAllGalleryRX = rxResource({
+    params: () => this.deleteAllGalleryByIdNewsPayload(),
+    stream: ({ params }) => {
+      if (!params) return of(null);
+
+      return this.newsGalleryService.delete_all(params).pipe(
+        map(r => {
+          if (!r.isSuccess) throw new Error(r.message);
+          return r.result;
+        }),
+        tap(() => {
+          this.deleteNewsByIdPayload.set(this.deleteAllGalleryByIdNewsPayload());
+          this.deleteAllGalleryByIdNewsPayload.set(null);
+        }),
+      );
+    }
+  });
+  
+  // ─── DELETE NEWS
+  private readonly deleteNewsByIdPayload = signal<number | null>(null);
 
   private readonly deleteRX = rxResource({
-    params: () => this.deleteIdPayload(),
+    params: () => this.deleteNewsByIdPayload(),
     stream: ({ params: payloadId }) => {
       if (payloadId === null) return of(null);
 
@@ -90,7 +114,7 @@ export class NewsListPage {
         tap(() => {
           this.refreshList()
           this.closeDeleteModal();
-          this.deleteIdPayload.set(null);
+          this.deleteNewsByIdPayload.set(null);
           this.selectedNewsWithImagesModel.set(null);
         }),
       );
@@ -122,7 +146,7 @@ export class NewsListPage {
     console.log("CONFIRM")
     const selectedNewsWithImagesModel = this.selectedNewsWithImagesModel();
     if (!selectedNewsWithImagesModel) return;
-    this.deleteIdPayload.set(selectedNewsWithImagesModel.id_news);
+    this.deleteAllGalleryByIdNewsPayload.set(selectedNewsWithImagesModel.id_news);
   } 
 
   // ─── MODAL

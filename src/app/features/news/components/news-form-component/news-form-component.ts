@@ -2,6 +2,8 @@ import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { NewsFormModel } from '@features/news/models/news-form-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { HttpErrorResponse } from '@angular/common/http';
+import { ImagePreviewVM } from '@features/news-gallery/models/image-preview.vm';
 
 @Component({
   selector: 'app-news-form-component',
@@ -17,6 +19,7 @@ export class NewsFormComponent {
   readonly actionText = input<string>()
   readonly newsFormModel = input<NewsFormModel>();
   readonly onFormSubmit = output<NewsFormModel>();
+  readonly onChangeImagesPreviewVMList = output<ImagePreviewVM[]>();
 
   // ─── ESTADO
   readonly errorMessage = signal<string | null>(null);
@@ -33,7 +36,7 @@ export class NewsFormComponent {
       subtitle: news.subtitle ?? '',
       body: news.body ?? '',
     });
-  }, { allowSignalWrites: true });
+  });
 
   protected updateTitle(value: string, input: HTMLInputElement) { 
     this.updateField('title', value, input); 
@@ -101,18 +104,44 @@ export class NewsFormComponent {
   private validateFormOnSubmit(data: Partial<NewsFormModel>): string | null {
     if (!data.title?.trim())      return 'El titulo es requerido';
     if (data.title.length < 2)    return 'El titulo debe tener al menos 2 caracteres';
+    if (data.title.length > 100)    return 'El titulo no debe superar los 100 caracteres';
   
     if (!data.subtitle?.trim())   return 'El subtitulo es requerido';
     if (data.subtitle.length < 2) return 'El subtitulo debe tener al menos 2 caracteres';
+    if (data.subtitle.length > 256)    return 'El titulo no debe superar los 256 caracteres';
   
     if (!data.body?.trim())       return 'La descripcion es requerido';
-    if (data.subtitle.length < 2) return 'El descripcion debe tener al menos 2 caracteres';
+    if (data.body.length < 2) return 'El descripcion debe tener al menos 2 caracteres';
     
     return null; // ✅ sin errores
   }
 
   // ─── IMAGE HANDLING
   protected onChangeImages(event: Event): void {
-  
+    const input = event.target as HTMLInputElement;
+    const files = input.files ? Array.from(input.files) : [];
+
+    if (!files.length) return;
+
+    for (const file of files) {
+      if (!file.type.startsWith('image/')) {
+        this.handleError(null, 'Solo se permiten imágenes');
+        input.value = '';
+        return;
+      }
+    }
+
+    const newImagePreviewVMList: ImagePreviewVM[] = files.map(file => ({
+      file,
+      preview: URL.createObjectURL(file),
+      isNew: true,
+      alt: ''
+    }));
+    
+    this.onChangeImagesPreviewVMList.emit(newImagePreviewVMList);
+  }
+
+  private handleError(e: HttpErrorResponse | null, message: string) {
+    this.errorMessage.set(message);
   }
 }

@@ -7,7 +7,7 @@ import { NewsGalleryModel } from '@features/news-gallery/models/news-gallery-mod
 @Injectable({
   providedIn: 'root',
 })
-export class NewsService {
+export class NewsGalleryService {
   private apiResponseService = inject(ApiResponseService)
   private readonly endpoint = 'news-gallery';
 
@@ -27,9 +27,15 @@ export class NewsService {
     );
   }
 
-  delete(id: number): Observable<ApiResponseModel<string>> {
+  delete(id_news_gallery: number): Observable<ApiResponseModel<string>> {
     return this.apiResponseService.delete<ApiResponseModel<string>>(
-      this.endpoint, id
+      this.endpoint, id_news_gallery
+    );
+  }
+
+  delete_all(news_id: number): Observable<ApiResponseModel<string>> {
+    return this.apiResponseService.delete<ApiResponseModel<string>>(
+      `${this.endpoint}/news`, news_id
     );
   }
 }

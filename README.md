@@ -316,11 +316,13 @@ ng g s features/news/services/news-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES NEWS GALLERY
+ng g c features/news-gallery/components/image-list-component --skip-tests --style=none
 ng g c features/news-gallery/components/news-gallery-component --skip-tests --style=none
 
 ng g interface features/news-gallery/models/news-gallery-model
+ng g interface features/news-gallery/models/create-news-gallery-model
 
-ng g s features/news-gallery/services/news-service --skip-tests
+ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 
 # ---------------------------------------------------------------------------------

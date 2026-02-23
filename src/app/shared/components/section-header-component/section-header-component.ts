@@ -16,9 +16,8 @@ export class SectionHeaderComponent {
 
   // Inputs opcionales
   readonly route = input<string | null>(); // Para el caso 2 (botón "Ver todas")
-  readonly routeText = input<string | null>("Ver Mas")
+  readonly routeText = input<string | null>(null)
   readonly searchPlaceholder = input<string | null>(); // Texto del placeholder
-  //readonly searchPlaceholder = input<string | null>('Buscar');
 
   // Output para emitir el valor de búsqueda
   readonly searchChange = output<string>();
