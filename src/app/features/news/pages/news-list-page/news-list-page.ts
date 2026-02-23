@@ -143,7 +143,6 @@ export class NewsListPage {
   }
 
   confirmDelete() {
-    console.log("CONFIRM")
     const selectedNewsWithImagesModel = this.selectedNewsWithImagesModel();
     if (!selectedNewsWithImagesModel) return;
     this.deleteAllGalleryByIdNewsPayload.set(selectedNewsWithImagesModel.id_news);
