@@ -1,21 +1,16 @@
 export const ROUTES_CONSTANTS = {
+  FORBIDDEN: '/forbidden',
   HOME: {
     ROOT: '/',
-    NEWS: '/news'
-  },
-  FORBIDDEN: '/forbidden',
-  LIBRARY: {
-    BASE: '/library',
-    BOOKS: '/library/books',    
-    BOOK: (id: number) => `/library/book/${id}`
-  },
-  NEWS: {
-    BASE: '/news',
-    DETAIL: (id: number) => `/news/${id}`
+    NEWS: {
+      DETAIL: (id: number) => `/news/${id}`,
+    },
+    BOOK: {
+      DETAIL: (id: number) => `/book/${id}`,
+    }
   },
   PROTECTED: {
     USER: {
-      BASE: '/user',
       DASHBOARD: '/user',
       PROFILE: {
         ROOT: '/user/profile',
@@ -23,7 +18,6 @@ export const ROUTES_CONSTANTS = {
       },
     },
     ADMIN: {
-      BASE: '/admin',
       DASHBOARD: '/admin',
       BOOKS: '/admin/books',
       NEWS: {
@@ -38,13 +32,13 @@ export const ROUTES_CONSTANTS = {
         ROOT: '/admin/profile',
         FORM: '/admin/profile/form',
       },
-      SETTINGS: '/admin/settings',
+      SETTINGS: {
+        ROOT: '/admin/settings'
+      },
     }
   },
   PAGES: [
     { URI: "/", NAME: "Inicio" },
-    { URI: "/library", NAME: "Biblioteca" },
     { URI: "/news", NAME: "Noticias" },
-    { URI: "/test", NAME: "Test" }   
   ],
 }

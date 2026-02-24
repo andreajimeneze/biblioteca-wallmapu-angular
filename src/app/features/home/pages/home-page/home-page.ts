@@ -10,8 +10,8 @@ import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { NewsFeaturedComponent } from "@features/news/components/news-featured-component/news-featured-component";
 import { RecommendedBooksComponent } from "@features/public/home/components/recommended-books-component/recommended-books-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
-import { AboutComponent } from "@shared/components/about-component/about-component";
 import { NewsCardListComponent } from "@features/news/components/news-card-list-component/news-card-list-component";
+import { AboutComponent } from '@features/home/components/about-component/about-component';
 
 @Component({
   selector: 'app-home.page',

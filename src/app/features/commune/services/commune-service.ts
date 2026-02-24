@@ -1,8 +1,8 @@
 import { inject, Injectable } from '@angular/core';
-import { ApiResponseService } from '@core/helpers/api-response-service';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { Observable } from 'rxjs';
 import { CommuneModel } from '@features/commune/models/commune-model';
+import { ApiResponseService } from '@core/services/api-response-service';
 
 @Injectable({
   providedIn: 'root',

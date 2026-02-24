@@ -9,11 +9,11 @@ import { map, of, tap } from 'rxjs';
 import { NewsService } from '@features/news/services/news-service';
 import { Router } from '@angular/router';
 import { ImageListComponent } from "@features/news-gallery/components/image-list-component/image-list-component";
-import { NewsGalleryModel } from '@core/models/news-gallery-model';
 import { ImagePreviewVM } from '@features/news-gallery/models/image-preview.vm';
 import { NewsGalleryService } from '@features/news-gallery/services/news-gallery-service';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { CreateNewsGalleryModel } from '@features/news-gallery/models/create-news-gallery-model';
+import { NewsGalleryModel } from '@features/news-gallery/models/news-gallery-model';
 
 @Component({
   selector: 'app-news-form-page',

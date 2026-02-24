@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
-import { ApiResponseService } from '@core/helpers/api-response-service';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { PaginationModel } from '@core/models/pagination-model';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { NewsModel } from '@features/news/models/news-model';
 import { NewsFormModel } from '@features/news/models/news-form-model';
 import { Observable } from 'rxjs';
+import { ApiResponseService } from '@core/services/api-response-service';
 
 @Injectable({
   providedIn: 'root',

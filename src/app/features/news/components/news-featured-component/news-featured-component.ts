@@ -15,6 +15,6 @@ import { RouterLink } from "@angular/router";
 })
 export class NewsFeaturedComponent {
   readonly newsWithImages = input<NewsWithImagesModel | null>(null)
-  readonly goToNews = computed(() => ROUTES_CONSTANTS.NEWS.DETAIL(this.newsWithImages()?.id_news ?? 0));
+  readonly goToNews = computed(() => ROUTES_CONSTANTS.HOME.NEWS.DETAIL(this.newsWithImages()?.id_news ?? 0));
 }
 

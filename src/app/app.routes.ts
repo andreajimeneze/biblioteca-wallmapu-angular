@@ -2,48 +2,35 @@ import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth-guard';
 import { ForbiddenPage } from '@core/pages/forbidden-page/forbidden-page';
 import { NotFoundPage } from '@core/pages/not-found-page/not-found-page';
-import { TestPage } from '@core/pages/test-page/test-page';
-import { AdminLayout } from '@layouts/admin-layout/admin-layout';
-import { PublicLayout } from '@layouts/public-layout/public-layout';
-import { UserLayout } from '@layouts/user-layout/user-layout';
+import { LayoutAdmin } from '@layouts/layout-admin/layout-admin';
+import { LayoutUser } from '@layouts/layout-user/layout-user';
+import { Layout } from '@layouts/layout/layout';
 import { Role } from '@shared/constants/roles-enum';
 
 export const routes: Routes = [
   {
     path: '',
-    component: PublicLayout,
+    component: Layout,
     children: [
       {
         path: '',
         loadChildren: () => import('@features/home/home.routes').then(m => m.HOME_ROUTES),
       },
-      {
-        path: 'library',
-        loadChildren: () => import('@features/public/library/library.routes').then(m => m.LIBRARY_ROUTES),
-      },
-      {
-        path: 'news',
-        loadChildren: () => import('@features/public/news/news.routes').then(m => m.NEWS_ROUTES),
-      },
-      {
-        path: 'test',
-        component: TestPage
-      },
     ]
   },
   {
     path: 'admin',
-    component: AdminLayout,
+    component: LayoutAdmin,
     canActivate: [authGuard],
     data: { roles: [Role.Admin]},
     children: [
       {
         path: '',
-        loadChildren: () => import('@features/admin/dashboard/dashboard.routes').then(m => m.DASHBOARD_ROUTES),
+        component: ForbiddenPage
       },
       {
         path: 'books',
-        loadChildren: () => import('@features/admin/book/book.routes').then(m => m.BOOK_ROUTES),
+        component: ForbiddenPage
       },
       {
         path: 'news',
@@ -59,13 +46,13 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        loadChildren: () => import('@features/home/home.routes').then(m => m.HOME_ROUTES),
+        component: ForbiddenPage
       },      
     ]
   },
   {
     path: 'user',
-    component: UserLayout,
+    component: LayoutUser,
     canActivate: [authGuard],
     data: { roles: [Role.Reader]},
     children: [

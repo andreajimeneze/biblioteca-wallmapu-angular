@@ -1,6 +1,6 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, input, signal } from '@angular/core';
-import { NewsWithImagesModel } from '@core/models/news-model';
+import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { ModalImageComponent } from "@shared/components/modal-image-component/modal-image-component";
 
 @Component({

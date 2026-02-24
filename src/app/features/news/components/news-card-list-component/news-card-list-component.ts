@@ -1,6 +1,6 @@
 import { Component, input } from '@angular/core';
-import { NewsWithImagesModel } from '@core/models/news-model';
 import { NewsCardComponent } from "@features/news/components/news-card-component/news-card-component";
+import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 
 @Component({
   selector: 'app-news-card-list-component',

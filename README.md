@@ -256,30 +256,22 @@ export class NavbarComponent {
 # CORE
 ng g guard core/guards/auth --skip-tests
 
-ng g s core/helpers/api-response-service --skip-tests
-
 ng g interceptor core/interceptors/auth --skip-tests
 ng g interceptor core/interceptors/error --skip-tests
 
 ng g interface core/models/api-response-model
 ng g interface core/models/pagination-model
-ng g interface core/models/news-gallery-model
-ng g interface core/models/news-model
-ng g interface core/models/book-model
 
 ng g c core/pages/forbidden-page --skip-tests --style=none
 ng g c core/pages/not-found-page --skip-tests --style=none
 ng g c core/pages/test-page --skip-tests --style=none
 
-ng g s core/services/book-service --skip-tests
-ng g s core/services/news-service --skip-tests
-ng g s core/services/news-gallery-service --skip-tests
 ng g s core/services/error-modal-service --skip-tests
+ng g s core/services/api-response-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES AUTH
 ng g c features/auth/components/auth-button-component --skip-tests --style=none
-ng g c features/auth/components/google-signin-component --skip-tests --style=none
 
 ng g interface features/auth/models/api-auth-google-request
 ng g interface features/auth/models/api-auth-google-response
@@ -299,6 +291,8 @@ ng g c features/commune/components/commune-select-components --skip-tests --styl
 
 # ---------------------------------------------------------------------------------
 # FEATURES HOME
+ng g c features/home/components/about-component --skip-tests --style=none
+
 ng g c features/home/pages/home-page --skip-tests --style=none
 ng g c features/home/pages/news-page --skip-tests --style=none
 ng g c features/home/pages/news-detail-page --skip-tests --style=none
@@ -337,21 +331,21 @@ ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES USER
+ng g c features/user/components/user-form-components --skip-tests --style=none
+ng g c features/user/components/user-list-components --skip-tests --style=none
+ng g c features/user/components/user-list-row-component --skip-tests --style=none
+ng g c features/user/components/user-profile-components --skip-tests --style=none
+
+ng g interface features/user/models/user-detail-model
+ng g interface features/user/models/user-form-model
 ng g interface features/user/models/user-model
 ng g interface features/user/models/user-update-model
-ng g interface features/user/models/user-detail-model
-
-ng g s features/user/services/user-feature-service --skip-tests
-ng g s features/user/services/user-service --skip-tests
 
 ng g c features/user/pages/user-form.page --skip-tests --style=none
 ng g c features/user/pages/user-list.page --skip-tests --style=none
 ng g c features/user/pages/user-profile.page --skip-tests --style=none
 
-ng g c features/user/components/user-form-components --skip-tests --style=none
-ng g c features/user/components/user-list-components --skip-tests --style=none
-ng g c features/user/components/user-list-row-component --skip-tests --style=none
-ng g c features/user/components/user-profile-components --skip-tests --style=none
+ng g s features/user/services/user-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES USER ROL
@@ -371,19 +365,20 @@ ng g c features/user-status/components/user-status-select-components --skip-test
 
 # ---------------------------------------------------------------------------------
 # LAYOUT
-ng g c layouts/admin-layout --skip-tests --style=none
-ng g c layouts/public-layout --skip-tests --style=none
-ng g c layouts/user-layout --skip-tests --style=none
+ng g c layouts/components/arrow-up-component --skip-tests --style=none
+ng g c layouts/components/dashboard-component --skip-tests --style=none
+ng g c layouts/components/dashboard-navbar-component --skip-tests --style=none
+ng g c layouts/components/dashboard-sidebar-component --skip-tests --style=none
+ng g c layouts/components/footer-component --skip-tests --style=none
+ng g c layouts/components/navbar-component --skip-tests --style=none
+
+ng g c layouts/layout --skip-tests --style=none
+ng g c layouts/layout-admin --skip-tests --style=none
+ng g c layouts/layout-user --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
 # SHARED COMPONENTS
-ng g c shared/components/about-component --skip-tests --style=none
-ng g c shared/components/arrow-up-component --skip-tests --style=none
 ng g c shared/components/book-card-component --skip-tests --style=none
-ng g c shared/components/dashboard-component --skip-tests --style=none
-ng g c shared/components/dashboard-navbar-component --skip-tests --style=none
-ng g c shared/components/dashboard-sidebar-component --skip-tests --style=none
-ng g c shared/components/footer-component --skip-tests --style=none
 ng g c shared/components/header-component --skip-tests --style=none
 ng g c shared/components/loading-component --skip-tests --style=none
 ng g c shared/components/message-error-component --skip-tests --style=none
@@ -391,45 +386,14 @@ ng g c shared/components/message-success-component --skip-tests --style=none
 ng g c shared/components/modal-delete-component --skip-tests --style=none
 ng g c shared/components/modal-error-component --skip-tests --style=none
 ng g c shared/components/modal-image-component --skip-tests --style=none
-ng g c shared/components/navbar-component --skip-tests --style=none
 ng g c shared/components/Pagination-component --skip-tests --style=none
 ng g c shared/components/section-header-component --skip-tests --style=none
 
+# ---------------------------------------------------------------------------------
 # SHARED MODELS
 ng g interface shared/models/navigation-model
 
 # ---------------------------------------------------------------------------------
-# FEATURES PUBLIC HOME 
-ng g c features/public/home/pages/home-page --skip-tests --style=none
-ng g c features/public/home/components/recommended-books-component --skip-tests --style=none
-
-# FEATURES PUBLIC LIBRARY
-ng g c features/public/library/pages/books-page --skip-tests --style=none
-ng g c features/public/library/pages/book-details-page --skip-tests --style=none
-ng g c features/public/library/components/book-list-component --skip-tests --style=none
-ng g c features/public/library/components/book-details-component --skip-tests --style=none
-
-# FEATURES PUBLIC NEWS
-ng g c features/public/news/pages/news-details-page --skip-tests --style=none
-ng g c features/public/news/pages/news-page --skip-tests --style=none
-
-# ---------------------------------------------------------------------------------
-# FEATURES ADMIN BOOK
-ng g c features/admin/book/pages/book-page --skip-tests --style=none
-
-# FEATURES ADMIN PROFILE
-ng g c features/admin/profile/pages/profile-admin-page --skip-tests --style=none
-
-# FEATURES ADMIN NEWS
-ng g c features/admin/news/pages/news-list-page --skip-tests --style=none
-ng g c features/admin/news/pages/news-form-page --skip-tests --style=none
-ng g interface features/admin/news/models/image-item
-
-# FEATURES ADMIN USERS
-ng g c features/admin/users/pages/users-list-page --skip-tests --style=none
-
-# ---------------------------------------------------------------------------------
-
 ```
 
 ## To keep your Fork updated

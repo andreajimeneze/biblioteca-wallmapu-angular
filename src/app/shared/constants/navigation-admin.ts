@@ -45,7 +45,7 @@ export const NAVIGATION_ADMIN: NavigationModel[] = [
   },
   {
     label: 'Configuración',
-    route: ROUTES_CONSTANTS.PROTECTED.ADMIN.SETTINGS,
+    route: ROUTES_CONSTANTS.PROTECTED.ADMIN.SETTINGS.ROOT,
     iconPaths: [
       'M20 7h-9',
       'M14 17H5',

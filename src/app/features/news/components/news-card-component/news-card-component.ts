@@ -15,5 +15,5 @@ import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 })
 export class NewsCardComponent {
   readonly newsWithImages = input.required<NewsWithImagesModel>();
-  readonly goToNews = computed(() => ROUTES_CONSTANTS.NEWS.DETAIL(this.newsWithImages().id_news));
+  readonly goToNews = computed(() => ROUTES_CONSTANTS.HOME.NEWS.DETAIL(this.newsWithImages().id_news));
 }
