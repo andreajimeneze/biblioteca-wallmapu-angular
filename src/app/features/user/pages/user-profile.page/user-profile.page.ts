@@ -50,7 +50,7 @@ export class UserProfilePage {
   });
 
   // ESPERA QUE FINALICE RX
-  readonly isLoading = this.dataResourceRX.isLoading;
+  readonly isLoading = this.dataResourceRX.isLoading();
 
   // CONTROL DE ERROES
   readonly backendError = computed(() => 

@@ -1,17 +1,17 @@
 <footer class="footer sm:footer-horizontal bg-neutral text-neutral-content items-center p-4">
   <aside class="grid-flow-col items-center">
-    <img ngSrc="images/icon-hash.svg" alt="email" height="30" width="26"/>
+    <img [ngSrc]="'images/icon-hash.svg'" alt="email" height="30" width="26"/>
     <p>Copyright © {{currentYear}} - All right reserved</p>
   </aside>
   <nav class="grid-flow-col gap-4 md:place-self-center md:justify-self-end">
     <a href="https://www.instagram.com/biblioteca_wallmapu_de_mesana" target="_blank">
-      <img ngSrc="images/icon-social-instagram.svg" alt="email" height="30" width="30"/>
+      <img [ngSrc]="'images/icon-social-instagram.svg'" alt="email" height="30" width="30"/>
     </a>
     <a href="https://www.facebook.com/people/Biblioteca-wallmapu-de-mesana/100064333436238/" target="_blank">
-      <img ngSrc="images/icon-social-facebook.svg" alt="email" height="30" width="30"/>
+      <img [ngSrc]="'images/icon-social-facebook.svg'" alt="email" height="30" width="30"/>
     </a>
     <a href="mailto:wallmapumesana@gmail.com">
-      <img ngSrc="images/icon-social-email.svg" alt="email" height="30" width="30"/>
+      <img [ngSrc]="'images/icon-social-email.svg'" alt="email" height="30" width="30"/>
     </a>
   </nav>
 </footer>
@@ -35,7 +35,7 @@
   <nav>
     <h6 class="footer-title">Financiado por el FNDR 8% Gobierno Regional de Valparaíso, año 2025</h6>
     <div class="max-w-80 m-auto">
-      <img src="/images/logo_core.webp">
+      <img [ngSrc]="'/images/logo_core.webp'">
     </div>
   </nav>
 </footer>

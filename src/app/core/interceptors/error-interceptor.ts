@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpInterceptorFn } from '@angular/common/http';
 import { inject } from '@angular/core';
 import { ErrorModalService } from '@core/services/error-modal-service';
 import { AuthStore } from '@features/auth/services/auth-store';
-import { catchError, throwError } from 'rxjs';
+import { catchError, EMPTY, throwError } from 'rxjs';
 
 export const errorInterceptor: HttpInterceptorFn = (req, next) => {
   const modalService = inject(ErrorModalService);
@@ -29,11 +29,13 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
           authStore.logout();
         }, 3000); // 3 segundos para que el usuario lea el mensaje
 
-        return throwError(() => error);
+        //return throwError(() => error);
+        return EMPTY;
       }
 
       modalService.openError(statusCode, message);
-      return throwError(() => error);
+      //return throwError(() => error);
+      return EMPTY;
     })
   );
 };
