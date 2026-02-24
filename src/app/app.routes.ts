@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from '@core/guards/auth-guard';
 import { ForbiddenPage } from '@core/pages/forbidden-page/forbidden-page';
+import { InDevelopmentPage } from '@core/pages/in-development-page/in-development-page';
 import { NotFoundPage } from '@core/pages/not-found-page/not-found-page';
 import { LayoutAdmin } from '@layouts/layout-admin/layout-admin';
 import { LayoutUser } from '@layouts/layout-user/layout-user';
@@ -26,11 +27,11 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: ForbiddenPage
+        component: InDevelopmentPage
       },
       {
         path: 'books',
-        component: ForbiddenPage
+        component: InDevelopmentPage
       },
       {
         path: 'news',
@@ -46,7 +47,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        component: ForbiddenPage
+        component: InDevelopmentPage
       },      
     ]
   },

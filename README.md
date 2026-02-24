@@ -263,8 +263,8 @@ ng g interface core/models/api-response-model
 ng g interface core/models/pagination-model
 
 ng g c core/pages/forbidden-page --skip-tests --style=none
+ng g c core/pages/In-development-page --skip-tests --style=none
 ng g c core/pages/not-found-page --skip-tests --style=none
-ng g c core/pages/test-page --skip-tests --style=none
 
 ng g s core/services/error-modal-service --skip-tests
 ng g s core/services/api-response-service --skip-tests
