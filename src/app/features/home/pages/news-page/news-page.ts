@@ -4,7 +4,7 @@ import { NewsWithImagesModel } from '@features/news/models/news-with-images-mode
 import { NewsService } from '@features/news/services/news-service';
 import { HeaderComponent } from "@shared/components/header-component/header-component";
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
-import { map } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { NewsCardListComponent } from "@features/news/components/news-card-list-component/news-card-list-component";
 
@@ -34,7 +34,9 @@ export class NewsPage {
 
   private readonly newsRX = rxResource({
     params: () => this.params(),
-    stream: ({ params }) => {    
+    stream: ({ params }) => {
+      if (!params) return of(null);
+
       return this.newsService.getAll(
         params.currentPage, 
         params.items, 
@@ -44,6 +46,9 @@ export class NewsPage {
           if (!response.isSuccess) throw new Error(response.message);
           this.totalPages.set(response.result.pages);
           return response.result.result;
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     },

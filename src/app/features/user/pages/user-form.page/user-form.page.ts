@@ -6,7 +6,7 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
-import { map, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { Role } from '@shared/constants/roles-enum';
 import { UserModel } from '@features/user/models/user-model';
 import { UserDetailModel } from '@features/user/models/user-detail-model';
@@ -77,6 +77,9 @@ export class UserFormPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     },

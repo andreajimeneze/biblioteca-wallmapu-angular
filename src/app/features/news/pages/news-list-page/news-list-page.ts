@@ -2,7 +2,7 @@ import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { NewsService } from '@features/news/services/news-service';
-import { map, of, tap } from 'rxjs';
+import { catchError, map, of, tap } from 'rxjs';
 import { NewsListComponent } from "@features/news/components/news-list-component/news-list-component";
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
@@ -66,6 +66,9 @@ export class NewsListPage {
           if (!response.isSuccess) throw new Error(response.message);
           this.totalPages.set(response.result.pages);
           return response.result.result;
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     },
@@ -94,6 +97,9 @@ export class NewsListPage {
           this.deleteNewsByIdPayload.set(this.deleteAllGalleryByIdNewsPayload());
           this.deleteAllGalleryByIdNewsPayload.set(null);
         }),
+        catchError(err => {
+          return of(null);
+        })
       );
     }
   });
@@ -117,6 +123,9 @@ export class NewsListPage {
           this.deleteNewsByIdPayload.set(null);
           this.selectedNewsWithImagesModel.set(null);
         }),
+        catchError(err => {
+          return of(null);
+        })
       );
     },
   });

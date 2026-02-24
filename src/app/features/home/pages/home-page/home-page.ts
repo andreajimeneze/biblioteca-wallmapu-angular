@@ -1,5 +1,5 @@
 import { Component, computed, inject } from '@angular/core';
-import { map } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
@@ -36,6 +36,9 @@ export class HomePage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result.result;
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     },

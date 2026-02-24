@@ -5,7 +5,7 @@ import { NewsWithImagesModel } from '@features/news/models/news-with-images-mode
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { NewsFormModel } from '@features/news/models/news-form-model';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { map, of, tap } from 'rxjs';
+import { catchError, map, of, tap } from 'rxjs';
 import { NewsService } from '@features/news/services/news-service';
 import { Router } from '@angular/router';
 import { ImageListComponent } from "@features/news-gallery/components/image-list-component/image-list-component";
@@ -102,6 +102,9 @@ export class NewsFormPage {
               alts,
             },
           });
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     },
@@ -130,6 +133,9 @@ export class NewsFormPage {
         }),
         tap(() => {
           this.routeGoBack();
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     }
@@ -152,6 +158,9 @@ export class NewsFormPage {
           this.imagesPreviewVMList.update(list =>
             list.filter(i => i.id !== params)
           );
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     }

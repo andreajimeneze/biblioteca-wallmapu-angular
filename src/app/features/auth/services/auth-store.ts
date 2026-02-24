@@ -80,6 +80,6 @@ export class AuthStore {
     this.currentUser.set(null);
     localStorage.removeItem('user');
     localStorage.removeItem('jwt_token');
-    this.router.navigate([ROUTES_CONSTANTS.HOME]);
+    this.router.navigate([ROUTES_CONSTANTS.HOME.ROOT]);
   }
 }

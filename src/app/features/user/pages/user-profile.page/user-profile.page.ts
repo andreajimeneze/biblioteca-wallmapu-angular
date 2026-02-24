@@ -4,7 +4,7 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { UserService } from '@features/user/services/user-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthStore } from '@features/auth/services/auth-store';
-import { map, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { UserProfileComponents } from "@features/user/components/user-profile-components/user-profile-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { UserDetailModel } from '@features/user/models/user-detail-model';
@@ -39,23 +39,19 @@ export class UserProfilePage {
   
       return this.userService.getById(id).pipe(
         map(response => {
-          if (!response.isSuccess) {
-            throw new Error(response.message);
-          }
+          if (!response.isSuccess) throw new Error(response.message);
   
           return response.result;
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     },
   });
 
-  // ESPERA QUE FINALICE RX
   readonly isLoading = this.dataResourceRX.isLoading();
-
-  // CONTROL DE ERROES
-  readonly backendError = computed(() => 
-    this.dataResourceRX.error()?.message ?? null
-  );
+  readonly backendError = computed(() => this.dataResourceRX.error()?.message ?? null);
   
   readonly errorMessage = computed(() => {
     if (this.backendError()) return this.backendError();
