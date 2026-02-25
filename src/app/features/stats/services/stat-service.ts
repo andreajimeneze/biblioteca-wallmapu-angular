@@ -1,18 +1,18 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiResponseModel } from '@core/models/api-response-model';
-import { Observable } from 'rxjs';
-import { CommuneModel } from '@features/commune/models/commune-model';
 import { ApiResponseService } from '@core/services/api-response-service';
+import { Observable } from 'rxjs';
+import { StatModel } from '@features/stats/models/stat-model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CommuneService {
+export class StatService {
   private apiResponseService = inject(ApiResponseService)
-  private readonly endpoint = 'commune';
+  private readonly endpoint = 'stat/admin';
 
-  getAll(): Observable<ApiResponseModel<CommuneModel[]>> {
-    return this.apiResponseService.getAll<ApiResponseModel<CommuneModel[]>>(
+  getAll(): Observable<ApiResponseModel<StatModel>> {
+    return this.apiResponseService.getAll<ApiResponseModel<StatModel>>(
       `${this.endpoint}`
     );
   }

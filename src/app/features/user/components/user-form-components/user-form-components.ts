@@ -1,11 +1,11 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { CommuneSelectComponents } from "@features/commune/components/commune-select-components/commune-select-components";
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { UserStatusSelectComponents } from "@features/user-status/components/user-status-select-components/user-status-select-components";
 import { UserRoleSelectComponents } from "@features/user-role/components/user-role-select-components/user-role-select-components";
 import { Role } from '@shared/constants/roles-enum';
 import { UserModel } from '@features/user/models/user-model';
+import { CommuneSelectComponents } from '@features/division-commune/components/commune-select-components/commune-select-components';
 
 @Component({
   selector: 'app-user-form-components',

@@ -282,12 +282,12 @@ ng g s features/auth/services/auth-service --skip-tests
 ng g s features/auth/services/auth-store --skip-tests
 
 # ---------------------------------------------------------------------------------
-# FEATURES COMMUNE
-ng g interface features/commune/models/commune-model
+# FEATURES DIVISION COMMUNE
+ng g c features/division-commune/components/commune-select-components --skip-tests --style=none
 
-ng g s features/commune/services/commune-service --skip-tests
+ng g interface features/division-commune/models/commune-model
 
-ng g c features/commune/components/commune-select-components --skip-tests --style=none
+ng g s features/division-commune/services/commune-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES HOME
@@ -328,6 +328,14 @@ ng g interface features/news-gallery/models/news-gallery-model
 ng g interface features/news-gallery/models/create-news-gallery-model
 
 ng g s features/news-gallery/services/news-gallery-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES STATS
+ng g interface features/stats/models/stat-model
+
+ng g c features/stats/pages/stat.page --skip-tests --style=none
+
+ng g s features/stats/services/stat-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES USER

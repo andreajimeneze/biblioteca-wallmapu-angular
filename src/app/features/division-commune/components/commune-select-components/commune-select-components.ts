@@ -1,19 +1,14 @@
-import { CommonModule } from '@angular/common';
 import { Component, computed, effect, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ApiResponseModel } from '@core/models/api-response-model';
-import { CommuneService } from '@features/commune/services/commune-service';
-import { catchError, finalize, of } from 'rxjs';
-import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { ApiResponseModel } from '@core/models/api-response-model';
+import { catchError, of } from 'rxjs';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { CommuneService } from '@features/division-commune/services/commune-service';
 
 @Component({
   selector: 'app-commune-select-components',
-  imports: [
-    CommonModule,
-    LoadingComponent,
-    MessageErrorComponent
-],
+  imports: [MessageErrorComponent, LoadingComponent],
   templateUrl: './commune-select-components.html',
 })
 export class CommuneSelectComponents {

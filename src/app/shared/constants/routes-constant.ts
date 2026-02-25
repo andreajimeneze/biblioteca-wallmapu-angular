@@ -18,7 +18,7 @@ export const ROUTES_CONSTANTS = {
       },
     },
     ADMIN: {
-      DASHBOARD: '/admin',
+      DASHBOARD: 'dashboard',
       BOOKS: '/admin/books',
       NEWS: {
         ROOT: '/admin/news',

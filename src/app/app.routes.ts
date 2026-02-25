@@ -27,7 +27,7 @@ export const routes: Routes = [
     children: [
       {
         path: '',
-        component: InDevelopmentPage
+        loadChildren: () => import('@features/stats/stat.routes').then(m => m.STAT_ROUTES),
       },
       {
         path: 'books',
