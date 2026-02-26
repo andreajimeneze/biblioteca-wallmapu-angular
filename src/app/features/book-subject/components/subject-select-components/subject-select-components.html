@@ -1,4 +1,4 @@
-@if(isLoading()) {
+@if (isLoading()) {
   <app-loading-component/>
 } @else {
   @if (errorMessage()) {
@@ -9,14 +9,14 @@
       [value]="selectedId()"
       (change)="onChange($event)"
       class="select text-my-pink"
-    >
-      <option disabled selected>Seleccióne un Rol</option>
-      @for (item of userStatusComputedList(); track $index) {
+    >      
+      <option disabled>Seleccióne un Descriptor</option>
+      @for (item of subjectComputedList(); track $index) {
         <option 
-          [value]="item.id_user_status" 
-          [selected]="item.id_user_status === selectedId()">
+          [value]="item.id_subject"
+          [selected]="item.id_subject === selectedId()">
           
-          {{ item.status }}
+          {{ item.subject }}
         </option>
       }
     </select>

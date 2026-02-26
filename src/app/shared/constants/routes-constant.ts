@@ -3,6 +3,7 @@ export const ROUTES_CONSTANTS = {
   HOME: {
     ROOT: '/',
     NEWS: {
+      ROOT: '/news',
       DETAIL: (id: number) => `/news/${id}`,
     },
     BOOK: {
@@ -18,7 +19,7 @@ export const ROUTES_CONSTANTS = {
       },
     },
     ADMIN: {
-      DASHBOARD: 'dashboard',
+      DASHBOARD: '/admin/dashboard',
       BOOKS: '/admin/books',
       NEWS: {
         ROOT: '/admin/news',

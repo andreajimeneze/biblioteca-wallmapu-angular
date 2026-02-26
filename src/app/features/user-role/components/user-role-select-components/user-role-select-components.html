@@ -1,7 +1,9 @@
-@if(!userRoleSignal()) {
+@if(isLoading()) {
   <app-loading-component/>
 } @else {
-  @if (userRoleSignal()?.isSuccess) {
+  @if (errorMessage()) {
+    <app-message-error-component [message]="errorMessage() || 'Error'"/>
+  } @else {
     <select 
       [disabled]="disabled()"
       [value]="selectedId()"
@@ -9,7 +11,7 @@
       class="select text-my-pink"
     >      
       <option disabled>Seleccióne un Rol</option>
-      @for (item of userRoleSignal()?.result; track $index) {
+      @for (item of userRoleComputedList(); track $index) {
         <option 
           [value]="item.id_user_role"
           [selected]="item.id_user_role === selectedId()">
@@ -18,7 +20,5 @@
         </option>
       }
     </select>
-  } @else {
-    <app-message-error-component [message]="userRoleSignal()?.message || 'Error en Select Role'"/>
   }
 }

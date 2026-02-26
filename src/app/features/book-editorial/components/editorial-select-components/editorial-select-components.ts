@@ -1,29 +1,26 @@
 import { Component, computed, inject, input, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { UserStatusService } from '@features/user-status/services/user-status-service';
+import { EditorialModel } from '@features/book-editorial/models/editorial-model';
+import { EditorialService } from '@features/book-editorial/services/editorial-service';
 import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { UserStatusModel } from '@features/user-status/models/user-status-model';
 
 @Component({
-  selector: 'app-user-status-select-components',
-  imports: [
-    LoadingComponent, 
-    MessageErrorComponent
-  ],
-  templateUrl: './user-status-select-components.html',
+  selector: 'app-editorial-select-components',
+  imports: [LoadingComponent, MessageErrorComponent],
+  templateUrl: './editorial-select-components.html',
 })
-export class UserStatusSelectComponents {
+export class EditorialSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
   readonly newSelectedId = output<number>();
   
-  private readonly userStatusService = inject(UserStatusService);
+  private readonly editorialService = inject(EditorialService);
 
-  private readonly userStatusRX = rxResource({
+  private readonly editorialRX = rxResource({
     stream: () => {    
-      return this.userStatusService.getAll().pipe(
+      return this.editorialService.getAll().pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
@@ -35,9 +32,9 @@ export class UserStatusSelectComponents {
     },
   });
 
-  protected readonly isLoading = computed(() => this.userStatusRX.isLoading());
-  protected readonly errorMessage = computed<string | null>(() => this.userStatusRX.error()?.message ?? null);
-  protected readonly userStatusComputedList = computed<UserStatusModel[]>(() => this.userStatusRX.value() ?? []);
+  protected readonly isLoading = computed<boolean>(() => this.editorialRX.isLoading());
+  protected readonly errorMessage = computed<string | null>(() => this.editorialRX.error()?.message ?? null);
+  protected readonly editorialComputedList = computed<EditorialModel[]>(() => this.editorialRX.value() ?? []);
 
   protected onChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
@@ -45,4 +42,3 @@ export class UserStatusSelectComponents {
     this.newSelectedId.emit(newId); 
   }
 }
-

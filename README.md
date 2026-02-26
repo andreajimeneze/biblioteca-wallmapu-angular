@@ -282,12 +282,52 @@ ng g s features/auth/services/auth-service --skip-tests
 ng g s features/auth/services/auth-store --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES BOOK AUTHOR
+ng g c features/book-author/components/author-select-components --skip-tests --style=none
+
+ng g interface features/book-author/models/author-model
+
+ng g s features/book-author/services/author-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES BOOK EDITORIAL
+ng g c features/book-editorial/components/editorial-select-components --skip-tests --style=none
+
+ng g interface features/book-editorial/models/editorial-model
+
+ng g s features/book-editorial/services/editorial-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES BOOK SUBJECT
+ng g c features/book-subject/components/subject-select-components --skip-tests --style=none
+
+ng g interface features/book-subject/models/subject-model
+
+ng g s features/book-subject/services/subject-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES DIVISION COMMUNE
 ng g c features/division-commune/components/commune-select-components --skip-tests --style=none
 
 ng g interface features/division-commune/models/commune-model
 
 ng g s features/division-commune/services/commune-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES DIVISION PROVINCE
+ng g c features/division-province/components/province-select-components --skip-tests --style=none
+
+ng g interface features/division-province/models/province-model
+
+ng g s features/division-province/services/province-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES DIVISION REGION
+ng g c features/division-region/components/region-select-components --skip-tests --style=none
+
+ng g interface features/division-region/models/region-model
+
+ng g s features/division-region/services/region-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES HOME

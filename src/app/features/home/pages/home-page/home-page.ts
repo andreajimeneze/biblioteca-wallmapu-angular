@@ -56,6 +56,6 @@ export class HomePage {
   });
 
   protected actionClicked(){
-    this.router.navigate([ROUTES_CONSTANTS.HOME.NEWS])
+    this.router.navigate([ROUTES_CONSTANTS.HOME.NEWS.ROOT])
   }
 }

@@ -1,11 +1,11 @@
-import { Component, inject, input, output } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ApiResponseModel } from '@core/models/api-response-model';
+import { Component, computed, inject, input, output } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { UserRoleService } from '@features/user-role/services/user-role-service';
-import { catchError, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { CommonModule } from '@angular/common';
+import { UserRoleModel } from '@features/user-role/models/user-role-model';
 
 @Component({
   selector: 'app-user-role-select-components',
@@ -23,17 +23,23 @@ export class UserRoleSelectComponents {
   
   private readonly userRoleService = inject(UserRoleService);
 
-  readonly userRoleSignal = toSignal(
-    this.userRoleService.getAll().pipe(
-      catchError(err => of({
-        isSuccess: false,
-        statusCode: 500,
-        message: err?.message || String(err),
-        result: null
-      } as ApiResponseModel<null>))
-    ),
-    { initialValue: undefined }
-  );
+  private readonly userRoleRX = rxResource({
+    stream: () => {    
+      return this.userRoleService.getAll().pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        }),
+        catchError(err => {
+          return of(null);
+        })
+      );
+    },
+  });
+
+  protected readonly isLoading = computed(() => this.userRoleRX.isLoading());
+  protected readonly errorMessage = computed<string | null>(() => this.userRoleRX.error()?.message ?? null);
+  protected readonly userRoleComputedList = computed<UserRoleModel[]>(() => this.userRoleRX.value() ?? []);
 
   protected onChange(event: Event): void {
     const select = event.target as HTMLSelectElement;

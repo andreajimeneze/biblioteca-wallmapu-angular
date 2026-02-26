@@ -1,7 +1,8 @@
-@if (isLoading()){
+@if (isLoading() || !authorComputedList()){
   <app-loading-component/>
 } @else {
   <div class="dropdown" [class.dropdown-open]="isOpen()">
+
     <!-- Input de búsqueda -->
     <label class="input input-bordered flex items-center gap-2 w-full">
       <svg class="w-4 h-4 text-base-content/50 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -12,7 +13,7 @@
         #searchInput
         type="text"
         class="grow placeholder-my-pink/75"
-        [placeholder]="selectedAuthorName() ?? 'Buscar comuna...'"
+        [placeholder]="selectedAuthorName() ?? 'Buscar autor...'"
         [value]="searchText()"
         (input)="onSearch($any($event.target).value)"
         (focus)="isOpen.set(true)"
@@ -35,14 +36,14 @@
           </span>
         </li>
       } @else {
-        @for (author of filteredAuthors(); track author.id_commune){
+        @for (author of filteredAuthors(); track author.id_author){
           <li>
             <button
               type="button"
               class="rounded-none"
-              [class.active]="selectedAuthor()?.id_commune === author.id_commune"
+              [class.active]="selectedAuthor()?.id_author === author.id_author"
               (mousedown)="select(author, $event)"
-              [innerHTML]="highlight(author.commune)">
+              [innerHTML]="highlight(author.author)">
             </button>
           </li>
         }
