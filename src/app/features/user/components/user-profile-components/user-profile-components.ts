@@ -2,8 +2,6 @@ import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { Component, inject, input } from '@angular/core';
 import { Router } from '@angular/router';
 import { UserDetailModel } from '@features/user/models/user-detail-model';
-import { UserFormVM } from '@features/user/models/user-form.vm';
-import { UserProfileVM } from '@features/user/models/user-profile.vm';
 import { Role } from '@shared/constants/roles-enum';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 
@@ -16,16 +14,16 @@ import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
   templateUrl: './user-profile-components.html',
 })
 export class UserProfileComponents {
-userViewModel() {
-throw new Error('Method not implemented.');
-}
   ROUTES_CONSTANTS=ROUTES_CONSTANTS
   private router = inject(Router);
-  readonly userProfileVM = input<UserProfileVM | null>(null);
 
-  protected onEdit(item: UserProfileVM | null): void {
-    if (item) {
-      const isAdmin = item.user_role.role === Role.Admin;
+  readonly editRole = input.required<Role>();
+  readonly picture = input.required<string>()
+  readonly userDetailModel = input<UserDetailModel | null>(null);
+
+  protected onEdit(userDetailModel: UserDetailModel | null): void {
+    if (userDetailModel) {
+      const isAdmin = this.editRole() === Role.Admin;
 
       const formRoute = isAdmin
       ? ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.FORM
@@ -37,7 +35,9 @@ throw new Error('Method not implemented.');
 
       this.router.navigate([formRoute], {
         state: {
-          userProfileVM: item,
+          editRole: this.editRole(),
+          picture: this.picture(),
+          userDetailModel: userDetailModel,
           navigateBack: backRoute,
         },
       });

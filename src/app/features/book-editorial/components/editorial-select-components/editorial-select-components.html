@@ -1,0 +1,24 @@
+@if (isLoading()) {
+  <app-loading-component/>
+} @else {
+  <select 
+    [disabled]="disabled()"
+    [value]="selectedId()"
+    (change)="onChange($event)"
+    class="select text-my-pink"
+  >      
+    <option disabled>Seleccióne una Editorial</option>
+    @for (item of editorialComputedList(); track $index) {
+      <option 
+        [value]="item.id_editorial"
+        [selected]="item.id_editorial === selectedId()">
+        
+        {{ item.editorial }}
+      </option>
+    }
+  </select>
+}
+
+@if (errorMessage()) {
+  <app-message-error-component [message]="errorMessage() || 'Error'"/>
+} 

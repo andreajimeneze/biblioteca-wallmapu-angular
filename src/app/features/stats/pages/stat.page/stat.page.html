@@ -1,0 +1,222 @@
+<section class="flex gap-4 flex-wrap p-4">
+
+  <div class="stats shadow bg-my-light text-my-purple">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Regiones</div>
+      <div class="stat-value">{{ statsComputedList()?.regions }}</div>
+      <div class="stat-desc">Total</div>
+    </div>
+  </div>
+
+
+  <div class="stats shadow bg-my-light text-my-purple">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Provincias</div>
+      <div class="stat-value">{{ statsComputedList()?.provinces }}</div>
+      <div class="stat-desc">Total</div>
+    </div>
+  </div>
+
+  
+  <div class="stats shadow bg-my-light text-my-purple">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Comunas</div>
+      <div class="stat-value">{{ statsComputedList()?.communes || '' }}</div>
+      <div class="stat-desc">Total</div>
+    </div>
+  </div>
+
+
+  <div class="stats shadow bg-my-light">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <div class="avatar avatar-online">
+          <div class="w-16 rounded-full">
+            <img src="images/book.png" />
+          </div>
+        </div>
+      </div>
+      <div class="stat-title">Usuarios</div>
+      <div class="stat-value">{{ statsComputedList()?.users }}</div>
+      <div class="stat-desc text-secondary">Total</div>
+    </div>
+  </div>
+
+
+  <div class="stats shadow bg-my-light text-my">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Noticias</div>
+      <div class="stat-value">{{ statsComputedList()?.news }}</div>
+      <div class="stat-desc text-secondary">Total</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-my-light text-my-pink">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Libros</div>
+      <div class="stat-value">{{ statsComputedList()?.books }}</div>
+      <div class="stat-desc">Total</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-my-light text-my-pink">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Autores</div>
+      <div class="stat-value">{{ statsComputedList()?.authors }}</div>
+      <div class="stat-desc">Total</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-my-light text-my-pink">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Editoriales</div>
+      <div class="stat-value">{{ statsComputedList()?.editorials }}</div>
+      <div class="stat-desc">Total</div>
+    </div>
+  </div>
+
+  <div class="stats shadow bg-my-light text-my-pink">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Descriptores</div>
+      <div class="stat-value">{{ statsComputedList()?.subjects }}</div>
+      <div class="stat-desc">Total</div>
+    </div>
+  </div>
+
+</section>
+
+
+
+
+<section class="grid p-4 gap-4">
+  <app-author-select-components />
+  <app-editorial-select-components />
+  <app-subject-select-components />
+  <div class="divider text-base-content/40">Prueba</div>
+  <app-commune-select-components />
+  <app-province-select-components />
+  <app-region-select-components />
+  <div class="divider text-base-content/40">Prueba</div>
+  <app-user-role-select-components />
+  <app-user-status-select-components />
+</section>

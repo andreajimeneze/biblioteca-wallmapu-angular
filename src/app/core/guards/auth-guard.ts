@@ -9,7 +9,7 @@ export const authGuard: CanActivateFn = (route, state) => {
 
   // 1️⃣ Verificar autenticación
   if (!authStore.isAuthenticated()) {
-    return router.createUrlTree([ROUTES_CONSTANTS.HOME]);
+    return router.createUrlTree([ROUTES_CONSTANTS.HOME.ROOT]);
   }
 
   // 2️⃣ Obtener roles requeridos

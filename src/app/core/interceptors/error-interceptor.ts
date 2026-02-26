@@ -10,29 +10,16 @@ export const errorInterceptor: HttpInterceptorFn = (req, next) => {
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
+      const statusCode = error.status;
+      const message = error.error?.message || error.message || 'Error inesperado';
 
-      let statusCode = error.status;
-      let message = 'Error inesperado';
-
-      if (error.error?.message) {
-        message = error.error.message;
-      } else if (error.message) {
-        message = error.message;
-      }
-
-      // ✅ Manejo especial para 401
       if (statusCode === 401) {
-        modalService.openError(401, 'Tu sesión ha expirado. Serás redirigido al inicio.');
-        
-        setTimeout(() => {
-          modalService.close();
-          authStore.logout();
-        }, 3000); // 3 segundos para que el usuario lea el mensaje
-
-        return throwError(() => error);
+        // ⚡ Le pasamos el logout como acción al modal
+        modalService.openError(401, 'Tu sesión ha expirado.', () => authStore.logout());
+      } else {
+        modalService.openError(statusCode, message);
       }
 
-      modalService.openError(statusCode, message);
       return throwError(() => error);
     })
   );

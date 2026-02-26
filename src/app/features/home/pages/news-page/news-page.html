@@ -1,0 +1,28 @@
+
+<div class="flex flex-col justify-between min-h-full">
+  <section>
+    <app-header-component
+      [title]="'Noticias'"
+      [description]="'Explora las últimas novedades, eventos culturales y actualizaciones de nuestra comunidad bibliotecaria.'"
+    />
+    
+    <app-section-header-component 
+      title="Historial de Noticias"
+      description="Mantente al día con las actividades, novedades y el quehacer de nuestra biblioteca"
+      searchPlaceholder="Buscar Noticia..."
+      (searchChange)="searchText($event)"
+    />
+
+    <app-news-card-list-component 
+      [isLoading]="isLoading()"
+      [newsWithImagesList]="newsWithImagesList()"
+    />
+  </section>
+
+  <app-pagination-component 
+    [currentPage]="currentPage()"
+    [totalPages]="totalPages()"
+    (prevPage)="prevPage()"
+    (nextPage)="nextPage()"
+  />
+</div>

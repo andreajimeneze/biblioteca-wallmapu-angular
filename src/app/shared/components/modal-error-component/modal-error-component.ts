@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, input, output } from '@angular/core';
 import { ErrorModalService } from '@core/services/error-modal-service';
 
 @Component({
@@ -13,7 +13,7 @@ export class ModalErrorComponent {
   statusCode = this.modal.statusCode;
   message = this.modal.message;
 
-  close() {
-    this.modal.close();
+  protected click(): void {
+    this.modal.close(); // ⚡ cierra y ejecuta acción automáticamente
   }
 }

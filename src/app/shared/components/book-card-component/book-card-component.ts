@@ -15,5 +15,5 @@ import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 export class BookCardComponent {
   readonly book = input.required<BookModel>();
   
-  bookRouterLink = computed(() => ROUTES_CONSTANTS.LIBRARY.BOOK(this.book().id));
+  bookRouterLink = computed(() => ROUTES_CONSTANTS.HOME.BOOK.DETAIL(this.book().id));
 }

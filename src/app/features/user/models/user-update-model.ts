@@ -5,4 +5,6 @@ export interface UserUpdateModel {
   address: string;
   phone: string;
   commune_id: number;
+  user_role_id: number,
+  user_status_id: number,
 }

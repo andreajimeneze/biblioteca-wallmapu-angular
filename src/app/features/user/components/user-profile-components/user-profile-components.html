@@ -1,4 +1,4 @@
-@if (!userProfileVM()) {
+@if (!userDetailModel()) {
   <div class="grid gap-4">
     <div class="skeleton h-64 w-full bg-my-light/50"></div>
     <div class="skeleton h-4 max-w-36 bg-my-light/50"></div>
@@ -29,8 +29,8 @@
           <div class="avatar">
             <div class="w-32 rounded-full ring ring-primary ring-offset-base-100 ring-offset-4">
               <img 
-                [ngSrc]="userProfileVM()?.picture || 'images/layout.webp'" 
-                [alt]="userProfileVM()?.name"
+                [ngSrc]="picture()" 
+                [alt]="userDetailModel()?.name"
                 width="128"
                 height="128"
               />
@@ -41,19 +41,22 @@
         <!-- Info principal -->
         <div class="mt-16">
           <p class="text-base-content/70">
-            {{ userProfileVM()?.user_role?.role }}
+            {{ userDetailModel()?.user_role?.role }}
           </p>
           <h2 class="card-title text-2xl text-my-purple">
-            {{ userProfileVM()?.name }} {{ userProfileVM()?.lastname }}
+            {{ userDetailModel()?.name }} {{ userDetailModel()?.lastname }}
           </h2>
           <p class="text-base-content/70">
-            {{ userProfileVM()?.email }}
+            +56 {{ userDetailModel()?.phone }}
           </p>
           <p class="text-base-content/70">
-            {{ userProfileVM()?.address }}
+            {{ userDetailModel()?.email }}
+          </p>
+          <p class="text-base-content/70">
+            {{ userDetailModel()?.address }}
           </p>
           <p class="text-my-pink">
-            {{ userProfileVM()?.user_status?.status }}
+            {{ userDetailModel()?.user_status?.status }}
           </p>
                     
           <!-- Separador -->
@@ -78,7 +81,7 @@
           <!-- Acciones -->
           <div class="card-actions justify-end mt-6">
             <button 
-              (click)="onEdit(userProfileVM())" 
+              (click)="onEdit(userDetailModel())" 
               class="btn bg-my-green hover:bg-my-green/80 text-my-light">
               Modificar Perfil
             </button>

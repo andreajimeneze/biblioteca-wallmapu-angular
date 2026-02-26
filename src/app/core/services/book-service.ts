@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
-import { ApiResponseService } from '@core/helpers/api-response-service';
 import { Observable, of } from 'rxjs';
 import { BookModel } from '@core/models/book-model';
+import { ApiResponseService } from '@core/services/api-response-service';
 
 @Injectable({
   providedIn: 'root',

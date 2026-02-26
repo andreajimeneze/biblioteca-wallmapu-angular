@@ -1,11 +1,14 @@
 import { Component, computed, inject } from '@angular/core';
-import { RouterLink } from "@angular/router";
 import { AuthStore } from '@features/auth/services/auth-store';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant'
+import { RouterLink } from "@angular/router";
+import { Role } from '@shared/constants/roles-enum';
 
 @Component({
   selector: 'app-auth-button-component',
-  imports: [RouterLink],
+  imports: [
+    RouterLink
+  ],
   templateUrl: './auth-button-component.html',
 })
 export class AuthButtonComponent {
@@ -16,18 +19,17 @@ export class AuthButtonComponent {
   isAuthenticated = this.auth.isAuthenticated;
   loading = this.auth.loading;
 
-  navigateTo = computed(() => {
+  navigateTo = computed<string>(() => {
     switch(this.user()?.role) { 
-      case 'Admin':
+      case Role.Admin:
         return ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD
-      case 'Lector':
+      case Role.Reader:
         return ROUTES_CONSTANTS.PROTECTED.USER.DASHBOARD 
       default:
-        return ROUTES_CONSTANTS.HOME;
+        return ROUTES_CONSTANTS.HOME.ROOT;
     }
   });
 
-  // 🔹 Métodos para el template
   login(): void {
     this.auth.login();
   }

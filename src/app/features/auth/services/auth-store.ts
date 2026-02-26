@@ -37,7 +37,7 @@ export class AuthStore {
 
       // 1️⃣ Obtener access_token de Google
       const googleToken = await this.googleAuth.getAccessToken();
-      
+
       // 2️⃣ Enviar token al backend
       const request: ApiAuthGoogleRequest = { googleToken };
       const response: ApiAuthGoogleResponse = await firstValueFrom(
@@ -63,7 +63,7 @@ export class AuthStore {
           navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT;
           break;
         default:
-          navigateTo = ROUTES_CONSTANTS.HOME
+          navigateTo = ROUTES_CONSTANTS.HOME.ROOT
       }
 
       this.router.navigate([navigateTo]);
@@ -80,6 +80,6 @@ export class AuthStore {
     this.currentUser.set(null);
     localStorage.removeItem('user');
     localStorage.removeItem('jwt_token');
-    this.router.navigate([ROUTES_CONSTANTS.HOME]);
+    this.router.navigate([ROUTES_CONSTANTS.HOME.ROOT]);
   }
 }

@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { UserModel } from '@features/user/models/user-model';
 import { ApiResponseModel } from '@core/models/api-response-model';
-import { ApiResponseService } from '@core/helpers/api-response-service';
 import { UserUpdateModel } from '@features/user/models/user-update-model';
 import { UserDetailModel } from '@features/user/models/user-detail-model';
 import { PaginationModel } from '@core/models/pagination-model';
+import { ApiResponseService } from '@core/services/api-response-service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,9 +26,15 @@ export class UserService {
     );
   }
 
-  update(id_user: string, item: UserUpdateModel): Observable<ApiResponseModel<UserModel>> {
+  update_user(id_user: string, item: UserUpdateModel): Observable<ApiResponseModel<UserModel>> {
     return this.apiResponseService.update<ApiResponseModel<UserModel>, UserUpdateModel>(
       this.endpoint, id_user, item
+    );
+  }
+
+  update_admin(id_user: string, item: UserUpdateModel): Observable<ApiResponseModel<UserModel>> {
+    return this.apiResponseService.update<ApiResponseModel<UserModel>, UserUpdateModel>(
+      `${this.endpoint}/admin`, id_user, item
     );
   }
 }

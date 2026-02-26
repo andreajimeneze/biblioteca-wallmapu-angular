@@ -4,10 +4,11 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { UserService } from '@features/user/services/user-service';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthStore } from '@features/auth/services/auth-store';
-import { map, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { UserProfileComponents } from "@features/user/components/user-profile-components/user-profile-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { UserProfileVM } from '@features/user/models/user-profile.vm';
+import { UserDetailModel } from '@features/user/models/user-detail-model';
+import { Role } from '@shared/constants/roles-enum';
 
 @Component({
   selector: 'app-user-profile.page',
@@ -22,9 +23,10 @@ import { UserProfileVM } from '@features/user/models/user-profile.vm';
 export class UserProfilePage {
   // SERVICIO USER OTRA FEATURE
   private readonly authStore = inject(AuthStore);
-  private readonly authUser = computed(() => ({
+  readonly authUser = computed(() => ({
     userId: this.authStore.user()?.id_user,
-    picture: this.authStore.user()?.picture,
+    editRole: this.authStore.user()?.role || Role.Reader,
+    picture: this.authStore.user()?.picture || 'images/book.png',
   }));
 
   // SERVICIO DE FEATURE
@@ -37,23 +39,19 @@ export class UserProfilePage {
   
       return this.userService.getById(id).pipe(
         map(response => {
-          if (!response.isSuccess) {
-            throw new Error(response.message);
-          }
+          if (!response.isSuccess) throw new Error(response.message);
   
           return response.result;
+        }),
+        catchError(err => {
+          return of(null);
         })
       );
     },
   });
 
-  // ESPERA QUE FINALICE RX
-  readonly isLoading = this.dataResourceRX.isLoading;
-
-  // CONTROL DE ERROES
-  readonly backendError = computed(() => 
-    this.dataResourceRX.error()?.message ?? null
-  );
+  readonly isLoading = this.dataResourceRX.isLoading();
+  readonly backendError = computed(() => this.dataResourceRX.error()?.message ?? null);
   
   readonly errorMessage = computed(() => {
     if (this.backendError()) return this.backendError();
@@ -75,16 +73,12 @@ export class UserProfilePage {
   });
 
   // PROCESAR USER A USER PROFILE TYPE
-  readonly userDetailComputed = computed<UserProfileVM | null>(() => {
+  readonly userDetailComputed = computed<UserDetailModel | null>(() => {
     const user = this.dataResourceRX.value();
-    const auth = this.authUser();
   
     if (!user) return null;
 
-    return {
-      ...user,
-      picture: auth.picture ?? null 
-    };
+    return user
   });
   
 }

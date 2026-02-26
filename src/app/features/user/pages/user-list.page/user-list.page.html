@@ -17,8 +17,9 @@
 
     <section class="p-4">
       <app-user-list-components 
-        [isLoading]="isLoading()" 
-        [userDetailList]="userDetailComputed()"
+        [editRole]="editRole()"
+        [isLoading]="isLoading()"
+        [userDetailModelList]="userDetailListComputed()"
       />
     </section>
   </div>

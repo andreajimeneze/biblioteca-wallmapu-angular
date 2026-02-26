@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { ApiAuthGoogleRequest } from '../models/api-auth-google-request';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { ApiAuthGoogleResponse } from '../models/api-auth-google-response';
-import { ApiResponseService } from '@core/helpers/api-response-service';
+import { ApiResponseService } from '@core/services/api-response-service';
 
 @Injectable({
   providedIn: 'root',

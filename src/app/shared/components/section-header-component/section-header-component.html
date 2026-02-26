@@ -6,11 +6,12 @@
       <p class="text-my-dark mt-2">{{ description() }}</p>
     </div>
 
-    @if (route()) {
-      <button 
-        [routerLink]="route()"
-        class="btn btn-outline bg-my-green text-my-light">
-        {{ routeText() }}
+    @if (actionText()) {
+      <button
+        class="btn btn-outline bg-my-green text-my-light"
+        (click)="onActionClick()">
+
+        {{ actionText() }}
       </button>
     }
   </div>

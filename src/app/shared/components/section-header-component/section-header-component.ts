@@ -1,26 +1,26 @@
 import { Component, input, output } from '@angular/core';
-import { RouterLink } from '@angular/router';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'app-section-header-component',
-  imports: [
-    RouterLink
-  ],
+  imports: [],
   templateUrl: './section-header-component.html',
 })
 export class SectionHeaderComponent {
-  // Inputs obligatorios
+  // INPUTS
   readonly title = input.required<string>();
   readonly description = input<string>('');
 
-  // Inputs opcionales
-  readonly route = input<string | null>(); // Para el caso 2 (botón "Ver todas")
-  readonly routeText = input<string | null>("Ver Mas")
-  readonly searchPlaceholder = input<string | null>(); // Texto del placeholder
-  //readonly searchPlaceholder = input<string | null>('Buscar');
+  // ACTION BUTON OPTIONAL
+  readonly actionText = input<string | null>(null);
+  
+  readonly actionClicked = output<void>();
+  protected onActionClick() {
+    this.actionClicked.emit();
+  }
 
-  // Output para emitir el valor de búsqueda
+  // SEARCH
+  readonly searchPlaceholder = input<string | null>(); // Texto del placeholder
   readonly searchChange = output<string>();
 
   private searchSubject = new Subject<string>();

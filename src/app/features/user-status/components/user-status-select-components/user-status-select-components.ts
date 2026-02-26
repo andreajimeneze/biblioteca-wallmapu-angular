@@ -1,10 +1,10 @@
-import { Component, inject, input } from '@angular/core';
-import { toSignal } from '@angular/core/rxjs-interop';
-import { ApiResponseModel } from '@core/models/api-response-model';
+import { Component, computed, inject, input, output } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { UserStatusService } from '@features/user-status/services/user-status-service';
-import { catchError, of } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { UserStatusModel } from '@features/user-status/models/user-status-model';
 
 @Component({
   selector: 'app-user-status-select-components',
@@ -17,19 +17,32 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 export class UserStatusSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
+  readonly newSelectedId = output<number>();
   
   private readonly userStatusService = inject(UserStatusService);
 
-  readonly userStatusSignal = toSignal(
-    this.userStatusService.getAll().pipe(
-      catchError(err => of({
-        isSuccess: false,
-        statusCode: 500,
-        message: err?.message || String(err),
-        result: null
-      } as ApiResponseModel<null>))
-    ),
-    { initialValue: undefined }
-  );
+  private readonly userStatusRX = rxResource({
+    stream: () => {    
+      return this.userStatusService.getAll().pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        }),
+        catchError(err => {
+          return of(null);
+        })
+      );
+    },
+  });
+
+  protected readonly isLoading = computed(() => this.userStatusRX.isLoading());
+  protected readonly errorMessage = computed<string | null>(() => this.userStatusRX.error()?.message ?? null);
+  protected readonly userStatusComputedList = computed<UserStatusModel[]>(() => this.userStatusRX.value() ?? []);
+
+  protected onChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const newId = Number(select.value); 
+    this.newSelectedId.emit(newId); 
+  }
 }
 

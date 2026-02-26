@@ -6,8 +6,11 @@
       <app-loading-component/>
     </section>
   } @else {
-    @for (userDetail of userDetailList(); track $index ) {
-      <app-user-list-row-component [userDetail]="userDetail"/>
+    @for (userDetailModel of userDetailModelList(); track $index ) {
+      <app-user-list-row-component 
+        [editRole]="editRole()"
+        [userDetailModel]="userDetailModel"
+      />
     }
   }
 </ul>
