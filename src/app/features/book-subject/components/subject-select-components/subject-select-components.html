@@ -1,24 +1,20 @@
-@if (isLoading()) {
+@if (isLoading() || subjectComputedList().length === 0) {
   <app-loading-component/>
 } @else {
-  @if (errorMessage()) {
-    <app-message-error-component [message]="errorMessage() || 'Error'"/>
-  } @else {
-    <select 
-      [disabled]="disabled()"
-      [value]="selectedId()"
-      (change)="onChange($event)"
-      class="select text-my-pink"
-    >      
-      <option disabled>Seleccióne un Descriptor</option>
-      @for (item of subjectComputedList(); track $index) {
-        <option 
-          [value]="item.id_subject"
-          [selected]="item.id_subject === selectedId()">
-          
-          {{ item.subject }}
-        </option>
-      }
-    </select>
-  }
+  <select 
+    [disabled]="disabled()"
+    [value]="selectedId()"
+    (change)="onChange($event)"
+    class="select text-my-pink"
+  >      
+    <option disabled>Seleccióne un Descriptor</option>
+    @for (item of subjectComputedList(); track $index) {
+      <option 
+        [value]="item.id_subject"
+        [selected]="item.id_subject === selectedId()">
+        
+        {{ item.name }}
+      </option>
+    }
+  </select>
 }

@@ -4,11 +4,12 @@ import { RegionModel } from '@features/division-region/models/region-model';
 import { RegionService } from '@features/division-region/services/region-service';
 import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
 @Component({
   selector: 'app-region-select-components',
-  imports: [LoadingComponent, MessageErrorComponent],
+  imports: [
+    LoadingComponent
+  ],
   templateUrl: './region-select-components.html',
 })
 export class RegionSelectComponents {
@@ -33,7 +34,6 @@ export class RegionSelectComponents {
   });
 
   protected readonly isLoading = computed<boolean>(() => this.regionRX.isLoading());
-  protected readonly errorMessage = computed<string | null>(() => this.regionRX.error()?.message ?? null);
   protected readonly regionComputedList = computed<RegionModel[]>(() => this.regionRX.value() ?? []);
 
   protected onChange(event: Event): void {

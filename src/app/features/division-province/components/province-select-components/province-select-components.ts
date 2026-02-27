@@ -4,11 +4,12 @@ import { ProvinceModel } from '@features/division-province/models/province-model
 import { ProvinceService } from '@features/division-province/services/province-service';
 import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
 @Component({
   selector: 'app-province-select-components',
-  imports: [LoadingComponent, MessageErrorComponent],
+  imports: [
+    LoadingComponent
+  ],
   templateUrl: './province-select-components.html',
 })
 export class ProvinceSelectComponents {
@@ -33,7 +34,6 @@ export class ProvinceSelectComponents {
   });
 
   protected readonly isLoading = computed<boolean>(() => this.provinceRX.isLoading());
-  protected readonly errorMessage = computed<string | null>(() => this.provinceRX.error()?.message ?? null);
   protected readonly provinceComputedList = computed<ProvinceModel[]>(() => this.provinceRX.value() ?? []);
 
   protected onChange(event: Event): void {

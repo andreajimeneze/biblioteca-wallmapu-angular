@@ -16,7 +16,7 @@ export class UserService {
 
   getAllDetails(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<UserDetailModel[]>>> {
     return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<UserDetailModel[]>>>(
-      `${this.endpoint}/detailed?page=${currentPage}&items=${maxItems}&search=${search}`
+      `${this.endpoint}/detailed?page=${currentPage}&limit=${maxItems}&search=${search}`
     );
   }
 

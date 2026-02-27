@@ -1,4 +1,4 @@
-@if (isLoading() || !authorComputedList()){
+@if (isLoading() || authorComputedList().length === 0){
   <app-loading-component/>
 } @else {
   <div class="dropdown" [class.dropdown-open]="isOpen()">
@@ -43,7 +43,7 @@
               class="rounded-none"
               [class.active]="selectedAuthor()?.id_author === author.id_author"
               (mousedown)="select(author, $event)"
-              [innerHTML]="highlight(author.author)">
+              [innerHTML]="highlight(author.name)">
             </button>
           </li>
         }
@@ -51,8 +51,4 @@
     </ul>
 
   </div>
-}
-
-@if (errorMessage()) {
-  <app-message-error-component [message]="errorMessage()"/>
 }

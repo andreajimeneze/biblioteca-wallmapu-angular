@@ -203,10 +203,10 @@
     </div>
   </div>
 
+  @if (errorMessage()) {
+    <app-message-error-component [message]="errorMessage()" />
+  }  
 </section>
-
-
-
 
 <section class="grid p-4 gap-4">
   <app-author-select-components />
@@ -220,3 +220,4 @@
   <app-user-role-select-components />
   <app-user-status-select-components />
 </section>
+

@@ -2,16 +2,12 @@ import { Component, computed, inject, input, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { UserRoleService } from '@features/user-role/services/user-role-service';
 import { catchError, map, of } from 'rxjs';
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { CommonModule } from '@angular/common';
 import { UserRoleModel } from '@features/user-role/models/user-role-model';
 
 @Component({
   selector: 'app-user-role-select-components',
   imports: [
-    CommonModule,
-    MessageErrorComponent, 
     LoadingComponent
   ],
   templateUrl: './user-role-select-components.html',
@@ -38,7 +34,6 @@ export class UserRoleSelectComponents {
   });
 
   protected readonly isLoading = computed(() => this.userRoleRX.isLoading());
-  protected readonly errorMessage = computed<string | null>(() => this.userRoleRX.error()?.message ?? null);
   protected readonly userRoleComputedList = computed<UserRoleModel[]>(() => this.userRoleRX.value() ?? []);
 
   protected onChange(event: Event): void {

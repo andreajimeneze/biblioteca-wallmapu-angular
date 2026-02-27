@@ -1,4 +1,4 @@
-@if (isLoading()){
+@if (isLoading() || communeComputedList().length === 0){
   <app-loading-component/>
 } @else {
   <div class="dropdown" [class.dropdown-open]="isOpen()">
@@ -50,8 +50,4 @@
     </ul>
 
   </div>
-}
-
-@if (errorMessage()) {
-  <app-message-error-component [message]="errorMessage()"/>
 }

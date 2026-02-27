@@ -1,24 +1,20 @@
-@if(isLoading()) {
+@if(isLoading() || userStatusComputedList().length === 0) {
   <app-loading-component/>
 } @else {
-  @if (errorMessage()) {
-    <app-message-error-component [message]="errorMessage() || 'Error'"/>
-  } @else {
-    <select 
-      [disabled]="disabled()"
-      [value]="selectedId()"
-      (change)="onChange($event)"
-      class="select text-my-pink"
-    >
-      <option disabled selected>Seleccióne un Rol</option>
-      @for (item of userStatusComputedList(); track $index) {
-        <option 
-          [value]="item.id_user_status" 
-          [selected]="item.id_user_status === selectedId()">
-          
-          {{ item.status }}
-        </option>
-      }
-    </select>
-  }
+  <select 
+    [disabled]="disabled()"
+    [value]="selectedId()"
+    (change)="onChange($event)"
+    class="select text-my-pink"
+  >
+    <option disabled selected>Seleccióne un Rol</option>
+    @for (item of userStatusComputedList(); track $index) {
+      <option 
+        [value]="item.id_user_status" 
+        [selected]="item.id_user_status === selectedId()">
+        
+        {{ item.status }}
+      </option>
+    }
+  </select>
 }

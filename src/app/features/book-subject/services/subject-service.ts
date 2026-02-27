@@ -9,7 +9,7 @@ import { Observable } from 'rxjs';
 })
 export class SubjectService {
   private apiResponseService = inject(ApiResponseService)
-  private readonly endpoint = 'book-subject';
+  private readonly endpoint = 'subject';
 
   getAll(): Observable<ApiResponseModel<SubjectModel[]>> {
     return this.apiResponseService.getAll<ApiResponseModel<SubjectModel[]>>(

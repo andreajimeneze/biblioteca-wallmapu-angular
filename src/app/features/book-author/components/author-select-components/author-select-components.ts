@@ -2,13 +2,14 @@ import { Component, computed, effect, ElementRef, inject, input, output, signal,
 import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthorModel } from '@features/book-author/models/author-model';
 import { AuthorService } from '@features/book-author/services/author-service';
-import { catchError, map, of, throwError } from 'rxjs';
+import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
 @Component({
   selector: 'app-author-select-components',
-  imports: [LoadingComponent, MessageErrorComponent],
+  imports: [
+    LoadingComponent
+  ],
   templateUrl: './author-select-components.html',
 })
 export class AuthorSelectComponents {
@@ -28,22 +29,20 @@ export class AuthorSelectComponents {
   private readonly authorService = inject(AuthorService);
 
   private readonly authorRX = rxResource({
-    stream: () =>
-      this.authorService.getAll().pipe(
+    stream: () => {
+      return this.authorService.getAll().pipe(
         map((res) => {
           if (!res.isSuccess) throw new Error(res.message);
           return res.result;
         }),
         catchError(err => {
-          //const message = err?.error?.detail || err?.error?.message || err?.message
-          //return throwError(() => new Error(message));
           return of(null);
-        })
-      ),
+        }),
+      );
+    },
   });
 
   protected readonly isLoading = computed(() => this.authorRX.isLoading());
-  protected readonly errorMessage = computed(() => this.authorRX.error()?.message ?? null);
   protected readonly authorComputedList = computed<AuthorModel[]>(() => this.authorRX.value() ?? []);
 
   // ─── Sincronización inicial ─────────────────────
@@ -59,21 +58,21 @@ export class AuthorSelectComponents {
   // ─── Computeds ──────────────────────────────────
   protected readonly selectedAuthorName = computed(() => {
     const sel = this.selectedAuthor();
-    return sel?.author ?? null;
+    return sel?.name ?? null;
   });
 
   protected readonly filteredAuthors = computed(() => {
     const term = this.searchText().toLowerCase().trim();
     const list = this.authorComputedList();
     if (!term) return list;
-    return list.filter((a) => a.author.toLowerCase().includes(term));
+    return list.filter((a) => a.name.toLowerCase().includes(term));
   });
 
   // ─── Handlers ──────────────────────────────────
   protected onSearch(value: string) {
     this.searchText.set(value);
     this.isOpen.set(true);
-    if (this.selectedAuthor() && value !== this.selectedAuthor()!.author) {
+    if (this.selectedAuthor() && value !== this.selectedAuthor()!.name) {
       this.selectedAuthor.set(null);
     }
   }

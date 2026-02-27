@@ -31,7 +31,7 @@ export const routes: Routes = [
       },
       {
         path: 'books',
-        component: InDevelopmentPage
+        loadChildren: () => import('@features/book/book.routes').then(m => m.BOOK_ROUTES),
       },
       {
         path: 'news',

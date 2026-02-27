@@ -282,6 +282,17 @@ ng g s features/auth/services/auth-service --skip-tests
 ng g s features/auth/services/auth-store --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES BOOK
+ng g c features/book/components/book-list-component --skip-tests --style=none
+ng g c features/book/components/book-list-row-component --skip-tests --style=none
+
+ng g interface features/book/models/book-model
+
+ng g c features/book/pages/book-list-page --skip-tests --style=none
+
+ng g s features/book/services/book-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES BOOK AUTHOR
 ng g c features/book-author/components/author-select-components --skip-tests --style=none
 
