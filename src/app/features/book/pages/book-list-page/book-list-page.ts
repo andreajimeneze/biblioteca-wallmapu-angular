@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { BookModel } from '@features/book/models/book-model';
 import { BookService } from '@features/book/services/book-service';
-import { catchError, map, of } from 'rxjs';
+import { catchError, map, of, tap } from 'rxjs';
 import { BookListComponent } from "@features/book/components/book-list-component/book-list-component";
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { Router } from '@angular/router';
@@ -17,8 +17,8 @@ import { PaginationComponent } from "@shared/components/pagination-component/pag
     BookListComponent,
     SectionHeaderComponent,
     MessageErrorComponent,
-    //ModalDeleteComponent,
-    //PaginationComponent
+    PaginationComponent,
+    ModalDeleteComponent
 ],
   templateUrl: './book-list-page.html',
 })
@@ -26,13 +26,19 @@ export class BookListPage {
   private router = inject(Router);
   private readonly bookService = inject(BookService);
 
+  readonly backendError = signal<string | null>(null);
+  readonly openDeleteModal = signal(false);
+  readonly selectedBookToDelete = signal<BookModel | null>(null);
+
   readonly currentPage = signal(1);
   private readonly items = signal(10);
   private readonly search = signal('');
   readonly totalPages = signal<number>(0);
   private readonly refreshTrigger = signal(0);
-  
-  private readonly params = computed(() => ({
+
+  readonly bookIdToDeletePayload = signal<number | null>(null)
+
+  private readonly paramsPayload = computed(() => ({
     currentPage: this.currentPage(),
     items: this.items(),
     search: this.search(),
@@ -40,8 +46,10 @@ export class BookListPage {
   }));  
     
   private readonly bookRX = rxResource({
-    params: () => this.params(),
-    stream: ({ params }) => {    
+    params: () => this.paramsPayload(),
+    stream: ({ params }) => {
+      this.backendError.set(null);
+
       return this.bookService.getAll(
         params.currentPage, 
         params.items, 
@@ -53,42 +61,90 @@ export class BookListPage {
           return response.result.result;
         }),
         catchError(err => {
+          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
+          this.backendError.set(message);
           return of(null);
         })
       );
     },
   });
 
-  protected readonly isLoading = computed(() => this.bookRX.isLoading());
-  protected readonly errorMessage = computed(() => this.bookRX.error()?.message ?? null);
+  private readonly deleteBookRX = rxResource({
+    params: () => this.bookIdToDeletePayload(),
+    stream: ({ params: payloadId }) => {
+      this.backendError.set(null);
+      if (payloadId === null) return of(null);
+
+      return this.bookService.delete(payloadId).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        }),
+        tap(() => {
+          this.refreshList()
+          this.closeDeleteModal();
+          this.bookIdToDeletePayload.set(null);
+          this.selectedBookToDelete.set(null);
+        }),
+        catchError(err => {
+          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
+          this.backendError.set(message);
+          return of(null);
+        }),
+      );
+    },
+  });
+
+  protected readonly isLoading = computed(() => this.bookRX.isLoading() || this.deleteBookRX.isLoading());
+  protected readonly errorMessage = computed(() => this.backendError());
   protected readonly bookComputedList = computed<BookModel[]>(() => this.bookRX.value() ?? []);
 
   // ─── ACCIONES 
   refreshList() {
-    //this.refreshTrigger.update(v => v + 1);
+    this.refreshTrigger.update(v => v + 1);
   }
 
   onCreate(){
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM]);
   }
   
-  onEdit(newsWithImagesModel: BookModel){
+  onEdit(bookModel: BookModel){
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM], 
-      { state : { newsWithImagesModel: newsWithImagesModel } }
+      { state : { bookModel: bookModel } }
     );
   }
 
-  onDelete(newsWithImagesModel: BookModel) {
-    if (!newsWithImagesModel) return;
-    //this.selectedNewsWithImagesModel.set(newsWithImagesModel)
-    //this.openDeleteModal.set(true);
+  onDelete(selectedBookToDelete: BookModel) {
+    if (!selectedBookToDelete) return;
+    this.selectedBookToDelete.set(selectedBookToDelete)
+    this.openDeleteModal.set(true);
   }
 
-   // ─── PAGINACION  
-   searchText(text: string) {
-    //this.search.set(text);
-    //this.currentPage.set(1); 
+  confirmDelete() {
+    const selectedBookToDelete = this.selectedBookToDelete();
+    if (!selectedBookToDelete) return;
+    this.bookIdToDeletePayload.set(selectedBookToDelete.id_book);
+  } 
+
+  closeDeleteModal() {
+    this.openDeleteModal.set(false);
   }
 
-  
+  // ─── PAGINACION  
+  searchText(text: string) {
+    this.search.set(text);
+    this.currentPage.set(1); 
+    }
+
+  nextPage() {
+    if (this.currentPage() < this.totalPages()){
+      this.currentPage.update(e => e + 1);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage() > 1){
+      this.currentPage.update(e => e - 1);
+    }
+  }
 }

@@ -1,16 +1,16 @@
 <article 
-  [routerLink]="bookRouterLink()"
+  [routerLink]="navigateGoToDitail()"
   class="group w-56 bg-my-light shadow-sm cursor-pointer shadow-my-light hover:shadow-2xl transition-all duration-300 rounded-2xl"
 >
   <figure class="relative overflow-hidden h-80 w-56 rounded-t-2xl">
     <img
-      [ngSrc]="book().coverImageUrl"
+      [ngSrc]="book().cover_image_url"
       [alt]="book().title"
       fill
       class="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 borde"/>
   </figure>
   <div class="text-center p-2">
     <h2 class="card-title justify-center text-my-green">{{ book().title }}</h2>
-    <p class="text-sm text-my-dark/50">{{ book().author }}</p>
+    <p class="text-sm text-my-dark/50">{{ book().isbn }}</p>
   </div>
 </article>

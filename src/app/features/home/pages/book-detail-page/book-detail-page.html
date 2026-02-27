@@ -1,0 +1,20 @@
+
+
+<section class="min-h-full bg-linear-to-b from-my-green/70 via-my-light to-my-light/50">
+  <div class="container mx-auto pt-10 pb-8 px-4">
+
+    <app-book-detail-component 
+      [bookModel]="bookComputed()"
+    />
+  
+    @if (errorMessage()) {
+      <div class="flex justify-center items-center min-h-dvh">
+        <app-message-error-component
+          [message]="errorMessage()"
+        />
+      </div>
+    }
+  </div>
+</section>
+
+

@@ -24,11 +24,20 @@
   [title]="'La lectura nos abre las puertas del mundo'"
   [description]="'Revisa nuestro catálogo de libros y elige el que quieras leer.'"
   [searchPlaceholder]="'Buscar libro...'"
+  (searchChange)="searchText($event)"
 />
 
-<app-recommended-books-component/>
+<app-book-card-list-component 
+  [isLoading]="isLoading()"
+  [bookList]="bookListComputed()"
+/>
 
-<app-pagination-component [currentPage]="1" [totalPages]="1"/>
+<app-pagination-component 
+  [currentPage]="currentPage()" 
+  [totalPages]="totalPages()"
+  (prevPage)="prevPage()"
+  (nextPage)="nextPage()" 
+/>
 
 <div id="about">
   <app-about-component />
