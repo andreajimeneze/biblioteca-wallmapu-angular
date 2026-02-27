@@ -283,11 +283,15 @@ ng g s features/auth/services/auth-store --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK
+ng g c features/book/components/book-detail-component --skip-tests --style=none
+ng g c features/book/components/book-card-component --skip-tests --style=none
+ng g c features/book/components/book-card-list-component --skip-tests --style=none
 ng g c features/book/components/book-list-component --skip-tests --style=none
 ng g c features/book/components/book-list-row-component --skip-tests --style=none
 
 ng g interface features/book/models/book-model
 
+ng g c features/book/pages/book-form-page --skip-tests --style=none
 ng g c features/book/pages/book-list-page --skip-tests --style=none
 
 ng g s features/book/services/book-service --skip-tests
@@ -344,6 +348,7 @@ ng g s features/division-region/services/region-service --skip-tests
 # FEATURES HOME
 ng g c features/home/components/about-component --skip-tests --style=none
 
+ng g c features/home/pages/book-detail-page --skip-tests --style=none
 ng g c features/home/pages/home-page --skip-tests --style=none
 ng g c features/home/pages/news-page --skip-tests --style=none
 ng g c features/home/pages/news-detail-page --skip-tests --style=none
@@ -437,7 +442,6 @@ ng g c layouts/layout-user --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
 # SHARED COMPONENTS
-ng g c shared/components/book-card-component --skip-tests --style=none
 ng g c shared/components/header-component --skip-tests --style=none
 ng g c shared/components/loading-component --skip-tests --style=none
 ng g c shared/components/message-error-component --skip-tests --style=none

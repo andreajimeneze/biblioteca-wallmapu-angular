@@ -1,0 +1,8 @@
+<app-section-header-component
+  [title]="headerText()" 
+  [actionText]="'Volver a Libros'"
+  (actionClicked)="navigateGoBack()"
+/>
+
+<pre>{{ isEditMode() }}</pre>
+<pre>{{ bookModel() | json}}</pre>

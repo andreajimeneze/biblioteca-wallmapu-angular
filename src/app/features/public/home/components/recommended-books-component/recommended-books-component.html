@@ -1,9 +1,0 @@
-<div class="flex gap-8 flex-wrap px-4 py-8 mx-auto justify-center max-w-7xl">
-  @if (loading()) {
-    <span class="loading loading-spinner loading-lg"></span>
-  } @else {
-    @for (book of books(); track book.id) {
-      <app-book-card-component [book]="book"/>
-    }
-  }
-</div>  

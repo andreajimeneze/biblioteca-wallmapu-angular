@@ -16,5 +16,17 @@ export class BookService {
     return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookModel[]>>>(
       `${this.endpoint}/?page=${currentPage}&limit=${maxItems}&search=${search}`
     );
-  }  
+  }
+
+  getById(id: number): Observable<ApiResponseModel<BookModel | null>> {
+    return this.apiResponseService.getById<ApiResponseModel<BookModel | null>>(
+      this.endpoint, id
+    );
+  }
+
+  delete(id: number): Observable<ApiResponseModel<string>> {
+    return this.apiResponseService.delete<ApiResponseModel<string>>(
+      this.endpoint, id
+    );
+  }
 }
