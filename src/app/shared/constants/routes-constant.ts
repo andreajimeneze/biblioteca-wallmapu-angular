@@ -20,7 +20,10 @@ export const ROUTES_CONSTANTS = {
     },
     ADMIN: {
       DASHBOARD: '/admin/dashboard',
-      BOOKS: '/admin/books',
+      BOOKS: {
+        ROOT: '/admin/books',
+        FORM: '/admin/books/form',
+      },
       NEWS: {
         ROOT: '/admin/news',
         FORM: '/admin/news/form',

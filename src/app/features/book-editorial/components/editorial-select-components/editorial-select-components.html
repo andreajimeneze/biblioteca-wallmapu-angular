@@ -1,4 +1,4 @@
-@if (isLoading()) {
+@if (isLoading() || editorialComputedList().length === 0) {
   <app-loading-component/>
 } @else {
   <select 
@@ -13,12 +13,8 @@
         [value]="item.id_editorial"
         [selected]="item.id_editorial === selectedId()">
         
-        {{ item.editorial }}
+        {{ item.name }}
       </option>
     }
   </select>
 }
-
-@if (errorMessage()) {
-  <app-message-error-component [message]="errorMessage() || 'Error'"/>
-} 

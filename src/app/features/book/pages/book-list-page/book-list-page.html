@@ -1,0 +1,51 @@
+<section class="flex flex-col justify-between h-full">
+  <div>
+    <app-section-header-component 
+      [title]="'Libros'" 
+      [searchPlaceholder]="'Buscar Libro'"
+      (searchChange)="searchText($event)"
+    />
+
+    <div class="flex justify-between m-4">
+      <button (click)="refreshList()" class="btn max-w-48 bg-my-purple text-my-light">
+        Refrescar
+      </button>  
+    
+      <button (click)="onCreate()" class="btn max-w-48 bg-my-pink text-my-light">
+        Crear Libro
+      </button>
+    </div>
+    
+    @if (errorMessage()) {
+      <app-message-error-component [message]="errorMessage()"/>
+    }
+
+    <app-book-list-component 
+      [isLoading]="isLoading()"
+      [bookList]="bookComputedList()"
+      (edit)="onEdit($event)"
+      (delete)="onDelete($event)"
+    />
+  </div>
+
+  <!--
+  <app-pagination-component
+    [totalPages]="totalPages()"
+    [currentPage]="currentPage()"
+    (prevPage)="prevPage()"
+    (nextPage)="nextPage()" 
+  />
+  -->
+</section>
+
+<!--
+<app-modal-delete-component
+  title="Eliminar Noticia"
+  [isOpen]="openDeleteModal()"
+  [loading]="isLoading()"
+  [itemName]="selectedNewsWithImagesModel()?.title"
+  (confirm)="confirmDelete()"
+  (cancel)="closeDeleteModal()"
+/>
+-->
+

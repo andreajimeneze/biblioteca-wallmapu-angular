@@ -4,11 +4,12 @@ import { EditorialModel } from '@features/book-editorial/models/editorial-model'
 import { EditorialService } from '@features/book-editorial/services/editorial-service';
 import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
 @Component({
   selector: 'app-editorial-select-components',
-  imports: [LoadingComponent, MessageErrorComponent],
+  imports: [
+    LoadingComponent
+  ],
   templateUrl: './editorial-select-components.html',
 })
 export class EditorialSelectComponents {
@@ -27,13 +28,12 @@ export class EditorialSelectComponents {
         }),
         catchError(err => {
           return of(null);
-        })
+        }),
       );
     },
   });
 
   protected readonly isLoading = computed<boolean>(() => this.editorialRX.isLoading());
-  protected readonly errorMessage = computed<string | null>(() => this.editorialRX.error()?.message ?? null);
   protected readonly editorialComputedList = computed<EditorialModel[]>(() => this.editorialRX.value() ?? []);
 
   protected onChange(event: Event): void {

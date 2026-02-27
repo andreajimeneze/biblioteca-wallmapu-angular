@@ -1,5 +1,4 @@
 import { Component, computed, effect, ElementRef, inject, input, output, signal, viewChild } from '@angular/core';
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { catchError, map, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
@@ -8,7 +7,9 @@ import { CommuneModel } from '@features/division-commune/models/commune-model';
 
 @Component({
   selector: 'app-commune-select-components',
-  imports: [MessageErrorComponent, LoadingComponent],
+  imports: [
+    LoadingComponent
+  ],
   templateUrl: './commune-select-components.html',
 })
 export class CommuneSelectComponents {
@@ -34,15 +35,12 @@ export class CommuneSelectComponents {
           return res.result;
         }),
         catchError(err => {
-          //const message = err?.error?.detail || err?.error?.message || err?.message
-          //return throwError(() => new Error(message));
           return of(null);
         })
       ),
   });
 
   protected readonly isLoading = computed(() => this.communeRX.isLoading());
-  protected readonly errorMessage = computed(() => this.communeRX.error()?.message ?? null);
   protected readonly communeComputedList = computed<CommuneModel[]>(() => this.communeRX.value() ?? []);
 
   // ─── Sincronización inicial ─────────────────────

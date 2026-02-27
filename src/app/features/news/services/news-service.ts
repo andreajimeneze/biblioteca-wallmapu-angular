@@ -16,7 +16,7 @@ export class NewsService {
 
   getAll(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<NewsWithImagesModel[]>>> {
     return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<NewsWithImagesModel[]>>>(
-      `${this.endpoint}/?page=${currentPage}&items=${maxItems}&search=${search}`
+      `${this.endpoint}/?page=${currentPage}&limit=${maxItems}&search=${search}`
     );
   }
 

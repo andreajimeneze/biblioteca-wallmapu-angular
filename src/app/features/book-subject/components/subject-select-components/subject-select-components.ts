@@ -4,11 +4,12 @@ import { SubjectModel } from '@features/book-subject/models/subject-model';
 import { SubjectService } from '@features/book-subject/services/subject-service';
 import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
 @Component({
   selector: 'app-subject-select-components',
-  imports: [LoadingComponent, MessageErrorComponent],
+  imports: [
+    LoadingComponent
+  ],
   templateUrl: './subject-select-components.html',
 })
 export class SubjectSelectComponents {
@@ -27,13 +28,12 @@ export class SubjectSelectComponents {
         }),
         catchError(err => {
           return of(null);
-        })
+        }),
       );
     },
   });
 
   protected readonly isLoading = computed<boolean>(() => this.subjectlRX.isLoading());
-  protected readonly errorMessage = computed<string | null>(() => this.subjectlRX.error()?.message ?? null);
   protected readonly subjectComputedList = computed<SubjectModel[]>(() => this.subjectlRX.value() ?? []);
 
   protected onChange(event: Event): void {

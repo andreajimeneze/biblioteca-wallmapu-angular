@@ -1,25 +1,21 @@
 <!-- commune-select-components.html -->
-@if (isLoading()) {
+@if (isLoading() || provinceComputedList().length === 0) {
   <app-loading-component/>
 } @else {
-  @if (errorMessage()) {
-    <app-message-error-component [message]="errorMessage() || 'Error'"/>
-  } @else {
-    <select 
-      [disabled]="disabled()"
-      [value]="selectedId()"
-      (change)="onChange($event)"
-      class="select text-my-pink"
-    >      
-      <option disabled>Seleccióne una Provincia</option>
-      @for (item of provinceComputedList(); track $index) {
-        <option 
-          [value]="item.id_province"
-          [selected]="item.id_province === selectedId()">
-          
-          {{ item.province }}
-        </option>
-      }
-    </select>
-  }
+  <select 
+    [disabled]="disabled()"
+    [value]="selectedId()"
+    (change)="onChange($event)"
+    class="select text-my-pink"
+  >      
+    <option disabled>Seleccióne una Provincia</option>
+    @for (item of provinceComputedList(); track $index) {
+      <option 
+        [value]="item.id_province"
+        [selected]="item.id_province === selectedId()">
+        
+        {{ item.province }}
+      </option>
+    }
+  </select>
 }
