@@ -47,7 +47,7 @@ export class UserFormComponents {
 
   /* -- Form Updates -------------------------------------- */
   protected updatePhone(value: string, input: HTMLInputElement) { 
-    this.updateField('phone', value, input); 
+    this.updateField('phone', value, input);
   }
   protected updateName(value: string, input: HTMLInputElement) { 
     this.updateField('name', value, input); 
