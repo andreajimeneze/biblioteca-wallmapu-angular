@@ -283,9 +283,10 @@ ng g s features/auth/services/auth-store --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK
-ng g c features/book/components/book-detail-component --skip-tests --style=none
 ng g c features/book/components/book-card-component --skip-tests --style=none
 ng g c features/book/components/book-card-list-component --skip-tests --style=none
+ng g c features/book/components/book-detail-component --skip-tests --style=none
+ng g c features/book/components/book-form-component --skip-tests --style=none
 ng g c features/book/components/book-list-component --skip-tests --style=none
 ng g c features/book/components/book-list-row-component --skip-tests --style=none
 

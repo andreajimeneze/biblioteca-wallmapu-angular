@@ -4,5 +4,4 @@
   (actionClicked)="navigateGoBack()"
 />
 
-<pre>{{ isEditMode() }}</pre>
-<pre>{{ bookModel() | json}}</pre>
+<app-book-form-component [bookModel]="bookModel()" />

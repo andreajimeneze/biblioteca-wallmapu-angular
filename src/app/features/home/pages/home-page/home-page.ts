@@ -36,7 +36,7 @@ export class HomePage {
   private readonly bookService = inject(BookService);
 
   readonly currentPage = signal(1);
-  private readonly limit = signal(8);
+  private readonly limit = signal(12);
   private readonly search = signal('');
   readonly totalPages = signal<number>(0);
   private readonly paramsPayload = computed(() => ({
@@ -75,9 +75,7 @@ export class HomePage {
       ).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-
           this.totalPages.set(response.result.pages);
-
           return response.result.result;
         }),
         catchError(err => {
