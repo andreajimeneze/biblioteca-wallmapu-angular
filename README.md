@@ -306,12 +306,28 @@ ng g interface features/book-author/models/author-model
 ng g s features/book-author/services/author-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES BOOK COPY STATUS
+ng g c features/book-copy-status/components/book-copy-status-select-components --skip-tests --style=none
+
+ng g interface features/book-copy-status/models/book-copy-status-model
+
+ng g s features/book-copy-status/services/book-copy-status-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES BOOK EDITORIAL
 ng g c features/book-editorial/components/editorial-select-components --skip-tests --style=none
 
 ng g interface features/book-editorial/models/editorial-model
 
 ng g s features/book-editorial/services/editorial-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES BOOK GENRE
+ng g c features/book-genre/components/genre-select-components --skip-tests --style=none
+
+ng g interface features/book-genre/models/genre-model
+
+ng g s features/book-genre/services/genre-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK SUBJECT

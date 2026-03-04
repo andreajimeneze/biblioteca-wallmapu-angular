@@ -11,8 +11,9 @@ import { RegionSelectComponents } from "@features/division-region/components/reg
 import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";
 import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
 import { SubjectSelectComponents } from "@features/book-subject/components/subject-select-components/subject-select-components";
-import { ModalErrorComponent } from "@shared/components/modal-error-component/modal-error-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
+import { BookCopyStatusSelectComponents } from "@features/book-copy-status/components/book-copy-status-select-components/book-copy-status-select-components";
 
 @Component({
   selector: 'app-stat.page',
@@ -25,7 +26,9 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
     EditorialSelectComponents,
     AuthorSelectComponents,
     SubjectSelectComponents,
-    MessageErrorComponent
+    MessageErrorComponent,
+    GenreSelectComponents,
+    BookCopyStatusSelectComponents
 ],
   templateUrl: './stat.page.html',
 })
