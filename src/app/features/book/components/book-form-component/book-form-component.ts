@@ -3,14 +3,22 @@ import { Component, computed, effect, input, output, signal } from '@angular/cor
 import { BookModel } from '@features/book/models/book-model';
 import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
+import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
+import { SubjectSelectComponents } from "@features/book-subject/components/subject-select-components/subject-select-components";
+import { AuthorListComponents } from "@features/book-author/components/author-list-components/author-list-components";
+import { SubjectListComponents } from "@features/book-subject/components/subject-list-components/subject-list-components";
 
 @Component({
   selector: 'app-book-form-component',
   imports: [
     JsonPipe,
-    NgOptimizedImage,
-    EditorialSelectComponents,
-    MessageErrorComponent
+    MessageErrorComponent,
+    GenreSelectComponents,
+    AuthorSelectComponents,
+    SubjectSelectComponents,
+    AuthorListComponents,
+    SubjectListComponents
 ],
   templateUrl: './book-form-component.html',
 })
@@ -18,10 +26,7 @@ export class BookFormComponent {
   readonly bookModel = input<BookModel | null>(null);
   readonly onFormSubmit = output<BookModel>();
 
-  readonly imageError = signal<string | null>(null);
-  imagePreview = signal<string | null>(null);
   readonly errorMessage = signal<string | null>(null);
-
   readonly formData = signal<Partial<BookModel>>({});
 
   private readonly effect = effect(() => {
@@ -34,6 +39,34 @@ export class BookFormComponent {
   protected updateTitle(value: string, input: HTMLInputElement) {
     this.updateField('title', value, input);
   }
+
+  protected updateSummary(value: string, input: HTMLTextAreaElement) {
+    this.updateField('summary', value, input);
+  }
+
+  private updateField<K extends keyof BookModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
+    const sanitized = this.sanitize(key, value);
+
+    if (sanitized === null) {
+      if (input) input.value = this.formData()[key] as string ?? ''; // ✅ Forzar el valor anterior de vuelta en el DOM
+      return; // valor inválido, no actualiza
+    } 
+
+    this.formData.update(data => ({ ...data, [key]: sanitized }));
+    this.errorMessage.set(null);
+  }
+
+  private sanitize(key: keyof BookModel, value: string): string | null {
+    switch (key){
+      case 'title':
+        if (value.length > 100) return null;
+        return value;      
+      default:
+        return value;
+    }
+  }
+
+  /*  
 
   protected updateDescription(value: string, input: HTMLTextAreaElement) { 
     this.updateField('description', value, input);
@@ -63,53 +96,7 @@ export class BookFormComponent {
     this.updateField('cutter', value, input);
   }
 
-  private updateField<K extends keyof BookModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
-    const sanitized = this.sanitize(key, value);
-
-    if (sanitized === null) {
-      if (input) input.value = this.formData()[key] as string ?? ''; // ✅ Forzar el valor anterior de vuelta en el DOM
-      return; // valor inválido, no actualiza
-    } 
-
-    this.formData.update(data => ({ ...data, [key]: sanitized }));
-    this.errorMessage.set(null);
-  }
-
-  private sanitize(key: keyof BookModel, value: string): string | null {
-    switch (key){
-      case 'title':
-        if (value.length > 100) return null;
-        return value;
-      case 'description':
-        if (value.length > 256) return null;
-        return value;
-      case 'isbn':
-        if (!/^(?:\d{9}[\dX]|\d{13})$/.test(value)) return null;
-        return value;
-      case 'publication_year':
-        if (!/^\d*$/.test(value)) return null; 
-        if (value.length > 4) return null;
-        return value;
-      case 'pages':
-        if (!/^\d*$/.test(value)) return null; 
-        if (value.length > 4) return null;
-        return value;
-      case 'edition':
-        if (!/^[a-zA-Z0-9\s°\-\.]*$/.test(value)) return null;
-        if (value.length > 50) return null;
-        return value;
-      case 'dewey_number':
-        if (!/^[0-9.]*$/.test(value)) return null;  // solo números y puntos
-        if (value.length > 10) return null;
-        return value;
-      case 'cutter':
-        if (!/^[a-zA-Z0-9]*$/.test(value)) return null; // solo letras y números
-        if (value.length > 10) return null;
-        return value;            
-      default:
-        return value;
-    }
-  }
+ 
 
   protected onChangeImages(event: Event): void {
     const input = event.target as HTMLInputElement;
@@ -142,7 +129,7 @@ export class BookFormComponent {
     };
     reader.readAsDataURL(file);
   }
-
+  */
   protected formSubmit(event: Event): void {
     event.preventDefault();
   }

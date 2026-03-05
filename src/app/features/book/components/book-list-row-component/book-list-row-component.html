@@ -1,14 +1,12 @@
 <li class="list-row">
-  <div class="relative overflow-hidden size-10">
-    @if (bookModel().cover_image_url) {
-      <img 
-        placeholder="/images/layout.webp"
-        [ngSrc]="bookModel().cover_image_url"
-        [alt]="bookModel().title"
-        fill
-        class="object-cover rounded-box" 
-      /> 
-    }
+  <div class="relative overflow-hidden min-h-10 size-30">
+    <img 
+      placeholder="/images/layout.webp"
+      [ngSrc]="'/images/book.png'"
+      [alt]="bookModel().title"
+      fill
+      class="object-cover rounded-box" 
+    /> 
   </div>
   
   <div>
@@ -17,6 +15,10 @@
       <span class="hidden md:inline"> - {{ bookModel().created_at | date:'HH:mm:ss' }}</span>
     </div>
     <div class="text-xs uppercase font-semibold opacity-60">{{ bookModel().title }}</div>
+    <div class="text-xs font-semibold text-my-purple opacity-60">{{ bookModel().authors[0].name }}</div>
+    <div class="text-xs font-semibold text-my-purple opacity-60">{{ bookModel().genre.name }}</div>
+    <div class="text-xs font-semibold text-my-green opacity-60">{{ `Ediciones: ${bookModel().editions.length}` }}</div>
+    <div class="text-xs font-semibold text-my-green opacity-60">{{ `Ejemplares: 0` }}</div>
   </div>
 
   <button

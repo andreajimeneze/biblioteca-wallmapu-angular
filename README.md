@@ -299,11 +299,20 @@ ng g s features/book/services/book-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK AUTHOR
+ng g c features/book-author/components/author-list-components --skip-tests --style=none
 ng g c features/book-author/components/author-select-components --skip-tests --style=none
 
 ng g interface features/book-author/models/author-model
 
 ng g s features/book-author/services/author-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES BOOK COPY STATUS
+ng g c features/book-copy-status/components/book-copy-status-select-components --skip-tests --style=none
+
+ng g interface features/book-copy-status/models/book-copy-status-model
+
+ng g s features/book-copy-status/services/book-copy-status-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK EDITORIAL
@@ -314,7 +323,16 @@ ng g interface features/book-editorial/models/editorial-model
 ng g s features/book-editorial/services/editorial-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES BOOK GENRE
+ng g c features/book-genre/components/genre-select-components --skip-tests --style=none
+
+ng g interface features/book-genre/models/genre-model
+
+ng g s features/book-genre/services/genre-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES BOOK SUBJECT
+ng g c features/book-subject/components/subject-list-components --skip-tests --style=none
 ng g c features/book-subject/components/subject-select-components --skip-tests --style=none
 
 ng g interface features/book-subject/models/subject-model
@@ -344,6 +362,14 @@ ng g c features/division-region/components/region-select-components --skip-tests
 ng g interface features/division-region/models/region-model
 
 ng g s features/division-region/services/region-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES EDITION
+ng g c features/edition/components/edition-form-components --skip-tests --style=none
+
+ng g interface features/edition/models/edition-model
+
+ng g s features/edition/services/edition-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES HOME
