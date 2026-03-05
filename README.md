@@ -362,6 +362,14 @@ ng g interface features/division-region/models/region-model
 ng g s features/division-region/services/region-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES EDITION
+ng g c features/edition/components/edition-form-components --skip-tests --style=none
+
+ng g interface features/edition/models/edition-model
+
+ng g s features/edition/services/edition-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES HOME
 ng g c features/home/components/about-component --skip-tests --style=none
 

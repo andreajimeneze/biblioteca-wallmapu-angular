@@ -7,7 +7,9 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 
 @Component({
   selector: 'app-book-copy-status-select-components',
-  imports: [LoadingComponent],
+  imports: [
+    LoadingComponent,
+  ],
   templateUrl: './book-copy-status-select-components.html',
 })
 export class BookCopyStatusSelectComponents {

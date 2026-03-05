@@ -1,20 +1,12 @@
-import { JsonPipe, NgOptimizedImage } from '@angular/common';
-import { Component, computed, effect, input, output, signal } from '@angular/core';
-import { BookModel } from '@features/book/models/book-model';
-import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { Component, input, output, signal } from '@angular/core';
 
 @Component({
-  selector: 'app-book-form-component',
-  imports: [
-    JsonPipe,
-    NgOptimizedImage,
-    EditorialSelectComponents,
-    MessageErrorComponent
-],
-  templateUrl: './book-form-component.html',
+  selector: 'app-edition-form-components',
+  imports: [],
+  templateUrl: './edition-form-components.html',
 })
-export class BookFormComponent {
+export class EditionFormComponents {
+  /*
   readonly bookModel = input<BookModel | null>(null);
   readonly onFormSubmit = output<BookModel>();
 
@@ -24,7 +16,6 @@ export class BookFormComponent {
 
   readonly formData = signal<Partial<BookModel>>({});
 
-  /*
   private readonly effect = effect(() => {
     const book = this.bookModel();
     if (book) {
@@ -32,7 +23,6 @@ export class BookFormComponent {
     }
   });
 
-  
   protected updateTitle(value: string, input: HTMLInputElement) {
     this.updateField('title', value, input);
   }
@@ -148,5 +138,5 @@ export class BookFormComponent {
   protected formSubmit(event: Event): void {
     event.preventDefault();
   }
-  */
+*/
 }

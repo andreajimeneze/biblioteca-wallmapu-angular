@@ -7,7 +7,9 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 
 @Component({
   selector: 'app-genre-select-components',
-  imports: [LoadingComponent],
+  imports: [
+    LoadingComponent,
+  ],
   templateUrl: './genre-select-components.html',
 })
 export class GenreSelectComponents {

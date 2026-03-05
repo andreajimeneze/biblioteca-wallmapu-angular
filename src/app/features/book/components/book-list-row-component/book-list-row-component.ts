@@ -1,6 +1,5 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
-import { Component, inject, input, output } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, input, output } from '@angular/core';
 import { BookModel } from '@features/book/models/book-model';
 
 @Component({
@@ -12,8 +11,6 @@ import { BookModel } from '@features/book/models/book-model';
   templateUrl: './book-list-row-component.html',
 })
 export class BookListRowComponent {
-  private readonly router = inject(Router);
-  
   readonly bookModel = input.required<BookModel>();
   readonly delete = output<BookModel>();
   readonly edit = output<BookModel>();
