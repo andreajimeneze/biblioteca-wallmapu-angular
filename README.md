@@ -299,6 +299,7 @@ ng g s features/book/services/book-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK AUTHOR
+ng g c features/book-author/components/author-list-components --skip-tests --style=none
 ng g c features/book-author/components/author-select-components --skip-tests --style=none
 
 ng g interface features/book-author/models/author-model
@@ -331,6 +332,7 @@ ng g s features/book-genre/services/genre-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK SUBJECT
+ng g c features/book-subject/components/subject-list-components --skip-tests --style=none
 ng g c features/book-subject/components/subject-select-components --skip-tests --style=none
 
 ng g interface features/book-subject/models/subject-model

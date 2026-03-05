@@ -1,1 +1,68 @@
+<div class="w-full max-w-7xl p-4 mx-auto">
+  <form class="fieldset bg-my-light rounded-box border p-6 grid grid-cols-1 md:grid-cols-2 gap-4"
+    (submit)="formSubmit($event)">
+  
+    <div>
+      <fieldset class="fieldset">
+        <label class="label font-semibold mb-1">Título</label>
+        <input
+          #titleInput 
+          type="text" class="input validator w-full" placeholder="Nombre del Libro" required 
+          [value]="formData().title"
+          (input)="updateTitle($any($event.target).value, titleInput)"
+        />
+        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+      </fieldset>
+
+      <fieldset class="fieldset flex flex-col">
+        <label class="label font-semibold">Género</label>
+        <div class="my-auto">
+          <app-genre-select-components />
+        </div>
+        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+      </fieldset>
+    </div>
+
+    <fieldset class="fieldset flex flex-col">
+      <label class="label font-semibold">Descripción / Resumen</label>
+      <textarea 
+        #summaryInput
+        class="textarea validator mt-2 w-full min-h-56" placeholder="Descripción/Resumen del libro" required
+        [value]="formData().summary"
+        (input)="updateSummary($any($event.target).value, summaryInput)"
+      ></textarea>
+      <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
+    </fieldset>
+
+    <div>
+      <div class="divider text-base-content/40">Autores</div>
+      <label class="label font-semibold">Seleccionar Autor/es</label>
+      <div class="my-2">
+        <app-author-select-components />
+      </div>
+      <app-author-list-components 
+        [authorList]="bookModel()?.authors"
+      />
+    </div>
+
+    <div>
+      <div class="divider text-base-content/40">Descriptores</div>
+      <label class="label font-semibold">Descriptor/es</label>
+      <div class="my-2">
+        <app-subject-select-components />
+      </div>
+      <app-subject-list-components 
+        [subjectList]="bookModel()?.subjects"
+      />
+    </div>
+
+  </form>
+
+  @if (errorMessage()) {
+    <div class="my-4">
+      <app-message-error-component [message]="errorMessage()"/>
+    </div>
+  }
+</div>
+
 <pre>{{bookModel() | json}}</pre>

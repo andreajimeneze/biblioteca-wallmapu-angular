@@ -5,7 +5,7 @@ import { BookModel } from '@features/book/models/book-model';
 @Component({
   selector: 'app-book-detail-component',
   imports: [
-    NgOptimizedImage,
+    //NgOptimizedImage,
   ],
   templateUrl: './book-detail-component.html',
 })
