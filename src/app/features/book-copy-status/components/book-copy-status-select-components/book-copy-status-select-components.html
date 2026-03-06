@@ -1,0 +1,20 @@
+@if (isLoading() ) {
+  <app-loading-component/>
+} @else {
+  <select 
+    [disabled]="disabled()"
+    [value]="selectedId()"
+    (change)="onChange($event)"
+    class="select text-my-pink"
+  >      
+    <option disabled>Seleccióne una Región</option>
+    @for (item of bookCopyStatusComputedList(); track $index) {
+      <option 
+        [value]="item.id_status"
+        [selected]="item.id_status === selectedId()">
+        
+        {{ item.name }}
+      </option>
+    }
+  </select>
+}

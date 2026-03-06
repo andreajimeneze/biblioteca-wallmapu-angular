@@ -7,8 +7,8 @@ import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 @Component({
   selector: 'app-book-card-component',
   imports: [
-    RouterLink,
-    NgOptimizedImage,
+    //RouterLink,
+    //NgOptimizedImage,
   ],
   templateUrl: './book-card-component.html',
 })
