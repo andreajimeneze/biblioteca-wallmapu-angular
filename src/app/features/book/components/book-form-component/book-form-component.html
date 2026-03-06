@@ -17,10 +17,19 @@
       <fieldset class="fieldset flex flex-col">
         <label class="label font-semibold">Género</label>
         <div class="my-auto">
-          <app-genre-select-components />
+          <app-genre-select-components 
+            [selectedId]="formData().genre?.id_genre || 0"
+          />
         </div>
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>
+
+      <p class="pt-6 text-my-purple">
+        {{ formData().created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha de Creación
+      </p>
+      <p class="text-my-purple">
+        {{ formData().updated_at| date:'yyyy-MM-dd HH:mm:ss' }} - Fecha de Modificación:
+      </p>
     </div>
 
     <fieldset class="fieldset flex flex-col">
@@ -40,7 +49,7 @@
       <div class="my-2">
         <app-author-select-components />
       </div>
-      <app-author-list-components 
+      <app-author-list-components
         [authorList]="bookModel()?.authors"
       />
     </div>
@@ -53,6 +62,10 @@
       </div>
       <app-subject-list-components 
         [subjectList]="bookModel()?.subjects"
+      />
+
+      <app-subject-select-with-list-components 
+        
       />
     </div>
 

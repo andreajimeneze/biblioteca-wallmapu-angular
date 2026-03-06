@@ -1,6 +1,5 @@
-import { JsonPipe, NgOptimizedImage } from '@angular/common';
+import { DatePipe, JsonPipe, NgOptimizedImage } from '@angular/common';
 import { Component, computed, effect, input, output, signal } from '@angular/core';
-import { BookModel } from '@features/book/models/book-model';
 import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
@@ -8,26 +7,30 @@ import { AuthorSelectComponents } from "@features/book-author/components/author-
 import { SubjectSelectComponents } from "@features/book-subject/components/subject-select-components/subject-select-components";
 import { AuthorListComponents } from "@features/book-author/components/author-list-components/author-list-components";
 import { SubjectListComponents } from "@features/book-subject/components/subject-list-components/subject-list-components";
+import { BookDetailModel } from '@features/book/models/book-detail-model';
+import { SubjectSelectWithListComponents } from "@features/book-subject/components/subject-select-with-list-components/subject-select-with-list-components";
 
 @Component({
   selector: 'app-book-form-component',
   imports: [
     JsonPipe,
+    DatePipe,
     MessageErrorComponent,
     GenreSelectComponents,
     AuthorSelectComponents,
     SubjectSelectComponents,
     AuthorListComponents,
-    SubjectListComponents
+    SubjectListComponents,
+    SubjectSelectWithListComponents
 ],
   templateUrl: './book-form-component.html',
 })
 export class BookFormComponent {
-  readonly bookModel = input<BookModel | null>(null);
-  readonly onFormSubmit = output<BookModel>();
+  readonly bookModel = input<BookDetailModel | null>(null);
+  readonly onFormSubmit = output<BookDetailModel>();
 
   readonly errorMessage = signal<string | null>(null);
-  readonly formData = signal<Partial<BookModel>>({});
+  readonly formData = signal<Partial<BookDetailModel>>({});
 
   private readonly effect = effect(() => {
     const book = this.bookModel();
@@ -44,7 +47,7 @@ export class BookFormComponent {
     this.updateField('summary', value, input);
   }
 
-  private updateField<K extends keyof BookModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
+  private updateField<K extends keyof BookDetailModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
     const sanitized = this.sanitize(key, value);
 
     if (sanitized === null) {
@@ -56,7 +59,7 @@ export class BookFormComponent {
     this.errorMessage.set(null);
   }
 
-  private sanitize(key: keyof BookModel, value: string): string | null {
+  private sanitize(key: keyof BookDetailModel, value: string): string | null {
     switch (key){
       case 'title':
         if (value.length > 100) return null;

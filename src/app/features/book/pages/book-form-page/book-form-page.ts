@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { BookModel } from '@features/book/models/book-model';
+import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { BookFormComponent } from '@features/book/components/book-form-component/book-form-component';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
@@ -14,10 +14,10 @@ import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
   templateUrl: './book-form-page.html',
 })
 export class BookFormPage {
-  private readonly state = history.state as { bookModel: BookModel };
+  private readonly state = history.state as { bookModel: BookDetailModel };
   private readonly router = inject(Router);
 
-  readonly bookModel = signal<BookModel>(this.state.bookModel);
+  readonly bookModel = signal<BookDetailModel>(this.state.bookModel);
   readonly isEditMode = computed<boolean>(() => !!this.bookModel());
   readonly headerText = computed<string>(() => this.isEditMode() ? "Modificar lLibro" : "Crear lLibro");
 

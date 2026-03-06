@@ -1,7 +1,7 @@
 import { NgOptimizedImage } from '@angular/common';
 import { Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BookModel } from '@features/book/models/book-model';
+import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 
 @Component({
@@ -13,7 +13,7 @@ import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
   templateUrl: './book-card-component.html',
 })
 export class BookCardComponent {
-  readonly book = input.required<BookModel>();
+  readonly book = input.required<BookDetailModel>();
   
   navigateGoToDitail = computed(() => ROUTES_CONSTANTS.HOME.BOOK.DETAIL(this.book().id_book));
 }

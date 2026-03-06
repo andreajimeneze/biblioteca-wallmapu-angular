@@ -2,7 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { ApiResponseService } from '@core/services/api-response-service';
 import { Observable } from 'rxjs';
-import { BookModel } from '@features/book/models/book-model';
+import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { PaginationModel } from '@core/models/pagination-model';
 
 @Injectable({
@@ -12,14 +12,14 @@ export class BookService {
   private apiResponseService = inject(ApiResponseService)
   private readonly endpoint = 'books';
 
-  getAll(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<BookModel[]>>> {
-    return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookModel[]>>>(
+  getAll(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<BookDetailModel[]>>> {
+    return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookDetailModel[]>>>(
       `${this.endpoint}/?page=${currentPage}&limit=${maxItems}&search=${search}`
     );
   }
 
-  getById(id: number): Observable<ApiResponseModel<BookModel | null>> {
-    return this.apiResponseService.getById<ApiResponseModel<BookModel | null>>(
+  getById(id: number): Observable<ApiResponseModel<BookDetailModel | null>> {
+    return this.apiResponseService.getById<ApiResponseModel<BookDetailModel | null>>(
       this.endpoint, id
     );
   }

@@ -5,7 +5,7 @@ import { BookService } from '@features/book/services/book-service';
 import { catchError, map, of } from 'rxjs';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { BookDetailComponent } from '@features/book/components/book-detail-component/book-detail-component';
-import { BookModel } from '@features/book/models/book-model';
+import { BookDetailModel } from '@features/book/models/book-detail-model';
 
 @Component({
   selector: 'app-book-detail-page',
@@ -49,5 +49,5 @@ export class BookDetailPage {
 
   protected readonly isLoading = computed<boolean>(() => this.bookRX.isLoading());
   protected readonly errorMessage = computed<string | null>(() => this.backendError() ?? null);
-  protected readonly bookComputed = computed<BookModel | null>(() => this.bookRX.value() ?? null)
+  protected readonly bookComputed = computed<BookDetailModel | null>(() => this.bookRX.value() ?? null)
 }
