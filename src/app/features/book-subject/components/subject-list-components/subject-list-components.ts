@@ -10,7 +10,10 @@ export class SubjectListComponents {
   readonly subjectList = input<SubjectModel[]>([]);
   readonly onDelete = output<SubjectModel>();
 
-  protected delete(item: SubjectModel): void {
+  protected delete(item: SubjectModel, event: MouseEvent): void {
+    event.preventDefault();   // evita submit del form si hay
+    event.stopPropagation();  // evita que otros listeners en padres se disparen
+    
     this.onDelete.emit(item);
   }
 }

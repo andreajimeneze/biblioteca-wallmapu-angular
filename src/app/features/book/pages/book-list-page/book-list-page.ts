@@ -105,13 +105,11 @@ export class BookListPage {
   }
 
   onCreate(){
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM]);
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM, 0]);
   }
   
   onEdit(bookModel: BookDetailModel) {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM], 
-      { state : { bookModel: bookModel } }
-    );
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM, bookModel.id_book]);
   }
 
   onDelete(selectedBookToDelete: BookDetailModel) {

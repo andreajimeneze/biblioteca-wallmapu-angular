@@ -79,6 +79,8 @@ export class AuthorSelectComponents {
 
   protected select(author: AuthorModel, event: MouseEvent) {
     event.preventDefault();
+    event.stopPropagation();
+
     this.selectedAuthor.set(author);
     this.searchText.set('');
     this.isOpen.set(false);

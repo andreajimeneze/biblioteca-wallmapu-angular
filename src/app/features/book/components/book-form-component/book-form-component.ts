@@ -41,6 +41,7 @@ export class BookFormComponent {
   readonly onNewSelectedSubject = output<SubjectModel>();
   readonly onDeleteSubject = output<SubjectModel>();
   //------------------------------------------------
+  readonly onFormChange = output<Partial<BookFormModel>>();
   readonly onFormSubmit = output<BookFormModel>();
   //------------------------------------------------
 
@@ -70,7 +71,15 @@ export class BookFormComponent {
       return;
     } 
 
-    this.formData.update(data => ({ ...data, [key]: sanitized }));
+    this.formData.update(data => {
+      const updated = { ...data, [key]: sanitized };
+  
+      // 🔥 notificar al padre
+      this.onFormChange.emit(updated);
+  
+      return updated;
+    });
+
     this.errorMessage.set(null);
   }
 

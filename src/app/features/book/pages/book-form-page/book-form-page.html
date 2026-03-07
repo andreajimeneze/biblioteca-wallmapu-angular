@@ -23,6 +23,8 @@
   (onDeleteAuthor)="deleteAuthor($event)"
   (onNewSelectedSubject)="newSelectedSubject($event)"
   (onDeleteSubject)="deleteSubject($event)"
+  (onFormChange)="formChange($event)"
+  (onFormSubmit)="formSubmit($event)"
 />
 
 <pre>{{bookFormModel() | json}}</pre>
