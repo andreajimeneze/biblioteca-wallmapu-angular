@@ -1,6 +1,6 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, input, output } from '@angular/core';
-import { BookModel } from '@features/book/models/book-model';
+import { BookDetailModel } from '@features/book/models/book-detail-model';
 
 @Component({
   selector: 'app-book-list-row-component',
@@ -11,15 +11,15 @@ import { BookModel } from '@features/book/models/book-model';
   templateUrl: './book-list-row-component.html',
 })
 export class BookListRowComponent {
-  readonly bookModel = input.required<BookModel>();
-  readonly delete = output<BookModel>();
-  readonly edit = output<BookModel>();
+  readonly bookDetail = input.required<BookDetailModel>();
+  readonly delete = output<BookDetailModel>();
+  readonly edit = output<BookDetailModel>();
 
-  protected onDelete(item: BookModel): void {
+  protected onDelete(item: BookDetailModel): void {
     this.delete.emit(item);
   }
 
-  protected onEdit(item: BookModel): void {
+  protected onEdit(item: BookDetailModel): void {
     this.edit.emit(item);
   }
 }

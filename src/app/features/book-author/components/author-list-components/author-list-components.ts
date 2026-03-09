@@ -8,9 +8,12 @@ import { AuthorModel } from '@features/book-author/models/author-model';
 })
 export class AuthorListComponents {
   readonly authorList = input<AuthorModel[]>();
-  readonly delete = output<AuthorModel>();
+  readonly onDelete = output<AuthorModel>();
 
-  protected onDelete(item: AuthorModel): void {
-    this.delete.emit(item);
+  protected delete(item: AuthorModel, event: MouseEvent): void {
+    event.preventDefault();   // evita submit del form si hay
+    event.stopPropagation();  // evita que otros listeners en padres se disparen
+  
+    this.onDelete.emit(item);
   }
 }

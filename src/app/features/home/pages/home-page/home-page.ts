@@ -12,7 +12,7 @@ import { PaginationComponent } from "@shared/components/pagination-component/pag
 import { NewsCardListComponent } from "@features/news/components/news-card-list-component/news-card-list-component";
 import { AboutComponent } from '@features/home/components/about-component/about-component';
 import { BookService } from '@features/book/services/book-service';
-import { BookModel } from '@features/book/models/book-model';
+import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { BookCardListComponent } from "@features/book/components/book-card-list-component/book-card-list-component";
 
 @Component({
@@ -98,7 +98,7 @@ export class HomePage {
     const list = this.newsRX.value() ?? [];
     return list.slice(1);
   });
-  protected readonly bookListComputed = computed<BookModel[]>(() => this.bookRX.value() ?? []);
+  protected readonly bookListComputed = computed<BookDetailModel[]>(() => this.bookRX.value() ?? []);
 
   protected actionClicked(){
     this.router.navigate([ROUTES_CONSTANTS.HOME.NEWS.ROOT])

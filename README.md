@@ -290,6 +290,8 @@ ng g c features/book/components/book-form-component --skip-tests --style=none
 ng g c features/book/components/book-list-component --skip-tests --style=none
 ng g c features/book/components/book-list-row-component --skip-tests --style=none
 
+ng g interface features/book/models/book-detail-model
+ng g interface features/book/models/book-form-model
 ng g interface features/book/models/book-model
 
 ng g c features/book/pages/book-form-page --skip-tests --style=none
@@ -305,6 +307,12 @@ ng g c features/book-author/components/author-select-components --skip-tests --s
 ng g interface features/book-author/models/author-model
 
 ng g s features/book-author/services/author-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES BOOK AUTHOR STEP
+ng g interface features/book-author-step/models/book-author-step-model
+
+ng g s features/book-author-step/services/book-author-step-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK COPY STATUS
@@ -334,10 +342,17 @@ ng g s features/book-genre/services/genre-service --skip-tests
 # FEATURES BOOK SUBJECT
 ng g c features/book-subject/components/subject-list-components --skip-tests --style=none
 ng g c features/book-subject/components/subject-select-components --skip-tests --style=none
+ng g c features/book-subject/components/subject-select-with-list-components --skip-tests --style=none
 
 ng g interface features/book-subject/models/subject-model
 
 ng g s features/book-subject/services/subject-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES BOOK SUBJECT STEP
+ng g interface features/book-subject-step/models/book-subject-step-model
+
+ng g s features/book-subject-step/services/book-subject-step-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES DIVISION COMMUNE
@@ -366,8 +381,11 @@ ng g s features/division-region/services/region-service --skip-tests
 # ---------------------------------------------------------------------------------
 # FEATURES EDITION
 ng g c features/edition/components/edition-form-components --skip-tests --style=none
+ng g c features/edition/components/edition-list-components --skip-tests --style=none
 
 ng g interface features/edition/models/edition-model
+
+ng g c features/edition/pages/edition-form-page --skip-tests --style=none
 
 ng g s features/edition/services/edition-service --skip-tests
 

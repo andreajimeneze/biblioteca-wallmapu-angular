@@ -16,7 +16,7 @@ export class AuthorSelectComponents {
   // ─── Inputs/Outputs ─────────────────────────────
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
-  readonly newSelectedId = output<number>();
+  readonly onNewSelectedAuthor = output<AuthorModel>();  
 
   // ─── Estado interno ─────────────────────────────
   protected readonly isOpen = signal(false);
@@ -79,18 +79,19 @@ export class AuthorSelectComponents {
 
   protected select(author: AuthorModel, event: MouseEvent) {
     event.preventDefault();
+    event.stopPropagation();
+
     this.selectedAuthor.set(author);
     this.searchText.set('');
     this.isOpen.set(false);
     this.inputRef()?.nativeElement.blur();
-    this.newSelectedId.emit(author.id_author);
+    this.onNewSelectedAuthor.emit(author);
   }
 
   protected clearSelection(event: MouseEvent) {
     event.preventDefault();
     this.selectedAuthor.set(null);
     this.searchText.set('');
-    this.newSelectedId.emit(0);
   }
 
   protected onBlur() {
