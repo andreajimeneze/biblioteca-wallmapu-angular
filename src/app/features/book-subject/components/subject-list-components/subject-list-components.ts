@@ -7,10 +7,13 @@ import { SubjectModel } from '@features/book-subject/models/subject-model';
   templateUrl: './subject-list-components.html',
 })
 export class SubjectListComponents {
-  readonly subjectList = input<SubjectModel[]>();
-  readonly delete = output<SubjectModel>();
+  readonly subjectList = input<SubjectModel[]>([]);
+  readonly onDelete = output<SubjectModel>();
 
-  protected onDelete(item: SubjectModel): void {
-    this.delete.emit(item);
+  protected delete(item: SubjectModel, event: MouseEvent): void {
+    event.preventDefault();   // evita submit del form si hay
+    event.stopPropagation();  // evita que otros listeners en padres se disparen
+    
+    this.onDelete.emit(item);
   }
 }

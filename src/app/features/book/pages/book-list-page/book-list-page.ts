@@ -1,6 +1,6 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { BookModel } from '@features/book/models/book-model';
+import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { BookService } from '@features/book/services/book-service';
 import { catchError, map, of, tap } from 'rxjs';
 import { BookListComponent } from "@features/book/components/book-list-component/book-list-component";
@@ -28,7 +28,7 @@ export class BookListPage {
 
   readonly backendError = signal<string | null>(null);
   readonly openDeleteModal = signal(false);
-  readonly selectedBookToDelete = signal<BookModel | null>(null);
+  readonly selectedBookToDelete = signal<BookDetailModel | null>(null);
 
   readonly currentPage = signal(1);
   private readonly items = signal(10);
@@ -97,7 +97,7 @@ export class BookListPage {
 
   protected readonly isLoading = computed(() => this.bookRX.isLoading() || this.deleteBookRX.isLoading());
   protected readonly errorMessage = computed(() => this.backendError());
-  protected readonly bookComputedList = computed<BookModel[]>(() => this.bookRX.value() ?? []);
+  protected readonly bookComputedList = computed<BookDetailModel[]>(() => this.bookRX.value() ?? []);
 
   // ─── ACCIONES 
   refreshList() {
@@ -105,22 +105,21 @@ export class BookListPage {
   }
 
   onCreate(){
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM]);
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM, 0]);
   }
   
-  onEdit(bookModel: BookModel){
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM], 
-      { state : { bookModel: bookModel } }
-    );
+  onEdit(bookModel: BookDetailModel) {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM, bookModel.id_book]);
   }
 
-  onDelete(selectedBookToDelete: BookModel) {
+  onDelete(selectedBookToDelete: BookDetailModel) {
     if (!selectedBookToDelete) return;
     this.selectedBookToDelete.set(selectedBookToDelete)
     this.openDeleteModal.set(true);
   }
 
   confirmDelete() {
+    this.bookIdToDeletePayload.set(null);
     const selectedBookToDelete = this.selectedBookToDelete();
     if (!selectedBookToDelete) return;
     this.bookIdToDeletePayload.set(selectedBookToDelete.id_book);
