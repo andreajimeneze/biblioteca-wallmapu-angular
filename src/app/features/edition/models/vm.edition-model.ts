@@ -1,4 +1,4 @@
-export interface EditionModel {
+export interface EditionModelVM {
   id_edition: number,
   edition: string,
   isbn: string,
@@ -9,4 +9,6 @@ export interface EditionModel {
   updated_at: string,
   book_id: number,
   editorial_id: number
+  file?: File;
+  isNewImg: boolean; 
 }

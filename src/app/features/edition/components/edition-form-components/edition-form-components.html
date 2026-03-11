@@ -6,7 +6,7 @@
       <div class="relative group overflow-hidden rounded-md shadow-lg">
         <figure class="aspect-7/10">
           <img 
-            [ngSrc]="imagePreview().preview" 
+            [ngSrc]="formData().cover_image || 'images/without_cover.webp'" 
             [alt]="'Portada del libro'"
             fill
             priority
@@ -14,13 +14,13 @@
           />
         </figure>
 
-        @if (editionModel()) {
+        @if (!formData().isNewImg) {
           <div class="absolute inset-0 bg-linear-to-b from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
             <div class="absolute top-4 right-4">
               <button 
                 type="button"
                 class="bg-my-pink text-sm px-2 py-1 rounded hover:bg-my-pink/90 text-my-light"
-                (click)="deleteImage(editionModel()?.id_edition || 0)"
+                (click)="deleteImage(vmEditionModel().id_edition)"
               >
                 Eliminar
               </button>
@@ -29,7 +29,7 @@
         }
       </div>
 
-      @if (imagePreview().isNew) {
+      @if (formData().isNewImg) {
         <label class="label font-semibold">Cargar Portada del Libro</label>
 
         <label class="file-input-wrapper cursor-pointer flex items-center gap-2 border rounded px-4 py-3 bg-white hover:bg-gray-100">
@@ -45,9 +45,10 @@
   
     <div>
       <div class="py-4 text-my-purple">
-        <p>ID Libro: {{ editionModel()?.book_id }} - ID Edición: {{ editionModel()?.editorial_id ?? 0 }}</p>
-        <p>{{ editionModel()?.created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha creación</p>
-        <p>{{ editionModel()?.created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha modificacion</p>
+        <p>ID Libro: {{ vmEditionModel().book_id }}</p>
+        <p>ID Edición: {{ vmEditionModel().id_edition }}</p>
+        <p>{{ vmEditionModel().created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha creación</p>
+        <p>{{ vmEditionModel().created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha modificacion</p>
       </div>
 
       <fieldset class="fieldset">
@@ -97,7 +98,7 @@
       <fieldset class="fieldset">
         <label class="label font-semibold mb-1">Editorial</label>
         <app-editorial-select-components 
-          [selectedId]="formData().id_edition ?? 0"
+          [selectedId]="formData().editorial_id ?? 0"
           (newSelectedId)="updateEditorial($event)"
         />    
       </fieldset>
@@ -113,9 +114,8 @@
   </form>
 
   @if (errorMessage()) {
-    <app-message-error-component [message]="errorMessage()"/>
+    <div class="py-4">
+      <app-message-error-component [message]="errorMessage()"/>
+    </div>
   }
 </div>
-
-<pre>{{ editionModel() | json}}</pre>
-<pre>{{ formData() | json}}</pre>
