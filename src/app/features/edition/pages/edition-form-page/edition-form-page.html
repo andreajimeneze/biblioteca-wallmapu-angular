@@ -6,5 +6,15 @@
 
 <app-edition-form-components 
   [isLoading]="isLoading()"
-  [editionModel]="editionForm()"
+  [vmEditionModel]="vmEditionForm()"
+  (onDeleteImage)="deleteImage($event)"
+  (onFormSubmit)="formSubmit($event)"
 />
+
+@if (errorMessage()) {
+  <div class="px-4">
+    <app-message-error-component
+      [message]="errorMessage()"
+    /> 
+  </div>
+}

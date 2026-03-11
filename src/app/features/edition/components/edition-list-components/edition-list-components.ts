@@ -1,4 +1,4 @@
-import { DatePipe, NgOptimizedImage } from '@angular/common';
+import { DatePipe, JsonPipe, NgOptimizedImage } from '@angular/common';
 import { Component, input, output } from '@angular/core';
 import { EditionModel } from '@features/edition/models/edition-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";

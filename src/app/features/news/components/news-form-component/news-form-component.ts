@@ -102,16 +102,16 @@ export class NewsFormComponent {
   }
 
   private validateFormOnSubmit(data: Partial<NewsFormModel>): string | null {
-    if (!data.title?.trim())      return 'El titulo es requerido';
-    if (data.title.length < 2)    return 'El titulo debe tener al menos 2 caracteres';
+    if (!data.title?.trim())        return 'El titulo es requerido';
+    if (data.title.length < 2)      return 'El titulo debe tener al menos 2 caracteres';
     if (data.title.length > 100)    return 'El titulo no debe superar los 100 caracteres';
   
-    if (!data.subtitle?.trim())   return 'El subtitulo es requerido';
-    if (data.subtitle.length < 2) return 'El subtitulo debe tener al menos 2 caracteres';
-    if (data.subtitle.length > 256)    return 'El titulo no debe superar los 256 caracteres';
+    if (!data.subtitle?.trim())     return 'El subtitulo es requerido';
+    if (data.subtitle.length < 2)   return 'El subtitulo debe tener al menos 2 caracteres';
+    if (data.subtitle.length > 256) return 'El titulo no debe superar los 256 caracteres';
   
-    if (!data.body?.trim())       return 'La descripcion es requerido';
-    if (data.body.length < 2) return 'El descripcion debe tener al menos 2 caracteres';
+    if (!data.body?.trim())         return 'La descripcion es requerido';
+    if (data.body.length < 2)       return 'El descripcion debe tener al menos 2 caracteres';
     
     return null; // ✅ sin errores
   }
