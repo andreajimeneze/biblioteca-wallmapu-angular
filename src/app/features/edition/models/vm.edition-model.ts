@@ -1,3 +1,5 @@
+import { EditionCopyModel } from "@features/edition-copy/models/edition-copy-model";
+
 export interface EditionModelVM {
   id_edition: number,
   edition: string,
@@ -8,7 +10,8 @@ export interface EditionModelVM {
   created_at: string,
   updated_at: string,
   book_id: number,
-  editorial_id: number
-  file?: File;
-  isNewImg: boolean; 
+  editorial_id: number,
+  copies: EditionCopyModel[],
+  file?: File,
+  isNewImg: boolean,
 }

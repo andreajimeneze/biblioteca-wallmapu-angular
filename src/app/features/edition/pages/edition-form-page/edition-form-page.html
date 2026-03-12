@@ -18,3 +18,18 @@
     /> 
   </div>
 }
+
+@if (isEditMode()) {
+  <div class="m-4 flex justify-end">
+    <button (click)="onCeateCopy()" class="btn max-w-48 bg-my-pink text-my-light">
+      Crear Copia
+    </button>
+  </div>  
+}
+
+<app-edition-copy-list-components 
+  [isLoading]="isLoading()"
+  [editionCopyModel]="[]"
+/>
+
+<pre>{{ vmEditionForm() | json }}</pre>

@@ -27,6 +27,9 @@ export const ROUTES_CONSTANTS = {
       EDITION: {
         FORM: `/admin/edition/form`,
       },
+      COPY: {
+        FORM: `/admin/copy/form`,
+      },
       NEWS: {
         ROOT: '/admin/news',
         FORM: '/admin/news/form',

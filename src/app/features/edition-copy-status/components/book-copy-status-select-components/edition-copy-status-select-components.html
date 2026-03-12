@@ -8,7 +8,7 @@
     class="select text-my-pink"
   >      
     <option disabled>Seleccióne una Región</option>
-    @for (item of bookCopyStatusComputedList(); track $index) {
+    @for (item of editionCopyStatusComputedList(); track $index) {
       <option 
         [value]="item.id_status"
         [selected]="item.id_status === selectedId()">

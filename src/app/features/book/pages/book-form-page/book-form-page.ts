@@ -304,7 +304,7 @@ export class BookFormPage {
   protected onCreateEdition(): void {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM], { 
       state: {
-        title:  this.bookFormModel().title,
+        book_name:  this.bookFormModel().title,
         id_book: this.bookFormModel().id_book,
         id_edition: 0,
       } 
@@ -314,7 +314,7 @@ export class BookFormPage {
   protected editEdition(item: EditionModel): void {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM], { 
       state: {
-        title:  this.bookFormModel().title,
+        book_name:  this.bookFormModel().title,
         id_book: this.bookFormModel().id_book,
         id_edition: item.id_edition,
       } 

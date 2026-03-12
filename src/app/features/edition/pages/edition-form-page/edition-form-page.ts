@@ -10,19 +10,23 @@ import { EditionImageService } from '@features/edition/services/edition-image-se
 import { EditionModelVM } from '@features/edition/models/vm.edition-model';
 import { EditionModel } from '@features/edition/models/edition-model';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { EditionCopyListComponents } from "@features/edition-copy/components/edition-copy-list-components/edition-copy-list-components";
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-edition-form-page',
   imports: [
+    JsonPipe,
     SectionHeaderComponent,
     EditionFormComponents,
-    MessageErrorComponent
+    MessageErrorComponent,
+    EditionCopyListComponents
 ],
   templateUrl: './edition-form-page.html',
 })
 export class EditionFormPage {
   private readonly state = history.state as {
-    title: string,
+    book_name: string,
     id_book: number;
     id_edition: number;
   };
@@ -38,11 +42,12 @@ export class EditionFormPage {
     created_at: '',
     updated_at: '',
     book_id: this.state.id_book,
+    copies: [],
     editorial_id: 0,
     isNewImg: true
   });
   protected readonly isEditMode = signal<boolean>(this.vmEditionForm().id_edition > 0)
-  protected readonly title = computed<string>(() => this.isEditMode() ? `Modificar Ejemplar para: ${this.state.title}` : `Crear Ejemplar para: ${this.state.title}`)
+  protected readonly title = computed<string>(() => this.isEditMode() ? `Modificar ejemplar de: ${this.state.book_name}` : `Crear ejemplar para: ${this.state.book_name}`)
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isLoading = computed<boolean>(() =>
     [
@@ -198,6 +203,16 @@ export class EditionFormPage {
 
   protected deleteImage(id_edition: number): void {
     this.deleteImagePayload.set(id_edition);
+  }
+
+  protected onCeateCopy(): void {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.COPY.FORM], { 
+      state: {
+        book_name: this.state.book_name,
+        id_edition: this.vmEditionForm().id_edition,
+        id_copy: 0
+      } 
+    }); 
   }
 
   protected navigateBack(): void {
