@@ -1,27 +1,27 @@
 import { Component, computed, inject, input, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { BookCopyStatusModel } from '@features/book-copy-status/models/book-copy-status-model';
-import { BookCopyStatusService } from '@features/book-copy-status/services/book-copy-status-service';
+import { EditionCopyStatusModel } from '@features/edition-copy-status/models/edition-copy-status-model';
+import { EditionCopyStatusService } from '@features/edition-copy-status/services/edition-copy-status-service';
 import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
-  selector: 'app-book-copy-status-select-components',
+  selector: 'app-edition-copy-status-select-components',
   imports: [
     LoadingComponent,
   ],
-  templateUrl: './book-copy-status-select-components.html',
+  templateUrl: './edition-copy-status-select-components.html',
 })
-export class BookCopyStatusSelectComponents {
+export class EditionCopyStatusSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
   readonly newSelectedId = output<number>();
   
-  private readonly bookCopyStatusService = inject(BookCopyStatusService);
+  private readonly editionCopyStatusService = inject(EditionCopyStatusService);
 
-  private readonly bookCopyStatusRX = rxResource({
+  private readonly editionCopyStatusRX = rxResource({
     stream: () => {    
-      return this.bookCopyStatusService.getAll().pipe(
+      return this.editionCopyStatusService.getAll().pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
@@ -33,8 +33,8 @@ export class BookCopyStatusSelectComponents {
     },
   });
 
-  protected readonly isLoading = computed<boolean>(() => this.bookCopyStatusRX.isLoading());
-  protected readonly bookCopyStatusComputedList = computed<BookCopyStatusModel[]>(() => this.bookCopyStatusRX.value() ?? []);
+  protected readonly isLoading = computed<boolean>(() => this.editionCopyStatusRX.isLoading());
+  protected readonly editionCopyStatusComputedList = computed<EditionCopyStatusModel[]>(() => this.editionCopyStatusRX.value() ?? []);
 
   protected onChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
