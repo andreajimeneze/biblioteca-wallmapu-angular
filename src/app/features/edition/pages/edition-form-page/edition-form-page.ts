@@ -43,6 +43,8 @@ export class EditionFormPage {
     editorial_id: 0,
     created_at: '',
     updated_at: '',
+    file: null,
+    isNewImg: true
   });
   protected readonly isEditMode = signal<boolean>(this.editionForm().id_edition > 0)
   protected readonly title = computed<string>(() => 
@@ -89,6 +91,7 @@ export class EditionFormPage {
             cover_image: edition.cover_image,
             book_id: edition.book.id_book,
             editorial_id: edition.editorial.id_editorial,
+            isNewImg: !edition.cover_image?.trim()
           })); 
           
           this.isEditMode.set(true);
@@ -215,7 +218,7 @@ export class EditionFormPage {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.COPY.FORM], {
       state: {
         book_title: this.state.book_title,
-        id_book: this.editionForm().book_id,
+        id_book: this.state.id_book,
         id_edition: this.editionForm().id_edition,
         id_copy: 0,
       }
@@ -223,6 +226,6 @@ export class EditionFormPage {
   }
 
   protected navigateBack(): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM, this.editionForm().book_id]);
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.FORM, this.state.id_book]);
   }
 }

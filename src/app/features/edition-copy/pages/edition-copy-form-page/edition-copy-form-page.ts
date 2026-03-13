@@ -7,12 +7,14 @@ import { catchError, map, of, tap } from 'rxjs';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { Router } from '@angular/router';
+import { EditionCopyFormComponents } from "@features/edition-copy/components/edition-copy-form-components/edition-copy-form-components";
 
 @Component({
   selector: 'app-edition-copy-form-page',
   imports: [
     JsonPipe,
-    SectionHeaderComponent
+    SectionHeaderComponent,
+    EditionCopyFormComponents
 ],
   templateUrl: './edition-copy-form-page.html',
 })
@@ -85,13 +87,12 @@ export class EditionCopyFormPage {
     }
   });
 
-
   protected navigateBack(): void {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM], {
       state: {
         book_title: this.state.book_title,
         id_book: this.state.id_book,
-        id_edition: this.editionCopyForm().edition_id,
+        id_edition: this.state.id_edition,
       }
     }); 
   }

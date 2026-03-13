@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class EditionCopyFormComponents {
 
+  protected formSubmit(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+
+  }
 }
