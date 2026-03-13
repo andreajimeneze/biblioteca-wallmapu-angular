@@ -1,0 +1,7 @@
+<app-section-header-component
+  [title]="book_edition_name()"
+  [actionText]="'Volver a Edición'"
+  (actionClicked)="navigateBack()"
+/>
+
+<pre>{{ editionCopyForm() | json }}</pre>

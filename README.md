@@ -315,14 +315,6 @@ ng g interface features/book-author-step/models/book-author-step-model
 ng g s features/book-author-step/services/book-author-step-service --skip-tests
 
 # ---------------------------------------------------------------------------------
-# FEATURES BOOK COPY STATUS
-ng g c features/book-copy-status/components/book-copy-status-select-components --skip-tests --style=none
-
-ng g interface features/book-copy-status/models/book-copy-status-model
-
-ng g s features/book-copy-status/services/book-copy-status-service --skip-tests
-
-# ---------------------------------------------------------------------------------
 # FEATURES BOOK EDITORIAL
 ng g c features/book-editorial/components/editorial-select-components --skip-tests --style=none
 
@@ -384,11 +376,31 @@ ng g c features/edition/components/edition-form-components --skip-tests --style=
 ng g c features/edition/components/edition-list-components --skip-tests --style=none
 
 ng g interface features/edition/models/edition-model
+ng g interface features/edition/models/edition-form-model
 
 ng g c features/edition/pages/edition-form-page --skip-tests --style=none
 
 ng g s features/edition/services/edition-service --skip-tests
 ng g s features/edition/services/edition-image-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES EDITION COPY
+ng g c features/edition-copy/components/edition-copy-form-components --skip-tests --style=none
+ng g c features/edition-copy/components/edition-copy-list-components --skip-tests --style=none
+
+ng g interface features/edition-copy/models/edition-copy-model
+
+ng g c features/edition-copy/pages/edition-copy-form-page --skip-tests --style=none
+
+ng g s features/edition-copy/services/edition-copy-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES EDITION COPY STATUS
+ng g c features/edition-copy-status/components/edition-copy-status-select-components --skip-tests --style=none
+
+ng g interface features/edition-copy-status/models/edition-copy-status-model
+
+ng g s features/edition-copy-status/services/edition-copy-status-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES HOME

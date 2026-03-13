@@ -2,17 +2,17 @@ import { inject, Injectable } from '@angular/core';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { ApiResponseService } from '@core/services/api-response-service';
 import { Observable } from 'rxjs';
-import { BookCopyStatusModel } from '@features/book-copy-status/models/book-copy-status-model';
+import { EditionCopyStatusModel } from '@features/edition-copy-status/models/edition-copy-status-model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class BookCopyStatusService {
+export class EditionCopyStatusService {
   private apiResponseService = inject(ApiResponseService)
-  private readonly endpoint = 'copy-status';
+  private readonly endpoint = 'edition-copy-status';
 
-  getAll(): Observable<ApiResponseModel<BookCopyStatusModel[]>> {
-    return this.apiResponseService.getAll<ApiResponseModel<BookCopyStatusModel[]>>(
+  getAll(): Observable<ApiResponseModel<EditionCopyStatusModel[]>> {
+    return this.apiResponseService.getAll<ApiResponseModel<EditionCopyStatusModel[]>>(
       `${this.endpoint}`
     );
   } 
