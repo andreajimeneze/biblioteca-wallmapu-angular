@@ -9,4 +9,6 @@ export interface EditionFormModel {
   editorial_id: number
   created_at: string,
   updated_at: string,
+  file: File | null,
+  isNewImg: boolean,
 }
