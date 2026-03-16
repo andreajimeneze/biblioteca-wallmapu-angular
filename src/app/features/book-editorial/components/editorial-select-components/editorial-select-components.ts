@@ -96,6 +96,7 @@ export class EditorialSelectComponents {
     event?.preventDefault();
     this.selectedEditorial.set(null);
     this.searchText.set('');
+    this.newSelectedId.emit(0);
   }
 
   protected onBlur() {

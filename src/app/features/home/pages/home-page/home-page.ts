@@ -15,10 +15,12 @@ import { BookService } from '@features/book/services/book-service';
 import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { BookCardListComponent } from "@features/book/components/book-card-list-component/book-card-list-component";
 import { BookSearchComponent } from "@features/book/components/book-search-component/book-search-component";
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-home.page',
   imports: [
+    JsonPipe,
     HeaderComponent,
     SectionHeaderComponent,
     NewsFeaturedComponent,
@@ -33,23 +35,36 @@ import { BookSearchComponent } from "@features/book/components/book-search-compo
 export class HomePage {
   private readonly router = inject(Router);
   
-  private readonly backendError = signal<string | null>(null);
-  private readonly newsService = inject(NewsService);
-  private readonly bookService = inject(BookService);
-
-  readonly currentPage = signal(1);
-  private readonly limit = signal(12);
-  private readonly search = signal('');
-  readonly totalPages = signal<number>(0);
-  private readonly paramsPayload = computed(() => ({
+  protected readonly currentPage = signal<number>(1);
+  private readonly limit = signal<number>(12);
+  private readonly search = signal<string>('');
+  private readonly id_author = signal<number>(0);
+  private readonly id_editorial  = signal<number>(0);
+  private readonly id_genre  = signal<number>(0);
+  protected readonly bookPayload = computed(() => ({
     currentPage: this.currentPage(),
     limit: this.limit(),
     search: this.search(),
-  }));  
+    id_author: this.id_author(),
+    id_editorial: this.id_editorial(),
+    id_genre: this.id_genre(),        
+  }));
+
+  protected readonly totalPages = signal<number>(0);
+  protected readonly errorMessage = signal<string | null>(null);
+  protected readonly isLoading = computed(() => 
+    [
+      this.newsRX,
+      this.bookRX
+    ].some(r => r.isLoading())
+  );
+  
+  private readonly newsService = inject(NewsService);
+  protected readonly bookListComputed = computed<BookDetailModel[]>(() => this.bookRX.value() ?? []);
 
   private readonly newsRX = rxResource({
     stream: () => {    
-      this.backendError.set(null);
+      this.errorMessage.set(null);
 
       return this.newsService.getAll(1, 4, '').pipe(
         map(response => {
@@ -58,17 +73,33 @@ export class HomePage {
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.backendError.set(message);
+          this.errorMessage.set(message);
           return of(null);
         })
       );
     },
   });
 
+  private readonly bookService = inject(BookService);
+  protected readonly firstNewsWithImages = computed<NewsWithImagesModel | null>(() => {
+    const list = this.newsRX.value() ?? [];
+    return list.length > 0 ? list[0] : null;
+  });
+  protected readonly restNewsWithImages = computed<NewsWithImagesModel[]>(() => {
+    const list = this.newsRX.value() ?? [];
+    return list.slice(1);
+  });
+
+  private readonly paramsPayload = computed(() => ({
+    currentPage: this.currentPage(),
+    limit: this.limit(),
+    search: this.search(),
+  }));
+
   private readonly bookRX = rxResource({
     params: () => this.paramsPayload(),
     stream: ({ params }) => {    
-      this.backendError.set(null);
+      this.errorMessage.set(null);
 
       return this.bookService.getAll(
         params.currentPage, 
@@ -82,25 +113,12 @@ export class HomePage {
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.backendError.set(message);
+          this.errorMessage.set(message);
           return of(null);
         })
       );
     },
   });  
-
-  protected readonly isLoading = computed(() => this.newsRX.isLoading() || this.bookRX.isLoading());
-  protected readonly errorMessage = computed(() => this.backendError());
-
-  protected readonly firstNewsWithImages = computed<NewsWithImagesModel | null>(() => {
-    const list = this.newsRX.value() ?? [];
-    return list.length > 0 ? list[0] : null;
-  });
-  protected readonly restNewsWithImages = computed<NewsWithImagesModel[]>(() => {
-    const list = this.newsRX.value() ?? [];
-    return list.slice(1);
-  });
-  protected readonly bookListComputed = computed<BookDetailModel[]>(() => this.bookRX.value() ?? []);
 
   protected actionClicked(){
     this.router.navigate([ROUTES_CONSTANTS.HOME.NEWS.ROOT])
@@ -121,5 +139,21 @@ export class HomePage {
     if (this.currentPage() > 1){
       this.currentPage.update(e => e - 1);
     }
+  }
+
+  protected onAuthorIdSelected(id_author: number): void {
+    this.id_author.set(id_author);
+  }
+
+  protected onEditorialIdSelected(id_editorial: number): void {
+    this.id_editorial.set(id_editorial);
+  }
+
+  protected onGenreIdSelected(id_genre: number): void {
+    this.id_genre.set(id_genre);
+  }
+
+  protected onBtnSearchClick() {
+    console.log("SearchBtnClick")
   }
 }

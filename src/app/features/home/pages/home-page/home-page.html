@@ -25,7 +25,14 @@
   [searchPlaceholder]="'Buscar Título, Descripción, ISBN...'"
   [textBtn]="'Buscar'"
   (onSearchChange)="searchText($event)"
+  (onAuthorIdSelected)="onAuthorIdSelected($event)"
+  (onEditorialIdSelected)="onEditorialIdSelected($event)"
+  (onGenreIdSelected)="onGenreIdSelected($event)"
+  (onBtnSearchClick)="onBtnSearchClick()"
 />
+
+<pre>{{ bookPayload() | json }}</pre>
+<pre>{{ bookListComputed() | json }}</pre>
 
 <app-book-card-list-component 
   [isLoading]="isLoading()"

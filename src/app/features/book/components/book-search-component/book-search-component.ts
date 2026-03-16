@@ -4,6 +4,7 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
 import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";
 import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
+import { AuthorModel } from '@features/book-author/models/author-model';
 
 @Component({
   selector: 'app-book-search-component',
@@ -20,10 +21,13 @@ export class BookSearchComponent {
   readonly textBtn = input<string | null>(null);
   readonly searchPlaceholder = input<string | null>(null);
   readonly onSearchChange = output<string>();
-  readonly onBtnClick = output<void>();
+  readonly onBtnSearchClick = output<void>();
+  readonly onAuthorIdSelected = output<number>();
+  readonly onEditorialIdSelected = output<number>();
+  readonly onGenreIdSelected = output<number>();
 
   protected btnClick() {
-    this.onBtnClick.emit();
+    this.onBtnSearchClick.emit();
   }
 
   protected searchChange(event: Event) {
@@ -55,9 +59,23 @@ export class BookSearchComponent {
   protected readonly clearGenreTrigger = signal<number>(0);
 
   protected onClear(): void {
-    this.clearSearch.set('');
     this.clearAuthorTrigger.update(v => v + 1);
     this.clearEditorialTrigger.update(v => v + 1);
     this.clearGenreTrigger.update(v => v + 1);
+    this.onAuthorIdSelected.emit(0);
+    this.clearSearch.set('');
+    this.onSearchChange.emit('');
+  }
+
+  protected authorSelected(item: AuthorModel) {
+    this.onAuthorIdSelected.emit(item.id_author)
+  }
+
+  protected editorialSelected(id: number) {
+    this.onEditorialIdSelected.emit(id)
+  }
+
+  protected genreSelected(id: number) {
+    this.onGenreIdSelected.emit(id)
   }
 }

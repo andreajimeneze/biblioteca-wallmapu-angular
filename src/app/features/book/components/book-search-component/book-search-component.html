@@ -26,6 +26,7 @@
       </label>
       <app-author-select-components 
         [clearTrigger]="clearAuthorTrigger()"
+        (onNewSelectedAuthor)="authorSelected($event)"
       />
     </div>
   
@@ -35,6 +36,7 @@
       </label>
       <app-editorial-select-components 
         [clearTrigger]="clearAuthorTrigger()"
+        (newSelectedId)="editorialSelected($event)"
       />
     </div>
   
@@ -44,6 +46,7 @@
       </label>
       <app-genre-select-components 
         [clearTrigger]="clearAuthorTrigger()"
+        (newSelectedId)="genreSelected($event)"
       />
     </div>
   
