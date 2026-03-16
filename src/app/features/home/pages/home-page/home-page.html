@@ -19,11 +19,12 @@
   [newsWithImagesList]="restNewsWithImages()"
 />
 
-<app-section-header-component
-  [title]="'La lectura nos abre las puertas del mundo'"
-  [description]="'Revisa nuestro catálogo de libros y elige el que quieras leer.'"
-  [searchPlaceholder]="'Buscar libro...'"
-  (searchChange)="searchText($event)"
+<app-book-search-component 
+  [textTitle]="'La lectura nos abre las puertas del mundo'"
+  [textDescription]="'Revisa nuestro catálogo de libros y elige el que quieras leer.'"
+  [searchPlaceholder]="'Buscar Título, Descripción, ISBN...'"
+  [textBtn]="'Buscar'"
+  (onSearchChange)="searchText($event)"
 />
 
 <app-book-card-list-component 

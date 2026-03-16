@@ -289,6 +289,7 @@ ng g c features/book/components/book-detail-component --skip-tests --style=none
 ng g c features/book/components/book-form-component --skip-tests --style=none
 ng g c features/book/components/book-list-component --skip-tests --style=none
 ng g c features/book/components/book-list-row-component --skip-tests --style=none
+ng g c features/book/components/book-search-component --skip-tests --style=none
 
 ng g interface features/book/models/book-detail-model
 ng g interface features/book/models/book-form-model

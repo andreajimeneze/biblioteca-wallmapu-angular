@@ -17,6 +17,12 @@ export class EditorialSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
   readonly newSelectedId = output<number>();  
+  readonly clearTrigger = input<number>(0);
+
+  private readonly clearEffect = effect(() => {
+    this.clearTrigger();
+    this.clearSelection();
+  });
 
   // ─── Estado interno ─────────────────────────────
   protected readonly isOpen = signal(false);
@@ -24,7 +30,7 @@ export class EditorialSelectComponents {
   protected readonly selectedEditorial = signal<EditorialModel | null>(null);
 
   readonly inputRef = viewChild<ElementRef<HTMLInputElement>>('searchInput');
-  
+
   // ─── Servicio ───────────────────────────────────
   private readonly editorialService = inject(EditorialService);
 
@@ -86,11 +92,10 @@ export class EditorialSelectComponents {
     this.newSelectedId.emit(author.id_editorial);
   }
 
-  protected clearSelection(event: MouseEvent) {
-    event.preventDefault();
+  protected clearSelection(event?: MouseEvent) {
+    event?.preventDefault();
     this.selectedEditorial.set(null);
     this.searchText.set('');
-    this.newSelectedId.emit(0);
   }
 
   protected onBlur() {

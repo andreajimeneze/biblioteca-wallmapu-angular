@@ -17,6 +17,12 @@ export class GenreSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>();
   readonly newSelectedId = output<number>();  
+  readonly clearTrigger = input<number>(0);
+
+  private readonly clearEffect = effect(() => {
+    this.clearTrigger();
+    this.clearSelection();
+  });
 
   // ─── Estado interno ─────────────────────────────
   protected readonly isOpen = signal(false);
@@ -86,8 +92,8 @@ export class GenreSelectComponents {
     this.newSelectedId.emit(author.id_genre);
   }
 
-  protected clearSelection(event: MouseEvent) {
-    event.preventDefault();
+  protected clearSelection(event?: MouseEvent) {
+    event?.preventDefault();
     this.selectedSubject.set(null);
     this.searchText.set('');
     this.newSelectedId.emit(0);

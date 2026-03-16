@@ -14,6 +14,7 @@ import { AboutComponent } from '@features/home/components/about-component/about-
 import { BookService } from '@features/book/services/book-service';
 import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { BookCardListComponent } from "@features/book/components/book-card-list-component/book-card-list-component";
+import { BookSearchComponent } from "@features/book/components/book-search-component/book-search-component";
 
 @Component({
   selector: 'app-home.page',
@@ -24,7 +25,8 @@ import { BookCardListComponent } from "@features/book/components/book-card-list-
     PaginationComponent,
     AboutComponent,
     NewsCardListComponent,
-    BookCardListComponent
+    BookCardListComponent,
+    BookSearchComponent
 ],
   templateUrl: './home-page.html',
 })
