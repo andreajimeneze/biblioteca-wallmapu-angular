@@ -262,6 +262,7 @@ ng g interceptor core/interceptors/error --skip-tests
 ng g interface core/models/api-response-model
 ng g interface core/models/pagination-model
 
+ng g c core/pages/book-not-found-page --skip-tests --style=none
 ng g c core/pages/forbidden-page --skip-tests --style=none
 ng g c core/pages/In-development-page --skip-tests --style=none
 ng g c core/pages/not-found-page --skip-tests --style=none

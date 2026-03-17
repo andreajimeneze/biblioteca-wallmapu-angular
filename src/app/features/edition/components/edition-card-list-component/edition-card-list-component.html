@@ -36,5 +36,9 @@
     }
 
   </div>
+
+  @if(editionDetailList().length == 0) {
+    <app-book-not-found-page/>
+  }
 }
 
