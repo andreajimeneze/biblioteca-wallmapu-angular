@@ -11,10 +11,11 @@ import { NewsFeaturedComponent } from "@features/news/components/news-featured-c
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { NewsCardListComponent } from "@features/news/components/news-card-list-component/news-card-list-component";
 import { AboutComponent } from '@features/home/components/about-component/about-component';
-import { BookService } from '@features/book/services/book-service';
-import { BookDetailModel } from '@features/book/models/book-detail-model';
-import { BookCardListComponent } from "@features/book/components/book-card-list-component/book-card-list-component";
 import { BookSearchComponent } from "@features/book/components/book-search-component/book-search-component";
+import { BookPaginationRequestModel } from '@features/book/models/book-pagination-request-model';
+import { EditionService } from '@features/edition/services/edition-service';
+import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
+import { EditionCardListComponent } from "@features/edition/components/edition-card-list-component/edition-card-list-component";
 import { JsonPipe } from '@angular/common';
 
 @Component({
@@ -27,40 +28,32 @@ import { JsonPipe } from '@angular/common';
     PaginationComponent,
     AboutComponent,
     NewsCardListComponent,
-    BookCardListComponent,
-    BookSearchComponent
+    BookSearchComponent,
+    EditionCardListComponent
 ],
   templateUrl: './home-page.html',
 })
 export class HomePage {
   private readonly router = inject(Router);
   
-  protected readonly currentPage = signal<number>(1);
-  private readonly limit = signal<number>(12);
-  private readonly search = signal<string>('');
-  private readonly id_author = signal<number>(0);
-  private readonly id_editorial  = signal<number>(0);
-  private readonly id_genre  = signal<number>(0);
-  protected readonly bookPayload = computed(() => ({
-    currentPage: this.currentPage(),
-    limit: this.limit(),
-    search: this.search(),
-    id_author: this.id_author(),
-    id_editorial: this.id_editorial(),
-    id_genre: this.id_genre(),        
-  }));
-
   protected readonly totalPages = signal<number>(0);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isLoading = computed(() => 
     [
       this.newsRX,
-      this.bookRX
+      this.editionRX
     ].some(r => r.isLoading())
   );
   
   private readonly newsService = inject(NewsService);
-  protected readonly bookListComputed = computed<BookDetailModel[]>(() => this.bookRX.value() ?? []);
+  protected readonly firstNewsWithImages = computed<NewsWithImagesModel | null>(() => {
+    const list = this.newsRX.value() ?? [];
+    return list.length > 0 ? list[0] : null;
+  });
+  protected readonly restNewsWithImages = computed<NewsWithImagesModel[]>(() => {
+    const list = this.newsRX.value() ?? [];
+    return list.slice(1);
+  });
 
   private readonly newsRX = rxResource({
     stream: () => {    
@@ -80,32 +73,29 @@ export class HomePage {
     },
   });
 
-  private readonly bookService = inject(BookService);
-  protected readonly firstNewsWithImages = computed<NewsWithImagesModel | null>(() => {
-    const list = this.newsRX.value() ?? [];
-    return list.length > 0 ? list[0] : null;
-  });
-  protected readonly restNewsWithImages = computed<NewsWithImagesModel[]>(() => {
-    const list = this.newsRX.value() ?? [];
-    return list.slice(1);
-  });
-
-  private readonly paramsPayload = computed(() => ({
-    currentPage: this.currentPage(),
+  private readonly editionService = inject(EditionService);
+  protected readonly editionListComputed = computed<EditionDetailModel[]>(() => this.editionRX.value() ?? []);
+  protected readonly currentPage = signal<number>(1);
+  private readonly limit = signal<number>(8);
+  private readonly search = signal<string>('');
+  private readonly id_author = signal<number>(0);
+  private readonly id_editorial  = signal<number>(0);
+  private readonly id_genre  = signal<number>(0);
+  protected readonly editionPayload = computed<BookPaginationRequestModel>(() => ({
+    page: this.currentPage(),
     limit: this.limit(),
     search: this.search(),
+    id_author: this.id_author(),
+    id_editorial: this.id_editorial(),
+    id_genre: this.id_genre(),        
   }));
 
-  private readonly bookRX = rxResource({
-    params: () => this.paramsPayload(),
+  private readonly editionRX = rxResource({
+    params: () => this.editionPayload(),
     stream: ({ params }) => {    
       this.errorMessage.set(null);
 
-      return this.bookService.getAll(
-        params.currentPage, 
-        params.limit, 
-        params.search
-      ).pipe(
+      return this.editionService.getAllPagination(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.totalPages.set(response.result.pages);

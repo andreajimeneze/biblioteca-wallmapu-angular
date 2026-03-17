@@ -31,12 +31,11 @@
   (onBtnSearchClick)="onBtnSearchClick()"
 />
 
-<pre>{{ bookPayload() | json }}</pre>
-<pre>{{ bookListComputed() | json }}</pre>
+<pre>{{ editionPayload() | json }}</pre>
 
-<app-book-card-list-component 
+<app-edition-card-list-component
   [isLoading]="isLoading()"
-  [bookList]="bookListComputed()"
+  [editionDetailList]="editionListComputed()"
 />
 
 <app-pagination-component 

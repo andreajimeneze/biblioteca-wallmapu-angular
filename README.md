@@ -292,8 +292,8 @@ ng g c features/book/components/book-list-row-component --skip-tests --style=non
 ng g c features/book/components/book-search-component --skip-tests --style=none
 
 ng g interface features/book/models/book-detail-model
-ng g interface features/book/models/book-form-model
 ng g interface features/book/models/book-model
+ng g interface features/book/models/book-pagination-request-model
 
 ng g c features/book/pages/book-form-page --skip-tests --style=none
 ng g c features/book/pages/book-list-page --skip-tests --style=none
@@ -373,11 +373,13 @@ ng g s features/division-region/services/region-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES EDITION
+ng g c features/edition/components/edition-card-list-component --skip-tests --style=none
 ng g c features/edition/components/edition-form-components --skip-tests --style=none
 ng g c features/edition/components/edition-list-components --skip-tests --style=none
 
 ng g interface features/edition/models/edition-detail-model
 ng g interface features/edition/models/edition-model
+ng g interface features/edition/models/edition-pagination-request-model
 
 ng g c features/edition/pages/edition-form-page --skip-tests --style=none
 

@@ -67,8 +67,13 @@ export class BookSearchComponent {
     this.onSearchChange.emit('');
   }
 
-  protected authorSelected(item: AuthorModel) {
-    this.onAuthorIdSelected.emit(item.id_author)
+  protected authorSelected(item: AuthorModel | null) {
+    if (item) {
+      this.onAuthorIdSelected.emit(item.id_author)
+      return;
+    }
+      
+    this.onAuthorIdSelected.emit(0)
   }
 
   protected editorialSelected(id: number) {

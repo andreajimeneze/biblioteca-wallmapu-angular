@@ -16,7 +16,7 @@ export class AuthorSelectComponents {
   // ─── Inputs/Outputs ─────────────────────────────
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
-  readonly onNewSelectedAuthor = output<AuthorModel>();  
+  readonly onNewSelectedAuthor = output<AuthorModel | null>();  
   readonly clearTrigger = input<number>(0);
 
   private readonly clearEffect = effect(() => {
@@ -98,6 +98,7 @@ export class AuthorSelectComponents {
     event?.preventDefault();
     this.selectedAuthor.set(null);
     this.searchText.set('');
+    this.onNewSelectedAuthor.emit(null);
   }
 
   protected onBlur() {
