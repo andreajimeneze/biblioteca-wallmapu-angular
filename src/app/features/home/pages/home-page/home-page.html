@@ -16,16 +16,23 @@
 />
 
 <app-news-card-list-component 
-  [isLoading]="isLoading()"
   [newsWithImagesList]="restNewsWithImages()"
 />
 
-<app-section-header-component
-  [title]="'La lectura nos abre las puertas del mundo'"
-  [description]="'Revisa nuestro catálogo de libros y elige el que quieras leer.'"
-  [searchPlaceholder]="'Buscar libro...'"
-  (searchChange)="searchText($event)"
+<app-book-search-component 
+  [textTitle]="'La lectura nos abre las puertas del mundo'"
+  [textDescription]="'Revisa nuestro catálogo de libros y elige el que quieras leer.'"
+  [searchPlaceholder]="'Buscar Título, Descripción, ISBN...'"
+  [textBtn]="'Buscar'"
+  (onSearchChange)="searchText($event)"
+  (onAuthorIdSelected)="onAuthorIdSelected($event)"
+  (onEditorialIdSelected)="onEditorialIdSelected($event)"
+  (onGenreIdSelected)="onGenreIdSelected($event)"
+  (onBtnSearchClick)="onBtnSearchClick()"
 />
+
+<pre>{{ bookPayload() | json }}</pre>
+<pre>{{ bookListComputed() | json }}</pre>
 
 <app-book-card-list-component 
   [isLoading]="isLoading()"

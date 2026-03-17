@@ -289,6 +289,7 @@ ng g c features/book/components/book-detail-component --skip-tests --style=none
 ng g c features/book/components/book-form-component --skip-tests --style=none
 ng g c features/book/components/book-list-component --skip-tests --style=none
 ng g c features/book/components/book-list-row-component --skip-tests --style=none
+ng g c features/book/components/book-search-component --skip-tests --style=none
 
 ng g interface features/book/models/book-detail-model
 ng g interface features/book/models/book-form-model
@@ -375,10 +376,8 @@ ng g s features/division-region/services/region-service --skip-tests
 ng g c features/edition/components/edition-form-components --skip-tests --style=none
 ng g c features/edition/components/edition-list-components --skip-tests --style=none
 
-ng g interface features/edition/models/edition-book-model
 ng g interface features/edition/models/edition-detail-model
 ng g interface features/edition/models/edition-model
-ng g interface features/edition/models/edition-form-model
 
 ng g c features/edition/pages/edition-form-page --skip-tests --style=none
 
@@ -390,6 +389,8 @@ ng g s features/edition/services/edition-image-service --skip-tests
 ng g c features/edition-copy/components/edition-copy-form-components --skip-tests --style=none
 ng g c features/edition-copy/components/edition-copy-list-components --skip-tests --style=none
 
+ng g interface features/edition-copy/models/edition-copy-detail-model
+ng g interface features/edition-copy/models/edition-copy-form-model
 ng g interface features/edition-copy/models/edition-copy-model
 
 ng g c features/edition-copy/pages/edition-copy-form-page --skip-tests --style=none

@@ -4,6 +4,15 @@
   (actionClicked)="navigateGoBack()"
 />
 
+<app-book-form-component
+  [actionText]="headerText()"
+  [isLoading]="isLoading()"
+  [bookFormVM]="bookFormVM()"
+  (onDeleteAuthor)="deleteAuthor($event)"
+  (onDeleteSubject)="deleteSubject($event)"
+  (onFormSubmit)="formSubmit($event)"
+/>
+
 @if (errorMessage()) {
   <section class="p-4 pb-0">
     <app-message-error-component 
@@ -11,21 +20,6 @@
     />
   </section>  
 }
-
-<app-book-form-component
-  [actionText]="headerText()" 
-  [isLoading]="isLoading()"
-  [bookFormModel]="bookFormModel()"
-  [subjectModelList]="subjectModelList()"
-  [AuthorModelList]="authorModelList()"
-  (onNewSelectedGenreId)="newSelectedGenreId($event)"
-  (onNewSelectedAuthor)="newSelectedAuthor($event)"
-  (onDeleteAuthor)="deleteAuthor($event)"
-  (onNewSelectedSubject)="newSelectedSubject($event)"
-  (onDeleteSubject)="deleteSubject($event)"
-  (onFormChange)="formChange($event)"
-  (onFormSubmit)="formSubmit($event)"
-/>
 
 @if (isEditMode()) {
   <div class="m-4 flex justify-end">
@@ -37,8 +31,16 @@
 
 <app-edition-list-components 
   [isLoading]="isLoading()"
-  [editionList]="editionModelList()"
+  [editionDetailList]="bookDetailComputed()?.editions ?? []"
   (onEdit)="editEdition($event)"
   (onDelete)="deleteEdition($event)"
 />
 
+<app-modal-delete-component
+  title="Eliminar Copia"
+  [isOpen]="openDeleteModal()"
+  [loading]="isLoading()"
+  [itemName]="bookFormVM().title + ' - ' + selectedEditionToDelete()?.edition"
+  (confirm)="confirmDelete()"
+  (cancel)="closeDeleteModal()"
+/>
