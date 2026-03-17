@@ -14,6 +14,7 @@ import { SubjectSelectComponents } from "@features/book-subject/components/subje
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
 import { EditionCopyStatusSelectComponents } from "@features/edition-copy-status/components/book-copy-status-select-components/edition-copy-status-select-components";
+import { BookSearchComponent } from "@features/book/components/book-search-component/book-search-component";
 
 @Component({
   selector: 'app-stat.page',
@@ -28,7 +29,8 @@ import { EditionCopyStatusSelectComponents } from "@features/edition-copy-status
     SubjectSelectComponents,
     MessageErrorComponent,
     GenreSelectComponents,
-    EditionCopyStatusSelectComponents
+    EditionCopyStatusSelectComponents,
+    BookSearchComponent
 ],
   templateUrl: './stat.page.html',
 })
