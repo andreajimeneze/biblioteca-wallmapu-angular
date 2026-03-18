@@ -35,7 +35,7 @@
         <span class="label-text text-sm font-semibold">Filtrar por editorial</span>
       </label>
       <app-editorial-select-components 
-        [clearTrigger]="clearAuthorTrigger()"
+        [clearTrigger]="clearEditorialTrigger()"
         (newSelectedId)="editorialSelected($event)"
       />
     </div>
@@ -45,7 +45,7 @@
         <span class="label-text text-sm font-semibold">Filtrar por género</span>
       </label>
       <app-genre-select-components 
-        [clearTrigger]="clearAuthorTrigger()"
+        [clearTrigger]="clearGenreTrigger()"
         (newSelectedId)="genreSelected($event)"
       />
     </div>

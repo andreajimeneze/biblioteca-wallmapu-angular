@@ -98,6 +98,12 @@ export class AuthorSelectComponents {
     event?.preventDefault();
     this.selectedAuthor.set(null);
     this.searchText.set('');
+    this.onNewSelectedAuthor.emit({
+      id_author: 0,
+      name: '',
+      created_at: '',
+      updated_at: '',
+    });
   }
 
   protected onBlur() {
