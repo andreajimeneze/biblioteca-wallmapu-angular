@@ -24,7 +24,7 @@
       <a 
         [routerLink]="ROUTES_HOME.ROOT"
         (click)="handleLogoClick($event)"
-        class="flex gap-2 items-center text-xl font-bold cursor-pointer hover:scale-105 transition-all duration-100"
+        class="flex gap-2 items-center text-xl font-bold cursor-pointer hover:scale-105 transition-all duration-300"
       >
         <img [ngSrc]="'images/logo.webp'" alt="Logo" height="40" width="40" class="rounded-full">
         <div class="tooltip tooltip-bottom tooltip-warning" data-tip="De Mesana">
@@ -35,7 +35,7 @@
     <div class="navbar-center hidden lg:flex">
       <ul class="menu menu-horizontal px-1">
         @for (page of ROUTES_PAGES; track $index) {
-          <li><a [routerLink]="page.URI">{{ page.NAME }}</a></li>
+          <li [class.backdrop-blur-md]="!isScrolled()"><a [routerLink]="page.URI">{{ page.NAME }}</a></li>
         }
       </ul>
     </div>
