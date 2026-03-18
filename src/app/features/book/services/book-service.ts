@@ -29,7 +29,6 @@ export class BookService {
     if (params.id_genre > 0)
       path = `${path}&id_genre=${params.id_genre}`
   
-    console.log(`${this.endpoint}/${path}`)
     return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookDetailModel[]>>>(
       `${this.endpoint}/pagination${path}`
     );

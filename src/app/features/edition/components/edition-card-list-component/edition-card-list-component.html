@@ -14,31 +14,39 @@
     </div>
   </section>
 } @else {
-  <div class="flex gap-8 flex-wrap px-4 py-8 mx-auto justify-center max-w-7xl">
-
-    @for(item of editionDetailList(); track item.id_edition) {
-       <article 
-        (click)="navigateToEditionDitail(item)"
-        class="group w-56 bg-my-light shadow-sm cursor-pointer shadow-my-light hover:shadow-2xl transition-all duration-300 rounded-2xl"
-      >
-        <figure class="relative overflow-hidden h-80 w-56 rounded-t-2xl">
-          <img
-            [ngSrc]="item.cover_image ?? 'images/without_cover.webp'"
-            [alt]="item.book.title"
-            fill
-            class="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 borde"/>
-        </figure>
-        <div class="text-center p-2">
-          <h2 class="card-title justify-center text-my-green">{{ item.book.title }}</h2>
-          <p class="text-sm text-my-dark/50">{{ item.isbn }}</p>
-        </div>
-      </article>
-    }
-
-  </div>
 
   @if(editionDetailList().length == 0) {
     <app-book-not-found-page/>
+  } @else {
+
+    <div class="flex gap-8 flex-wrap px-4 py-8 mx-auto justify-center max-w-7xl">
+      @for(item of editionDetailList(); track item.id_edition) {
+         <article 
+          (click)="navigateToEditionDitail(item)"
+          class="group w-72 bg-my-light shadow-sm cursor-pointer shadow-my-light hover:shadow-2xl transition-all duration-300 rounded-2xl"
+        >
+          <figure class="relative overflow-hidden aspect-7/10 rounded-t-2xl">
+            <img
+              [ngSrc]="item.cover_image ?? 'images/without_cover.webp'"
+              [alt]="item.book.title"
+              fill
+              class="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 borde"/>
+          </figure>
+          <div class="text-center p-2">
+            <section>
+              <h2 class="card-title justify-center text-my-green">{{ item.book.title }}</h2>
+              <p class="text-sm text-my-purple">{{ item.book.authors[0]?.name ?? 'Sin Autor' }}</p>
+              <p class="text-sm text-my-purple">{{ item.edition }}</p>  
+            </section>
+            <section>
+              <p class="text-sm text-my-dark/50">Género: {{ item.book.genre.name }}</p>
+              <p class="text-sm text-my-dark/50">Editorial: {{ item.editorial.name }}</p>              
+            </section>
+           </div>
+        </article>
+      }
+    </div>
+
   }
 }
 
