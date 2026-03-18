@@ -4,6 +4,7 @@
       placeholder="/images/layout.webp"
       [ngSrc]="bookDetail().editions[0]?.cover_image ?? '/images/book.png'"
       [alt]="bookDetail().title"
+      priority
       fill
       class="object-cover rounded-box" 
     /> 

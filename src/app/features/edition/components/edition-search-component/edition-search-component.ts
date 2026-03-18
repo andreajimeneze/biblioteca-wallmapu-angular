@@ -1,21 +1,17 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
-import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
-import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";
-import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
 import { AuthorModel } from '@features/book-author/models/author-model';
+import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
+import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";
+import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
 
 @Component({
-  selector: 'app-book-search-component',
-  imports: [
-    AuthorSelectComponents, 
-    EditorialSelectComponents, 
-    GenreSelectComponents
-  ],
-  templateUrl: './book-search-component.html',
+  selector: 'app-edition-search-component',
+  imports: [GenreSelectComponents, EditorialSelectComponents, AuthorSelectComponents],
+  templateUrl: './edition-search-component.html',
 })
-export class BookSearchComponent {
+export class EditionSearchComponent {
   readonly textTitle = input<string | null>(null);
   readonly textDescription = input<string | null>(null);
   readonly textBtn = input<string | null>(null);

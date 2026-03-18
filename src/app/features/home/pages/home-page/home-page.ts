@@ -11,12 +11,12 @@ import { NewsFeaturedComponent } from "@features/news/components/news-featured-c
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { NewsCardListComponent } from "@features/news/components/news-card-list-component/news-card-list-component";
 import { AboutComponent } from '@features/home/components/about-component/about-component';
-import { BookSearchComponent } from "@features/book/components/book-search-component/book-search-component";
 import { BookPaginationRequestModel } from '@features/book/models/book-pagination-request-model';
 import { EditionService } from '@features/edition/services/edition-service';
 import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { EditionCardListComponent } from "@features/edition/components/edition-card-list-component/edition-card-list-component";
 import { JsonPipe } from '@angular/common';
+import { EditionSearchComponent } from "@features/edition/components/edition-search-component/edition-search-component";
 
 @Component({
   selector: 'app-home.page',
@@ -28,8 +28,8 @@ import { JsonPipe } from '@angular/common';
     PaginationComponent,
     AboutComponent,
     NewsCardListComponent,
-    BookSearchComponent,
-    EditionCardListComponent
+    EditionCardListComponent,
+    EditionSearchComponent
 ],
   templateUrl: './home-page.html',
 })

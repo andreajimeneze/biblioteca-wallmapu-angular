@@ -36,7 +36,6 @@ export class BookService {
   }
 
   getAll(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<BookDetailModel[]>>> {
-    console.log(`QUE WEA`)
     return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookDetailModel[]>>>(
       `${this.endpoint}/?page=${currentPage}&limit=${maxItems}&search=${search}`
     );
