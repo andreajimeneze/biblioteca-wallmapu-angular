@@ -11,25 +11,23 @@ import { NewsFeaturedComponent } from "@features/news/components/news-featured-c
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { NewsCardListComponent } from "@features/news/components/news-card-list-component/news-card-list-component";
 import { AboutComponent } from '@features/home/components/about-component/about-component';
-import { BookSearchComponent } from "@features/book/components/book-search-component/book-search-component";
 import { BookPaginationRequestModel } from '@features/book/models/book-pagination-request-model';
 import { EditionService } from '@features/edition/services/edition-service';
 import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { EditionCardListComponent } from "@features/edition/components/edition-card-list-component/edition-card-list-component";
-import { JsonPipe } from '@angular/common';
+import { EditionSearchComponent } from "@features/edition/components/edition-search-component/edition-search-component";
 
 @Component({
   selector: 'app-home.page',
   imports: [
-    JsonPipe,
     HeaderComponent,
     SectionHeaderComponent,
     NewsFeaturedComponent,
     PaginationComponent,
     AboutComponent,
     NewsCardListComponent,
-    BookSearchComponent,
-    EditionCardListComponent
+    EditionCardListComponent,
+    EditionSearchComponent
 ],
   templateUrl: './home-page.html',
 })
@@ -76,7 +74,7 @@ export class HomePage {
   private readonly editionService = inject(EditionService);
   protected readonly editionListComputed = computed<EditionDetailModel[]>(() => this.editionRX.value() ?? []);
   protected readonly currentPage = signal<number>(1);
-  private readonly limit = signal<number>(8);
+  private readonly limit = signal<number>(12);
   private readonly search = signal<string>('');
   private readonly id_author = signal<number>(0);
   private readonly id_editorial  = signal<number>(0);

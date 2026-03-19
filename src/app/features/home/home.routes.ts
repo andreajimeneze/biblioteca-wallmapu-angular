@@ -18,7 +18,7 @@ export const  HOME_ROUTES: Routes = [
     component: NewsDetailPage
   },
   {
-    path: 'book/:id',
+    path: 'book/detail/:id',
     component: BookDetailPage
   }
 ]

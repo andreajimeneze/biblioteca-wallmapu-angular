@@ -29,14 +29,12 @@ export class BookService {
     if (params.id_genre > 0)
       path = `${path}&id_genre=${params.id_genre}`
   
-    console.log(`${this.endpoint}/${path}`)
     return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookDetailModel[]>>>(
       `${this.endpoint}/pagination${path}`
     );
   }
 
   getAll(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<BookDetailModel[]>>> {
-    console.log(`QUE WEA`)
     return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookDetailModel[]>>>(
       `${this.endpoint}/?page=${currentPage}&limit=${maxItems}&search=${search}`
     );

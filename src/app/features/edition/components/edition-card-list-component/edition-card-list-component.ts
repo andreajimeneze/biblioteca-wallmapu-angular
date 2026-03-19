@@ -19,8 +19,7 @@ export class EditionCardListComponent {
   readonly isLoading = input<boolean>(false);
   readonly editionDetailList = input<EditionDetailModel[]>([]);
 
-
   protected navigateToEditionDitail(item: EditionDetailModel): void {
-    this.router.navigate([ROUTES_CONSTANTS.HOME.BOOK, item.id_edition]);
+    this.router.navigate([ROUTES_CONSTANTS.HOME.BOOK.DETAIL, item.book.id_book]);
   }
 }

@@ -2,7 +2,15 @@
   class="flex flex-col items-center justify-center bg-my-light/10 px-6 py-20"
 >
 
-  <h1 class="text-9xl font-extrabold text-my-purple">📚</h1>
+  <div class="relative overflow-hidden size-40 aspect-square">
+    <img 
+      [ngSrc]="'images/book.png'"
+      alt="Libros no encontrados"
+      fill
+      priority
+      class="object-cover rounded-box" 
+    /> 
+  </div>
 
   <div class="bg-my-pink/80 text-my-light p-2 text-sm rounded -rotate-12 absolute">
     Libros no encontrados
