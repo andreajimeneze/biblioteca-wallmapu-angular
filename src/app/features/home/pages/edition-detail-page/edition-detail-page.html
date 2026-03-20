@@ -30,7 +30,7 @@
           <div class="flex-1">
             <h1 class="text-5xl font-bold text-my-purple mb-2">{{ bookDetailComputed()?.title }}</h1>
     
-            @for (item of bookDetailComputed()?.authors; track $index) {
+            @for (item of bookDetailComputed()?.authors; track item.name) {
               <p class="text-xl text-my-pink mb-4">{{ item.name }}</p>
             }
     

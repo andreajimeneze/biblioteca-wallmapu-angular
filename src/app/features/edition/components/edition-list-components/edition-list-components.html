@@ -7,7 +7,7 @@
     </section>
   } @else {
   
-    @for (item of editionDetailList(); track $index) {
+    @for (item of editionDetailList(); track item.id_edition) {
       <li class="list-row">
         <div class="relative overflow-hidden min-w-20 aspect-7/10">
           <img 

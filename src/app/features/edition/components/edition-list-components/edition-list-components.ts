@@ -1,10 +1,11 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-edition-list-components',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
     NgOptimizedImage,

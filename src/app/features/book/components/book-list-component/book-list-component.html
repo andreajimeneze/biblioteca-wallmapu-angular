@@ -7,7 +7,7 @@
     </section>
   } @else {
   
-    @for (book of bookList(); track $index) {
+    @for (book of bookList(); track book.id_book) {
       <app-book-list-row-component 
         [bookDetail]="book"
         (edit)="onEdit($event)"

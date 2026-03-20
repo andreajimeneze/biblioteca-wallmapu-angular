@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ProvinceModel } from '@features/division-province/models/province-model';
 import { ProvinceService } from '@features/division-province/services/province-service';
@@ -7,6 +7,7 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 
 @Component({
   selector: 'app-province-select-components',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     LoadingComponent
   ],

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { EditionCopyStatusModel } from '@features/edition-copy-status/models/edition-copy-status-model';
 import { EditionCopyStatusService } from '@features/edition-copy-status/services/edition-copy-status-service';
@@ -7,6 +7,7 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 
 @Component({
   selector: 'app-edition-copy-status-select-components',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     LoadingComponent,
   ],

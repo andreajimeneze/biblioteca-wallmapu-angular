@@ -8,7 +8,7 @@
     class="select text-my-pink"
   >      
     <option disabled>Seleccióne un Rol</option>
-    @for (item of userRoleComputedList(); track $index) {
+    @for (item of userRoleComputedList(); track item.id_user_role) {
       <option 
         [value]="item.id_user_role"
         [selected]="item.id_user_role === selectedId()">
