@@ -109,12 +109,7 @@ export class BookFormComponent {
     }
   }  
 
-  protected deleteAuthor(item: AuthorModel): void {
-    //if (item.id_author > 0) {
-    //  this.onDeleteAuthor.emit(item);
-    //  return;
-    //}
-    
+  protected deleteAuthor(item: AuthorModel): void {    
     this.formData.update(data => {
       return {
         ...data,
@@ -124,11 +119,6 @@ export class BookFormComponent {
   }
 
   protected deleteSubject(item: SubjectModel): void {
-    //if (item.id_subject > 0) {
-    //  this.onDeleteSubject.emit(item);
-    //  return;
-    //}
-
     this.formData.update(data => {
       return {
         ...data,
