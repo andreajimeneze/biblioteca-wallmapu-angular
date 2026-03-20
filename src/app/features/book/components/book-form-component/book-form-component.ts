@@ -38,7 +38,6 @@ export class BookFormComponent {
 
   private readonly updateEffect = effect(() => {
     const book = this.bookFormVM();
-
     if (book) {
       this.formData.set(book);
     }

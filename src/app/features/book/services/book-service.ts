@@ -53,7 +53,6 @@ export class BookService {
   }  
 
   update(id: number, item: UpdateBookModel): Observable<ApiResponseModel<BookModel>> {
-    console.log(item)
     return this.apiResponseService.update<ApiResponseModel<BookModel>, UpdateBookModel>(
       this.endpoint, id, item
     );

@@ -7,8 +7,9 @@ export const ROUTES_CONSTANTS = {
       DETAIL: (id: number) => `/news/${id}`,
     },
     BOOK: {
-      DETAIL: (id: number) => `/book/${id}`,
-    }
+      DETAIL: (bookId: number) => `/book/${bookId}`,
+      EDITION: (bookId: number, editionId: number) => `/book/${bookId}/edition/${editionId}`
+    },
   },
   PROTECTED: {
     USER: {

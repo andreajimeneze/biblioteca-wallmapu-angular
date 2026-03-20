@@ -33,7 +33,7 @@ export class BookDetailPage {
       if (!params)  return of(null);
       this.backendError.set(null);
 
-      return this.bookService.getById(params).pipe(
+      return this.bookService.getById(1).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;

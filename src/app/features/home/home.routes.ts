@@ -2,7 +2,7 @@ import { Routes } from "@angular/router";
 import { HomePage } from "@features/home/pages/home-page/home-page";
 import { NewsPage } from "@features/home/pages/news-page/news-page";
 import { NewsDetailPage } from "@features/home/pages/news-detail-page/news-detail-page";
-import { BookDetailPage } from "@features/home/pages/book-detail-page/book-detail-page";
+import { EditionDetailPage } from "./pages/edition-detail-page/edition-detail-page";
 
 export const  HOME_ROUTES: Routes = [
   {
@@ -18,7 +18,11 @@ export const  HOME_ROUTES: Routes = [
     component: NewsDetailPage
   },
   {
-    path: 'book/detail/:id',
-    component: BookDetailPage
-  }
+    path: 'book/:bookId',
+    component: EditionDetailPage
+  },
+  {
+    path: 'book/:bookId/edition/:editionId',
+    component: EditionDetailPage
+  },  
 ]

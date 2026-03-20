@@ -284,9 +284,6 @@ ng g s features/auth/services/auth-store --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK
-ng g c features/book/components/book-card-component --skip-tests --style=none
-ng g c features/book/components/book-card-list-component --skip-tests --style=none
-ng g c features/book/components/book-detail-component --skip-tests --style=none
 ng g c features/book/components/book-form-component --skip-tests --style=none
 ng g c features/book/components/book-list-component --skip-tests --style=none
 ng g c features/book/components/book-list-row-component --skip-tests --style=none
@@ -374,6 +371,7 @@ ng g s features/division-region/services/region-service --skip-tests
 # ---------------------------------------------------------------------------------
 # FEATURES EDITION
 ng g c features/edition/components/edition-card-list-component --skip-tests --style=none
+ng g c features/edition/components/edition-detail-component --skip-tests --style=none
 ng g c features/edition/components/edition-form-components --skip-tests --style=none
 ng g c features/edition/components/edition-list-components --skip-tests --style=none
 ng g c features/edition/components/edition-search-component --skip-tests --style=none
@@ -412,7 +410,7 @@ ng g s features/edition-copy-status/services/edition-copy-status-service --skip-
 # FEATURES HOME
 ng g c features/home/components/about-component --skip-tests --style=none
 
-ng g c features/home/pages/book-detail-page --skip-tests --style=none
+ng g c features/home/pages/edition-detail-page --skip-tests --style=none
 ng g c features/home/pages/home-page --skip-tests --style=none
 ng g c features/home/pages/news-page --skip-tests --style=none
 ng g c features/home/pages/news-detail-page --skip-tests --style=none
