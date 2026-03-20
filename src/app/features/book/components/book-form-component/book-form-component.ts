@@ -56,6 +56,8 @@ export class BookFormComponent {
   }
 
   protected addAuthor(item: AuthorModel) {
+    if (!item.id_author || item.id_author === 0) return;
+    
     this.formData.update(data => {
       const exists = data.authors?.some(a => a.id_author === item.id_author);
       if (exists) return data;
@@ -68,6 +70,8 @@ export class BookFormComponent {
   }
 
   protected addSubject(item: SubjectModel) {
+    if (!item.id_subject || item.id_subject === 0) return;
+    
     this.formData.update(data => {
       const exists = data.subjects?.some(a => a.id_subject === item.id_subject);
       if (exists) return data;
