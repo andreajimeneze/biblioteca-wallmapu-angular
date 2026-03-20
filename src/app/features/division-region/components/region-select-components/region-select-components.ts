@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { RegionModel } from '@features/division-region/models/region-model';
 import { RegionService } from '@features/division-region/services/region-service';
@@ -7,6 +7,7 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 
 @Component({
   selector: 'app-region-select-components',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     LoadingComponent
   ],

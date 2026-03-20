@@ -7,7 +7,7 @@
     </section>
   } @else {
   
-    @for (newsWithImages of newsWithImagesList(); track $index) {
+    @for (newsWithImages of newsWithImagesList(); track newsWithImages.id_news) {
       <app-news-list-row-component 
         [newsWithImages]="newsWithImages"
         (edit)="onEdit($event)"

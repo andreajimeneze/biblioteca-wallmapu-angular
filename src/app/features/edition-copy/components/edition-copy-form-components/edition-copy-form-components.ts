@@ -1,4 +1,4 @@
-import { DatePipe, JsonPipe } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, effect, input, output, signal } from '@angular/core';
 import { EditionCopyDetailModel } from '@features/edition-copy/models/edition-copy-detail-model';
 import { EditionCopyFormModel } from '@features/edition-copy/models/edition-copy-form-model';

@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { UserRoleService } from '@features/user-role/services/user-role-service';
 import { catchError, map, of } from 'rxjs';
@@ -7,6 +7,7 @@ import { UserRoleModel } from '@features/user-role/models/user-role-model';
 
 @Component({
   selector: 'app-user-role-select-components',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     LoadingComponent
   ],

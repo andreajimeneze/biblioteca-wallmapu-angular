@@ -1,4 +1,4 @@
-import { Component, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Router, RouterLink } from '@angular/router';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
@@ -8,6 +8,7 @@ import { NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-navbar-component',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     RouterLink,
     NgOptimizedImage,

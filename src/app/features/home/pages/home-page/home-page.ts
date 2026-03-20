@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { catchError, map, of } from 'rxjs';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { Router } from '@angular/router';
@@ -19,6 +19,7 @@ import { EditionSearchComponent } from "@features/edition/components/edition-sea
 
 @Component({
   selector: 'app-home.page',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     HeaderComponent,
     SectionHeaderComponent,
@@ -142,6 +143,5 @@ export class HomePage {
   }
 
   protected onBtnSearchClick() {
-    console.log("SearchBtnClick")
   }
 }

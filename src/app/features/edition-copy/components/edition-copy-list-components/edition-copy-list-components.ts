@@ -1,10 +1,11 @@
 import { DatePipe } from '@angular/common';
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { EditionCopyDetailModel } from '@features/edition-copy/models/edition-copy-detail-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-edition-copy-list-components',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: 
   [
     DatePipe,

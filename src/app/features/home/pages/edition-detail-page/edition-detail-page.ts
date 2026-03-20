@@ -1,5 +1,5 @@
-import { JsonPipe, NgOptimizedImage } from '@angular/common';
-import { Component, computed, inject, signal } from '@angular/core';
+import { NgOptimizedImage } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { BookDetailModel } from '@features/book/models/book-detail-model';
@@ -7,13 +7,16 @@ import { BookService } from '@features/book/services/book-service';
 import { EditionDetailsWithoutBookModel } from '@features/edition/models/edition-detail-model';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { catchError, map, of, tap } from 'rxjs';
+import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-edition-detail-page',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgOptimizedImage,
-    MessageErrorComponent
-  ],
+    MessageErrorComponent,
+    LoadingComponent
+],
   templateUrl: './edition-detail-page.html',
 })
 export class EditionDetailPage {
@@ -73,5 +76,10 @@ export class EditionDetailPage {
 
   protected selectNewEdition(item: EditionDetailsWithoutBookModel): void {
     this.selectedEditionId.set(item.id_edition)
+
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth' // animación suave
+    });
   };
 }

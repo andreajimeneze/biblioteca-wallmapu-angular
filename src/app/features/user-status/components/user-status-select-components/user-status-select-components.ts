@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, input, output } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { UserStatusService } from '@features/user-status/services/user-status-service';
 import { catchError, map, of } from 'rxjs';
@@ -7,6 +7,7 @@ import { UserStatusModel } from '@features/user-status/models/user-status-model'
 
 @Component({
   selector: 'app-user-status-select-components',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     LoadingComponent, 
   ],
