@@ -49,7 +49,7 @@
               {{ bookDetailComputed()?.summary }}
             </p>
     
-            <section class="flex justify-between">
+            <section class="flex justify-between gap-4">
               <div class="mb-6 space-y-2 text-sm">
                 <p><strong class="text-my-green">Edicion:</strong> {{ selectedEdition()?.edition }}</p>
                 <p><strong class="text-my-green">ISBN:</strong> {{ selectedEdition()?.isbn }}</p>
@@ -58,12 +58,17 @@
                 <p><strong class="text-my-green">Editorial:</strong> {{ selectedEdition()?.editorial?.name }}</p>
               </div>
       
-              <div class="flex gap-4">
-                <!--
-                <button class="btn bg-my-green text-my-light">Añadir a Favoritos</button>
-                -->
-                <button class="btn btn-outline bg-my-pink text-my-light">Solicitar Préstamo</button>
-              </div>
+              @if (isAuthenticated()) {
+                <div class="flex gap-4">
+                  <!--
+                  <button class="btn bg-my-green text-my-light">Añadir a Favoritos</button>
+                  -->
+                  <app-reservation-btn-components 
+                    [idBook]="bookDetailComputed()?.id_book"
+                    [bookName]="bookDetailComputed()?.title"
+                  />
+                </div>
+              }
             </section>
           </div>
 
@@ -74,17 +79,18 @@
   
     <div class="divider p-4 text-base-content/40 max-w-7xl mx-auto">Ediciones</div>
     
-    <div class="flex gap-8 flex-wrap pt-4 pb-16 px-4 mx-auto max-w-7xl justify-center sm:justify-normal">
+    <div class="grid gap-8 pt-4 pb-16 px-4 mx-auto max-w-7xl grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] justify-items-center">
       @for (item of bookDetailComputed()?.editions; track item.id_edition) {
         <article 
           (click)="selectNewEdition(item)"
-          class="flex flex-col group w-72 sm:w-56 bg-my-light shadow-sm cursor-pointer shadow-my-light hover:shadow-2xl transition-all duration-300 rounded-2xl"
+          class="flex flex-col group w-72 md:w-56 bg-my-light shadow-sm cursor-pointer shadow-my-light hover:shadow-2xl transition-all duration-300 rounded-2xl"
         >
           <figure class="relative overflow-hidden aspect-7/10 rounded-t-2xl">
             <img
               [ngSrc]="item.cover_image ?? 'images/without_cover.webp'"
               [alt]="item.edition"
               fill
+              priority
               class="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 borde"/>
           </figure>
           <div class="flex flex-col flex-1 gap-2 text-center p-2">

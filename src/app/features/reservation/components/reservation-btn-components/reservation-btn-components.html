@@ -1,0 +1,42 @@
+
+<section class="text-right">
+  <button (click)="toggleModal(true)" class="btn btn-outline bg-my-pink text-my-light">Solicitar Préstamo</button>
+
+  @if(succesMessage()) {
+    <p class="text-my-green text-sm text-center">{{ succesMessage() }}</p>
+  }
+  
+  @if(errorMessage()) {
+    <p class="text-my-pink text-sm text-center">{{ errorMessage() }}</p>
+  }  
+</section>
+
+@if(isModalOpen()) {
+  <div class="modal modal-open bg-my-dark/70" role="dialog">
+    <div class="modal-box max-w-md relative">
+  
+      <h3 class="font-bold text-lg text-my-purple">
+        Realizar Reserva de: {{ bookName() }}?
+      </h3>
+    
+      <div class="modal-action">
+        @if (isLoading()) {
+          <app-loading-component />
+        } @else {
+          <button 
+            (click)="onPreOrder()"
+            class="btn bg-my-green hover:bg-my-green/80 text-my-light">
+            Reservar
+          </button>
+          
+          <button 
+            (click)="toggleModal(false)"
+            class="btn bg-my-pink hover:bg-my-pink/80 text-my-light">
+            Cerrar
+          </button>
+        }
+      </div>
+  
+    </div>
+  </div>
+}

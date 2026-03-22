@@ -448,6 +448,22 @@ ng g interface features/news-gallery/models/create-news-gallery-model
 ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES RESERVATION
+ng g c features/reservation/components/reservation-btn-components --skip-tests --style=none
+
+ng g interface features/reservation/models/reservation-model
+
+ng g s features/reservation/services/reservation-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES RESERVATION STATUS
+ng g c features/reservation-status/components/reservation-status-select-components --skip-tests --style=none
+
+ng g interface features/reservation-status/models/reservation-status-model
+
+ng g s features/reservation-status/services/reservation-status-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES STATS
 ng g interface features/stats/models/stat-model
 
