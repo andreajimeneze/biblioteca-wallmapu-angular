@@ -8,6 +8,8 @@ import { EditionDetailsWithoutBookModel } from '@features/edition/models/edition
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { catchError, map, of, tap } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { AuthStore } from '@features/auth/services/auth-store';
+import { ReservationBtnComponents } from "@features/reservation/components/reservation-btn-components/reservation-btn-components";
 
 @Component({
   selector: 'app-edition-detail-page',
@@ -15,7 +17,8 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
   imports: [
     NgOptimizedImage,
     MessageErrorComponent,
-    LoadingComponent
+    LoadingComponent,
+    ReservationBtnComponents
 ],
   templateUrl: './edition-detail-page.html',
 })
@@ -36,6 +39,9 @@ export class EditionDetailPage {
     { initialValue: 0 }
   );
 
+  private readonly authStore = inject(AuthStore);
+  protected readonly isAuthenticated = computed<boolean>(() => this.authStore.isAuthenticated());
+
   protected readonly selectedEditionId = signal<number>(this.editionId() ?? 0);
   protected readonly selectedEdition = computed<EditionDetailsWithoutBookModel | null>(() => {
     const list = this.bookDetailComputed()?.editions;
@@ -49,7 +55,7 @@ export class EditionDetailPage {
     [
       this.getBookRX,
     ].some(r => r.isLoading())
-  );
+  ); 
 
   private readonly bookService = inject(BookService);
   protected readonly bookDetailComputed = computed<BookDetailModel | null>(() => this.getBookRX.value() ?? null);
@@ -82,4 +88,8 @@ export class EditionDetailPage {
       behavior: 'smooth' // animación suave
     });
   };
+
+  protected preOrder(item: BookDetailModel | null): void {
+    console.log(item)
+  }
 }

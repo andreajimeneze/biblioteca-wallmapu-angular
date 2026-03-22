@@ -210,32 +210,36 @@
   <div>DASHBOARD DEMO</div>
 </section>
 
+<section class="grid p-4 gap-4">
+  <div class="divider text-base-content/40 m-0">Prueba Libros</div>
+  <div class="flex gap-4 flex-wrap">
+    <app-author-select-components />
+    <app-editorial-select-components />
+    <app-subject-select-components />
+    <app-genre-select-components />
+    <app-edition-copy-status-select-components />
+  </div>
+
+  <div class="divider text-base-content/40 m-0">Prueba Direccion</div>
+  <div class="flex gap-4 flex-wrap">
+    <app-commune-select-components />
+    <app-province-select-components />
+    <app-region-select-components />
+  </div>  
+
+  <div class="divider text-base-content/40 m-0">Prueba Usuario</div>
+  <div class="flex gap-4 flex-wrap">
+    <app-user-role-select-components />
+    <app-user-status-select-components />
+    <app-reservation-status-select-components />
+  </div>
+
+  <div class="divider text-base-content/40 m-0"></div>
+</section>
+
 <app-edition-search-component
   [textTitle]="'La lectura nos abre las puertas del mundo'"
   [textDescription]="'Revisa nuestro catálogo de libros y elige el que quieras leer.'"
   [searchPlaceholder]="'Buscar Título, Descripción, ISBN...'"
   [textBtn]="'Buscar'"
 />
-
-<section class="grid p-4 gap-4">
-  <div class="divider text-base-content/40">Prueba Libros</div>
-  <app-author-select-components />
-  <app-editorial-select-components />
-  <app-subject-select-components />
-  <app-genre-select-components />
-  <app-edition-copy-status-select-components />
-  <div class="divider text-base-content/40">Prueba Direccion</div>
-  <app-commune-select-components />
-  <div>
-    <app-province-select-components />
-    <span> NO SE USARA, por ahora</span>
-  </div>
-  <div>
-    <app-region-select-components />
-    <span> NO SE USARA, por ahora</span>
-  </div>
-  <div class="divider text-base-content/40">Prueba Usuario</div>
-  <app-user-role-select-components />
-  <app-user-status-select-components />
-  <div class="divider text-base-content/40"></div>
-</section>

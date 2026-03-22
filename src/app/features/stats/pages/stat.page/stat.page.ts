@@ -15,6 +15,7 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
 import { EditionCopyStatusSelectComponents } from "@features/edition-copy-status/components/book-copy-status-select-components/edition-copy-status-select-components";
 import { EditionSearchComponent } from "@features/edition/components/edition-search-component/edition-search-component";
+import { ReservationStatusSelectComponents } from "@features/reservation-status/components/reservation-status-select-components/reservation-status-select-components";
 
 @Component({
   selector: 'app-stat.page',
@@ -30,7 +31,8 @@ import { EditionSearchComponent } from "@features/edition/components/edition-sea
     MessageErrorComponent,
     GenreSelectComponents,
     EditionCopyStatusSelectComponents,
-    EditionSearchComponent
+    EditionSearchComponent,
+    ReservationStatusSelectComponents
 ],
   templateUrl: './stat.page.html',
 })
