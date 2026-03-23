@@ -3,6 +3,7 @@ import { authGuard } from '@core/guards/auth-guard';
 import { ForbiddenPage } from '@core/pages/forbidden-page/forbidden-page';
 import { InDevelopmentPage } from '@core/pages/in-development-page/in-development-page';
 import { NotFoundPage } from '@core/pages/not-found-page/not-found-page';
+import { StatPage } from '@features/stats/pages/stat.page/stat.page';
 import { LayoutAdmin } from '@layouts/layout-admin/layout-admin';
 import { LayoutUser } from '@layouts/layout-user/layout-user';
 import { Layout } from '@layouts/layout/layout';
@@ -55,7 +56,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        component: InDevelopmentPage
+        component: StatPage
       },      
     ]
   },
