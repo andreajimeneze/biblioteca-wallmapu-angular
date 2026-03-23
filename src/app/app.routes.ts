@@ -24,11 +24,11 @@ export const routes: Routes = [
     path: 'admin',
     component: LayoutAdmin,
     canActivate: [authGuard],
-    data: { roles: [Role.Admin]},
+    data: { roles: [Role.Admin] },
     children: [
       {
-        path: '',
-        loadChildren: () => import('@features/stats/stat.routes').then(m => m.STAT_ROUTES),
+        path: 'dashboard',
+        loadChildren: () => import('@features/dashboard/admin.routes').then(m => m.DASHBOARD_ROUTES),
       },
       {
         path: 'books',

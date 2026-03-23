@@ -72,6 +72,7 @@ export class EditionFormPage {
       copies: edition?.copies ?? []
     };
   });
+  
   private readonly editionIdPayload = signal<number | null>(this.state.id_edition);
 
   private readonly getEditionRX = rxResource({
