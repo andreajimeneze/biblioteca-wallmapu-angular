@@ -1,8 +1,9 @@
 import { Component, input, output } from '@angular/core';
+import { LoadingComponent } from "../loading-component/loading-component";
 
 @Component({
   selector: 'app-modal-delete-component',
-  imports: [],
+  imports: [LoadingComponent],
   templateUrl: './modal-delete-component.html',
 })
 export class ModalDeleteComponent {

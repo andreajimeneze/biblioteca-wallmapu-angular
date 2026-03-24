@@ -14,6 +14,7 @@ import { ModalDeleteComponent } from "@shared/components/modal-delete-component/
 import { EditionCopyService } from '@features/edition-copy/services/edition-copy-service';
 import { CreateEditionModel, UpdateEditionModel } from '@features/edition/models/edition-model';
 import { EditionFormVM } from '@features/edition/models/vm.edition-form-model';
+import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 
 @Component({
   selector: 'app-edition-form-page',
@@ -22,7 +23,8 @@ import { EditionFormVM } from '@features/edition/models/vm.edition-form-model';
     EditionFormComponents,
     MessageErrorComponent,
     EditionCopyListComponents,
-    ModalDeleteComponent
+    ModalDeleteComponent,
+    MessageSuccessComponent
 ],
   templateUrl: './edition-form-page.html',
 })
@@ -41,6 +43,7 @@ export class EditionFormPage {
     ? `Modificar ejemplar de: ${ this.state.book_title }` 
     : `Crear ejemplar para: ${ this.state.book_title }`
   )
+  protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isLoading = computed<boolean>(() =>
     [
@@ -101,6 +104,7 @@ export class EditionFormPage {
     params: () => this.addEditionPayload(),
     stream: ({ params }) => {
       if (!params) return of(null);
+      this.successMessage.set(null);
 
       const request$ = 'id_edition' in params && params.id_edition > 0
       ? this.editionService.update(params.id_edition, params)
@@ -109,6 +113,7 @@ export class EditionFormPage {
       return request$.pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.result;
         }),
         tap(edition => {
@@ -130,10 +135,12 @@ export class EditionFormPage {
     params: () => this.uploadImagePayload(),
     stream: ({ params: file }) => {
       if (!file) return of(null);
+      this.successMessage.set(null);
 
       return this.editionImageService.create(file).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.result;
         }),
         tap(url => {
@@ -160,10 +167,12 @@ export class EditionFormPage {
     params: () => this.deleteImagePayload(),
     stream: ({ params: id_edition }) => {
       if (!id_edition) return of(null);
+      this.successMessage.set(null);
 
       return this.editionImageService.delete(id_edition).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.result;
         }),
         tap(() => {
@@ -185,10 +194,12 @@ export class EditionFormPage {
     params: () => this.deleteEditionCopyPayload(),
     stream: ({ params: id_copy }) => {
       if (!id_copy) return of(null);
-
+      this.successMessage.set(null);
+      
       return this.editionCopyService.delete(id_copy).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.result;
         }),
         tap(() => {

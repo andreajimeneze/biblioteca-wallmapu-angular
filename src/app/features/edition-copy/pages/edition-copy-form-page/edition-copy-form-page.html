@@ -9,3 +9,13 @@
   [editionCopyDetail]="editionCopyDetail()"
   (onFormSubmit)="formSubmit($event)"
 />
+
+<section class="p-4 grid gap-4">
+  @if(successMessage()){
+    <app-message-success-component [message]="successMessage()" />
+  }
+  
+  @if(errorMessage()) {
+    <app-message-error-component [message]="errorMessage()" />
+  }
+</section>

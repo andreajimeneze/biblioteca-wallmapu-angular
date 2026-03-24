@@ -12,23 +12,12 @@
       </p>
       
       <div class="modal-action">
-        <button 
-          class="btn bg-my-pink text-my-light"
-          (click)="confirm.emit()"
-        >
-          @if (loading()) {
-            <span class="loading loading-spinner text-my-light"></span>
-          } @else {
-            Eliminar
-          }  
-        </button>
-
-        <button 
-          class="btn"
-          (click)="cancel.emit()"
-        >
-          Cancelar
-        </button>
+        @if (loading()) {
+          <app-loading-component/>
+        } @else {
+          <button class="btn bg-my-pink text-my-light"(click)="confirm.emit()">Eliminar</button>
+          <button class="btn" (click)="cancel.emit()">Cancelar</button> 
+        }
       </div>
 
     </div>

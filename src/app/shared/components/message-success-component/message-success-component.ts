@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'app-message-success-component',
@@ -6,5 +6,5 @@ import { Component, Input } from '@angular/core';
   templateUrl: './message-success-component.html',
 })
 export class MessageSuccessComponent {
-  @Input() message: string = "Éxito";
+  readonly message = input<string | null>("Success");
 }
