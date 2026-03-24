@@ -1,0 +1,42 @@
+import { Component, computed, inject, input, output } from '@angular/core';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { LoanStatusModel } from '@features/loan-status/models/loan-status-model';
+import { LoanStatusService } from '@features/loan-status/services/loan-status-service';
+import { catchError, map, of } from 'rxjs';
+import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+
+@Component({
+  selector: 'app-loan-status-select-component',
+  imports: [LoadingComponent],
+  templateUrl: './loan-status-select-component.html',
+})
+export class LoanStatusSelectComponent {
+  readonly disabled = input<boolean>(false);
+  readonly selectedId = input<number>(0);
+  readonly newSelectedId = output<number>();
+  
+  private readonly loanStatusService = inject(LoanStatusService);
+
+  private readonly loanStatusRX = rxResource({
+    stream: () => {    
+      return this.loanStatusService.getAll().pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        }),
+        catchError(err => {
+          return of(null);
+        })
+      );
+    },
+  });
+
+  protected readonly isLoading = computed(() => this.loanStatusRX.isLoading());
+  protected readonly computedLoanStatusList = computed<LoanStatusModel[]>(() => this.loanStatusRX.value() ?? []);
+
+  protected onChange(event: Event): void {
+    const select = event.target as HTMLSelectElement;
+    const newId = Number(select.value); 
+    this.newSelectedId.emit(newId); 
+  }
+}

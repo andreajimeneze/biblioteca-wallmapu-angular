@@ -16,6 +16,7 @@ import { GenreSelectComponents } from "@features/book-genre/components/genre-sel
 import { EditionCopyStatusSelectComponents } from "@features/edition-copy-status/components/book-copy-status-select-components/edition-copy-status-select-components";
 import { EditionSearchComponent } from "@features/edition/components/edition-search-component/edition-search-component";
 import { ReservationStatusSelectComponents } from "@features/reservation-status/components/reservation-status-select-components/reservation-status-select-components";
+import { LoanStatusSelectComponent } from "@features/loan-status/components/loan-status-select-component/loan-status-select-component";
 
 @Component({
   selector: 'app-stat.page',
@@ -32,7 +33,8 @@ import { ReservationStatusSelectComponents } from "@features/reservation-status/
     GenreSelectComponents,
     EditionCopyStatusSelectComponents,
     EditionSearchComponent,
-    ReservationStatusSelectComponents
+    ReservationStatusSelectComponents,
+    LoanStatusSelectComponent
 ],
   templateUrl: './stat.page.html',
 })

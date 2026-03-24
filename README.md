@@ -345,6 +345,11 @@ ng g interface features/book-subject-step/models/book-subject-step-model
 ng g s features/book-subject-step/services/book-subject-step-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES DASHBOARD
+ng g c features/dashboard/pages/admin-dashboard-page --skip-tests --style=none
+ng g c features/dashboard/pages/user-dashboard-page --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
 # FEATURES DIVISION COMMUNE
 ng g c features/division-commune/components/commune-select-components --skip-tests --style=none
 
@@ -414,6 +419,26 @@ ng g c features/home/pages/edition-detail-page --skip-tests --style=none
 ng g c features/home/pages/home-page --skip-tests --style=none
 ng g c features/home/pages/news-page --skip-tests --style=none
 ng g c features/home/pages/news-detail-page --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
+# FEATURES LOANS
+ng g interface features/loan/models/loan-model
+
+ng g s features/loan/services/loan-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES LOANS POLICIES
+ng g interface features/loan-policies/models/loan-policies-model
+
+ng g s features/loan-policies/services/loan-policies-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES LOANS STATUS
+ng g c features/loan-status/components/loan-status-select-component --skip-tests --style=none
+
+ng g interface features/loan-status/models/loan-status-model
+
+ng g s features/loan-status/services/loan-status-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES NEWS

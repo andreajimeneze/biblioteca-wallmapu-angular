@@ -1,4 +1,4 @@
-import { Component, computed, inject, input, signal } from '@angular/core';
+import { Component, computed, ElementRef, inject, input, signal, ViewChild } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { CreateReservationModel } from '@features/reservation/models/reservation-model';
 import { ReservationService } from '@features/reservation/services/reservation-service';
@@ -18,6 +18,8 @@ export class ReservationBtnComponents {
   readonly errorMessage = signal<string | null>(null);
   readonly succesMessage = signal<string | null>(null);
   protected readonly isModalOpen = signal<boolean>(false);
+  
+  @ViewChild('dialogRef') private dialogRef!: ElementRef<HTMLDialogElement>;
   
   private readonly reservationService = inject(ReservationService);
   private readonly reservationPayload = signal<CreateReservationModel | null>(null); 
@@ -54,12 +56,14 @@ export class ReservationBtnComponents {
       return;
     }
 
-    this.reservationPayload.set({
-      book_id: this.idBook(),
+    this.reservationPayload.set({ 
+      book_id: this.idBook() 
     } as CreateReservationModel);
   }
 
   protected toggleModal(toggle: boolean): void {
-    this.isModalOpen.update(e => toggle);
+    this.isModalOpen.set(toggle);
+    const dialog = this.dialogRef.nativeElement;
+    toggle ? dialog.showModal() : dialog.close();
   }
 }

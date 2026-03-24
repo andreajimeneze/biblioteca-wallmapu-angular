@@ -1,3 +1,7 @@
+
+
+<div class="divider text-base-content/40 p-4"></div>
+
 <section class="flex gap-4 flex-wrap p-4">
 
   <div class="stats shadow bg-my-light text-my-purple">
@@ -211,27 +215,34 @@
 </section>
 
 <section class="grid p-4 gap-4">
-  <div class="divider text-base-content/40 m-0">Prueba Libros</div>
+  <div class="divider text-base-content/40 m-0">Libros</div>
   <div class="flex gap-4 flex-wrap">
     <app-author-select-components />
     <app-editorial-select-components />
     <app-subject-select-components />
     <app-genre-select-components />
-    <app-edition-copy-status-select-components />
   </div>
 
-  <div class="divider text-base-content/40 m-0">Prueba Direccion</div>
+  <div class="divider text-base-content/40 m-0">Copias</div>
+  <app-edition-copy-status-select-components />
+
+  <div class="divider text-base-content/40 m-0">Reserva</div>
+  <app-reservation-status-select-components />
+
+  <div class="divider text-base-content/40 m-0">Prestamos</div>
+  <app-loan-status-select-component />
+
+  <div class="divider text-base-content/40 m-0">Direccion</div>
   <div class="flex gap-4 flex-wrap">
     <app-commune-select-components />
     <app-province-select-components />
     <app-region-select-components />
   </div>  
 
-  <div class="divider text-base-content/40 m-0">Prueba Usuario</div>
+  <div class="divider text-base-content/40 m-0">Usuario</div>
   <div class="flex gap-4 flex-wrap">
     <app-user-role-select-components />
     <app-user-status-select-components />
-    <app-reservation-status-select-components />
   </div>
 
   <div class="divider text-base-content/40 m-0"></div>
