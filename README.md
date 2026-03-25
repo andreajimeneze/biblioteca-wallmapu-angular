@@ -346,6 +346,10 @@ ng g s features/book-subject-step/services/book-subject-step-service --skip-test
 
 # ---------------------------------------------------------------------------------
 # FEATURES DASHBOARD
+ng g c features/dashboard/components/admin-stats-components --skip-tests --style=none
+ng g c features/dashboard/components/register-loan-components --skip-tests --style=none
+ng g c features/dashboard/components/register-return-components --skip-tests --style=none
+
 ng g c features/dashboard/pages/admin-dashboard-page --skip-tests --style=none
 ng g c features/dashboard/pages/user-dashboard-page --skip-tests --style=none
 

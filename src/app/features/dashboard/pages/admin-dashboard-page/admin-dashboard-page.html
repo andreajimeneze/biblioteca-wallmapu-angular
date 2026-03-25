@@ -1,1 +1,94 @@
+<app-section-header-component [title]="'Panel de Administración'" />
+
+<app-admin-stats-components 
+  [totalBooks]="35"
+  [totalLoans]="12"
+  [totalReservations]="3"
+  [totalUsers]="20"
+/>
+
+<div class="navbar bg-base-100 shadow-sm">
+  <div class="flex-none">
+    <ul class="menu menu-horizontal px-1">
+      <li><a>Link</a></li>
+      <li><a>Link</a></li>
+      <li><a>Link</a></li>      
+    </ul>
+  </div>
+</div>
+
+<section class="grid grid-cols-3 gap-4 p-4">
+  <app-register-loan-components/>
+  <app-register-return-components/>
+
+  <div class="rounded-box shadow-md flex flex-col bg-my-light">
+    
+    <!-- Título -->
+    <div class="p-4 pb-2 text-my-pink text-xl tracking-wide">
+      Préstamos Vencidos
+    </div>
+
+    <!-- Lista scrolleable -->
+    <ul class="flex-1 overflow-y-auto max-h-56">
+      
+      <li class="list-row flex justify-between p-4">
+        <div>
+          <div>2026-01-01</div>
+          <div>Nombre del Libro</div>
+          <div class="text-xs uppercase font-semibold opacity-60">Nombre del Usuario</div>
+        </div>
+        <div class="aspect-square size-10 rounded-md bg-my-pink text-my-light flex items-center justify-center">
+          5d
+        </div>
+      </li>
+
+      <li class="list-row flex justify-between p-4">
+        <div>
+          <div>2026-01-01</div>
+          <div>Nombre del Libro</div>
+          <div class="text-xs uppercase font-semibold opacity-60">Nombre del Usuario</div>
+        </div>
+        <div class="aspect-square size-10 rounded-md bg-my-pink text-my-light flex items-center justify-center">
+          5d
+        </div>
+      </li>
+
+      <li class="list-row flex justify-between p-4">
+        <div>
+          <div>2026-01-01</div>
+          <div>Nombre del Libro</div>
+          <div class="text-xs uppercase font-semibold opacity-60">Nombre del Usuario</div>
+        </div>
+        <div class="aspect-square size-10 rounded-md bg-my-pink text-my-light flex items-center justify-center">
+          5d
+        </div>
+      </li>
+
+      <li class="list-row flex justify-between p-4">
+        <div>
+          <div>2026-01-01</div>
+          <div>Nombre del Libro</div>
+          <div class="text-xs uppercase font-semibold opacity-60">Nombre del Usuario</div>
+        </div>
+        <div class="aspect-square size-10 rounded-md bg-my-pink text-my-light flex items-center justify-center">
+          5d
+        </div>
+      </li>
+      <!-- Repetidos... -->
+
+    </ul>
+
+    <!-- Botón fijo abajo -->
+    <div class="p-4">
+      <button class="btn bg-my-pink text-my-light w-full" type="submit">
+        Ver Todos
+      </button>
+    </div>
+
+  </div>
+</section>
+
 <pre>{{ computedLoanList() | json }}</pre>
+<pre>{{ computedLoanPolicies() | json }}</pre>
+<pre>{{ computedReservationList() | json }}</pre>
+
