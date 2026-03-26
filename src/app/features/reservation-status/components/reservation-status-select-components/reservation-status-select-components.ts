@@ -18,6 +18,11 @@ export class ReservationStatusSelectComponents {
   readonly newSelectedId = output<number>();
   
   private readonly reservationStatusService = inject(ReservationStatusService);
+  protected readonly isLoading = computed(() => this.reservationStatusRX.isLoading());
+  protected readonly computedReservationStatusList = computed<ReservationStatusModel[]>(() => [
+    { id_status: 0, status: 'Todos los Estados' },
+    ...this.reservationStatusRX.value() ?? []
+  ]);
 
   private readonly reservationStatusRX = rxResource({
     stream: () => {    
@@ -33,12 +38,9 @@ export class ReservationStatusSelectComponents {
     },
   });
 
-  protected readonly isLoading = computed(() => this.reservationStatusRX.isLoading());
-  protected readonly computedReservationStatusList = computed<ReservationStatusModel[]>(() => this.reservationStatusRX.value() ?? []);
-
   protected onChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
-    const newId = Number(select.value); 
+    const newId = Number(select.value);
     this.newSelectedId.emit(newId); 
   }
 }
