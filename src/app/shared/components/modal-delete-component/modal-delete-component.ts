@@ -1,8 +1,9 @@
 import { Component, input, output } from '@angular/core';
+import { LoadingComponent } from "../loading-component/loading-component";
 
 @Component({
   selector: 'app-modal-delete-component',
-  imports: [],
+  imports: [LoadingComponent],
   templateUrl: './modal-delete-component.html',
 })
 export class ModalDeleteComponent {
@@ -12,6 +13,7 @@ export class ModalDeleteComponent {
   
   // Contenido dinámico
   readonly title = input<string>('Confirmar acción');
+  readonly contentText = input<string>('¿Estás seguro que deseas eliminar:');
   readonly itemName = input<string | undefined>('???');
 
   // Eventos

@@ -1,0 +1,121 @@
+<section class="p-4 grid grid-cols-2 lg:grid-cols-4 gap-4">
+  <div class="stats shadow bg-my-light text-my-purple">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Total de Libros</div>
+        @if (isLoading()) {
+          <div class="p-2">
+            <app-loading-component/>
+          </div>
+        } @else {
+          <div class="stat-value">
+            {{ totalBooks() }}
+          </div>
+        }
+    </div>
+  </div>
+  
+  <div class="stats shadow bg-my-light text-my-pink">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Préstamos Activos</div>
+      @if (isLoading()) {
+        <div class="p-2">
+          <app-loading-component/>
+        </div>
+      } @else {
+        <div class="stat-value">
+          {{ totalLoans() }}
+        </div>
+      }
+    </div>
+  </div>
+  
+  <div class="stats shadow bg-my-light text-my-green">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Reservas Activas</div>
+        @if (isLoading()) {
+          <div class="p-2">
+            <app-loading-component/>
+          </div>
+        } @else {
+          <div class="stat-value">
+            {{ totalReservations() }}
+          </div>
+        }
+    </div>
+  </div>
+  
+  <div class="stats shadow bg-my-light text-my-yellow">
+    <div class="stat">
+      <div class="stat-figure text-secondary">
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          class="inline-block h-8 w-8 stroke-current"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"
+          ></path>
+        </svg>
+      </div>
+      <div class="stat-title">Usuarios</div>
+        @if (isLoading()) {
+          <div class="p-2">
+            <app-loading-component/>
+          </div>
+        } @else {
+          <div class="stat-value">
+            {{ totalUsers() }}
+          </div>
+        }        
+    </div>
+  </div>
+</section>

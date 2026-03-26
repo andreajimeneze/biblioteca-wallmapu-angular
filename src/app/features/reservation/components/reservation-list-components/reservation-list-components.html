@@ -1,0 +1,63 @@
+<div class="bg-my-light rounded-md m-4 text-my-dark overflow-x-auto">
+  <div class="min-w-[700px]">
+
+    <!-- HEADER -->
+     <header class="p-6 pb-2 flex justify-between">
+      <div>
+        <h2 class="font-bold text-my-dark/80 text-lg">
+          Gestión de Reservas
+        </h2>
+        <p class="text-sm text-my-dark/50">
+          Lista completa de todas las reservas
+        </p>
+      </div>
+  
+      <button (click)="onReload()" class="btn btn-outline bg-my-purple hover:bg-my-purple/80 text-my-light">
+        Refrescar
+      </button>
+     </header>
+
+    @if(isLoading()) {
+      <div class="p-4 flex justify-center">
+        <app-loading-component/>
+      </div>
+    } @else {
+
+      <!-- TABLA -->
+      <table class="table w-full text-center py-4">
+        <thead class="uppercase">
+          <tr>
+            <th>Id</th>
+            <th>Libro</th>
+            <th>Usuario</th>
+            <th>Fecha Reserva</th>
+            <th>Expira</th>
+            <th>Estado</th>
+            <th class="whitespace-nowrap">Acciones</th>
+          </tr>
+        </thead>
+
+        <tbody class="[&>tr>td]:align-middle">
+          @for(item of computedReservationList(); track item.id_reservation) {
+            <tr class="hover:bg-my-purple/10 text-my-purple">
+              <td>{{ item.id_reservation }}</td>
+              <td>{{ item.book_title }}</td>
+              <td>{{ item.user_name }} {{ item.user_lastname }}</td>
+              <td>{{ item.reservation_date | date:'yyyy-MM-dd' }}</td>
+              <td>{{ item.expiration_date | date:'yyyy-MM-dd' }}</td>
+
+              <td>{{ item.reservation_status_name }}</td>
+    
+              <td class="whitespace-nowrap p-1">
+                <app-reservation-cancel-btn-components 
+                  [reservationModel]="item"
+                  (reload)="onReload()"
+                />
+              </td>
+            </tr>
+          }
+        </tbody>    
+      </table>
+    }
+  </div>
+</div>

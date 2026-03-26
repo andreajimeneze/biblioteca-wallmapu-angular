@@ -8,12 +8,16 @@ import { Router } from '@angular/router';
 import { EditionCopyFormComponents } from "@features/edition-copy/components/edition-copy-form-components/edition-copy-form-components";
 import { EditionCopyDetailModel } from '@features/edition-copy/models/edition-copy-detail-model';
 import { EditionCopyFormModel } from '@features/edition-copy/models/edition-copy-form-model';
+import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 
 @Component({
   selector: 'app-edition-copy-form-page',
   imports: [
     SectionHeaderComponent,
-    EditionCopyFormComponents
+    EditionCopyFormComponents,
+    MessageErrorComponent,
+    MessageSuccessComponent
 ],
   templateUrl: './edition-copy-form-page.html',
 })
@@ -45,6 +49,7 @@ export class EditionCopyFormPage {
     ? `Modificar copia de: ${ this.state.book_title }` 
     : `Crear copia para: ${ this.state.book_title }`
   )
+  protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isLoading = computed<boolean>(() =>
     [
@@ -87,15 +92,16 @@ export class EditionCopyFormPage {
     params: () => this.newEditionCopyPayload(),
     stream: ({ params }) => {
       if (!params) return of(null);
-
+      this.successMessage.set(null);
+      
       return this.editionCopyService.create(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.result;
         }),
         tap(copy => {
           this.getEditionCopyPayload.set(copy.id_copy);
-
           this.newEditionCopyPayload.set(null);
         }),
         catchError(err => {

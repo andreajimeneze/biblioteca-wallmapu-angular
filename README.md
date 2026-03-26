@@ -346,6 +346,10 @@ ng g s features/book-subject-step/services/book-subject-step-service --skip-test
 
 # ---------------------------------------------------------------------------------
 # FEATURES DASHBOARD
+ng g c features/dashboard/components/admin-stats-components --skip-tests --style=none
+ng g c features/dashboard/components/register-loan-components --skip-tests --style=none
+ng g c features/dashboard/components/register-return-components --skip-tests --style=none
+
 ng g c features/dashboard/pages/admin-dashboard-page --skip-tests --style=none
 ng g c features/dashboard/pages/user-dashboard-page --skip-tests --style=none
 
@@ -474,7 +478,9 @@ ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES RESERVATION
+ng g c features/reservation/components/reservation-cancel-btn-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-btn-components --skip-tests --style=none
+ng g c features/reservation/components/reservation-list-components --skip-tests --style=none
 
 ng g interface features/reservation/models/reservation-model
 

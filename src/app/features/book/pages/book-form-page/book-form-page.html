@@ -13,13 +13,15 @@
   (onFormSubmit)="formSubmit($event)"
 />
 
-@if (errorMessage()) {
-  <section class="p-4 pb-0">
-    <app-message-error-component 
-      [message]="errorMessage()"
-    />
-  </section>  
-}
+<section class="p-4 pb-0 grid gap-4">
+  @if(successMessage()) {
+    <app-message-success-component [message]="successMessage()"/>
+  }
+
+  @if (errorMessage()) {
+    <app-message-error-component [message]="errorMessage()"/>
+  } 
+</section>  
 
 @if (isEditMode()) {
   <div class="m-4 flex justify-end">
