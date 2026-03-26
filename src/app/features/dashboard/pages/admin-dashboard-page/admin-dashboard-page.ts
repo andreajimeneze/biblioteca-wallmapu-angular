@@ -6,20 +6,20 @@ import { LoanPoliciesService } from '@features/loan-policies/services/loan-polic
 import { LoanService } from '@features/loan/services/loan-service';
 import { catchError, map, of } from 'rxjs';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
-import { AdminStatsComponents } from "@features/dashboard/components/admin-stats-components/admin-stats-components";
 import { RegisterLoanComponents } from "@features/dashboard/components/register-loan-components/register-loan-components";
 import { RegisterReturnComponents } from "@features/dashboard/components/register-return-components/register-return-components";
 import { ReservationListComponents } from "@features/reservation/components/reservation-list-components/reservation-list-components";
+import { AdminStatsComponents } from "@features/stats/components/admin-stats-components/admin-stats-components";
 
 @Component({
   selector: 'app-admin-dashboard-page',
   imports: [
     JsonPipe,
     SectionHeaderComponent,
-    AdminStatsComponents,
     RegisterLoanComponents,
     RegisterReturnComponents,
-    ReservationListComponents
+    ReservationListComponents,
+    AdminStatsComponents
 ],
   templateUrl: './admin-dashboard-page.html',
 })

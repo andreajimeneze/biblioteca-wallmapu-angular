@@ -478,9 +478,10 @@ ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES RESERVATION
-ng g c features/reservation/components/reservation-cancel-btn-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-btn-components --skip-tests --style=none
+ng g c features/reservation/components/reservation-cancel-btn-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-list-components --skip-tests --style=none
+ng g c features/reservation/components/reservation-update-btn-components --skip-tests --style=none
 
 ng g interface features/reservation/models/reservation-model
 
@@ -496,6 +497,8 @@ ng g s features/reservation-status/services/reservation-status-service --skip-te
 
 # ---------------------------------------------------------------------------------
 # FEATURES STATS
+ng g c features/stats/components/admin-stats-components --skip-tests --style=none
+
 ng g interface features/stats/models/stat-model
 
 ng g c features/stats/pages/stat.page --skip-tests --style=none

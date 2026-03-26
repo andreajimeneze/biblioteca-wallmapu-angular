@@ -1,14 +1,10 @@
 <app-section-header-component [title]="'Panel de Administración'" />
 
-<app-admin-stats-components 
-  [totalBooks]="35"
-  [totalLoans]="12"
-  [totalReservations]="3"
-  [totalUsers]="20"
-/>
+<app-admin-stats-components/>
 
 <section class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 p-4">
   <app-register-loan-components/>
+  
   <app-register-return-components/>
 
   <div class="rounded-box shadow-md flex flex-col bg-my-light">

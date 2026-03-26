@@ -7,6 +7,7 @@ import { ReservationService } from '@features/reservation/services/reservation-s
 import { catchError, map, of, tap } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { ReservationStatusSelectComponents } from "@features/reservation-status/components/reservation-status-select-components/reservation-status-select-components";
+import { ReservationUpdateBtnComponents } from "../reservation-update-btn-components/reservation-update-btn-components";
 
 @Component({
   selector: 'app-reservation-list-components',
@@ -14,7 +15,8 @@ import { ReservationStatusSelectComponents } from "@features/reservation-status/
     DatePipe,
     ReservationCancelBtnComponents,
     LoadingComponent,
-    ReservationStatusSelectComponents
+    ReservationStatusSelectComponents,
+    ReservationUpdateBtnComponents
 ],
   templateUrl: './reservation-list-components.html',
 })

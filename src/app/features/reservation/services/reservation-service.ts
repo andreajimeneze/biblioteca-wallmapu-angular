@@ -22,6 +22,12 @@ export class ReservationService {
       this.endpoint, `${id}/cancel`, null
     );
   }
+
+  expire(): Observable<ApiResponseModel<number>> {
+    return this.apiResponseService.update<ApiResponseModel<number>, null>(
+      this.endpoint, `expire-overdue`, null
+    );
+  }
   
   create(item: CreateReservationModel): Observable<ApiResponseModel<any>> {
     return this.apiResponseService.create<ApiResponseModel<any>, CreateReservationModel>(

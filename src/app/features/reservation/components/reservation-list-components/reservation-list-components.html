@@ -4,7 +4,7 @@
     <!-- HEADER -->
      <header class="p-6 pb-2 flex justify-between">
       <div>
-        <h2 class="font-bold text-my-dark/80 text-lg">
+        <h2 class="font-bold text-my-purple text-lg">
           Gestión de Reservas
         </h2>
         <p class="text-sm text-my-dark/50">
@@ -13,10 +13,14 @@
       </div>
   
 
-      <div class="flex gap-2">
+      <div class="flex gap-2 items-center">
         <app-reservation-status-select-components
           [selectedId]="idReservationStatus()"
           (newSelectedId)="onFilterReservation($event)"
+        />
+
+        <app-reservation-update-btn-components 
+          (reload)="onReload()"
         />
         
         <button 
@@ -65,8 +69,11 @@
                 @case (2) {
                   <td><p class="bg-my-purple text-my-light p-1 rounded-md">{{ item.reservation_status_name }}</p></td>
                 }
-                @default {
+                @case (3) {
                   <td><p class="bg-my-pink text-my-light p-1 rounded-md">{{ item.reservation_status_name }}</p></td>
+                }
+                @default {
+                  <td><p class="bg-my-yellow text-my-pink p-1 rounded-md">{{ item.reservation_status_name }}</p></td>
                 }
               }
 
