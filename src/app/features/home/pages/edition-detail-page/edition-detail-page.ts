@@ -9,7 +9,7 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { catchError, map, of, tap } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { AuthStore } from '@features/auth/services/auth-store';
-import { ReservationBtnComponents } from "@features/reservation/components/reservation-btn-components/reservation-btn-components";
+import { ReservationBtnCreateComponents } from "@features/reservation/components/reservation-btn-create-components/reservation-btn-create-components";
 
 @Component({
   selector: 'app-edition-detail-page',
@@ -18,7 +18,7 @@ import { ReservationBtnComponents } from "@features/reservation/components/reser
     NgOptimizedImage,
     MessageErrorComponent,
     LoadingComponent,
-    ReservationBtnComponents
+    ReservationBtnCreateComponents,
 ],
   templateUrl: './edition-detail-page.html',
 })

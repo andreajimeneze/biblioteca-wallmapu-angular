@@ -5,7 +5,9 @@
     <p class="text-sm text-base-content/60">Convertir reserva a préstamo</p>
   </div>
 
-  <app-reservation-get-components />
+  <app-reservation-get-components 
+    (getReservation)="onGetReservation($event)"
+  />
 
   <button type="submit" class="btn bg-my-purple hover:bg-my-purple/80 text-my-light w-full">
     Registrar Préstamo

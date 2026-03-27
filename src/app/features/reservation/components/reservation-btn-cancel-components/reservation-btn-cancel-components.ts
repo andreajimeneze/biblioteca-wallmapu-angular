@@ -5,13 +5,13 @@ import { ModalDeleteComponent } from "@shared/components/modal-delete-component/
 import { catchError, finalize, of, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-reservation-cancel-btn-components',
+  selector: 'app-reservation-btn-cancel-components',
   imports: [
     ModalDeleteComponent
-],
-  templateUrl: './reservation-cancel-btn-components.html',
+  ],
+  templateUrl: './reservation-btn-cancel-components.html',
 })
-export class ReservationCancelBtnComponents {
+export class ReservationBtnCancelComponents {
   readonly reservationModel = input<ReservationModel | null>(null);
   readonly reload = output<void>();
 

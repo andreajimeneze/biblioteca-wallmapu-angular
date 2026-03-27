@@ -17,7 +17,7 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
   templateUrl: './reservation-get-components.html',
 })
 export class ReservationGetComponents {
-  readonly reload = output<void>();
+  readonly getReservation = output<ReservationModel | null>();
 
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
@@ -54,7 +54,7 @@ export class ReservationGetComponents {
           return response.result;
         }),
         tap((res) => {
-
+          this.getReservation.emit(res);
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';

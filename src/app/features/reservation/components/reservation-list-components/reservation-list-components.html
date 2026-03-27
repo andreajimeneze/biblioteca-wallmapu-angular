@@ -19,7 +19,7 @@
           (newSelectedId)="onFilterReservation($event)"
         />
 
-        <app-reservation-update-btn-components 
+        <app-reservation-btn-expire-components
           (reload)="onReload()"
         />
         
@@ -79,9 +79,9 @@
 
               <td class="whitespace-nowrap p-1">
                 @if (item.reservation_status_id != 3) {
-                  <app-reservation-cancel-btn-components 
+                  <app-reservation-btn-cancel-components
                     [reservationModel]="item"
-                    (reload)="onReload()"
+                    (reload)="onReload()"                  
                   />
                 }
               </td>
