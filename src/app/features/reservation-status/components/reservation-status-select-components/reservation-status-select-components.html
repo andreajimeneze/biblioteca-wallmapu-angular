@@ -6,13 +6,12 @@
     [value]="selectedId()"
     (change)="onChange($event)"
     class="select text-my-pink"
-  >      
-    <option disabled>Seleccióne un Estado</option>
+  >
     @for (item of computedReservationStatusList(); track item.id_status) {
       <option 
         [value]="item.id_status"
-        [selected]="item.id_status === selectedId()">
-        
+        [selected]="item.id_status === selectedId()"
+      >  
         {{ item.status }}
       </option>
     }

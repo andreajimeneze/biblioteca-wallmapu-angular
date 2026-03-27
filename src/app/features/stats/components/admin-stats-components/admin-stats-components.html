@@ -1,0 +1,91 @@
+<section class="p-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+  <div class="stats shadow bg-my-light text-my-purple">
+    <div class="stat">
+      @if (isLoading()) {
+        <div class="p-2 m-auto">
+          <app-loading-component/>
+        </div>
+      } @else {
+        <div class="stat-figure">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 512 512"><path fill="currentColor" d="M32 456a24 24 0 0 0 24 24h400a24 24 0 0 0 24-24V176H32Zm320-244a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Zm0 80a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Zm-80-80a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Zm0 80a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Zm0 80a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Zm-80-80a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Zm0 80a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Zm-80-80a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4Zm0 80a4 4 0 0 1 4-4h40a4 4 0 0 1 4 4v40a4 4 0 0 1-4 4h-40a4 4 0 0 1-4-4ZM456 64h-55.92V32h-48v32H159.92V32h-48v32H56a23.8 23.8 0 0 0-24 23.77V144h448V87.77A23.8 23.8 0 0 0 456 64"/></svg>
+        </div>
+        <div class="text-xs text-my-dark/60">Reservas</div>
+        <div class="stat-value">
+          {{ computedStats()?.reservations }}
+        </div>
+      }
+    </div>
+  </div>
+
+  <div class="stats shadow bg-my-light text-my-green">
+    <div class="stat">
+      @if (isLoading()) {
+        <div class="p-2 m-auto">
+          <app-loading-component/>
+        </div>
+      } @else {
+        <div class="stat-figure">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="currentColor" d="M6 22q-.825 0-1.412-.587T4 20V4q0-.825.588-1.412T6 2h12q.825 0 1.413.588T20 4v16q0 .825-.587 1.413T18 22zm5-11l2.5-1.5L16 11V4h-5z"/></svg>
+        </div>
+        <div class="text-xs text-my-dark/60">Préstamos</div>      
+        <div class="stat-value">
+          {{ computedStats()?.loans }}
+        </div> 
+      }
+    </div>
+  </div>  
+
+  <div class="stats shadow bg-my-light text-my-pink">
+    <div class="stat">
+      @if (isLoading()) {
+        <div class="p-2 m-auto">
+          <app-loading-component/>
+        </div>
+      } @else {
+        <div class="stat-figure">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path fill="currentColor" d="M20 2H6C4.35 2 3 3.35 3 5v14c0 1.65 1.35 3 3 3h15v-2H6c-.55 0-1-.45-1-1s.45-1 1-1h14c.55 0 1-.45 1-1V3c0-.55-.45-1-1-1m-3 6H8V6h9z"/></svg>
+        </div>
+        <div class="text-xs text-my-dark/60">Libros</div>
+        <div class="stat-value">
+          {{ computedStats()?.books }}
+        </div>
+      }
+    </div>
+  </div>
+    
+  <div class="stats shadow bg-my-light text-my-purple">
+    <div class="stat">
+      @if (isLoading()) {
+        <div class="p-2 m-auto">
+          <app-loading-component/>
+        </div>
+      } @else {
+        <div class="stat-figure">
+          <svg xmlns="http://www.w3.org/2000/svg" width="51.43" height="48" viewBox="0 0 1920 1792"><path fill="currentColor" d="M593 896q-162 5-265 128H194q-82 0-138-40.5T0 865q0-353 124-353q6 0 43.5 21t97.5 42.5T384 597q67 0 133-23q-5 37-5 66q0 139 81 256m1071 637q0 120-73 189.5t-194 69.5H523q-121 0-194-69.5T256 1533q0-53 3.5-103.5t14-109T300 1212t43-97.5t62-81t85.5-53.5T602 960q10 0 43 21.5t73 48t107 48t135 21.5t135-21.5t107-48t73-48t43-21.5q61 0 111.5 20t85.5 53.5t62 81t43 97.5t26.5 108.5t14 109t3.5 103.5M640 256q0 106-75 181t-181 75t-181-75t-75-181t75-181T384 0t181 75t75 181m704 384q0 159-112.5 271.5T960 1024T688.5 911.5T576 640t112.5-271.5T960 256t271.5 112.5T1344 640m576 225q0 78-56 118.5t-138 40.5h-134q-103-123-265-128q81-117 81-256q0-29-5-66q66 23 133 23q59 0 119-21.5t97.5-42.5t43.5-21q124 0 124 353m-128-609q0 106-75 181t-181 75t-181-75t-75-181t75-181t181-75t181 75t75 181"/></svg>
+        </div>
+        <div class="text-xs text-my-dark/60">Usuarios</div>
+        <div class="stat-value">
+          {{ computedStats()?.users }}
+        </div>  
+      }    
+    </div>
+  </div>
+
+  <div class="stats shadow bg-my-light text-my-green">
+    <div class="stat">
+      @if (isLoading()) {
+        <div class="p-2 m-auto">
+          <app-loading-component/>
+        </div>
+      } @else {
+        <div class="stat-figure">
+          <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 8 8"><path fill="currentColor" d="M7 6H4v1h3m0-3H3v1h4m0-4H6v2h1M5 1H3v2h2M2 7V0h6v7L7 8H1L0 7V1h2L1 2v5"/></svg>
+        </div>
+        <div class="text-xs text-my-dark/60">Noticias</div>
+        <div class="stat-value">
+          {{ computedStats()?.news }}
+        </div>
+      }  
+    </div>
+  </div>
+</section>

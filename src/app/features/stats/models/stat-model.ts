@@ -1,3 +1,12 @@
+export interface AdminStatsModel {
+  reservations: number;
+  loans: number;
+  books: number;
+  users: number;
+  news: number;  
+}
+
+
 export interface StatModel {
   users: number;
   news: number;

@@ -4,7 +4,7 @@
     <!-- HEADER -->
      <header class="p-6 pb-2 flex justify-between">
       <div>
-        <h2 class="font-bold text-my-dark/80 text-lg">
+        <h2 class="font-bold text-my-purple text-lg">
           Gestión de Reservas
         </h2>
         <p class="text-sm text-my-dark/50">
@@ -12,9 +12,25 @@
         </p>
       </div>
   
-      <button (click)="onReload()" class="btn btn-outline bg-my-purple hover:bg-my-purple/80 text-my-light">
-        Refrescar
-      </button>
+
+      <div class="flex gap-2 items-center">
+        <app-reservation-status-select-components
+          [selectedId]="idReservationStatus()"
+          (newSelectedId)="onFilterReservation($event)"
+        />
+
+        <app-reservation-update-btn-components 
+          (reload)="onReload()"
+        />
+        
+        <button 
+          (click)="onReload()" 
+          class="btn btn-outline bg-my-purple hover:bg-my-purple/80 text-my-light">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20q-3.35 0-5.675-2.325T4 12t2.325-5.675T12 4q1.725 0 3.3.712T18 6.75V5q0-.425.288-.712T19 4t.713.288T20 5v5q0 .425-.288.713T19 11h-5q-.425 0-.712-.288T13 10t.288-.712T14 9h3.2q-.8-1.4-2.187-2.2T12 6Q9.5 6 7.75 7.75T6 12t1.75 4.25T12 18q1.7 0 3.113-.862t2.187-2.313q.2-.35.563-.487t.737-.013q.4.125.575.525t-.025.75q-1.025 2-2.925 3.2T12 20"/></svg>
+          Refrescar
+        </button>
+      </div>
      </header>
 
     @if(isLoading()) {
@@ -38,7 +54,7 @@
         </thead>
 
         <tbody class="[&>tr>td]:align-middle">
-          @for(item of computedReservationList(); track item.id_reservation) {
+          @for(item of filteredReservationList(); track item.id_reservation) {
             <tr class="hover:bg-my-purple/10 text-my-purple">
               <td>{{ item.id_reservation }}</td>
               <td>{{ item.book_title }}</td>
@@ -46,13 +62,28 @@
               <td>{{ item.reservation_date | date:'yyyy-MM-dd' }}</td>
               <td>{{ item.expiration_date | date:'yyyy-MM-dd' }}</td>
 
-              <td>{{ item.reservation_status_name }}</td>
-    
+              @switch (item.reservation_status_id) {
+                @case (1) {
+                  <td><p class="bg-my-green text-my-light p-1 rounded-md">{{ item.reservation_status_name }}</p></td>
+                }
+                @case (2) {
+                  <td><p class="bg-my-purple text-my-light p-1 rounded-md">{{ item.reservation_status_name }}</p></td>
+                }
+                @case (3) {
+                  <td><p class="bg-my-pink text-my-light p-1 rounded-md">{{ item.reservation_status_name }}</p></td>
+                }
+                @default {
+                  <td><p class="bg-my-yellow text-my-pink p-1 rounded-md">{{ item.reservation_status_name }}</p></td>
+                }
+              }
+
               <td class="whitespace-nowrap p-1">
-                <app-reservation-cancel-btn-components 
-                  [reservationModel]="item"
-                  (reload)="onReload()"
-                />
+                @if (item.reservation_status_id != 3) {
+                  <app-reservation-cancel-btn-components 
+                    [reservationModel]="item"
+                    (reload)="onReload()"
+                  />
+                }
               </td>
             </tr>
           }
