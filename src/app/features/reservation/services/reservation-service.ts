@@ -17,6 +17,12 @@ export class ReservationService {
     );
   }
 
+  getById(id: number): Observable<ApiResponseModel<ReservationModel | null>> {
+    return this.apiResponseService.getById<ApiResponseModel<ReservationModel | null>>(
+      this.endpoint, id
+    );
+  }  
+
   cancel(id: number): Observable<ApiResponseModel<ReservationModel>> {
     return this.apiResponseService.update<ApiResponseModel<ReservationModel>, null>(
       this.endpoint, `${id}/cancel`, null
