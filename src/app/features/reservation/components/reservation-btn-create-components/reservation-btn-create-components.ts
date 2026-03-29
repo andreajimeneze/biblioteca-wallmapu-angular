@@ -6,11 +6,13 @@ import { catchError, finalize, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
-  selector: 'app-reservation-btn-components',
-  imports: [LoadingComponent],
-  templateUrl: './reservation-btn-components.html',
+  selector: 'app-reservation-btn-create-components',
+  imports: [
+    LoadingComponent
+  ],
+  templateUrl: './reservation-btn-create-components.html',
 })
-export class ReservationBtnComponents {
+export class ReservationBtnCreateComponents {
   readonly idBook = input<number>();
   readonly bookName = input<string>();
 

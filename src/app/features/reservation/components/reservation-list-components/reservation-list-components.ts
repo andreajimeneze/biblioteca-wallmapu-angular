@@ -1,22 +1,22 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ReservationModel } from '@features/reservation/models/reservation-model';
-import { ReservationCancelBtnComponents } from "../reservation-cancel-btn-components/reservation-cancel-btn-components";
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ReservationService } from '@features/reservation/services/reservation-service';
 import { catchError, map, of, tap } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { ReservationStatusSelectComponents } from "@features/reservation-status/components/reservation-status-select-components/reservation-status-select-components";
-import { ReservationUpdateBtnComponents } from "../reservation-update-btn-components/reservation-update-btn-components";
+import { ReservationBtnCancelComponents } from "../reservation-btn-cancel-components/reservation-btn-cancel-components";
+import { ReservationBtnExpireComponents } from "../reservation-btn-expire-components/reservation-btn-expire-components";
 
 @Component({
   selector: 'app-reservation-list-components',
   imports: [
     DatePipe,
-    ReservationCancelBtnComponents,
     LoadingComponent,
     ReservationStatusSelectComponents,
-    ReservationUpdateBtnComponents
+    ReservationBtnCancelComponents,
+    ReservationBtnExpireComponents,
 ],
   templateUrl: './reservation-list-components.html',
 })
