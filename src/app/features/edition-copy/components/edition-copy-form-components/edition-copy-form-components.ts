@@ -2,25 +2,26 @@ import { DatePipe } from '@angular/common';
 import { Component, effect, input, output, signal } from '@angular/core';
 import { EditionCopyDetailModel } from '@features/edition-copy/models/edition-copy-detail-model';
 import { EditionCopyFormModel } from '@features/edition-copy/models/edition-copy-form-model';
-import { UserStatusSelectComponents } from "@features/user-status/components/user-status-select-components/user-status-select-components";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { EditionCopyStatusSelectComponents } from "@features/edition-copy-status/components/book-copy-status-select-components/edition-copy-status-select-components";
 
 @Component({
   selector: 'app-edition-copy-form-components',
   imports: [
     DatePipe,
-    UserStatusSelectComponents,
     LoadingComponent,
-    MessageErrorComponent
+    MessageErrorComponent,
+    EditionCopyStatusSelectComponents
 ],
   templateUrl: './edition-copy-form-components.html',
 })
 export class EditionCopyFormComponents {
-  readonly isLoading = input<boolean>(false);
+  readonly isLoading = input<boolean>(true);
   readonly editionCopyDetail = input<EditionCopyDetailModel | null>(null);
   readonly onFormSubmit = output<EditionCopyFormModel>();  
-    
+  
+  protected readonly toggleStatus = signal<boolean>(true);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly formData = signal<Partial<EditionCopyFormModel>>({});  
   
@@ -37,13 +38,16 @@ export class EditionCopyFormComponents {
     });
   });
 
-
   protected updateTopography(value: string, input: HTMLInputElement) {
     this.updateField('signature_topography', value, input);
   }
 
   protected updateCopyNumber(value: string, input: HTMLInputElement) {
     this.updateField('copy_number', value, input);
+  }
+
+  protected updateStatus(value: number) {
+    this.updateField('status_id', value.toString());
   }
 
   private updateField<K extends keyof EditionCopyFormModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
@@ -110,5 +114,10 @@ export class EditionCopyFormComponents {
       return 'El número de copia debe ser mayor a 0';
     
     return null;
+  }
+
+  protected activateStatusBtn(event: Event): void {
+    event.preventDefault();
+    this.toggleStatus.update(value => !value);
   }
 }

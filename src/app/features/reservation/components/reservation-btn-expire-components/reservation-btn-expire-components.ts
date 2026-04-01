@@ -1,10 +1,11 @@
 import { Component, inject, output, signal } from '@angular/core';
 import { ReservationService } from '@features/reservation/services/reservation-service';
 import { catchError, finalize, of, tap } from 'rxjs';
+import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-reservation-btn-expire-components',
-  imports: [],
+  imports: [LoadingComponent],
   templateUrl: './reservation-btn-expire-components.html',
 })
 export class ReservationBtnExpireComponents {

@@ -3,6 +3,7 @@ import { HomePage } from "@features/home/pages/home-page/home-page";
 import { NewsPage } from "@features/home/pages/news-page/news-page";
 import { NewsDetailPage } from "@features/home/pages/news-detail-page/news-detail-page";
 import { EditionDetailPage } from "./pages/edition-detail-page/edition-detail-page";
+import { BookDetailPage } from "./pages/book-detail-page/book-detail-page";
 
 export const  HOME_ROUTES: Routes = [
   {
@@ -23,6 +24,6 @@ export const  HOME_ROUTES: Routes = [
   },
   {
     path: 'book/:bookId/edition/:editionId',
-    component: EditionDetailPage
+    component: BookDetailPage
   },  
 ]
