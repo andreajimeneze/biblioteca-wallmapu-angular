@@ -33,14 +33,14 @@
   [isLoading]="isLoading()"
   [editionCopyModel]="editionFormVMComputed().copies"
   (onEdit)="onEditEdition($event)"
-  (onDelete)="onDeleteEditionCopy($event)"
+  (onDelete)="onDeleteCopy($event)"
 />
 
 <app-modal-delete-component
   title="Eliminar Copia"
   [isOpen]="openDeleteModal()"
   [loading]="isLoading()"
-  [itemName]="selectedEditionCopyDetailToDelete()?.signature_topography"
+  [itemName]="selectedCopyToDelete()?.signature_topography + ' - Copia N°: ' + selectedCopyToDelete()?.copy_number"
   (confirm)="confirmDelete()"
   (cancel)="closeDeleteModal()"
 />

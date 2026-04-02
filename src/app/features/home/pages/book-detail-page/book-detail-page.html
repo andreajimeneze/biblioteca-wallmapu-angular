@@ -1,5 +1,4 @@
 <section class="min-h-full bg-linear-to-b from-my-green/80 via-my-light/70 to-my-light/60">
-
   @if (errorMessage()) {
     <div class="container mx-auto p-4">
       <div class="flex justify-center items-center min-h-dvh">
@@ -20,7 +19,7 @@
           <figure class="relative aspect-7/10 w-full max-w-96 mx-auto">
             <img
               class="w-full h-full object-cover shadow-2xl"
-              [ngSrc]="selectedEdition()?.cover_image ??  'images/without_cover.webp'"
+              [ngSrc]="vmBookEditionCopy()?.cover_image ??  'images/without_cover.webp'"
               [alt]="'Portada'"
               fill
               priority
@@ -51,14 +50,27 @@
     
             <section class="flex justify-between gap-4">
               <div class="mb-6 space-y-2 text-sm">
-                <p><strong class="text-my-green">Edicion:</strong> {{ selectedEdition()?.edition }}</p>
-                <p><strong class="text-my-green">ISBN:</strong> {{ selectedEdition()?.isbn }}</p>
-                <p><strong class="text-my-green">Publicado:</strong> {{ selectedEdition()?.publication_year }}</p>
-                <p><strong class="text-my-green">Paginas:</strong> {{ selectedEdition()?.pages }}</p>
-                <p><strong class="text-my-green">Editorial:</strong> {{ selectedEdition()?.editorial?.name }}</p>
+                <p><strong class="text-my-green">Edicion:</strong> {{ vmBookEditionCopy()?.edition }}</p>
+                <p><strong class="text-my-green">ISBN:</strong> {{ vmBookEditionCopy()?.isbn }}</p>
+                <p><strong class="text-my-green">Publicado:</strong> {{ vmBookEditionCopy()?.publication_year }}</p>
+                <p><strong class="text-my-green">Paginas:</strong> {{ vmBookEditionCopy()?.pages }}</p>
+                <p><strong class="text-my-green">Editorial:</strong> {{ vmBookEditionCopy()?.editorial?.name }}</p>
+                <p><strong class="text-my-green">Copia n°:</strong> {{ vmBookEditionCopy()?.copy?.copy_number }}</p>
+                <p>
+                  <strong class="text-my-green">Estado:</strong> 
+                  @if (vmBookEditionCopy()?.copy?.status?.id_status == 1) {
+                    <span class="bg-my-green text-my-light mx-2 p-1 pr-2 rounded-md">
+                      {{ vmBookEditionCopy()?.copy?.status?.name }}
+                    </span>
+                  } @else {
+                    <span class="bg-my-pink text-my-light mx-2 p-1 pr-2 rounded-md">
+                      No Disponible
+                    </span>
+                  }
+                </p>
               </div>
       
-              @if (isAuthenticated()) {
+              @if (isAuthenticated() && vmBookEditionCopy()?.copy?.status?.id_status === 1) {
                 <div class="flex gap-4">
                   <!--
                   <button class="btn bg-my-green text-my-light">Añadir a Favoritos</button>
@@ -76,98 +88,85 @@
 
       </div>
     </div>
-  
-    <div class="divider p-4 text-base-content/40 max-w-7xl mx-auto">Ediciones</div>
     
-    <div class="grid gap-8 pt-4 pb-16 px-4 mx-auto max-w-7xl grid-cols-[repeat(auto-fit,minmax(14rem,1fr))] justify-items-center">
-      @for (item of bookDetailComputed()?.editions; track item.id_edition) {
-        <article 
-          (click)="selectNewEdition(item)"
-          class="flex flex-col group w-72 md:w-56 bg-my-light shadow-sm cursor-pointer shadow-my-light hover:shadow-2xl transition-all duration-300 rounded-2xl"
-        >
-          <figure class="relative overflow-hidden aspect-7/10 rounded-t-2xl">
-            <img
-              [ngSrc]="item.cover_image ?? 'images/without_cover.webp'"
-              [alt]="item.edition"
-              fill
-              priority
-              class="w-full h-full object-cover transform group-hover:scale-103 transition-transform duration-500 borde"/>
-          </figure>
-          <div class="flex flex-col flex-1 gap-2 text-center p-2">
-            <section>
-              <h2 class="card-title justify-center text-my-green">{{ item.edition}}</h2>
-            </section>
-          </div>
-        </article>
-      }
-    </div>
+    <div class="divider p-4 text-base-content/40 max-w-7xl mx-auto">Lista de Copias</div>
 
-    <section>
-      <div class="overflow-x-auto">
-        <table class="table">
-          <!-- head -->
-          <thead>
-            <tr>
-              <th>
-                <label>
-                  <input type="checkbox" class="checkbox" />
-                </label>
-              </th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            @for (item of bookDetailComputed()?.editions; track item.id_edition) {
-              <tr>
-                <th>
-                  <label>
-                    <input type="checkbox" class="checkbox" />
-                  </label>
-                </th>
-                <td>
-                  <div class="flex items-center gap-3">
-                    <div class="avatar">
-                      <div class="aspect-7/10 h-28">
-                        <img
-                          [ngSrc]="item.cover_image ?? 'images/without_cover.webp'"
-                          [alt]="item.edition"
-                          fill
-                          priority />
-                      </div>
-                    </div>
-                    <div>
-                      <div class="font-bold">{{ item.edition }}</div>
-                      <div class="text-sm opacity-50">{{ item.editorial.name }}</div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  {{ item.copies.length }}
-                  <br />
-                  <span class="badge badge-ghost badge-sm">Desktop Support Technician</span>
-                </td>
-                <td>Purple</td>
-                <th>
-                  <button class="btn btn-ghost btn-xs">details</button>
-                </th>
-              </tr>
-            }
-          </tbody>
-          <!-- foot -->
-          <tfoot>
-            <tr>
-              <th></th>
-              <th>Name</th>
-              <th>Job</th>
-              <th>Favorite Color</th>
-              <th></th>
-            </tr>
-          </tfoot>
-        </table>
+    @if (isLoading()) {
+      <div class="p-4 flex justify-center">
+        <app-loading-component/>
       </div>
-    </section>
+    } @else {
+      <section class="max-w-7xl mx-auto">
+        <div class="overflow-x-auto bg-my-light rounded-md shadow-2xl m-4">
+          <table class="table">
+            <!-- head -->
+            <thead>
+              <tr>
+                <th>Copias</th>
+                <th>Estado</th>
+                <th>Editorial / Edicion</th>
+                <th>ISBN</th>
+              </tr>
+            </thead>
+  
+            <tbody>
+              @for (edition of bookDetailComputed()?.editions; track edition.id_edition) {
+                @for (copy of edition.copies; track copy.id_copy) {
+                  <tr 
+                    (click)="selectNewCopy(edition, copy)"
+                    class="hover:bg-my-dark/10 cursor-pointer">
+                    <td>
+                      <div class="flex items-center gap-3">
+                        <div class="avatar">
+                          <div class="aspect-7/10 h-20">
+                            <img
+                              [ngSrc]="edition.cover_image ?? 'images/without_cover.webp'"
+                              [alt]="edition.edition"
+                              fill
+                              priority />
+                          </div>
+                        </div>
+                        <div>
+                          <div class="font-bold">Copia n°: {{ copy.copy_number }}</div>
+                          <div class="text-sm opacity-50">{{ copy.signature_topography }}</div>
+                          <div class="text-sm opacity-50">ID: {{ copy.id_copy }}</div>
+                        </div>
+                      </div>
+                    </td>
+                    
+                    <td>
+                      @if (copy.status?.id_status == 1) {
+                        <span class="badge bg-my-green text-my-light p-4">{{ copy.status?.name }}</span>
+                      } @else {
+                        <span class="badge bg-my-pink text-my-light p-4">No Disponible</span>
+                      }
+                    </td>
+  
+                    <td>
+                      <span>{{ edition.editorial.name }}</span>
+                      <br />
+                      <span>{{ edition.edition }}</span>
+                    </td>
+  
+                    <td>
+                      <span class="badge badge-ghost p-4">{{ edition.isbn }}</span>
+                    </td>                  
+                  </tr>
+                }
+              }        
+            </tbody>
+  
+            <tfoot>
+              <tr>
+                <th>Copias</th>
+                <th>Editorial</th>
+                <th>Edicion</th>
+                <th>ISBN</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+      </section>
+    }
   }
 </section>

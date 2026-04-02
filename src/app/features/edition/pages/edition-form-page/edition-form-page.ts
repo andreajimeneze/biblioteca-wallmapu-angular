@@ -51,7 +51,7 @@ export class EditionFormPage {
       this.addEditionRX,
       this.uploadEditionImageRX,
       this.deleteEditionImageRX,
-      this.deleteEditionCopyRX,
+      this.deleteCopyRX,
     ].some(r => r.isLoading())
   );
   
@@ -188,16 +188,17 @@ export class EditionFormPage {
   });
 
   private readonly editionCopyService = inject(EditionCopyService);
-  private readonly deleteEditionCopyPayload = signal<number | null>(null);
+  private readonly deleteCopyPayload = signal<number | null>(null);
 
-  private readonly deleteEditionCopyRX = rxResource({
-    params: () => this.deleteEditionCopyPayload(),
+  private readonly deleteCopyRX = rxResource({
+    params: () => this.deleteCopyPayload(),
     stream: ({ params: id_copy }) => {
       if (!id_copy) return of(null);
       this.successMessage.set(null);
       
       return this.editionCopyService.delete(id_copy).pipe(
         map(response => {
+          console.log(response);
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);
           return response.result;
@@ -260,19 +261,20 @@ export class EditionFormPage {
 
   // onDelete --------------------------------------------------------
   protected readonly openDeleteModal = signal<boolean>(false);
-  readonly selectedEditionCopyDetailToDelete = signal<EditionCopyDetailModel | null>(null);
+  readonly selectedCopyToDelete = signal<EditionCopyDetailModel | null>(null);
   
-  protected onDeleteEditionCopy(item: EditionCopyDetailModel): void {
+  protected onDeleteCopy(item: EditionCopyDetailModel): void {
     if (!item) return;
-    this.selectedEditionCopyDetailToDelete.set(item);
+    this.selectedCopyToDelete.set(item);
     this.openDeleteModal.set(true);
   }
 
   confirmDelete() {
-    const selectedBookToDelete = this.selectedEditionCopyDetailToDelete();
+    const selectedBookToDelete = this.selectedCopyToDelete();
     if (!selectedBookToDelete) return;
-    this.deleteEditionCopyPayload.set(selectedBookToDelete.id_copy);
-  } 
+    this.deleteCopyPayload.set(selectedBookToDelete.id_copy);
+    this.closeDeleteModal();
+  }
 
   closeDeleteModal() {
     this.openDeleteModal.set(false);

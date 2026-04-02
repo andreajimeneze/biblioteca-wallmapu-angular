@@ -6,10 +6,12 @@ import { catchError, map, of } from 'rxjs';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { AuthStore } from '@features/auth/services/auth-store';
-import { EditionDetailsWithoutBookModel } from '@features/edition/models/edition-detail-model';
+import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { NgOptimizedImage } from '@angular/common';
 import { ReservationBtnCreateComponents } from "@features/reservation/components/reservation-btn-create-components/reservation-btn-create-components";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { BookEditionCopyVM } from '@features/home/view-models/BookEditionCopyVM';
+import { EditionCopyDetailModel } from '@features/edition-copy/models/edition-copy-detail-model';
 
 @Component({
   selector: 'app-book-detail-page',
@@ -41,13 +43,29 @@ export class BookDetailPage {
   private readonly authStore = inject(AuthStore);
   protected readonly isAuthenticated = computed<boolean>(() => this.authStore.isAuthenticated());
 
+  protected readonly selectedCopyId = signal<number>(0);
   protected readonly selectedEditionId = signal<number>(this.editionId() ?? 0);
-  protected readonly selectedEdition = computed<EditionDetailsWithoutBookModel | null>(() => {
-    const list = this.bookDetailComputed()?.editions;
+  protected readonly vmBookEditionCopy = computed<BookEditionCopyVM | null>(() => {
+    const editions = this.bookDetailComputed()?.editions;
+    const edition = editions?.find(item => item.id_edition === this.selectedEditionId());
+    if (!edition) return null;
   
-    return list?.find(item =>
-      item.id_edition == this.selectedEditionId()
-    ) ?? null;
+    const copies = edition.copies || [];
+    const copyId = this.selectedCopyId();
+  
+    const copy =
+      copyId !== 0
+        ? copies.find(c => c.id_copy === copyId) || null
+        : copies.find(c => c.status?.id_status === 1) || copies[0] || null;
+  
+    if (!copy) return null;
+  
+    const { copies: _, ...editionWithoutCopies } = edition;
+  
+    return {
+      ...editionWithoutCopies,
+      copy
+    } as BookEditionCopyVM;
   });
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isLoading = computed<boolean>(() => 
@@ -79,8 +97,9 @@ export class BookDetailPage {
     }
   });
 
-  protected selectNewEdition(item: EditionDetailsWithoutBookModel): void {
-    this.selectedEditionId.set(item.id_edition)
+  protected selectNewCopy(edition: EditionDetailModel,  copy: EditionCopyDetailModel): void {
+    this.selectedEditionId.set(edition.id_edition);
+    this.selectedCopyId.set(copy.id_copy);
 
     window.scrollTo({
       top: 0,
