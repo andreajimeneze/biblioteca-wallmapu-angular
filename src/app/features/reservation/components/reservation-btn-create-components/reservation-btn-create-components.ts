@@ -13,7 +13,7 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
   templateUrl: './reservation-btn-create-components.html',
 })
 export class ReservationBtnCreateComponents {
-  readonly idBook = input<number>();
+  readonly idCopy = input<number>();
   readonly bookName = input<string>();
 
   readonly isLoading = computed<boolean>(() => this.reservationRX.isLoading());
@@ -28,10 +28,10 @@ export class ReservationBtnCreateComponents {
 
   private readonly reservationRX = rxResource({
     params: () => this.reservationPayload(),
-    stream: ({ params }) => {
-      if (!params) return of(null);
+    stream: ({ params: id_copy }) => {
+      if (!id_copy) return of(null);
 
-      return this.reservationService.create(params).pipe(
+      return this.reservationService.create(id_copy).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.succesMessage.set(response.message);
@@ -52,14 +52,14 @@ export class ReservationBtnCreateComponents {
   });
 
   protected onPreOrder(): void {
-    if (!this.idBook()) {
+    if (!this.idCopy()) {
       this.succesMessage.set(null);
       this.errorMessage.set('Error en la reserva');
       return;
     }
 
     this.reservationPayload.set({ 
-      book_id: this.idBook() 
+      copy_id: this.idCopy() 
     } as CreateReservationModel);
   }
 
