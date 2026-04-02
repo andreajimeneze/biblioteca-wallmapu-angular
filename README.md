@@ -559,6 +559,7 @@ ng g c shared/components/header-component --skip-tests --style=none
 ng g c shared/components/loading-component --skip-tests --style=none
 ng g c shared/components/message-error-component --skip-tests --style=none
 ng g c shared/components/message-success-component --skip-tests --style=none
+ng g c shared/components/modal-action-component --skip-tests --style=none
 ng g c shared/components/modal-delete-component --skip-tests --style=none
 ng g c shared/components/modal-error-component --skip-tests --style=none
 ng g c shared/components/modal-image-component --skip-tests --style=none
