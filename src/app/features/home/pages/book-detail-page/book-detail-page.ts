@@ -1,21 +1,20 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { JsonPipe, ViewportScroller } from '@angular/common';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { BookService } from '@features/book/services/book-service';
 import { catchError, finalize, map, of, tap } from 'rxjs';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { AuthStore } from '@features/auth/services/auth-store';
-import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { NgOptimizedImage } from '@angular/common';
 import { ReservationService } from '@features/reservation/services/reservation-service';
 import { CreateReservationModel } from '@features/reservation/models/reservation-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
-import { BookEditionCopyVM } from '@features/home/view-models/BookEditionCopyVM';
-import { EditionCopyDetailModel } from '@features/edition-copy/models/edition-copy-detail-model';
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
+import { BookModel } from '@features/book/models/book-model';
+import { EditionCopyService } from '@features/edition-copy/services/edition-copy-service';
+import { CopyModel } from '@features/edition-copy/models/edition-copy-model';
 
 @Component({
   selector: 'app-book-detail-page',
@@ -46,54 +45,64 @@ export class BookDetailPage {
     { initialValue: 0 }
   );
 
-  private readonly viewportScroller = inject(ViewportScroller);
-  private readonly authStore = inject(AuthStore);
-  private readonly bookService = inject(BookService);
-  private readonly reservationService = inject(ReservationService);
-
-  protected readonly isLoading = computed<boolean>(() => 
-    [
-      this.getBookRX,
-      this.createReservationRX,
-    ].some(r => r.isLoading())
-  ); 
-
-  protected readonly computedBookDetail = computed<BookDetailModel | null>(() => this.getBookRX.value() ?? null);
-  
-  private readonly getBookPayload = signal<number>(this.bookId());
-  private readonly createReservationPayload = signal<CreateReservationModel | null>(null);
-
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
 
+  private readonly viewportScroller = inject(ViewportScroller);
+  private readonly authStore = inject(AuthStore);
+  private readonly bookService = inject(BookService);
+  private readonly copyService = inject(EditionCopyService);
+  private readonly reservationService = inject(ReservationService);
+  
   protected readonly isAuthenticated = computed<boolean>(() => this.authStore.isAuthenticated());
   protected readonly isReservationModalOpen = signal<boolean>(false);
-
-  protected readonly selectedCopyId = signal<number>(0);
-  protected readonly selectedEditionId = signal<number>(this.editionId() ?? 0);
-  protected readonly vmBookEditionCopy = computed<BookEditionCopyVM | null>(() => {
-    const editions = this.computedBookDetail()?.editions;
-    const edition = editions?.find(item => item.id_edition === this.selectedEditionId());
-    if (!edition) return null;
+  private readonly firstLoadEffect = effect(() => {
+    const copyList = this.computedCopyList();
+    const editionId = this.editionId();
+    const current = this.selectedCopy();
   
-    const copies = edition.copies || [];
-    const copyId = this.selectedCopyId();
+    if (!copyList.length) return;
   
-    const copy =
-      copyId !== 0
-        ? copies.find(c => c.id_copy === copyId) || null
-        : copies.find(c => c.status?.id_status === 1) || copies[0] || null;
+    // 🔁 Si ya hay selección → intentar actualizarla con datos frescos
+    if (current) {
+      const updated = copyList.find(c => c.id_copy === current.id_copy);
   
-    if (!copy) return null;
+      // ✔️ Si existe, actualiza referencia (esto refresca UI)
+      if (updated) {
+        this.selectedCopy.set(updated);
+        return;
+      }
+    }
   
-    const { copies: _, ...editionWithoutCopies } = edition;
+    // 🆕 Si no hay selección o ya no existe → elegir una nueva
+    const filtered = copyList.filter(
+      e => e.edition.id_edition === editionId
+    );
   
-    return {
-      ...editionWithoutCopies,
-      copy,
-    } as BookEditionCopyVM;
+    const copyAvailable =
+      filtered.find(e => e.availability_status === 'disponible') ||
+      filtered[0] ||
+      null;
+  
+    if (copyAvailable) {
+      this.selectedCopy.set(copyAvailable);
+    }
   });
+  protected readonly selectedEditionId = signal<number>(this.editionId());
+  protected readonly selectedCopy = signal<CopyModel | null>(null);
 
+  protected readonly isLoadingBook = computed<boolean>(() => this.getBookRX.isLoading());
+  protected readonly isLoadingCopy = computed<boolean>(() => 
+    [
+      this.getCopyRX,
+      this.createReservationRX,
+    ].some(r => r.isLoading())
+  ); 
+  protected readonly computedBook = computed<BookModel | null>(() => this.getBookRX.value() ?? null);
+  protected readonly computedCopyList = computed<CopyModel[]>(() => this.getCopyRX.value() ?? []);
+  private readonly getBookPayload = signal<number>(this.bookId());
+  private readonly createReservationPayload = signal<CreateReservationModel | null>(null);
+  
   private readonly getBookRX = rxResource({
     params: () => this.getBookPayload(),
     stream: ({ params: id_book }) => {
@@ -104,10 +113,31 @@ export class BookDetailPage {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
         }),
-        catchError(err => this.handleError(err))
+        catchError((err) => {
+          this.handleError(err)
+          return of(null);
+        }),
       );
     }
   });
+
+  private readonly getCopyRX = rxResource({
+    params: () => this.getBookPayload(),
+    stream: ({ params: id_book }) => {
+      if (!id_book) return of(null);
+
+      return this.copyService.getAllByIdBook(id_book).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        }),
+        catchError((err) => {
+          this.handleError(err)
+          return of(null);
+        }),
+      );
+    }
+  });  
 
   protected readonly createReservationRX = rxResource({
     params: () => this.createReservationPayload(),
@@ -117,20 +147,17 @@ export class BookDetailPage {
       return this.reservationService.create(id_copy).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          this.successMessage.set(response.message);
-          this.errorMessage.set(null);
+          this.handleSuccess(response.message)
           return response.result;
         }),
         tap(() => {
-          this.getBookRX.reload();
+          this.getCopyRX.reload();
         }),
-        catchError(err => {
-          this.successMessage.set(null);
-          return this.handleError(err);
+        catchError((err) => {
+          this.handleError(err)
+          return of(null);
         }),
-        finalize(() => {
-          this.isReservationModalOpen.set(false);
-        })
+        finalize(() => this.isReservationModalOpen.set(false)),
       );
     }
   });
@@ -144,7 +171,7 @@ export class BookDetailPage {
   }
 
   protected createReservation(): void {
-    const copyId = this.vmBookEditionCopy()?.copy?.id_copy;
+    const copyId = this.selectedCopy()?.id_copy;
     if (!copyId) {
       this.errorMessage.set('Error en la reserva');
       return;
@@ -152,17 +179,21 @@ export class BookDetailPage {
     this.createReservationPayload.set({ copy_id: copyId });
   }
 
-  protected selectNewCopy(edition: EditionDetailModel,  copy: EditionCopyDetailModel): void {
-    this.selectedEditionId.set(edition.id_edition);
-    this.selectedCopyId.set(copy.id_copy);
+  protected selectNewCopy(copy: CopyModel): void {
+    this.selectedCopy.set(copy);
     this.viewportScroller.scrollToPosition([0, 0]);
   };
 
-  private handleError(err: unknown) {
+  private handleSuccess(msge: string) {
+    this.successMessage.set(msge);
+    this.errorMessage.set(null);
+  }
+
+  private handleError(err: unknown): void {
     const message = err instanceof Error 
       ? err.message 
       : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
     this.errorMessage.set(message);
-    return of(null);
+    this.successMessage.set(null);
   }
 }

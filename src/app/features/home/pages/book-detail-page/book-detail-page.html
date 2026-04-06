@@ -2,14 +2,14 @@
   <div class="hero p-4 pt-20">
     <div class="hero-content px-6 py-12 flex-col lg:flex-row items-start gap-10 w-full bg-my-light rounded-lg">
       
-      @if (isLoading()){
+      @if (isLoadingBook()){
         <app-loading-component/>
       } @else {
 
         <figure class="relative aspect-7/10 w-full max-w-96 mx-auto">
           <img
             class="w-full h-full object-cover shadow-2xl"
-            [ngSrc]="vmBookEditionCopy()?.cover_image ??  'images/without_cover.webp'"
+            [ngSrc]="selectedCopy()?.edition?.cover_image ??  'images/without_cover.webp'"
             [alt]="'Portada'"
             fill
             priority
@@ -17,13 +17,13 @@
         </figure>
   
         <div class="flex-1">
-          <h1 class="text-5xl font-bold text-my-purple mb-2">{{ computedBookDetail()?.title }}</h1>
+          <h1 class="text-5xl font-bold text-my-purple mb-2">{{ computedBook()?.title }}</h1>
   
-          @for (item of computedBookDetail()?.authors; track item.name) {
+          @for (item of computedBook()?.authors; track item.name) {
             <p class="text-xl text-my-pink mb-4">{{ item.name }}</p>
           }
   
-          <p><strong class="text-my-green">Género: </strong> {{ computedBookDetail()?.genre?.name }}</p>
+          <p><strong class="text-my-green">Género: </strong> {{ computedBook()?.genre?.name }}</p>
   
           <!--
           <div class="mb-6">
@@ -35,22 +35,22 @@
           -->
   
           <p class="text-lg leading-relaxed my-6 text-my-dark/70">
-            {{ computedBookDetail()?.summary }}
+            {{ computedBook()?.summary }}
           </p>
   
           <section class="flex justify-between gap-4">
             <div class="mb-6 space-y-2 text-sm">
-              <p><strong class="text-my-green">Edicion:</strong> {{ vmBookEditionCopy()?.edition }}</p>
-              <p><strong class="text-my-green">ISBN:</strong> {{ vmBookEditionCopy()?.isbn }}</p>
-              <p><strong class="text-my-green">Publicado:</strong> {{ vmBookEditionCopy()?.publication_year }}</p>
-              <p><strong class="text-my-green">Paginas:</strong> {{ vmBookEditionCopy()?.pages }}</p>
-              <p><strong class="text-my-green">Editorial:</strong> {{ vmBookEditionCopy()?.editorial?.name }}</p>
-              <p><strong class="text-my-green">Copia n°:</strong> {{ vmBookEditionCopy()?.copy?.copy_number }}</p>
+              <p><strong class="text-my-green">Edicion:</strong> {{ selectedCopy()?.edition }}</p>
+              <p><strong class="text-my-green">ISBN:</strong> {{ selectedCopy()?.edition?.isbn }}</p>
+              <p><strong class="text-my-green">Publicado:</strong> {{ selectedCopy()?.edition?.publication_year }}</p>
+              <p><strong class="text-my-green">Paginas:</strong> {{ selectedCopy()?.edition?.pages }}</p>
+              <p><strong class="text-my-green">Editorial:</strong> {{ selectedCopy()?.edition?.editorial_name }}</p>
+              <p><strong class="text-my-green">Copia n°:</strong> {{ selectedCopy()?.copy_number }}</p>
               <p>
                 <strong class="text-my-green">Estado:</strong> 
-                @if (vmBookEditionCopy()?.copy?.status?.id_status == 1) {
+                @if (selectedCopy()?.availability_status === 'disponible') {
                   <span class="bg-my-green text-my-light mx-2 p-1 pr-2 rounded-md">
-                    {{ vmBookEditionCopy()?.copy?.status?.name }}
+                    {{ selectedCopy()?.availability_status }}
                   </span>
                 } @else {
                   <span class="bg-my-pink text-my-light mx-2 p-1 pr-2 rounded-md">
@@ -60,7 +60,7 @@
               </p>
             </div>
     
-            @if (isAuthenticated() && vmBookEditionCopy()?.copy?.status?.id_status === 1) {
+            @if (isAuthenticated() && selectedCopy()?.availability_status === 'disponible') {
               <div class="flex gap-4">
                 <section class="text-right">
                   <button (click)="openReservationModal()" class="btn btn-outline bg-my-pink text-my-light p-6">Solicitar Préstamo</button>
@@ -89,7 +89,7 @@
   
   <div class="divider p-4 text-base-content/40 max-w-7xl mx-auto">Lista de Copias</div>
 
-  @if (isLoading()) {
+  @if (isLoadingCopy()) {
     <div class="p-4 flex justify-center">
       <app-loading-component/>
     </div>
@@ -108,50 +108,48 @@
           </thead>
 
           <tbody>
-            @for (edition of computedBookDetail()?.editions; track edition.id_edition) {
-              @for (copy of edition.copies; track copy.id_copy) {
-                <tr 
-                  (click)="selectNewCopy(edition, copy)"
-                  class="hover:bg-my-dark/10 cursor-pointer">
-                  <td>
-                    <div class="flex items-center gap-3">
-                      <div class="avatar">
-                        <div class="aspect-7/10 h-20">
-                          <img
-                            [ngSrc]="edition.cover_image ?? 'images/without_cover.webp'"
-                            [alt]="edition.edition"
-                            fill
-                            priority />
-                        </div>
-                      </div>
-                      <div>
-                        <div class="font-bold">Copia n°: {{ copy.copy_number }}</div>
-                        <div class="text-sm opacity-50">{{ copy.signature_topography }}</div>
-                        <div class="text-sm opacity-50">ID: {{ copy.id_copy }}</div>
+            @for (copy of computedCopyList(); track copy.id_copy) {
+              <tr 
+                (click)="selectNewCopy(copy)"
+                class="hover:bg-my-dark/10 cursor-pointer">
+                <td>
+                  <div class="flex items-center gap-3">
+                    <div class="avatar">
+                      <div class="aspect-7/10 h-20">
+                        <img
+                          [ngSrc]="copy?.edition?.cover_image ?? 'images/without_cover.webp'"
+                          [alt]="copy?.edition?.edition"
+                          fill
+                          priority />
                       </div>
                     </div>
-                  </td>
-                  
-                  <td>
-                    @if (copy.status?.id_status == 1) {
-                      <span class="badge bg-my-green text-my-light p-4">{{ copy.status?.name }}</span>
-                    } @else {
-                      <span class="badge bg-my-pink text-my-light p-4">No Disponible</span>
-                    }
-                  </td>
+                    <div>
+                      <div class="font-bold">Copia n°: {{ copy.copy_number }}</div>
+                      <div class="text-sm opacity-50">{{ copy.signature_topography }}</div>
+                      <div class="text-sm opacity-50">ID: {{ copy.id_copy }}</div>
+                    </div>
+                  </div>
+                </td>
 
-                  <td>
-                    <span>{{ edition.editorial.name }}</span>
-                    <br />
-                    <span>{{ edition.edition }}</span>
-                  </td>
+                <td>
+                  @if (copy?.availability_status === 'disponible') {
+                    <span class="badge bg-my-green text-my-light p-4">{{ copy?.availability_status }}</span>
+                  } @else {
+                    <span class="badge bg-my-pink text-my-light p-4">{{ copy?.availability_status }}</span>
+                  }
+                </td>
 
-                  <td>
-                    <span class="badge badge-ghost p-4">{{ edition.isbn }}</span>
-                  </td>                  
-                </tr>
-              }
-            }        
+                <td>
+                  <span>{{ copy?.edition?.editorial_name }}</span>
+                  <br />
+                  <span>{{ copy?.edition?.edition }}</span>
+                </td>
+
+                <td>
+                  <span class="badge badge-ghost p-4">{{ copy?.edition?.isbn }}</span>
+                </td>  
+              </tr>
+            }
           </tbody>
 
           <tfoot>
@@ -167,15 +165,16 @@
     </section>
   }
 
-  <pre>{{ computedBookDetail() | json }}</pre>
+  <pre>{{ computedBook() | json }}</pre>
+  <pre>{{ computedCopyList() | json }}</pre>
 </section>
 
 <app-modal-action-component 
   [textTitle]="'Crear Reserva'"
   [textContent]="'Realizar Reserva de:'"
-  [textName]="computedBookDetail()?.title + ' - ' + vmBookEditionCopy()?.edition + ' - Copia n° ' + vmBookEditionCopy()?.copy?.copy_number"
+  [textName]="computedBook()?.title + ' - ' + selectedCopy()?.edition?.edition  + ' - Copia n° ' + selectedCopy()?.copy_number"
   [isOpen]="isReservationModalOpen()"
-  [isLoading]="isLoading()"
+  [isLoading]="isLoadingCopy()"
   (onConfirm)="createReservation()"
   (onCancel)="closeReservationModal()"
 />

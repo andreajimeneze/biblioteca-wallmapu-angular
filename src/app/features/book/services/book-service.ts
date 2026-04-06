@@ -40,8 +40,14 @@ export class BookService {
     );
   }
 
-  getById(id: number): Observable<ApiResponseModel<BookDetailModel | null>> {
+  getDetailById(id: number): Observable<ApiResponseModel<BookDetailModel | null>> {
     return this.apiResponseService.getById<ApiResponseModel<BookDetailModel | null>>(
+      `${this.endpoint}/detail`, id
+    );
+  }
+
+  getById(id: number): Observable<ApiResponseModel<BookModel | null>> {
+    return this.apiResponseService.getById<ApiResponseModel<BookModel | null>>(
       this.endpoint, id
     );
   }

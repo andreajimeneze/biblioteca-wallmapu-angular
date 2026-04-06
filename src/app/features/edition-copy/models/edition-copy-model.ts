@@ -10,3 +10,21 @@ export interface EditionCopyModel {
   edition_id: number,
   status_id: number
 }
+
+export interface CopyModel {
+  id_copy: number,
+  barcode: string,
+  signature_topography: string,
+  copy_number: number,
+  edition: {
+    id_edition: number,
+    edition: string,
+    isbn: string,
+    publication_year: number,
+    pages: number,
+    cover_image: string,
+    editorial_id: number,
+    editorial_name: string
+  },
+  availability_status: string
+}
