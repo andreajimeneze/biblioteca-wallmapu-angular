@@ -11,8 +11,8 @@ export class LoanPoliciesService {
   private apiResponseService = inject(ApiResponseService)
   private readonly endpoint = 'loan-policies';
 
-  getAll(): Observable<ApiResponseModel<LoanPoliciesModel>> {
-    return this.apiResponseService.getAll<ApiResponseModel<LoanPoliciesModel>>(
+  getAll(): Observable<ApiResponseModel<LoanPoliciesModel[]>> {
+    return this.apiResponseService.getAll<ApiResponseModel<LoanPoliciesModel[]>>(
       `${this.endpoint}`
     );
   }

@@ -1,5 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ViewportScroller } from '@angular/common';
+import { JsonPipe, ViewportScroller } from '@angular/common';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { BookService } from '@features/book/services/book-service';
@@ -20,12 +20,13 @@ import { MessageSuccessComponent } from "@shared/components/message-success-comp
 @Component({
   selector: 'app-book-detail-page',
   imports: [
+    JsonPipe,
     NgOptimizedImage,
     LoadingComponent,
     ModalActionComponent,
     MessageSuccessComponent,
     MessageErrorComponent,
-],
+  ],
   templateUrl: './book-detail-page.html',
 })
 export class BookDetailPage {
@@ -89,10 +90,9 @@ export class BookDetailPage {
   
     return {
       ...editionWithoutCopies,
-      copy
+      copy,
     } as BookEditionCopyVM;
   });
-
 
   private readonly getBookRX = rxResource({
     params: () => this.getBookPayload(),

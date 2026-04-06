@@ -426,12 +426,17 @@ ng g c features/home/pages/news-detail-page --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
 # FEATURES LOANS
+ng g c features/loan/components/due-loan-list-component --skip-tests --style=none
+ng g c features/loan/components/loan-list-component --skip-tests --style=none
+
 ng g interface features/loan/models/loan-model
 
 ng g s features/loan/services/loan-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES LOANS POLICIES
+ng g c features/loan-policies/components/loan-policies-list-component --skip-tests --style=none
+
 ng g interface features/loan-policies/models/loan-policies-model
 
 ng g s features/loan-policies/services/loan-policies-service --skip-tests
