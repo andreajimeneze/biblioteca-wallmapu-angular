@@ -86,7 +86,7 @@ export class BookFormPage {
         return of(null);
       }
 
-      return this.bookService.getById(idBook).pipe(
+      return this.bookService.getDetailById(idBook).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;

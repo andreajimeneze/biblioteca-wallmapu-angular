@@ -53,15 +53,15 @@ export class EditionCopyFormPage {
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isLoading = computed<boolean>(() =>
     [
-      this.copyRX,
-      this.createCopyRX,
+      this.getCopyRX,
+      this.saveCopyRX,
     ].some(r => r.isLoading())
   );
 
   private readonly editionCopyService = inject(EditionCopyService);
   private readonly getEditionCopyPayload = signal<number | null>(this.editionCopyDetail().id_copy);
 
-  private readonly copyRX = rxResource({
+  private readonly getCopyRX = rxResource({
     params: () => this.getEditionCopyPayload(),
     stream: ({ params: id_copy }) => {
       if (!id_copy || id_copy == 0) return of(null);
@@ -88,13 +88,18 @@ export class EditionCopyFormPage {
 
   private readonly newEditionCopyPayload = signal<EditionCopyFormModel | null>(null);
 
-  private readonly createCopyRX = rxResource({
+  private readonly saveCopyRX = rxResource({
     params: () => this.newEditionCopyPayload(),
     stream: ({ params }) => {
       if (!params) return of(null);
       this.successMessage.set(null);
       
-      return this.editionCopyService.create(params).pipe(
+
+      const request$ = this.isEditMode()
+        ? this.editionCopyService.update(params.id_copy, params)
+        : this.editionCopyService.create(params);
+
+      return request$.pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);

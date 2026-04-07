@@ -4,6 +4,7 @@ import { ApiResponseService } from '@core/services/api-response-service';
 import { EditionCopyDetailModel } from '@features/edition-copy/models/edition-copy-detail-model';
 import { Observable } from 'rxjs';
 import { EditionCopyFormModel } from '@features/edition-copy/models/edition-copy-form-model';
+import { CopyModel } from '../models/edition-copy-model';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +16,12 @@ export class EditionCopyService {
   getById(id: number): Observable<ApiResponseModel<EditionCopyDetailModel | null>> {
     return this.apiResponseService.getById<ApiResponseModel<EditionCopyDetailModel | null>>(
       this.endpoint, id
+    );
+  }
+
+  getAllByIdBook(id_book: number): Observable<ApiResponseModel<CopyModel[]>> {
+    return this.apiResponseService.getById<ApiResponseModel<CopyModel[]>>(
+      `${this.endpoint}/book`, id_book
     );
   }
   
