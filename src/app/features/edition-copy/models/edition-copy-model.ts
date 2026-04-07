@@ -3,7 +3,7 @@ import { EditionCopyStatusModel } from "@features/edition-copy-status/models/edi
 export interface EditionCopyModel {
   id_copy: number,
   barcode: string,
-  signature_topography: string,
+  signature_topography: string | null,
   copy_number: number,
   created_at: string,
   updated_at: string,

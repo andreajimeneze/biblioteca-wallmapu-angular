@@ -1,5 +1,5 @@
 import { Component, computed, effect, inject, signal } from '@angular/core';
-import { JsonPipe, ViewportScroller } from '@angular/common';
+import { ViewportScroller } from '@angular/common';
 import { rxResource, toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { BookService } from '@features/book/services/book-service';
@@ -19,7 +19,6 @@ import { CopyModel } from '@features/edition-copy/models/edition-copy-model';
 @Component({
   selector: 'app-book-detail-page',
   imports: [
-    JsonPipe,
     NgOptimizedImage,
     LoadingComponent,
     ModalActionComponent,

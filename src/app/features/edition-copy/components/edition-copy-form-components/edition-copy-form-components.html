@@ -30,11 +30,10 @@
         <label class="label font-semibold mb-1">Firma Topografica:</label>
         <input
           #topographyInput
-          type="text" class="input validator w-full uppercase" placeholder="NA 1.0" required 
+          type="text" class="input w-full uppercase" placeholder="Se genera automaticamente" 
           [value]="formData().signature_topography"
           (input)="updateTopography($any($event.target).value, topographyInput)"
         />
-        <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>
   
       <fieldset class="fieldset">

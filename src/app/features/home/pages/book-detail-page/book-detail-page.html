@@ -133,9 +133,9 @@
 
                 <td>
                   @if (copy?.availability_status === 'disponible') {
-                    <span class="badge bg-my-green text-my-light p-4">{{ copy?.availability_status }}</span>
+                    <span class="badge bg-my-green text-my-light p-4 h-auto">{{ copy?.availability_status }}</span>
                   } @else {
-                    <span class="badge bg-my-pink text-my-light p-4">{{ copy?.availability_status }}</span>
+                    <span class="badge bg-my-pink text-my-light p-4 h-auto">{{ copy?.availability_status }}</span>
                   }
                 </td>
 
@@ -146,7 +146,7 @@
                 </td>
 
                 <td>
-                  <span class="badge badge-ghost p-4">{{ copy?.edition?.isbn }}</span>
+                  <span class="badge badge-ghost p-4 h-auto">{{ copy?.edition?.isbn }}</span>
                 </td>  
               </tr>
             }
@@ -164,9 +164,6 @@
       </div>
     </section>
   }
-
-  <pre>{{ computedBook() | json }}</pre>
-  <pre>{{ computedCopyList() | json }}</pre>
 </section>
 
 <app-modal-action-component 
