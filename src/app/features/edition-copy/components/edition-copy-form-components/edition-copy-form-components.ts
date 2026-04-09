@@ -101,12 +101,6 @@ export class EditionCopyFormComponents {
   }
 
   private validateFormOnSubmit(data: Partial<EditionCopyFormModel>): string | null {
-    if (!data.signature_topography?.trim())
-      return 'La firma topográfica es requerida';
-
-    if (data.signature_topography.length > 50)
-      return 'La firma topográfica no debe superar los 50 caracteres';
-
     if (data.copy_number == null)
       return 'El número de copia es requerido';
 

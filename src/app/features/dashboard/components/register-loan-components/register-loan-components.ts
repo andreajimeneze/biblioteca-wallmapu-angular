@@ -4,7 +4,9 @@ import { ReservationModel } from '@features/reservation/models/reservation-model
 
 @Component({
   selector: 'app-register-loan-components',
-  imports: [ReservationGetComponents],
+  imports: [
+    ReservationGetComponents,
+  ],
   templateUrl: './register-loan-components.html',
 })
 export class RegisterLoanComponents {
