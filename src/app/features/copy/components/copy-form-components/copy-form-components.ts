@@ -4,15 +4,17 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { CopyStatusSelectComponents } from "@features/copy-status/components/copy-status-select-components/copy-status-select-components";
 import { DatePipe } from '@angular/common';
+import { SignatureManualComponents } from "../signature-manual-components/signature-manual-components";
 
 @Component({
   selector: 'app-copy-form-components',
   imports: [
     DatePipe,
-    LoadingComponent, 
-    MessageErrorComponent, 
-    CopyStatusSelectComponents
-  ],
+    LoadingComponent,
+    MessageErrorComponent,
+    CopyStatusSelectComponents,
+    SignatureManualComponents
+],
   templateUrl: './copy-form-components.html',
 })
 export class CopyFormComponents {

@@ -34,8 +34,9 @@
           [value]="formData().signature_topography"
           (input)="updateTopography($any($event.target).value, topographyInput)"
         />
+        <app-signature-manual-components />
       </fieldset>
-  
+      
       <fieldset class="fieldset">
         <label class="label font-semibold mb-1">Numero de Copia:</label>
         <input

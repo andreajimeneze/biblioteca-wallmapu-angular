@@ -346,6 +346,7 @@ ng g s features/book-subject-step/services/book-subject-step-service --skip-test
 
 # ---------------------------------------------------------------------------------
 # FEATURES COPY
+ng g c features/copy/components/signature-manual-components --skip-tests --style=none
 ng g c features/copy/components/copy-form-components --skip-tests --style=none
 ng g c features/copy/components/copy-list-components --skip-tests --style=none
 
