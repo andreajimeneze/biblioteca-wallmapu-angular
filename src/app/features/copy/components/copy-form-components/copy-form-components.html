@@ -3,16 +3,16 @@
     (submit)="formSubmit($event)">
 
     <div class="py-4 text-my-purple">
-      <p>ID Edición: {{ editionCopyDetail()?.edition_id }}</p>      
-      <p>ID Copia: {{ editionCopyDetail()?.id_copy }}</p>
-      <p>Código de Barra: {{ editionCopyDetail()?.barcode }}</p>
-      <p>{{ editionCopyDetail()?.created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha creación</p>
-      <p>{{ editionCopyDetail()?.updated_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha modificacion</p>
+      <p>ID Edición: {{ copyFormVM()?.edition_id }}</p>
+      <p>ID Copia: {{ copyFormVM()?.id_copy }}</p>
+      <p>Código de Barra: {{ copyFormVM()?.barcode }}</p>
+      <p>{{ copyFormVM()?.created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha creación</p>
+      <p>{{ copyFormVM()?.updated_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha modificacion</p>
       <div class="fieldset py-4">
         <label class="label font-semibold mb-1">Estado:</label>
         <div class="flex gap-4">
-          <app-edition-copy-status-select-components
-            [selectedId]="editionCopyDetail()?.status?.id_status ?? 1"
+          <app-copy-status-select-components
+            [selectedId]="copyFormVM()?.status_id ?? 1"
             (newSelectedId)="updateStatus($event)"
             [disabled]="toggleStatus()"
           />
@@ -30,12 +30,13 @@
         <label class="label font-semibold mb-1">Firma Topografica:</label>
         <input
           #topographyInput
-          type="text" class="input w-full uppercase" placeholder="Se genera automaticamente" 
+          type="text" class="input w-full" placeholder="ABCdef-c0-2026" 
           [value]="formData().signature_topography"
           (input)="updateTopography($any($event.target).value, topographyInput)"
         />
+        <app-signature-manual-components />
       </fieldset>
-  
+      
       <fieldset class="fieldset">
         <label class="label font-semibold mb-1">Numero de Copia:</label>
         <input

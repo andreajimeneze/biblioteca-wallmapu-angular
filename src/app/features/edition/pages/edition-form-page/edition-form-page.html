@@ -29,9 +29,9 @@
   </div>  
 }
 
-<app-edition-copy-list-components 
+<app-copy-list-components 
   [isLoading]="isLoading()"
-  [editionCopyModel]="editionFormVMComputed().copies"
+  [copyList]="computedCopyList()"
   (onEdit)="onEditEdition($event)"
   (onDelete)="onDeleteCopy($event)"
 />

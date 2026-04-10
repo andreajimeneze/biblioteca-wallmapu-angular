@@ -1,12 +1,12 @@
 import { Routes } from "@angular/router";
-import { EditionCopyFormPage } from "./pages/edition-copy-form-page/edition-copy-form-page";
 import { authGuard } from "@core/guards/auth-guard";
+import { CopyFormPage } from "@features/copy/pages/copy-form-page/copy-form-page";
 import { Role } from "@shared/constants/roles-enum";
 
-export const  EDITION_COPY_ROUTES: Routes = [
+export const  COPY_ROUTES: Routes = [
   {
     path: 'form',
-    component: EditionCopyFormPage,
+    component: CopyFormPage,
     canActivate: [authGuard],
     data: { roles: [Role.Admin]},
   },

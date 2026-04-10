@@ -2,7 +2,7 @@ import { AuthorModel } from "@features/book-author/models/author-model"
 import { EditorialModel } from "@features/book-editorial/models/editorial-model"
 import { GenreModel } from "@features/book-genre/models/genre-model"
 import { SubjectModel } from "@features/book-subject/models/subject-model"
-import { EditionCopyDetailModel } from "@features/edition-copy/models/edition-copy-detail-model"
+import { CopyWithStatusModel } from "@features/copy/models/copy-model"
 
 
 export interface EditionBookModel {
@@ -28,7 +28,7 @@ export interface EditionDetailModel {
   updated_at: string,
   book: EditionBookModel,  
   editorial: EditorialModel,
-  copies: EditionCopyDetailModel[],
+  copies: CopyWithStatusModel[],
 }
 
 export interface EditionDetailsWithoutBookModel {
@@ -41,5 +41,5 @@ export interface EditionDetailsWithoutBookModel {
   created_at: string,
   updated_at: string,
   editorial: EditorialModel,
-  copies: EditionCopyDetailModel[],
+  copies: CopyWithStatusModel[],
 }

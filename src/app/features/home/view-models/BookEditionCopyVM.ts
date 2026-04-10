@@ -1,5 +1,5 @@
 import { EditorialModel } from "@features/book-editorial/models/editorial-model";
-import { EditionCopyDetailModel } from "@features/edition-copy/models/edition-copy-detail-model";
+import { CopyWithStatusModel } from "@features/copy/models/copy-model";
 
 export interface BookEditionCopyVM {
   id_edition: number,
@@ -11,5 +11,5 @@ export interface BookEditionCopyVM {
   created_at: string,
   updated_at: string,
   editorial: EditorialModel,
-  copy: EditionCopyDetailModel,
+  copy: CopyWithStatusModel,
 }

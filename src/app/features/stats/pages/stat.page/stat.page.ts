@@ -13,7 +13,7 @@ import { AuthorSelectComponents } from "@features/book-author/components/author-
 import { SubjectSelectComponents } from "@features/book-subject/components/subject-select-components/subject-select-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
-import { EditionCopyStatusSelectComponents } from "@features/edition-copy-status/components/book-copy-status-select-components/edition-copy-status-select-components";
+import { CopyStatusSelectComponents } from "@features/copy-status/components/copy-status-select-components/copy-status-select-components";
 import { EditionSearchComponent } from "@features/edition/components/edition-search-component/edition-search-component";
 import { ReservationStatusSelectComponents } from "@features/reservation-status/components/reservation-status-select-components/reservation-status-select-components";
 import { LoanStatusSelectComponent } from "@features/loan-status/components/loan-status-select-component/loan-status-select-component";
@@ -31,7 +31,7 @@ import { LoanStatusSelectComponent } from "@features/loan-status/components/loan
     SubjectSelectComponents,
     MessageErrorComponent,
     GenreSelectComponents,
-    EditionCopyStatusSelectComponents,
+    CopyStatusSelectComponents,
     EditionSearchComponent,
     ReservationStatusSelectComponents,
     LoanStatusSelectComponent

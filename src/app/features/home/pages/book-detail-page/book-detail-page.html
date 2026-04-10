@@ -40,11 +40,11 @@
   
           <section class="flex justify-between gap-4">
             <div class="mb-6 space-y-2 text-sm">
-              <p><strong class="text-my-green">Edicion:</strong> {{ selectedCopy()?.edition }}</p>
+              <p><strong class="text-my-green">Edicion:</strong> {{ selectedCopy()?.edition?.edition }}</p>
               <p><strong class="text-my-green">ISBN:</strong> {{ selectedCopy()?.edition?.isbn }}</p>
               <p><strong class="text-my-green">Publicado:</strong> {{ selectedCopy()?.edition?.publication_year }}</p>
               <p><strong class="text-my-green">Paginas:</strong> {{ selectedCopy()?.edition?.pages }}</p>
-              <p><strong class="text-my-green">Editorial:</strong> {{ selectedCopy()?.edition?.editorial_name }}</p>
+              <p><strong class="text-my-green">Editorial:</strong> {{ selectedCopy()?.edition?.editorial?.name }}</p>
               <p><strong class="text-my-green">Copia n°:</strong> {{ selectedCopy()?.copy_number }}</p>
               <p>
                 <strong class="text-my-green">Estado:</strong> 
@@ -140,7 +140,7 @@
                 </td>
 
                 <td>
-                  <span>{{ copy?.edition?.editorial_name }}</span>
+                  <span>{{ copy?.edition?.editorial?.name }}</span>
                   <br />
                   <span>{{ copy?.edition?.edition }}</span>
                 </td>
