@@ -20,6 +20,7 @@ import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { BookFormVM } from '@features/book/models/vm.book-form';
 import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
+import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 
 @Component({
   selector: 'app-book-form-page',
@@ -28,7 +29,8 @@ import { ModalDeleteComponent } from "@shared/components/modal-delete-component/
     BookFormComponent,
     MessageErrorComponent,
     EditionListComponents,
-    ModalDeleteComponent
+    ModalDeleteComponent,
+    MessageSuccessComponent
 ],
   templateUrl: './book-form-page.html',
 })
@@ -60,6 +62,7 @@ export class BookFormPage {
 
   protected readonly isEditMode = signal<boolean>(this.routeId() > 0);
   protected readonly headerText = computed<string>(() => this.isEditMode() ? "Modificar Libro" : "Crear Libro");
+  protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isLoading = computed<boolean>(() => 
     [
@@ -83,7 +86,7 @@ export class BookFormPage {
         return of(null);
       }
 
-      return this.bookService.getById(idBook).pipe(
+      return this.bookService.getDetailById(idBook).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
@@ -111,6 +114,7 @@ export class BookFormPage {
     params: () => this.addBookPayload(),
     stream: ({ params }) => {
       if (!params) return of(null);
+      this.successMessage.set(null);
 
       const request$ = 'id_book' in params && params.id_book > 0
         ? this.bookService.update(params.id_book, params)
@@ -119,6 +123,7 @@ export class BookFormPage {
       return request$.pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.result;
         }),
         tap((res) => {
@@ -140,6 +145,7 @@ export class BookFormPage {
     params: () => this.deleteAuthorStepPayload(),
     stream: ({ params }) => {
       if (!params) return of(null);
+      this.successMessage.set(null);
 
       return this.authorStepService.delete(params).pipe(
         map(res => {
@@ -165,6 +171,7 @@ export class BookFormPage {
     params: () => this.deleteSubjectStepPayload(),
     stream: ({ params }) => {
       if (!params) return of(null);
+      this.successMessage.set(null);
 
       return this.subjectStepService.delete(params).pipe(
         map(res => {
@@ -190,12 +197,14 @@ export class BookFormPage {
     params: () => this.deleteEditionPayload(),
     stream: ({ params: id_edition }) => {
       if (!id_edition) return of(null);
-
+      this.successMessage.set(null);
+      
       const request$ = this.editionService;
 
       return request$.delete(id_edition).pipe(
         map(res => {
           if (!res.isSuccess) throw new Error(res.message);
+          this.successMessage.set(res.message);
           return res.result;
         }),
         tap(() => {

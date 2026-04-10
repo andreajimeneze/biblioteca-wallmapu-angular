@@ -11,13 +11,15 @@
   (onFormSubmit)="formSubmit($event)"
 />
 
-@if (errorMessage()) {
-  <div class="px-4">
-    <app-message-error-component
-      [message]="errorMessage()"
-    /> 
-  </div>
-}
+<div class="px-4 grid gap-4">
+  @if(successMessage()) {
+    <app-message-success-component [message]="successMessage()" />
+  }
+
+  @if (errorMessage()) {
+    <app-message-error-component [message]="errorMessage()"/> 
+  }
+</div>
 
 @if (isEditMode()) {
   <div class="m-4 flex justify-end">
@@ -27,18 +29,18 @@
   </div>  
 }
 
-<app-edition-copy-list-components 
+<app-copy-list-components 
   [isLoading]="isLoading()"
-  [editionCopyModel]="editionFormVMComputed().copies"
+  [copyList]="computedCopyList()"
   (onEdit)="onEditEdition($event)"
-  (onDelete)="onDeleteEditionCopy($event)"
+  (onDelete)="onDeleteCopy($event)"
 />
 
 <app-modal-delete-component
   title="Eliminar Copia"
   [isOpen]="openDeleteModal()"
   [loading]="isLoading()"
-  [itemName]="selectedEditionCopyDetailToDelete()?.signature_topography"
+  [itemName]="selectedCopyToDelete()?.signature_topography + ' - Copia N°: ' + selectedCopyToDelete()?.copy_number"
   (confirm)="confirmDelete()"
   (cancel)="closeDeleteModal()"
 />

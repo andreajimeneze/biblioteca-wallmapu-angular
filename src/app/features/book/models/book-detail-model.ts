@@ -7,10 +7,10 @@ export interface BookDetailModel {
   id_book: number,
   title: string,
   summary: string,  
-  genre: GenreModel,
   created_at: string,
-  updated_at: string,  
-  authors: AuthorModel[]
-  subjects: SubjectModel[]
-  editions: EditionDetailModel[]
+  updated_at: string,
+  genre: GenreModel,
+  authors: AuthorModel[],
+  subjects: SubjectModel[],
+  editions: EditionDetailModel[],
 }

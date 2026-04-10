@@ -6,29 +6,19 @@
         {{ title() }}
       </h3>
 
-      <p class="py-4 text-my-dark">
-        ¿Estás seguro que deseas eliminar: 
-        <strong class="text-my-purple">{{ itemName() }}</strong>?
+      <p class="py-4 text-my-purple text-lg">
+        {{ contentText() }}
+        <br/>
+        <strong>{{ itemName() }}</strong>?
       </p>
       
       <div class="modal-action">
-        <button 
-          class="btn bg-my-pink text-my-light"
-          (click)="confirm.emit()"
-        >
-          @if (loading()) {
-            <span class="loading loading-spinner text-my-light"></span>
-          } @else {
-            Eliminar
-          }  
-        </button>
-
-        <button 
-          class="btn"
-          (click)="cancel.emit()"
-        >
-          Cancelar
-        </button>
+        @if (loading()) {
+          <app-loading-component/>
+        } @else {
+          <button class="btn bg-my-pink text-my-light"(click)="confirm.emit()">{{ title() }}</button>
+          <button class="btn" (click)="cancel.emit()">Cerrar</button> 
+        }
       </div>
 
     </div>

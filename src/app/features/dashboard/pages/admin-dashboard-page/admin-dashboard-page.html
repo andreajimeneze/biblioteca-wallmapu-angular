@@ -1,0 +1,21 @@
+<app-section-header-component [title]="'Panel de Administración'" />
+
+<app-admin-stats-components/>
+
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
+  <app-register-loan-components />
+  <app-register-return-components />
+  <app-due-loan-list-component />  
+</section>
+
+<app-reservation-list-components />
+
+<app-loan-list-component 
+  [isLoading]="isLoading()"
+  [loanList]="computedLoanList()"  
+/>
+
+<app-loan-policies-list-component 
+  [isLoading]="isLoading()"
+  [loanPoliciesList]="computedLoanPolicies()"
+/>

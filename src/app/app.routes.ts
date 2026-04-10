@@ -3,6 +3,7 @@ import { authGuard } from '@core/guards/auth-guard';
 import { ForbiddenPage } from '@core/pages/forbidden-page/forbidden-page';
 import { InDevelopmentPage } from '@core/pages/in-development-page/in-development-page';
 import { NotFoundPage } from '@core/pages/not-found-page/not-found-page';
+import { StatPage } from '@features/stats/pages/stat.page/stat.page';
 import { LayoutAdmin } from '@layouts/layout-admin/layout-admin';
 import { LayoutUser } from '@layouts/layout-user/layout-user';
 import { Layout } from '@layouts/layout/layout';
@@ -23,11 +24,11 @@ export const routes: Routes = [
     path: 'admin',
     component: LayoutAdmin,
     canActivate: [authGuard],
-    data: { roles: [Role.Admin]},
+    data: { roles: [Role.Admin] },
     children: [
       {
-        path: '',
-        loadChildren: () => import('@features/stats/stat.routes').then(m => m.STAT_ROUTES),
+        path: 'dashboard',
+        loadChildren: () => import('@features/dashboard/admin.routes').then(m => m.DASHBOARD_ROUTES),
       },
       {
         path: 'books',
@@ -39,7 +40,7 @@ export const routes: Routes = [
       },
       {
         path: 'copy',
-        loadChildren: () => import('@features/edition-copy/edition-copy.routes').then(m => m.EDITION_COPY_ROUTES),
+        loadChildren: () => import('@features/copy/copy.routes').then(m => m.COPY_ROUTES),
       },
       {
         path: 'news',
@@ -55,7 +56,7 @@ export const routes: Routes = [
       },
       {
         path: 'settings',
-        component: InDevelopmentPage
+        component: StatPage
       },      
     ]
   },

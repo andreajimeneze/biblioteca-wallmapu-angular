@@ -4,6 +4,8 @@ import { ApiResponseService } from '@core/services/api-response-service';
 import { Observable } from 'rxjs';
 import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { CreateEditionModel, EditionModel, UpdateEditionModel } from '../models/edition-model';
+import { EditionPaginationRequestModel } from '@features/edition/models/edition-pagination-request-model';
+import { PaginationModel } from '@core/models/pagination-model';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +13,26 @@ import { CreateEditionModel, EditionModel, UpdateEditionModel } from '../models/
 export class EditionService {
   private apiResponseService = inject(ApiResponseService)
   private readonly endpoint = 'edition';
+
+  getAllPagination(params: EditionPaginationRequestModel): Observable<ApiResponseModel<PaginationModel<EditionDetailModel[]>>> {
+    let path = `?page=${params.page}&limit=${params.limit}`
+    
+    if (params.search.trim() != '')
+      path = `${path}&search=${params.search}`
+  
+    if (params.id_author > 0)
+      path = `${path}&id_author=${params.id_author}`
+  
+    if (params.id_editorial > 0)
+      path = `${path}&id_editorial=${params.id_editorial}`
+  
+    if (params.id_genre > 0)
+      path = `${path}&id_genre=${params.id_genre}`
+
+    return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<EditionDetailModel[]>>>(
+      `${this.endpoint}/pagination${path}`
+    );
+  }
 
   getById(id: number): Observable<ApiResponseModel<EditionDetailModel | null>> {
     return this.apiResponseService.getById<ApiResponseModel<EditionDetailModel | null>>(

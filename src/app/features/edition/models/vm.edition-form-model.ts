@@ -1,4 +1,4 @@
-import { EditionCopyDetailModel } from "@features/edition-copy/models/edition-copy-detail-model";
+import { CopyWithStatusModel } from "@features/copy/models/copy-model";
 
 export interface EditionFormVM {
   id_edition: number,
@@ -13,5 +13,5 @@ export interface EditionFormVM {
   updated_at?: string,
   file: File | null,
   isNewImg: boolean,
-  copies: EditionCopyDetailModel[], 
+  copies: CopyWithStatusModel[], 
 }

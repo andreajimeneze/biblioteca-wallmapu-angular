@@ -1,4 +1,4 @@
-import { DatePipe, JsonPipe, NgOptimizedImage } from '@angular/common';
+import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, effect, input, output, signal } from '@angular/core';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";

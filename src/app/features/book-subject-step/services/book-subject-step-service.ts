@@ -16,4 +16,10 @@ export class BookSubjectStepService {
       `${this.endpoint}/${book_subject.id_book}`, book_subject.id_subject
     );
   }
+
+  delete_by_book(id_book: number): Observable<ApiResponseModel<boolean>> {
+    return this.apiResponseService.delete<ApiResponseModel<boolean>>(
+      `${this.endpoint}/book`, id_book
+    );
+  }  
 }

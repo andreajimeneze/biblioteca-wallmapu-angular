@@ -1,0 +1,21 @@
+<app-section-header-component
+  [title]="book_edition_name()"
+  [actionText]="'Volver a Edición'"
+  (actionClicked)="navigateBack()"
+/>
+
+<app-copy-form-components
+  [isLoading]="isLoading()"
+  [copyFormVM]="computedCopyFormVM()"
+  (onFormSubmit)="formSubmit($event)"
+/>
+
+<section class="p-4 grid gap-4">
+  @if(successMessage()){
+    <app-message-success-component [message]="successMessage()" />
+  }
+  
+  @if(errorMessage()) {
+    <app-message-error-component [message]="errorMessage()" />
+  }
+</section>

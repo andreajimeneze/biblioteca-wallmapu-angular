@@ -19,7 +19,7 @@
   [newsWithImagesList]="restNewsWithImages()"
 />
 
-<app-book-search-component 
+<app-edition-search-component
   [textTitle]="'La lectura nos abre las puertas del mundo'"
   [textDescription]="'Revisa nuestro catálogo de libros y elige el que quieras leer.'"
   [searchPlaceholder]="'Buscar Título, Descripción, ISBN...'"
@@ -31,12 +31,9 @@
   (onBtnSearchClick)="onBtnSearchClick()"
 />
 
-<pre>{{ bookPayload() | json }}</pre>
-<pre>{{ bookListComputed() | json }}</pre>
-
-<app-book-card-list-component 
+<app-edition-card-list-component
   [isLoading]="isLoading()"
-  [bookList]="bookListComputed()"
+  [editionDetailList]="editionListComputed()"
 />
 
 <app-pagination-component 

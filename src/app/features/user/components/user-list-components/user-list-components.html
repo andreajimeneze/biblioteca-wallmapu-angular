@@ -6,7 +6,7 @@
       <app-loading-component/>
     </section>
   } @else {
-    @for (userDetailModel of userDetailModelList(); track $index ) {
+    @for (userDetailModel of userDetailModelList(); track userDetailModel.id_user) {
       <app-user-list-row-component 
         [editRole]="editRole()"
         [userDetailModel]="userDetailModel"

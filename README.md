@@ -262,6 +262,7 @@ ng g interceptor core/interceptors/error --skip-tests
 ng g interface core/models/api-response-model
 ng g interface core/models/pagination-model
 
+ng g c core/pages/book-not-found-page --skip-tests --style=none
 ng g c core/pages/forbidden-page --skip-tests --style=none
 ng g c core/pages/In-development-page --skip-tests --style=none
 ng g c core/pages/not-found-page --skip-tests --style=none
@@ -283,17 +284,13 @@ ng g s features/auth/services/auth-store --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK
-ng g c features/book/components/book-card-component --skip-tests --style=none
-ng g c features/book/components/book-card-list-component --skip-tests --style=none
-ng g c features/book/components/book-detail-component --skip-tests --style=none
 ng g c features/book/components/book-form-component --skip-tests --style=none
 ng g c features/book/components/book-list-component --skip-tests --style=none
 ng g c features/book/components/book-list-row-component --skip-tests --style=none
-ng g c features/book/components/book-search-component --skip-tests --style=none
 
 ng g interface features/book/models/book-detail-model
-ng g interface features/book/models/book-form-model
 ng g interface features/book/models/book-model
+ng g interface features/book/models/book-pagination-request-model
 
 ng g c features/book/pages/book-form-page --skip-tests --style=none
 ng g c features/book/pages/book-list-page --skip-tests --style=none
@@ -348,6 +345,35 @@ ng g interface features/book-subject-step/models/book-subject-step-model
 ng g s features/book-subject-step/services/book-subject-step-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES COPY
+ng g c features/copy/components/signature-manual-components --skip-tests --style=none
+ng g c features/copy/components/copy-form-components --skip-tests --style=none
+ng g c features/copy/components/copy-list-components --skip-tests --style=none
+
+ng g interface features/copy/models/copy-model
+
+ng g c features/copy/pages/copy-form-page --skip-tests --style=none
+
+ng g s features/copy/services/copy-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES COPY STATUS
+ng g c features/copy-status/components/copy-status-select-components --skip-tests --style=none
+
+ng g interface features/copy-status/models/copy-status-model
+
+ng g s features/copy-status/services/copy-status-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES DASHBOARD
+ng g c features/dashboard/components/admin-stats-components --skip-tests --style=none
+ng g c features/dashboard/components/register-loan-components --skip-tests --style=none
+ng g c features/dashboard/components/register-return-components --skip-tests --style=none
+
+ng g c features/dashboard/pages/admin-dashboard-page --skip-tests --style=none
+ng g c features/dashboard/pages/user-dashboard-page --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
 # FEATURES DIVISION COMMUNE
 ng g c features/division-commune/components/commune-select-components --skip-tests --style=none
 
@@ -373,11 +399,15 @@ ng g s features/division-region/services/region-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES EDITION
+ng g c features/edition/components/edition-card-list-component --skip-tests --style=none
+ng g c features/edition/components/edition-detail-component --skip-tests --style=none
 ng g c features/edition/components/edition-form-components --skip-tests --style=none
 ng g c features/edition/components/edition-list-components --skip-tests --style=none
+ng g c features/edition/components/edition-search-component --skip-tests --style=none
 
 ng g interface features/edition/models/edition-detail-model
 ng g interface features/edition/models/edition-model
+ng g interface features/edition/models/edition-pagination-request-model
 
 ng g c features/edition/pages/edition-form-page --skip-tests --style=none
 
@@ -385,34 +415,38 @@ ng g s features/edition/services/edition-service --skip-tests
 ng g s features/edition/services/edition-image-service --skip-tests
 
 # ---------------------------------------------------------------------------------
-# FEATURES EDITION COPY
-ng g c features/edition-copy/components/edition-copy-form-components --skip-tests --style=none
-ng g c features/edition-copy/components/edition-copy-list-components --skip-tests --style=none
-
-ng g interface features/edition-copy/models/edition-copy-detail-model
-ng g interface features/edition-copy/models/edition-copy-form-model
-ng g interface features/edition-copy/models/edition-copy-model
-
-ng g c features/edition-copy/pages/edition-copy-form-page --skip-tests --style=none
-
-ng g s features/edition-copy/services/edition-copy-service --skip-tests
-
-# ---------------------------------------------------------------------------------
-# FEATURES EDITION COPY STATUS
-ng g c features/edition-copy-status/components/edition-copy-status-select-components --skip-tests --style=none
-
-ng g interface features/edition-copy-status/models/edition-copy-status-model
-
-ng g s features/edition-copy-status/services/edition-copy-status-service --skip-tests
-
-# ---------------------------------------------------------------------------------
 # FEATURES HOME
 ng g c features/home/components/about-component --skip-tests --style=none
 
-ng g c features/home/pages/book-detail-page --skip-tests --style=none
+ng g c features/home/pages/edition-detail-page --skip-tests --style=none
 ng g c features/home/pages/home-page --skip-tests --style=none
 ng g c features/home/pages/news-page --skip-tests --style=none
 ng g c features/home/pages/news-detail-page --skip-tests --style=none
+
+# ---------------------------------------------------------------------------------
+# FEATURES LOANS
+ng g c features/loan/components/due-loan-list-component --skip-tests --style=none
+ng g c features/loan/components/loan-list-component --skip-tests --style=none
+
+ng g interface features/loan/models/loan-model
+
+ng g s features/loan/services/loan-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES LOANS POLICIES
+ng g c features/loan-policies/components/loan-policies-list-component --skip-tests --style=none
+
+ng g interface features/loan-policies/models/loan-policies-model
+
+ng g s features/loan-policies/services/loan-policies-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES LOANS STATUS
+ng g c features/loan-status/components/loan-status-select-component --skip-tests --style=none
+
+ng g interface features/loan-status/models/loan-status-model
+
+ng g s features/loan-status/services/loan-status-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES NEWS
@@ -447,7 +481,29 @@ ng g interface features/news-gallery/models/create-news-gallery-model
 ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES RESERVATION
+ng g c features/reservation/components/reservation-btn-cancel-components --skip-tests --style=none
+ng g c features/reservation/components/reservation-btn-create-components --skip-tests --style=none
+ng g c features/reservation/components/reservation-btn-expire-components --skip-tests --style=none
+ng g c features/reservation/components/reservation-get-components --skip-tests --style=none
+ng g c features/reservation/components/reservation-list-components --skip-tests --style=none
+
+ng g interface features/reservation/models/reservation-model
+
+ng g s features/reservation/services/reservation-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES RESERVATION STATUS
+ng g c features/reservation-status/components/reservation-status-select-components --skip-tests --style=none
+
+ng g interface features/reservation-status/models/reservation-status-model
+
+ng g s features/reservation-status/services/reservation-status-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES STATS
+ng g c features/stats/components/admin-stats-components --skip-tests --style=none
+
 ng g interface features/stats/models/stat-model
 
 ng g c features/stats/pages/stat.page --skip-tests --style=none
@@ -507,6 +563,7 @@ ng g c shared/components/header-component --skip-tests --style=none
 ng g c shared/components/loading-component --skip-tests --style=none
 ng g c shared/components/message-error-component --skip-tests --style=none
 ng g c shared/components/message-success-component --skip-tests --style=none
+ng g c shared/components/modal-action-component --skip-tests --style=none
 ng g c shared/components/modal-delete-component --skip-tests --style=none
 ng g c shared/components/modal-error-component --skip-tests --style=none
 ng g c shared/components/modal-image-component --skip-tests --style=none

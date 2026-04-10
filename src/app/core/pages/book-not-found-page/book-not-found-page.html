@@ -1,0 +1,28 @@
+<div 
+  class="flex flex-col items-center justify-center bg-my-light/10 px-6 py-20"
+>
+
+  <div class="relative overflow-hidden size-40 aspect-square">
+    <img 
+      [ngSrc]="'images/book.png'"
+      alt="Libros no encontrados"
+      fill
+      priority
+      class="object-cover rounded-box" 
+    /> 
+  </div>
+
+  <div class="bg-my-pink/80 text-my-light p-2 text-sm rounded -rotate-12 absolute">
+    Libros no encontrados
+  </div>
+
+  <div class="mt-5 text-center">
+    <p class="text-2xl font-semibold text-my-purple md:text-3xl">
+      No hemos podido encontrar libros que coincidan con tu búsqueda.
+    </p>
+
+    <p class="text-my-dark/70 mt-2">
+      Intenta con otro título, autor o palabra clave.
+    </p>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
+import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 
 @Component({
   selector: 'app-book-list-page',
@@ -18,7 +19,8 @@ import { PaginationComponent } from "@shared/components/pagination-component/pag
     SectionHeaderComponent,
     MessageErrorComponent,
     PaginationComponent,
-    ModalDeleteComponent
+    ModalDeleteComponent,
+    MessageSuccessComponent
 ],
   templateUrl: './book-list-page.html',
 })
@@ -26,7 +28,9 @@ export class BookListPage {
   private router = inject(Router);
   private readonly bookService = inject(BookService);
 
-  readonly backendError = signal<string | null>(null);
+  protected readonly successMessage = signal<string | null>(null);
+  protected readonly errorMessage = signal<string | null>(null);
+  protected readonly isLoading = computed(() => this.bookRX.isLoading() || this.deleteBookRX.isLoading());
   readonly openDeleteModal = signal(false);
   readonly selectedBookToDelete = signal<BookDetailModel | null>(null);
 
@@ -48,7 +52,6 @@ export class BookListPage {
   private readonly bookRX = rxResource({
     params: () => this.paramsPayload(),
     stream: ({ params }) => {
-      this.backendError.set(null);
 
       return this.bookService.getAll(
         params.currentPage, 
@@ -62,7 +65,7 @@ export class BookListPage {
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.backendError.set(message);
+          this.errorMessage.set(message);
           return of(null);
         })
       );
@@ -72,13 +75,14 @@ export class BookListPage {
   private readonly deleteBookRX = rxResource({
     params: () => this.bookIdToDeletePayload(),
     stream: ({ params: payloadId }) => {
-      this.backendError.set(null);
       if (payloadId === null) return of(null);
-
+      this.successMessage.set(null);
+      
       return this.bookService.delete(payloadId).pipe(
         map(response => {
           this.closeDeleteModal();
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.result;
         }),
         tap(() => {
@@ -88,15 +92,13 @@ export class BookListPage {
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.backendError.set(message);
+          this.errorMessage.set(message);
           return of(null);
         }),
       );
     },
   });
 
-  protected readonly isLoading = computed(() => this.bookRX.isLoading() || this.deleteBookRX.isLoading());
-  protected readonly errorMessage = computed(() => this.backendError());
   protected readonly bookComputedList = computed<BookDetailModel[]>(() => this.bookRX.value() ?? []);
 
   // ─── ACCIONES 

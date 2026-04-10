@@ -1,0 +1,15 @@
+<section class="bg-my-light border-base-300 rounded-box border p-6 shadow-xl">
+  <!-- Título -->
+  <div class="py-4">
+    <h3 class="card-title text-xl text-my-purple">Registrar Préstamo</h3>
+    <p class="text-sm text-base-content/60">Convertir reserva a préstamo</p>
+  </div>
+
+  <app-reservation-get-components 
+    (getReservation)="onGetReservation($event)"
+  />
+
+  <button type="submit" class="btn bg-my-purple hover:bg-my-purple/80 text-my-light w-full">
+    Registrar Préstamo
+  </button>
+</section>

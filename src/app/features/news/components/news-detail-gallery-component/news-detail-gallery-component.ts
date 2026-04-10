@@ -1,10 +1,11 @@
 import { NgOptimizedImage } from '@angular/common';
-import { Component, input, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { ModalImageComponent } from "@shared/components/modal-image-component/modal-image-component";
 
 @Component({
   selector: 'app-news-detail-gallery-component',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     NgOptimizedImage,
     ModalImageComponent

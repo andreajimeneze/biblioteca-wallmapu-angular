@@ -15,12 +15,16 @@
         Crear Libro
       </button>
     </div>
+
+  <div class="px-4">
+    @if (successMessage()) {
+      <app-message-success-component [message]="successMessage()"/>
+    }
     
     @if (errorMessage()) {
-      <div class="px-4">
-        <app-message-error-component [message]="errorMessage()"/>
-      </div>
+      <app-message-error-component [message]="errorMessage()"/>
     }
+  </div>
 
     <app-book-list-component 
       [isLoading]="isLoading()"

@@ -1,10 +1,11 @@
-import { Component, input, output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { NewsListRowComponent } from "../news-list-row-component/news-list-row-component";
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
   selector: 'app-news-list-component',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [NewsListRowComponent, LoadingComponent],
   templateUrl: './news-list-component.html',
 })

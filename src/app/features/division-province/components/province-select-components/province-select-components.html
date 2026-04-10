@@ -9,7 +9,7 @@
     class="select text-my-pink"
   >      
     <option disabled>Seleccióne una Provincia</option>
-    @for (item of provinceComputedList(); track $index) {
+    @for (item of provinceComputedList(); track item.id_province) {
       <option 
         [value]="item.id_province"
         [selected]="item.id_province === selectedId()">
