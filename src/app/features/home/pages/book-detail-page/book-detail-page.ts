@@ -13,8 +13,8 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { BookModel } from '@features/book/models/book-model';
-import { EditionCopyService } from '@features/edition-copy/services/edition-copy-service';
-import { CopyModel } from '@features/edition-copy/models/edition-copy-model';
+import { CopyService } from '@features/copy/services/copy-service';
+import { CopyAvailabilityModel, CopyWithStatusModel } from '@features/copy/models/copy-model';
 
 @Component({
   selector: 'app-book-detail-page',
@@ -50,7 +50,7 @@ export class BookDetailPage {
   private readonly viewportScroller = inject(ViewportScroller);
   private readonly authStore = inject(AuthStore);
   private readonly bookService = inject(BookService);
-  private readonly copyService = inject(EditionCopyService);
+  private readonly copyService = inject(CopyService);
   private readonly reservationService = inject(ReservationService);
   
   protected readonly isAuthenticated = computed<boolean>(() => this.authStore.isAuthenticated());
@@ -88,7 +88,7 @@ export class BookDetailPage {
     }
   });
   protected readonly selectedEditionId = signal<number>(this.editionId());
-  protected readonly selectedCopy = signal<CopyModel | null>(null);
+  protected readonly selectedCopy = signal<CopyAvailabilityModel | null>(null);
 
   protected readonly isLoadingBook = computed<boolean>(() => this.getBookRX.isLoading());
   protected readonly isLoadingCopy = computed<boolean>(() => 
@@ -98,7 +98,7 @@ export class BookDetailPage {
     ].some(r => r.isLoading())
   ); 
   protected readonly computedBook = computed<BookModel | null>(() => this.getBookRX.value() ?? null);
-  protected readonly computedCopyList = computed<CopyModel[]>(() => this.getCopyRX.value() ?? []);
+  protected readonly computedCopyList = computed<CopyAvailabilityModel[]>(() => this.getCopyRX.value() ?? []);
   private readonly getBookPayload = signal<number>(this.bookId());
   private readonly createReservationPayload = signal<CreateReservationModel | null>(null);
   
@@ -125,8 +125,9 @@ export class BookDetailPage {
     stream: ({ params: id_book }) => {
       if (!id_book) return of(null);
 
-      return this.copyService.getAllByIdBook(id_book).pipe(
+      return this.copyService.getAllByBookId(id_book).pipe(
         map(response => {
+          console.log(response)
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
         }),
@@ -178,7 +179,7 @@ export class BookDetailPage {
     this.createReservationPayload.set({ copy_id: copyId });
   }
 
-  protected selectNewCopy(copy: CopyModel): void {
+  protected selectNewCopy(copy: CopyAvailabilityModel): void {
     this.selectedCopy.set(copy);
     this.viewportScroller.scrollToPosition([0, 0]);
   };

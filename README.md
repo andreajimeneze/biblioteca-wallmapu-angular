@@ -345,6 +345,25 @@ ng g interface features/book-subject-step/models/book-subject-step-model
 ng g s features/book-subject-step/services/book-subject-step-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES COPY
+ng g c features/copy/components/copy-form-components --skip-tests --style=none
+ng g c features/copy/components/copy-list-components --skip-tests --style=none
+
+ng g interface features/copy/models/copy-model
+
+ng g c features/copy/pages/copy-form-page --skip-tests --style=none
+
+ng g s features/copy/services/copy-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES COPY STATUS
+ng g c features/copy-status/components/copy-status-select-components --skip-tests --style=none
+
+ng g interface features/copy-status/models/copy-status-model
+
+ng g s features/copy-status/services/copy-status-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES DASHBOARD
 ng g c features/dashboard/components/admin-stats-components --skip-tests --style=none
 ng g c features/dashboard/components/register-loan-components --skip-tests --style=none
@@ -393,27 +412,6 @@ ng g c features/edition/pages/edition-form-page --skip-tests --style=none
 
 ng g s features/edition/services/edition-service --skip-tests
 ng g s features/edition/services/edition-image-service --skip-tests
-
-# ---------------------------------------------------------------------------------
-# FEATURES EDITION COPY
-ng g c features/edition-copy/components/edition-copy-form-components --skip-tests --style=none
-ng g c features/edition-copy/components/edition-copy-list-components --skip-tests --style=none
-
-ng g interface features/edition-copy/models/edition-copy-detail-model
-ng g interface features/edition-copy/models/edition-copy-form-model
-ng g interface features/edition-copy/models/edition-copy-model
-
-ng g c features/edition-copy/pages/edition-copy-form-page --skip-tests --style=none
-
-ng g s features/edition-copy/services/edition-copy-service --skip-tests
-
-# ---------------------------------------------------------------------------------
-# FEATURES EDITION COPY STATUS
-ng g c features/edition-copy-status/components/edition-copy-status-select-components --skip-tests --style=none
-
-ng g interface features/edition-copy-status/models/edition-copy-status-model
-
-ng g s features/edition-copy-status/services/edition-copy-status-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES HOME

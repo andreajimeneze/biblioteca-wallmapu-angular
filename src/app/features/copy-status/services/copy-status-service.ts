@@ -1,19 +1,19 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { ApiResponseService } from '@core/services/api-response-service';
+import { CopyStatusModel } from '@features/copy-status/models/copy-status-model';
 import { Observable, tap } from 'rxjs';
-import { EditionCopyStatusModel } from '@features/edition-copy-status/models/edition-copy-status-model';
 
 @Injectable({
   providedIn: 'root',
 })
-export class EditionCopyStatusService {
+export class CopyStatusService {
   private apiResponseService = inject(ApiResponseService)
-  private readonly endpoint = 'edition-copy-status';
-  private cache: { data: ApiResponseModel<EditionCopyStatusModel[]>; timestamp: number } | null = null;
+  private readonly endpoint = 'copy-status';
+  private cache: { data: ApiResponseModel<CopyStatusModel[]>; timestamp: number } | null = null;
   private readonly CACHE_TTL = 5 * 60 * 1000;
 
-  getAll(): Observable<ApiResponseModel<EditionCopyStatusModel[]>> {
+  getAll(): Observable<ApiResponseModel<CopyStatusModel[]>> {
     if (this.cache && Date.now() - this.cache.timestamp < this.CACHE_TTL) {
       return new Observable(subscriber => {
         subscriber.next(this.cache!.data);
@@ -21,7 +21,7 @@ export class EditionCopyStatusService {
       });
     }
 
-    return this.apiResponseService.getAll<ApiResponseModel<EditionCopyStatusModel[]>>(
+    return this.apiResponseService.getAll<ApiResponseModel<CopyStatusModel[]>>(
       `${this.endpoint}`
     ).pipe(
       tap(response => {

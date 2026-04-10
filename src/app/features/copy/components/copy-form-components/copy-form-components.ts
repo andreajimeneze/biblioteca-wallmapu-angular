@@ -1,41 +1,34 @@
-import { DatePipe } from '@angular/common';
 import { Component, effect, input, output, signal } from '@angular/core';
-import { EditionCopyDetailModel } from '@features/edition-copy/models/edition-copy-detail-model';
-import { EditionCopyFormModel } from '@features/edition-copy/models/edition-copy-form-model';
+import { CopyFormVM } from '@features/copy/models/copy-model.vm';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { EditionCopyStatusSelectComponents } from "@features/edition-copy-status/components/book-copy-status-select-components/edition-copy-status-select-components";
+import { CopyStatusSelectComponents } from "@features/copy-status/components/copy-status-select-components/copy-status-select-components";
+import { DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-edition-copy-form-components',
+  selector: 'app-copy-form-components',
   imports: [
     DatePipe,
-    LoadingComponent,
-    MessageErrorComponent,
-    EditionCopyStatusSelectComponents
-],
-  templateUrl: './edition-copy-form-components.html',
+    LoadingComponent, 
+    MessageErrorComponent, 
+    CopyStatusSelectComponents
+  ],
+  templateUrl: './copy-form-components.html',
 })
-export class EditionCopyFormComponents {
+export class CopyFormComponents {
   readonly isLoading = input<boolean>(true);
-  readonly editionCopyDetail = input<EditionCopyDetailModel | null>(null);
-  readonly onFormSubmit = output<EditionCopyFormModel>();  
+  readonly copyFormVM = input<CopyFormVM | null>(null);
+  readonly onFormSubmit = output<CopyFormVM>();  
   
   protected readonly toggleStatus = signal<boolean>(true);
   protected readonly errorMessage = signal<string | null>(null);
-  protected readonly formData = signal<Partial<EditionCopyFormModel>>({});  
+  protected readonly formData = signal<Partial<CopyFormVM>>({});  
   
   private readonly updateEffect = effect(() => {
-    const copy = this.editionCopyDetail();
-    if (!copy) return;
+    const item = this.copyFormVM();
+    if (!item) return;
 
-    this.formData.set({
-      id_copy: copy.id_copy,
-      signature_topography: copy.signature_topography,
-      copy_number: copy.copy_number,
-      edition_id: copy.edition_id,
-      status_id: copy.status?.id_status ?? 1,
-    });
+    this.formData.set(item);
   });
 
   protected updateTopography(value: string, input: HTMLInputElement) {
@@ -50,7 +43,7 @@ export class EditionCopyFormComponents {
     this.updateField('status_id', value.toString());
   }
 
-  private updateField<K extends keyof EditionCopyFormModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
+  private updateField<K extends keyof CopyFormVM>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
     const sanitized = this.sanitize(key, value);
 
     if (sanitized === null) {
@@ -62,7 +55,7 @@ export class EditionCopyFormComponents {
     this.errorMessage.set(null);
   }
 
-  private sanitize(key: keyof EditionCopyFormModel, value: string): string | number  | null {
+  private sanitize(key: keyof CopyFormVM, value: string): string | number  | null {
     switch (key){
       case 'signature_topography':
         if (value.length > 50) return null;
@@ -88,19 +81,15 @@ export class EditionCopyFormComponents {
       return;
     }
 
-    const submitData: EditionCopyFormModel = {
-      id_copy: data.id_copy!,
-      signature_topography: data.signature_topography!,
-      copy_number: data.copy_number!,
-      edition_id: data.edition_id!,
-      status_id: data.status_id!
-    };
+    const submitData = {
+      ...data
+    } as CopyFormVM;
 
     this.errorMessage.set(null);
     this.onFormSubmit.emit(submitData);
   }
 
-  private validateFormOnSubmit(data: Partial<EditionCopyFormModel>): string | null {
+  private validateFormOnSubmit(data: Partial<CopyFormVM>): string | null {
     if (data.copy_number == null)
       return 'El número de copia es requerido';
 

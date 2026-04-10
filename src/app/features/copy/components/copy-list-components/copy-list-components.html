@@ -7,20 +7,10 @@
     </section>
   } @else {
   
-    @for (item of editionCopyModel(); track item.id_copy) {
+    @for (item of copyList(); track item.id_copy) {
       <li class="list-row">
         <div class="relative overflow-hidden size-20">
-        <!--
-          <img 
-            placeholder="/images/layout.webp"
-            [ngSrc]="'images/layout.webp'"
-            [alt]="'Sin Imagen'"
-            fill
-            class="object-cover rounded-box" 
-          />           
-        -->
           <div>ID: {{ item.id_copy }}</div>
-          <div>{{ item.signature_topography }}</div>
           <div>Copia N°: {{ item.copy_number }}</div>
         </div>
         
@@ -29,17 +19,21 @@
             <span>{{ item.created_at | date:'yyyy-MM-dd' }}</span>
             <span class="hidden md:inline"> - {{ item.created_at | date:'HH:mm:ss' }}</span>
           </div>
-          <p class="font-bold text-my-purple">{{ item.barcode }}</p>
-          <!--
-          <div class="text-my-purple">
-            <span class="font-bold">Firma Topografica: </span>
-            <span>{{ item.signature_topography }}</span>
-          </div>          
-          -->
-          <div class="text-my-purple">
-            <span class="font-bold">Estado: </span>
-            <span>{{ item.status?.name }}</span>
-          </div>
+
+          <p class="font-bold text-my-purple">{{ item.signature_topography }}</p>
+          
+          @if (item?.status?.id_status === 1) {
+            <div class="text-my-purple">
+              <span class="font-bold">Estado: </span>
+              <span>{{ item?.status?.name }}</span>
+            </div>
+          } @else {
+            <div class="text-my-pink">
+              <span class="font-bold">Estado: </span>
+              <span>{{ item?.status?.name }}</span>
+            </div>
+          }
+
         </div>
       
         <button

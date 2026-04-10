@@ -40,7 +40,7 @@ export const routes: Routes = [
       },
       {
         path: 'copy',
-        loadChildren: () => import('@features/edition-copy/edition-copy.routes').then(m => m.EDITION_COPY_ROUTES),
+        loadChildren: () => import('@features/copy/copy.routes').then(m => m.COPY_ROUTES),
       },
       {
         path: 'news',

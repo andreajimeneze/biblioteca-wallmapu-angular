@@ -4,9 +4,9 @@
   (actionClicked)="navigateBack()"
 />
 
-<app-edition-copy-form-components
+<app-copy-form-components
   [isLoading]="isLoading()"
-  [editionCopyDetail]="editionCopyDetail()"
+  [copyFormVM]="computedCopyFormVM()"
   (onFormSubmit)="formSubmit($event)"
 />
 

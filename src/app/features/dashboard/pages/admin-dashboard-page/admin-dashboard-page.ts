@@ -79,6 +79,7 @@ export class AdminDashboardPage {
     const message = err instanceof Error 
       ? err.message 
       : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
+    this.successMessage.set(null);
     this.errorMessage.set(message);
   }
 }
