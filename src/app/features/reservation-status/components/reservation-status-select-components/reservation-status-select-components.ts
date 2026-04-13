@@ -20,7 +20,7 @@ export class ReservationStatusSelectComponents {
   private readonly reservationStatusService = inject(ReservationStatusService);
   protected readonly isLoading = computed(() => this.reservationStatusRX.isLoading());
   protected readonly computedReservationStatusList = computed<ReservationStatusModel[]>(() => [
-    { id_status: 0, status: 'Todos los Estados' },
+    { id_status: 0, name: 'Todos los Estados' },
     ...this.reservationStatusRX.value() ?? []
   ]);
 
