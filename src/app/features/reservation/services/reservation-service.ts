@@ -23,6 +23,12 @@ export class ReservationService {
     );
   }  
 
+  pickup(id: number): Observable<ApiResponseModel<ReservationModel>> {
+    return this.apiResponseService.update<ApiResponseModel<ReservationModel>, null>(
+      this.endpoint, `${id}/pickup`, null
+    );
+  }
+
   cancel(id: number): Observable<ApiResponseModel<ReservationModel>> {
     return this.apiResponseService.update<ApiResponseModel<ReservationModel>, null>(
       this.endpoint, `${id}/cancel`, null
