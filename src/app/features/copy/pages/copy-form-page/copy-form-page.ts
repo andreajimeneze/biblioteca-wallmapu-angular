@@ -1,5 +1,7 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { toSignal } from '@angular/core/rxjs-interop';
+import { map } from 'rxjs';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { CopyFormComponents } from "@features/copy/components/copy-form-components/copy-form-components";
@@ -7,7 +9,7 @@ import { MessageSuccessComponent } from "@shared/components/message-success-comp
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { CopyFormVM } from '@features/copy/models/copy-model.vm';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { catchError, map, of, tap } from 'rxjs';
+import { catchError, of, tap } from 'rxjs';
 import { CopyService } from '@features/copy/services/copy-service';
 import { CreateCopyModel, UpdateCopyModel } from '@features/copy/models/copy-model';
 
@@ -23,26 +25,41 @@ import { CreateCopyModel, UpdateCopyModel } from '@features/copy/models/copy-mod
 })
 export class CopyFormPage {
   private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
-  readonly state = history.state as {
-    book_title: string,
-    id_book: number,
-    id_edition: number,
-    id_copy: number,
-  }
+  readonly bookId = toSignal(
+    this.activatedRoute.paramMap.pipe(
+      map(params => Number(params.get('bookId')) || 0)
+    ),
+    { initialValue: 0 }
+  );
+
+  readonly editionId = toSignal(
+    this.activatedRoute.paramMap.pipe(
+      map(params => Number(params.get('editionId')) || 0)
+    ),
+    { initialValue: 0 }
+  );
+
+  readonly copyId = toSignal(
+    this.activatedRoute.paramMap.pipe(
+      map(params => Number(params.get('copyId')) || 0)
+    ),
+    { initialValue: 0 }
+  );
 
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
 
   private readonly copyService = inject(CopyService);
-  private readonly getCopyPayload = signal<number | null>(this.state.id_copy);
+  private readonly getCopyPayload = signal<number | null>(this.copyId());
   private readonly saveCopyPayload = signal<CreateCopyModel | UpdateCopyModel | null>(null);
   protected readonly computedCopyFormVM = computed<CopyFormVM>(() => {
     const item = this.getCopyRX.value();
 
     return {
-      id_copy: item?.id_copy ?? this.state.id_copy,
-      edition_id: item?.edition_id ?? this.state.id_edition,
+      id_copy: item?.id_copy ?? this.copyId(),
+      edition_id: item?.edition_id ?? this.editionId(),
       signature_topography: item?.signature_topography ?? '',
       copy_number: item?.copy_number ?? 0,
       barcode: item?.barcode ?? '',
@@ -53,8 +70,8 @@ export class CopyFormPage {
   });
   protected readonly book_edition_name = computed<string>(() => 
     this.computedCopyFormVM().id_copy > 0
-    ? `Modificar copia de: ${ this.state.book_title }` 
-    : `Crear copia para: ${ this.state.book_title }`
+    ? `Modificar copia` 
+    : `Crear copia`
   )
   protected readonly isLoading = computed<boolean>(() =>
     [
@@ -129,13 +146,7 @@ export class CopyFormPage {
   }
 
   protected navigateBack(): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM], {
-      state: {
-        book_title: this.state.book_title,
-        id_book: this.state.id_book,
-        id_edition: this.state.id_edition,
-      }
-    }); 
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM(this.bookId(), this.editionId())]); 
   }
 
   private handleError(err: unknown): void {

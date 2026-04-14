@@ -34,12 +34,12 @@ import { MessageSuccessComponent } from "@shared/components/message-success-comp
   templateUrl: './book-form-page.html',
 })
 export class BookFormPage {
-  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   readonly routeId = toSignal(
     this.activatedRoute.paramMap.pipe(
-      map(params => Number(params.get('id')) || 0)
+      map(params => Number(params.get('id_book')) || 0)
     ),
     { initialValue: 0 }
   );
@@ -251,26 +251,15 @@ export class BookFormPage {
   }
 
   protected navigateGoBack(): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.ROOT]);
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOK.ROOT]);
   }
 
   protected onCreateEdition(): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM], {
-      state: {
-        id_book: this.bookFormVM().id_book,
-        id_edition: 0,
-      }
-    }); 
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM(this.bookFormVM().id_book, 0)]); 
   }
 
   protected editEdition(item: EditionDetailModel): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM], {
-      state: {
-        book_title: this.bookFormVM().title,
-        id_book: this.bookFormVM().id_book,
-        id_edition: item.id_edition,
-      }
-    }); 
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM(this.bookFormVM().id_book, item.id_edition)]);
   }
 
   // onDelete --------------------------------------------------------
