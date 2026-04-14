@@ -1,6 +1,5 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { BookDetailModel } from '@features/book/models/book-detail-model';
 import { BookService } from '@features/book/services/book-service';
 import { catchError, map, of, tap } from 'rxjs';
 import { BookListComponent } from "@features/book/components/book-list-component/book-list-component";
@@ -11,6 +10,8 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
+import { BookDetailModel } from '@features/book/models/book-model';
+import { BookPaginationRequestModel } from '@features/book/models/book-pagination-request-model';
 
 @Component({
   selector: 'app-book-list-page',
@@ -35,29 +36,26 @@ export class BookListPage {
   readonly selectedBookToDelete = signal<BookDetailModel | null>(null);
 
   readonly currentPage = signal(1);
-  private readonly items = signal(10);
   private readonly search = signal('');
   readonly totalPages = signal<number>(0);
   private readonly refreshTrigger = signal(0);
 
   readonly bookIdToDeletePayload = signal<number | null>(null)
 
-  private readonly paramsPayload = computed(() => ({
-    currentPage: this.currentPage(),
-    items: this.items(),
+  private readonly paramsPayload = computed<BookPaginationRequestModel>(() => ({
+    page: this.currentPage(),
+    limit: 10,
     search: this.search(),
-    refresh: this.refreshTrigger(),
+    id_author: 0,
+    id_editorial: 0,
+    id_genre: 0
   }));  
     
   private readonly bookRX = rxResource({
     params: () => this.paramsPayload(),
     stream: ({ params }) => {
 
-      return this.bookService.getAll(
-        params.currentPage, 
-        params.items, 
-        params.search
-      ).pipe(
+      return this.bookService.getAllPagination(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.totalPages.set(response.result.pages);

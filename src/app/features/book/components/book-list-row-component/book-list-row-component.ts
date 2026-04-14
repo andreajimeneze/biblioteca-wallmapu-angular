@@ -1,8 +1,7 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
 import { Component, input, output } from '@angular/core';
-import { BookDetailModel } from '@features/book/models/book-detail-model';
+import { BookDetailModel } from '@features/book/models/book-model';
 import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
-import { EditionModel } from '@features/edition/models/edition-model';
 
 @Component({
   selector: 'app-book-list-row-component',
