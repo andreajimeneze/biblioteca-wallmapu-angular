@@ -12,6 +12,11 @@ export interface UpdateCopyModel extends CreateCopyModel {
   status_id: number;
 }
 
+export interface CopyModel extends UpdateCopyModel {
+  created_at: string;
+  updated_at: string;
+}
+
 export interface CopyWithStatusModel {
   id_copy: number;
   signature_topography: string;

@@ -34,8 +34,14 @@ export class EditionService {
     );
   }
 
-  getById(id: number): Observable<ApiResponseModel<EditionDetailModel | null>> {
+  getByIdDetail(id: number): Observable<ApiResponseModel<EditionDetailModel | null>> {
     return this.apiResponseService.getById<ApiResponseModel<EditionDetailModel | null>>(
+      this.endpoint, `${id}/detail`
+    );
+  }
+
+  getById(id: number): Observable<ApiResponseModel<EditionModel | null>> {
+    return this.apiResponseService.getById<ApiResponseModel<EditionModel | null>>(
       this.endpoint, id
     );
   }

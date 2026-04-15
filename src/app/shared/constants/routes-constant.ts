@@ -29,7 +29,7 @@ export const ROUTES_CONSTANTS = {
         FORM: (bookId: number, editionId: number) => `/admin/edition/form/${editionId}/book/${bookId}`,
       },
       COPY: {
-        FORM: (bookId: number, editionId: number, copyId: number) => `/admin/copy/form/${copyId}/edition/${editionId}/book/${bookId}`,
+        FORM: (bookId: number, editionId: number) => `/admin/copy/book/${bookId}/edition/${editionId}/copy/form`,
       },
       NEWS: {
         ROOT: '/admin/news',
