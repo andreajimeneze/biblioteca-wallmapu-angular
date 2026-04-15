@@ -31,7 +31,7 @@ export const routes: Routes = [
         loadChildren: () => import('@features/dashboard/admin.routes').then(m => m.DASHBOARD_ROUTES),
       },
       {
-        path: 'books',
+        path: 'book',
         loadChildren: () => import('@features/book/book.routes').then(m => m.BOOK_ROUTES),
       },
       {

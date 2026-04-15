@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, input, output } from '@angular/core';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { BookListRowComponent } from "@features/book/components/book-list-row-component/book-list-row-component";
-import { BookDetailModel } from '@features/book/models/book-detail-model';
+import { BookDetailModel } from '@features/book/models/book-model';
+
 
 @Component({
   selector: 'app-book-list-component',

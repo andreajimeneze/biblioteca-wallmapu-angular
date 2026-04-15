@@ -31,6 +31,12 @@
     />
   }
 
+  @if (errorMessage()) {
+    <app-message-error-component
+      [message]="errorMessage()"
+    />
+  }
+
   @if (enableButton()) {
     <button (click)="onClick()" type="button" class="btn bg-my-purple hover:bg-my-purple/80 text-my-light w-full mt-2">
       Registrar Préstamo

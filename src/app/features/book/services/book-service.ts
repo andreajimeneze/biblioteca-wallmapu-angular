@@ -2,8 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { ApiResponseService } from '@core/services/api-response-service';
 import { Observable } from 'rxjs';
-import { BookDetailModel } from '@features/book/models/book-detail-model';
-import { BookModel, CreateBookModel, UpdateBookModel } from '@features/book/models/book-model';
+import { BookDetailModel, BookModel, CreateBookModel, UpdateBookModel } from '@features/book/models/book-model';
 import { PaginationModel } from '@core/models/pagination-model';
 import { BookPaginationRequestModel } from '@features/book/models/book-pagination-request-model';
 
@@ -31,12 +30,6 @@ export class BookService {
   
     return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookDetailModel[]>>>(
       `${this.endpoint}/pagination${path}`
-    );
-  }
-
-  getAll(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<BookDetailModel[]>>> {
-    return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<BookDetailModel[]>>>(
-      `${this.endpoint}/?page=${currentPage}&limit=${maxItems}&search=${search}`
     );
   }
 

@@ -7,12 +7,17 @@ import { BookFormPage } from "@features/book/pages/book-form-page/book-form-page
 export const  BOOK_ROUTES: Routes = [
   {
     path: '',
+    redirectTo: 'list',
+    pathMatch: 'full'
+  },
+  {
+    path: 'list',
     component: BookListPage,
     canActivate: [authGuard],
     data: { roles: [Role.Admin]},
   },
   {
-    path: 'form/:id',
+    path: 'form/:id_book',
     component: BookFormPage,
     canActivate: [authGuard],
     data: { roles: [Role.Admin]},

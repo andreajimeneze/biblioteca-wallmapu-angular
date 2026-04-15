@@ -6,12 +6,14 @@ import { ReservationService } from '@features/reservation/services/reservation-s
 import { SearchCodbarComponent } from "@shared/components/search-codbar-component/search-codbar-component";
 import { catchError, map, of, tap } from 'rxjs';
 import { RegisterLoanDetailComponents } from "../register-loan-detail-components/register-loan-detail-components";
+import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
 @Component({
   selector: 'app-register-loan-components',
   imports: [
     SearchCodbarComponent,
-    RegisterLoanDetailComponents
+    RegisterLoanDetailComponents,
+    MessageErrorComponent
 ],
   templateUrl: './register-loan-components.html',
 })
@@ -25,7 +27,7 @@ export class RegisterLoanComponents {
   
   private readonly reservationService = inject(ReservationService);
   private readonly getReservationPayload = signal<number | null>(null);
-  private readonly saveReservationPayload = signal<number | null>(null);
+  private readonly saveReservationPayload = signal<{ id: number; copyId: number } | null>(null);
 
   protected readonly isLoading = computed<boolean>(() => this.saveReservationRX.isLoading());
   protected readonly isLoadingReservation = computed<boolean>(() => this.getReservationRX.isLoading() || this.saveReservationRX.isLoading());
@@ -53,12 +55,12 @@ export class RegisterLoanComponents {
 
   private readonly saveReservationRX = rxResource({
     params: () => this.saveReservationPayload(),
-    stream: ({ params: id }) => {
-      if (!id) return of(null);
+    stream: ({ params }) => {
+      if (!params) return of(null);
       this.reservationErrorMessage.set(null);
       this.errorMessage.set(null);
       
-      return this.reservationService.pickup(id).pipe(
+      return this.reservationService.pickup(params.id, params.copyId).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
@@ -98,7 +100,13 @@ export class RegisterLoanComponents {
   }
 
   protected onClick(): void {
-    this.saveReservationPayload.set(this.getReservationPayload());
+    const reservation = this.computedReservation();
+    if (reservation && reservation.copy_id) {
+      this.saveReservationPayload.set({
+        id: reservation.id_reservation,
+        copyId: reservation.copy_id
+      });
+    }
   }
 
   protected onClear(): void {
