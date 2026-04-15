@@ -1,0 +1,42 @@
+@if(errorMessage()) {
+  <app-message-error-component
+    [message]="errorMessage()"
+  />
+}
+
+@if(successMessage()) {
+  <app-message-success-component 
+    [message]="successMessage()"
+  />
+}
+
+@if(isLoading()) {
+  <div class="flex justify-center">
+    <app-loading-component />
+  </div>
+} @else {
+  <form (submit)="submit($event)" class="space-y-4">
+    <!-- Campo de búsqueda -->
+    <fieldset class="fieldset">
+      <label class="label">{{ textTitle() }}</label>
+  
+      <div class="flex">
+        <!-- Input + icono -->
+        <div class="input flex items-center gap-2 flex-1">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="#000" d="M1 19V5h2v14zm3 0V5h2v14zm3 0V5h1v14zm3 0V5h2v14zm3 0V5h3v14zm4 0V5h1v14zm3 0V5h3v14z"/></svg>
+          <input 
+            #codeInput
+            type="search" class="flex-1 text-center" required placeholder="Código de Barra" 
+            [value]="formData() ?? ''"
+            (input)="updateCode($any($event.target).value, codeInput)"
+          />
+        </div>
+  
+        <!-- Botón Buscar (solo botón, no submit) -->
+        <button type="submit" class="btn bg-my-purple hover:bg-my-purple/80 text-my-light rounded-l-none ml-2">
+          Buscar
+        </button>
+      </div>
+    </fieldset>
+  </form>
+}

@@ -15,8 +15,7 @@ import { BookSubjectStepService } from '@features/book-subject-step/services/boo
 import { BookService } from '@features/book/services/book-service';
 import { EditionListComponents } from "@features/edition/components/edition-list-components/edition-list-components";
 import { EditionService } from '@features/edition/services/edition-service';
-import { CreateBookModel, UpdateBookModel } from '@features/book/models/book-model';
-import { BookDetailModel } from '@features/book/models/book-detail-model';
+import { BookDetailModel, BookModel, CreateBookModel, UpdateBookModel } from '@features/book/models/book-model';
 import { BookFormVM } from '@features/book/models/vm.book-form';
 import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
@@ -35,12 +34,12 @@ import { MessageSuccessComponent } from "@shared/components/message-success-comp
   templateUrl: './book-form-page.html',
 })
 export class BookFormPage {
-  private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly activatedRoute = inject(ActivatedRoute);
 
   readonly routeId = toSignal(
     this.activatedRoute.paramMap.pipe(
-      map(params => Number(params.get('id')) || 0)
+      map(params => Number(params.get('id_book')) || 0)
     ),
     { initialValue: 0 }
   );
@@ -67,7 +66,7 @@ export class BookFormPage {
   protected readonly isLoading = computed<boolean>(() => 
     [
       this.getBookRX,
-      this.addBookRX,
+      this.saveBookRX,
       this.deleteSubjectStepRX,
       this.deleteAuthorStepRX,
       this.editionRX,
@@ -108,10 +107,10 @@ export class BookFormPage {
     }
   });
 
-  private readonly addBookPayload = signal<CreateBookModel | UpdateBookModel | null>(null);
+  private readonly saveBookPayload = signal<CreateBookModel | UpdateBookModel | null>(null);
 
-  private readonly addBookRX = rxResource({
-    params: () => this.addBookPayload(),
+  private readonly saveBookRX = rxResource({
+    params: () => this.saveBookPayload(),
     stream: ({ params }) => {
       if (!params) return of(null);
       this.successMessage.set(null);
@@ -248,30 +247,19 @@ export class BookFormPage {
       ? (basePayload as CreateBookModel)
       : (basePayload as UpdateBookModel);
 
-    this.addBookPayload.set(payload);
+    this.saveBookPayload.set(payload);
   }
 
   protected navigateGoBack(): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOKS.ROOT]);
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOK.ROOT]);
   }
 
   protected onCreateEdition(): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM], {
-      state: {
-        id_book: this.bookFormVM().id_book,
-        id_edition: 0,
-      }
-    }); 
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM(this.bookFormVM().id_book, 0)]); 
   }
 
   protected editEdition(item: EditionDetailModel): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM], {
-      state: {
-        book_title: this.bookFormVM().title,
-        id_book: this.bookFormVM().id_book,
-        id_edition: item.id_edition,
-      }
-    }); 
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM(this.bookFormVM().id_book, item.id_edition)]);
   }
 
   // onDelete --------------------------------------------------------

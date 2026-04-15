@@ -21,15 +21,15 @@ export const ROUTES_CONSTANTS = {
     },
     ADMIN: {
       DASHBOARD: '/admin/dashboard',
-      BOOKS: {
-        ROOT: '/admin/books',
-        FORM: `/admin/books/form`,
+      BOOK: {
+        ROOT: '/admin/book/list',
+        FORM: (bookId: number) => `/admin/book/form/${bookId}`,
       },
       EDITION: {
-        FORM: `/admin/edition/form`,
+        FORM: (bookId: number, editionId: number) => `/admin/edition/form/${editionId}/book/${bookId}`,
       },
       COPY: {
-        FORM: `/admin/copy/form`,
+        FORM: (bookId: number, editionId: number) => `/admin/copy/book/${bookId}/edition/${editionId}/copy/form`,
       },
       NEWS: {
         ROOT: '/admin/news',

@@ -23,6 +23,12 @@ export class ReservationService {
     );
   }  
 
+  pickup(id: number, copyId: number): Observable<ApiResponseModel<ReservationModel>> {
+    return this.apiResponseService.update<ApiResponseModel<ReservationModel>, { copy_id: number }>(
+      this.endpoint, `${id}/pickup`, { copy_id: copyId }
+    );
+  }
+
   cancel(id: number): Observable<ApiResponseModel<ReservationModel>> {
     return this.apiResponseService.update<ApiResponseModel<ReservationModel>, null>(
       this.endpoint, `${id}/cancel`, null

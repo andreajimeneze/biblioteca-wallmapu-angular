@@ -5,7 +5,7 @@ import { Role } from "@shared/constants/roles-enum";
 
 export const  COPY_ROUTES: Routes = [
   {
-    path: 'form',
+    path: 'book/:bookId/edition/:editionId/copy/form',
     component: CopyFormPage,
     canActivate: [authGuard],
     data: { roles: [Role.Admin]},

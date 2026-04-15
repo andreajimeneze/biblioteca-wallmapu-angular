@@ -19,7 +19,6 @@ export interface EditionModel extends UpdateEditionModel {
   updated_at: string,
 }
 
-
 export interface EditionWithEditorialModel {
   id_edition: number,
   edition: string,
