@@ -1,15 +1,13 @@
 import { Component, effect, input, output, signal } from '@angular/core';
-import { CopyFormVM } from '@features/copy/models/copy-model.vm';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { CopyStatusSelectComponents } from "@features/copy-status/components/copy-status-select-components/copy-status-select-components";
-import { DatePipe } from '@angular/common';
 import { SignatureManualComponents } from "../signature-manual-components/signature-manual-components";
+import { CopyModel } from '@features/copy/models/copy-model';
 
 @Component({
   selector: 'app-copy-form-components',
   imports: [
-    DatePipe,
     LoadingComponent,
     MessageErrorComponent,
     CopyStatusSelectComponents,
@@ -19,15 +17,15 @@ import { SignatureManualComponents } from "../signature-manual-components/signat
 })
 export class CopyFormComponents {
   readonly isLoading = input<boolean>(true);
-  readonly copyFormVM = input<CopyFormVM | null>(null);
-  readonly onFormSubmit = output<CopyFormVM>();  
+  readonly copyModel = input<CopyModel | null>(null);
+  readonly onFormSubmit = output<CopyModel>();  
   
   protected readonly toggleStatus = signal<boolean>(true);
   protected readonly errorMessage = signal<string | null>(null);
-  protected readonly formData = signal<Partial<CopyFormVM>>({});  
+  protected readonly formData = signal<Partial<CopyModel>>({ id_copy: 0 });  
   
   private readonly updateEffect = effect(() => {
-    const item = this.copyFormVM();
+    const item = this.copyModel();
     if (!item) return;
 
     this.formData.set(item);
@@ -45,7 +43,7 @@ export class CopyFormComponents {
     this.updateField('status_id', value.toString());
   }
 
-  private updateField<K extends keyof CopyFormVM>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
+  private updateField<K extends keyof CopyModel>(key: K, value: string, input?: HTMLInputElement | HTMLTextAreaElement) {
     const sanitized = this.sanitize(key, value);
 
     if (sanitized === null) {
@@ -57,7 +55,7 @@ export class CopyFormComponents {
     this.errorMessage.set(null);
   }
 
-  private sanitize(key: keyof CopyFormVM, value: string): string | number  | null {
+  private sanitize(key: keyof CopyModel, value: string): string | number  | null {
     switch (key){
       case 'signature_topography':
         if (value.length > 50) return null;
@@ -83,15 +81,15 @@ export class CopyFormComponents {
       return;
     }
 
-    const submitData = {
+    const submitData: CopyModel = {
       ...data
-    } as CopyFormVM;
+    } as CopyModel;
 
     this.errorMessage.set(null);
     this.onFormSubmit.emit(submitData);
   }
 
-  private validateFormOnSubmit(data: Partial<CopyFormVM>): string | null {
+  private validateFormOnSubmit(data: Partial<CopyModel>): string | null {
     if (data.copy_number == null)
       return 'El número de copia es requerido';
 

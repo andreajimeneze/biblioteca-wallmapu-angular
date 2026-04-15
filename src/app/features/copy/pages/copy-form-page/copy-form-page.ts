@@ -1,4 +1,4 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { map } from 'rxjs';
@@ -7,20 +7,26 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { CopyFormComponents } from "@features/copy/components/copy-form-components/copy-form-components";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { CopyFormVM } from '@features/copy/models/copy-model.vm';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, of, tap } from 'rxjs';
 import { CopyService } from '@features/copy/services/copy-service';
-import { CreateCopyModel, UpdateCopyModel } from '@features/copy/models/copy-model';
+import { CopyModel, CopyWithStatusModel, CreateCopyModel, UpdateCopyModel } from '@features/copy/models/copy-model';
+import { BookService } from '@features/book/services/book-service';
+import { EditionService } from '@features/edition/services/edition-service';
+import { BookModel } from '@features/book/models/book-model';
+import { EditionModel } from '@features/edition/models/edition-model';
+import { DatePipe, NgOptimizedImage } from '@angular/common';
 
 @Component({
   selector: 'app-copy-form-page',
   imports: [
-    SectionHeaderComponent, 
-    CopyFormComponents, 
-    MessageSuccessComponent, 
-    MessageErrorComponent
-  ],
+    DatePipe,
+    NgOptimizedImage,
+    SectionHeaderComponent,
+    CopyFormComponents,
+    MessageSuccessComponent,
+    MessageErrorComponent,
+],
   templateUrl: './copy-form-page.html',
 })
 export class CopyFormPage {
@@ -42,7 +48,7 @@ export class CopyFormPage {
   );
 
   readonly copyId = toSignal(
-    this.activatedRoute.paramMap.pipe(
+    this.activatedRoute.queryParamMap.pipe(
       map(params => Number(params.get('copyId')) || 0)
     ),
     { initialValue: 0 }
@@ -51,43 +57,104 @@ export class CopyFormPage {
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
 
+  private readonly bookService = inject(BookService)
+  private readonly getBookPayload = signal<number | null>(this.bookId());
+  protected readonly computedBook = computed<BookModel | null>(() => this.getBookRX.value() ?? null);
+
+  private readonly editionService = inject(EditionService);
+  private readonly getEditionPayload = signal<number | null>(this.editionId());
+  protected readonly computedEdition = computed<EditionModel | null>(() => this.getEditionRX.value() ?? null);
+
   private readonly copyService = inject(CopyService);
+  private readonly getCopyByEditionPayload = signal<number | null>(this.editionId());
   private readonly getCopyPayload = signal<number | null>(this.copyId());
   private readonly saveCopyPayload = signal<CreateCopyModel | UpdateCopyModel | null>(null);
-  protected readonly computedCopyFormVM = computed<CopyFormVM>(() => {
-    const item = this.getCopyRX.value();
-
+  protected readonly computedCopyList = computed<CopyWithStatusModel[]>(() => this.getCopyByEditionRX.value() ?? []);
+  protected readonly selectedCopy = computed<CopyModel | null>(() => {
+    const id = this.copyId();
+    const list = this.computedCopyList();
+  
+    if (id <= 0 || !list.length) return null;
+  
+    const item = list.find(e => e.id_copy === id);
+  
+    if (!item) return null;
+  
     return {
-      id_copy: item?.id_copy ?? this.copyId(),
-      edition_id: item?.edition_id ?? this.editionId(),
-      signature_topography: item?.signature_topography ?? '',
-      copy_number: item?.copy_number ?? 0,
-      barcode: item?.barcode ?? '',
-      created_at: item?.created_at ?? '',
-      updated_at: item?.updated_at ?? '',
-      status_id: item?.status?.id_status ?? 0,
+      ...item,
+      status_id: item.status.id_status
+    };
+  });
+
+  private readonly validateSelectedCopyEffect = effect(() => {
+    const id = this.copyId();
+    const list = this.computedCopyList();
+    
+    if (id > 0 && list.length > 0) {
+      const exists = list.some(c => c.id_copy === id);
+      if (!exists) {
+        this.selectCopy(0);
+      }
     }
   });
-  protected readonly book_edition_name = computed<string>(() => 
-    this.computedCopyFormVM().id_copy > 0
-    ? `Modificar copia` 
-    : `Crear copia`
-  )
+  
   protected readonly isLoading = computed<boolean>(() =>
     [
-      this.getCopyRX,
+      this.getBookRX,
+      this.getEditionRX,
+      this.getCopyByEditionRX,
       this.saveCopyRX,
     ].some(r => r.isLoading())
   );
 
-  private readonly getCopyRX = rxResource({
-    params: () => this.getCopyPayload(),
-    stream: ({ params: id_copy }) => {
-      if (!id_copy || id_copy == 0) return of(null);
+  private readonly getBookRX = rxResource({
+    params: () => this.getBookPayload(),
+    stream: ({ params: id_book }) => {
+      if (!id_book || id_book == 0) return of(null);
       this.successMessage.set(null);
       this.errorMessage.set(null);
 
-      return this.copyService.getById(id_copy).pipe(
+      return this.bookService.getById(id_book).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        }),
+        catchError(err => {
+          this.handleError(err);
+          return of(null);
+        })
+      );
+    }
+  });
+
+  private readonly getEditionRX = rxResource({
+    params: () => this.getEditionPayload(),
+    stream: ({ params: id_edition }) => {
+      if (!id_edition || id_edition == 0) return of(null);
+      this.successMessage.set(null);
+      this.errorMessage.set(null);
+
+      return this.editionService.getById(id_edition).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.result;
+        }),
+        catchError(err => {
+          this.handleError(err);
+          return of(null);
+        })
+      );
+    }
+  });
+
+  private readonly getCopyByEditionRX = rxResource({
+    params: () => this.getCopyByEditionPayload(),
+    stream: ({ params: id_edition }) => {
+      if (!id_edition || id_edition == 0) return of(null);
+      this.successMessage.set(null);
+      this.errorMessage.set(null);
+
+      return this.copyService.getAllByEditionId(id_edition).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
@@ -117,7 +184,7 @@ export class CopyFormPage {
         }),
         tap(copy => {
           this.getCopyPayload.set(copy.id_copy);
-          this.getCopyRX.reload();
+          this.getCopyByEditionRX.reload();
         }),
         catchError(err => {
           this.handleError(err);
@@ -127,7 +194,15 @@ export class CopyFormPage {
     }
   });
 
-  protected formSubmit(form: CopyFormVM): void {
+  protected selectCopy(id_copy: number): void {
+    this.router.navigate([], {
+      relativeTo: this.activatedRoute,
+      queryParams: { copyId: id_copy },
+      queryParamsHandling: 'merge'
+    });
+  }
+
+  protected formSubmit(form: CopyModel): void {
     const payload: CreateCopyModel | UpdateCopyModel = form.id_copy > 0
     ? {
         id_copy: form.id_copy,

@@ -128,7 +128,7 @@ export class EditionFormPage {
     stream: ({ params: id_edition }) => {
       if (!id_edition || id_edition == 0) return of(null);
 
-      return this.editionService.getById(id_edition).pipe(
+      return this.editionService.getByIdDetail(id_edition).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.result;
@@ -285,19 +285,25 @@ export class EditionFormPage {
   }
 
   protected onCeateCopy(): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.COPY.FORM(
-      this.bookId(),
-      this.editionId(),
-      0
-    )]); 
+    this.router.navigate(
+      [
+        ROUTES_CONSTANTS.PROTECTED.ADMIN.COPY.FORM(this.bookId(), this.editionId())
+      ],
+      {
+        queryParams: { copyId: 0 }
+      }
+    );
   }
 
   protected onEditEdition(item: CopyWithStatusModel): void {
-    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.COPY.FORM(
-      this.bookId(),
-      item.edition_id,
-      item.id_copy
-    )]); 
+    this.router.navigate(
+      [
+        ROUTES_CONSTANTS.PROTECTED.ADMIN.COPY.FORM(this.bookId(), item.edition_id)
+      ],
+      {
+        queryParams: { copyId: item.id_copy }
+      }
+    );
   }
 
   // onDelete --------------------------------------------------------
