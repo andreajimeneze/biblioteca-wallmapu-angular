@@ -13,31 +13,12 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
   templateUrl: './reservation-status-select-components.html',
 })
 export class ReservationStatusSelectComponents {
+  readonly reservationStatusList = input<ReservationStatusModel[]>([]);
+  readonly isLoading = input<boolean>(false);
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
   readonly newSelectedId = output<number>();
   
-  private readonly reservationStatusService = inject(ReservationStatusService);
-  protected readonly isLoading = computed(() => this.reservationStatusRX.isLoading());
-  protected readonly computedReservationStatusList = computed<ReservationStatusModel[]>(() => [
-    { id_status: 0, name: 'Todos los Estados' },
-    ...this.reservationStatusRX.value() ?? []
-  ]);
-
-  private readonly reservationStatusRX = rxResource({
-    stream: () => {    
-      return this.reservationStatusService.getAll().pipe(
-        map(response => {
-          if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
-        }),
-        catchError(err => {
-          return of(null);
-        })
-      );
-    },
-  });
-
   protected onChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
     const newId = Number(select.value);

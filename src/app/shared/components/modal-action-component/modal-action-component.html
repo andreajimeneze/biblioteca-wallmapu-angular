@@ -2,7 +2,7 @@
   <div class="modal modal-open" role="dialog">
     <div class="modal-box bg-my-light">
       
-      <h3 class="text-lg font-bold text-my-green">
+      <h3 class="text-lg font-bold text-my-pink">
         {{ textTitle() }}
       </h3>
 
@@ -16,7 +16,7 @@
           <app-loading-component/>
         } @else {
           <button class="btn bg-my-pink hover:bg-my-pink/80 text-my-light"(click)="onConfirm.emit()">{{ textTitle() }}</button>
-          <button class="btn" (click)="onCancel.emit()">Cerrar</button> 
+          <button class="btn" (click)="onModalClose.emit()">Cerrar</button> 
         }
       </div>
 

@@ -20,5 +20,5 @@ export class ModalActionComponent {
 
   // Eventos
   readonly onConfirm = output<void>();
-  readonly onCancel = output<void>();
+  readonly onModalClose = output<void>();
 }
