@@ -49,7 +49,7 @@ export class StatPage {
       return this.statService.getAll().pipe(
         map(res => {
           if (!res.isSuccess) throw new Error(res.message || 'Unexpected error');
-          return res.result;
+          return res.data;
         }),
         catchError(err => {
           const message =

@@ -1,11 +1,11 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiResponseModel } from '@core/models/api-response-model';
-import { PaginationModel } from '@core/models/pagination-model';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { NewsModel } from '@features/news/models/news-model';
 import { NewsFormModel } from '@features/news/models/news-form-model';
 import { Observable } from 'rxjs';
 import { ApiResponseService } from '@core/services/api-response-service';
+import { PaginationResponseModel } from '@core/models/pagination-response-model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,8 @@ export class NewsService {
   private apiResponseService = inject(ApiResponseService)
   private readonly endpoint = 'news';
 
-  getAll(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<NewsWithImagesModel[]>>> {
-    return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<NewsWithImagesModel[]>>>(
+  getAll(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationResponseModel<NewsWithImagesModel[]>>> {
+    return this.apiResponseService.getAll<ApiResponseModel<PaginationResponseModel<NewsWithImagesModel[]>>>(
       `${this.endpoint}/?page=${currentPage}&limit=${maxItems}&search=${search}`
     );
   }

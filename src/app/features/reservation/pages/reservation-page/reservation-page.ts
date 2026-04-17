@@ -62,7 +62,7 @@ export class ReservationPage {
       return this.reservationStatusService.getAll().pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           this.handleError(err);
@@ -77,7 +77,7 @@ export class ReservationPage {
       return this.reservationService.getAll().pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(() => {
           this.onFilterByIdStatus(0);
@@ -98,7 +98,7 @@ export class ReservationPage {
       return this.reservationService.cancel(id_reservation).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(() => {
           this.reloadReservation();
@@ -119,7 +119,7 @@ export class ReservationPage {
       return this.reservationService.expire().pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(() => {
           this.reloadReservation();

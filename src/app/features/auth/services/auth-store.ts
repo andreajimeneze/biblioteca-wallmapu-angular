@@ -42,7 +42,7 @@ export class AuthStore {
       const request: ApiAuthGoogleRequest = { googleToken };
       const response: ApiAuthGoogleResponse = await firstValueFrom(
         this.apiAuth.auth(request)
-      ).then(res => res.result);
+      ).then(res => res.data);
 
       // 3️⃣ Guardar JWT
       localStorage.setItem('jwt_token', response.token);

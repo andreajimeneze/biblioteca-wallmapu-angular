@@ -26,7 +26,7 @@ export class GenreSelectComponents {
       return this.genreService.getAll().pipe(
         map((res) => {
           if (!res.isSuccess) throw new Error(res.message);
-          return res.result;
+          return res.data;
         }),
         catchError(() => of([])),
       );

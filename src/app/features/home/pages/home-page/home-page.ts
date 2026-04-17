@@ -61,7 +61,7 @@ export class HomePage {
       return this.newsService.getAll(1, 4, '').pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result.result;
+          return response.data.data;
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
@@ -97,8 +97,8 @@ export class HomePage {
       return this.editionService.getAllPagination(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          this.totalPages.set(response.result.pages);
-          return response.result.result;
+          this.totalPages.set(response.data.pages);
+          return response.data.data;
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';

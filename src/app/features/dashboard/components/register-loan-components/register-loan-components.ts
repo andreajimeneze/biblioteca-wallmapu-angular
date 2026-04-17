@@ -43,7 +43,7 @@ export class RegisterLoanComponents {
       return this.reservationService.getById(id).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           this.handleError(err);
@@ -63,7 +63,7 @@ export class RegisterLoanComponents {
       return this.reservationService.pickup(params.id, params.copyId).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           this.handleError(err);

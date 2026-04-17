@@ -50,7 +50,7 @@ export class AdminDashboardPage {
       return this.loanService.getAll().pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           this.handleError(err);
@@ -65,7 +65,7 @@ export class AdminDashboardPage {
       return this.loanPoliciesService.getAll().pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           this.handleError(err);

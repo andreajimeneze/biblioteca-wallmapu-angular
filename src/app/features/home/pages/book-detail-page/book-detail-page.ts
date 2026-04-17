@@ -110,7 +110,7 @@ export class BookDetailPage {
       return this.bookService.getById(id_book).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError((err) => {
           this.handleError(err)
@@ -129,7 +129,7 @@ export class BookDetailPage {
         map(response => {
           console.log(response)
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError((err) => {
           this.handleError(err)
@@ -148,7 +148,7 @@ export class BookDetailPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.handleSuccess(response.message)
-          return response.result;
+          return response.data;
         }),
         tap(() => {
           this.getCopyRX.reload();
