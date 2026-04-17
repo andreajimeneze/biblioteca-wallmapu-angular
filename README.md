@@ -482,13 +482,13 @@ ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES RESERVATION
-ng g c features/reservation/components/reservation-btn-cancel-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-btn-create-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-btn-expire-components --skip-tests --style=none
-ng g c features/reservation/components/reservation-get-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-list-components --skip-tests --style=none
 
 ng g interface features/reservation/models/reservation-model
+
+ng g c features/reservation/pages/reservation-page --skip-tests --style=none
 
 ng g s features/reservation/services/reservation-service --skip-tests
 
@@ -559,6 +559,7 @@ ng g c layouts/layout-user --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
 # SHARED COMPONENTS
+ng g c shared/components/button-delete-component --skip-tests --style=none
 ng g c shared/components/header-component --skip-tests --style=none
 ng g c shared/components/loading-component --skip-tests --style=none
 ng g c shared/components/message-error-component --skip-tests --style=none

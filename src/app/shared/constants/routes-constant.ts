@@ -21,6 +21,12 @@ export const ROUTES_CONSTANTS = {
     },
     ADMIN: {
       DASHBOARD: '/admin/dashboard',
+      RESERVATION: {
+        ROOT: '/admin/reservation',
+      },
+      LOAN: {
+        ROOT: '/admin/loan',
+      },
       BOOK: {
         ROOT: '/admin/book/list',
         FORM: (bookId: number) => `/admin/book/form/${bookId}`,

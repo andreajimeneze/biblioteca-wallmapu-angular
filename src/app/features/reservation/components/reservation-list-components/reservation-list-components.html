@@ -1,4 +1,4 @@
-<div class="bg-my-light rounded-md m-4 text-my-dark overflow-x-auto">
+<div class="bg-my-light rounded-md m-4 text-my-dark overflow-x-auto shadow-xl">
   <div class="min-w-[700px]">
 
     <!-- HEADER -->
@@ -15,16 +15,21 @@
 
       <div class="flex gap-2 items-center">
         <app-reservation-status-select-components
-          [selectedId]="idReservationStatus()"
-          (newSelectedId)="onFilterReservation($event)"
+          [isLoading]="isLoading()"
+          [reservationStatusList]="reservationStatusList()"
+          [selectedId]="selectIdStatus()"
+          (newSelectedId)="onSelectedIdStatus.emit($event)"
         />
 
-        <app-reservation-btn-expire-components
-          (reload)="onReload()"
-        />
-        
         <button 
-          (click)="onReload()" 
+          (click)="onUpdateExpireReservation.emit()" 
+          class="btn btn-outline bg-my-yellow hover:bg-my-pink text-my-dark hover:text-my-light" >
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 21q-1.875 0-3.512-.712t-2.85-1.925t-1.925-2.85T3 12t.713-3.512t1.924-2.85t2.85-1.925T12 3q2.05 0 3.888.875T19 6.35V5q0-.425.288-.712T20 4t.713.288T21 5v4q0 .425-.288.713T20 10h-4q-.425 0-.712-.288T15 9t.288-.712T16 8h1.75q-1.025-1.4-2.525-2.2T12 5Q9.075 5 7.038 7.038T5 12t2.038 4.963T12 19q2.375 0 4.25-1.425t2.475-3.675q.125-.4.45-.6t.725-.15q.425.05.675.362t.15.688q-.725 2.975-3.15 4.888T12 21m1-9.4l2.5 2.5q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-2.8-2.8q-.15-.15-.225-.337T11 11.975V8q0-.425.288-.712T12 7t.713.288T13 8z"/></svg>
+          Actualizar Estado
+        </button>   
+
+        <button 
+          (click)="onReload.emit();" 
           class="btn btn-outline bg-my-purple hover:bg-my-purple/80 text-my-light">
           
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20q-3.35 0-5.675-2.325T4 12t2.325-5.675T12 4q1.725 0 3.3.712T18 6.75V5q0-.425.288-.712T19 4t.713.288T20 5v5q0 .425-.288.713T19 11h-5q-.425 0-.712-.288T13 10t.288-.712T14 9h3.2q-.8-1.4-2.187-2.2T12 6Q9.5 6 7.75 7.75T6 12t1.75 4.25T12 18q1.7 0 3.113-.862t2.187-2.313q.2-.35.563-.487t.737-.013q.4.125.575.525t-.025.75q-1.025 2-2.925 3.2T12 20"/></svg>
@@ -54,7 +59,7 @@
         </thead>
 
         <tbody class="[&>tr>td]:align-middle">
-          @for(item of filteredReservationList(); track item.id_reservation) {
+          @for(item of reservationList(); track item.id_reservation) {
             <tr class="hover:bg-my-purple/10 text-my-purple">
               <td>{{ item.id_reservation }}</td>
               <td>{{ item.book_title }}</td>
@@ -79,9 +84,8 @@
 
               <td class="whitespace-nowrap p-1">
                 @if (item.reservation_status_id != 3) {
-                  <app-reservation-btn-cancel-components
-                    [reservationModel]="item"
-                    (reload)="onReload()"                  
+                  <app-button-delete-component 
+                    (onClick)="onCancelReservation.emit(item.id_reservation)"
                   />
                 }
               </td>
@@ -91,4 +95,9 @@
       </table>
     }
   </div>
+  
+  <app-pagination-component
+    [currentPage]="1"
+    [totalPages]="1"
+  />
 </div>

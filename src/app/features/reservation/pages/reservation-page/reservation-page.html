@@ -1,0 +1,34 @@
+<app-section-header-component [title]="'Reservas'" />
+
+@if (successMessage()) {
+  <div class="p-4 pb-0">
+    <app-message-success-component [message]="successMessage()" />
+  </div>
+}
+
+@if (errorMessage()) {
+  <div class="p-4 pb-0">
+    <app-message-error-component [message]="errorMessage()" />
+  </div>
+}
+
+<app-reservation-list-components
+  [isLoading]="isLoading()"
+  [reservationList]="filteredReservationList()"
+  [reservationStatusList]="computedReservationStatusList()"
+  [selectIdStatus]="selectIdStatus()"
+  (onSelectedIdStatus)="onFilterByIdStatus($event)"
+  (onCancelReservation)="onCancelReservation($event)"
+  (onUpdateExpireReservation)="onUpdateExpireReservation()"
+  (onReload)="reloadReservation()"
+/>
+
+<app-modal-action-component
+  [textTitle]="'Cancelar Reserva'"
+  [textContent]="'¿Estás seguro que deseas cancelar la Reserva?'"
+  [textName]="'Elemento'"
+  [isOpen]="isModalOpen()"
+  [isLoading]="isLoading()"
+  (onConfirm)="onConfirmCancelReservation()"
+  (onModalClose)="closeModal()"
+/>
