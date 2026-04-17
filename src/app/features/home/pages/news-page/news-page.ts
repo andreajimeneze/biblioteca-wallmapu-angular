@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { NewsService } from '@features/news/services/news-service';
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { HeaderComponent } from "@shared/components/header-component/header-component";
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { catchError, map, of } from 'rxjs';
@@ -26,9 +27,9 @@ export class NewsPage {
   private readonly items = signal(6);
   private readonly search = signal('');
 
-  private readonly params = computed(() => ({
-    currentPage: this.currentPage(),
-    items: this.items(),
+  private readonly params = computed<PaginationRequestModel>(() => ({
+    page: this.currentPage(),
+    limit: this.items(),
     search: this.search(),
   }));  
 
@@ -37,11 +38,7 @@ export class NewsPage {
     stream: ({ params }) => {
       if (!params) return of(null);
 
-      return this.newsService.getAll(
-        params.currentPage, 
-        params.items, 
-        params.search
-      ).pipe(
+      return this.newsService.getAll(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.totalPages.set(response.data.pages);

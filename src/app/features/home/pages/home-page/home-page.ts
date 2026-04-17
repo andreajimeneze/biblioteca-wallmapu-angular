@@ -59,7 +59,7 @@ export class HomePage {
     stream: () => {    
       this.errorMessage.set(null);
 
-      return this.newsService.getAll(1, 4, '').pipe(
+      return this.newsService.getAll({ page: 1, limit: 4, search: '' }).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data.data;
