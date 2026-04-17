@@ -2,6 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { UserService } from '@features/user/services/user-service';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { catchError, map, of } from 'rxjs';
 import { UserListComponents } from "@features/user/components/user-list-components/user-list-components";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
@@ -33,9 +34,9 @@ export class UserListPage {
   readonly search = signal('');
   readonly totalPages = signal<number>(0);
 
-  private readonly params = computed(() => ({
-    currentPage: this.currentPage(),
-    items: this.items(),
+  private readonly params = computed<PaginationRequestModel>(() => ({
+    page: this.currentPage(),
+    limit: this.items(),
     search: this.search(),
   })); 
 
@@ -45,11 +46,7 @@ export class UserListPage {
     stream: ({ params }) => {
       if (!params) return of(null);
 
-      return this.userService.getAllDetails(
-        params.currentPage, 
-        params.items, 
-        params.search
-      ).pipe(
+      return this.userService.getAllDetails(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.totalPages.set(response.data.pages);

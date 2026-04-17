@@ -1,4 +1,4 @@
-export interface PaginationRequestModel<T> {
+export interface PaginationRequestModel<T = undefined> {
   page: number;
   limit: number;
   search?: string;

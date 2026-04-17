@@ -2,6 +2,7 @@ import { Component, computed, effect, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 import { NewsService } from '@features/news/services/news-service';
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { catchError, map, of, tap } from 'rxjs';
 import { NewsListComponent } from "@features/news/components/news-list-component/news-list-component";
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
@@ -47,21 +48,16 @@ export class NewsListPage {
   });
 
   // ─── GET RX
-  private readonly params = computed(() => ({
-    currentPage: this.currentPage(),
-    items: this.items(),
+  private readonly params = computed<PaginationRequestModel>(() => ({
+    page: this.currentPage(),
+    limit: this.items(),
     search: this.search(),
-    refresh: this.refreshTrigger(),
   }));  
   
   private readonly dataResourceRX = rxResource({
     params: () => this.params(),
     stream: ({ params }) => {    
-      return this.newsService.getAll(
-        params.currentPage, 
-        params.items, 
-        params.search
-      ).pipe(
+      return this.newsService.getAll(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.totalPages.set(response.data.pages);

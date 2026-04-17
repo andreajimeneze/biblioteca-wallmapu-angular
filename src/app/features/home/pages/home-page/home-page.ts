@@ -11,7 +11,8 @@ import { NewsFeaturedComponent } from "@features/news/components/news-featured-c
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { NewsCardListComponent } from "@features/news/components/news-card-list-component/news-card-list-component";
 import { AboutComponent } from '@features/home/components/about-component/about-component';
-import { BookPaginationRequestModel } from '@features/book/models/book-pagination-request-model';
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
+import { EditionFilterModel } from '@features/edition/models/edition-filter-model';
 import { EditionService } from '@features/edition/services/edition-service';
 import { EditionDetailModel } from '@features/edition/models/edition-detail-model';
 import { EditionCardListComponent } from "@features/edition/components/edition-card-list-component/edition-card-list-component";
@@ -80,13 +81,15 @@ export class HomePage {
   private readonly id_author = signal<number>(0);
   private readonly id_editorial  = signal<number>(0);
   private readonly id_genre  = signal<number>(0);
-  protected readonly editionPayload = computed<BookPaginationRequestModel>(() => ({
+  protected readonly editionPayload = computed<PaginationRequestModel<EditionFilterModel>>(() => ({
     page: this.currentPage(),
     limit: this.limit(),
     search: this.search(),
-    id_author: this.id_author(),
-    id_editorial: this.id_editorial(),
-    id_genre: this.id_genre(),        
+    filter: {
+      id_author: this.id_author(),
+      id_editorial: this.id_editorial(),
+      id_genre: this.id_genre()
+    }        
   }));
 
   private readonly editionRX = rxResource({

@@ -5,6 +5,7 @@ import { ApiResponseModel } from '@core/models/api-response-model';
 import { UserUpdateModel } from '@features/user/models/user-update-model';
 import { UserDetailModel } from '@features/user/models/user-detail-model';
 import { ApiResponseService } from '@core/services/api-response-service';
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
 
 @Injectable({
@@ -14,9 +15,14 @@ export class UserService {
   private apiResponseService = inject(ApiResponseService)
   private readonly endpoint = 'users';
 
-  getAllDetails(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationResponseModel<UserDetailModel[]>>> {
+  getAllDetails(params: PaginationRequestModel): Observable<ApiResponseModel<PaginationResponseModel<UserDetailModel[]>>> {
+    let path = `?page=${params.page}&limit=${params.limit}`
+    
+    if (params.search && params.search.trim() != '')
+      path = `${path}&search=${params.search}`
+  
     return this.apiResponseService.getAll<ApiResponseModel<PaginationResponseModel<UserDetailModel[]>>>(
-      `${this.endpoint}/detailed?page=${currentPage}&limit=${maxItems}&search=${search}`
+      `${this.endpoint}/detailed${path}`
     );
   }
 
