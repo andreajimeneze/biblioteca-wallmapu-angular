@@ -52,8 +52,8 @@ export class UserListPage {
       ).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          this.totalPages.set(response.result.pages);
-          return response.result.result;
+          this.totalPages.set(response.data.pages);
+          return response.data.data;
         }),
         catchError(err => {
           return of(null);

@@ -58,8 +58,8 @@ export class BookListPage {
       return this.bookService.getAllPagination(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          this.totalPages.set(response.result.pages);
-          return response.result.result;
+          this.totalPages.set(response.data.pages);
+          return response.data.data;
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
@@ -81,7 +81,7 @@ export class BookListPage {
           this.closeDeleteModal();
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(() => {
           this.refreshList()

@@ -72,8 +72,8 @@ export class EditionFormPage {
   protected readonly isEditMode = computed<boolean>(() => !!this.getEditionPayload())
   protected readonly title = computed<string>(() => 
     this.isEditMode() 
-    ? `Modificar ejemplar de: ${ this.computedBook()?.title }` 
-    : `Crear ejemplar para: ${ this.computedBook()?.title }`
+    ? `Modificar Edición de: ${ this.computedBook()?.title }` 
+    : `Crear Edición para: ${ this.computedBook()?.title }`
   )
   protected readonly isLoading = computed<boolean>(() =>
     [
@@ -113,7 +113,7 @@ export class EditionFormPage {
       return this.bookService.getById(id_book).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           this.handleError(err);
@@ -131,7 +131,7 @@ export class EditionFormPage {
       return this.editionService.getByIdDetail(id_edition).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           this.handleError(err);
@@ -155,7 +155,7 @@ export class EditionFormPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(edition => {
           this.getEditionPayload.set(edition.id_edition); 
@@ -178,7 +178,7 @@ export class EditionFormPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(url => {
           const base = this.addBaseEditionPayload();
@@ -207,7 +207,7 @@ export class EditionFormPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(() => {
           this.getEditionRX.reload();
@@ -229,7 +229,7 @@ export class EditionFormPage {
       return this.copyService.getAllByEditionId(id_edition).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           this.handleError(err);
@@ -249,7 +249,7 @@ export class EditionFormPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(() => {
           this.openDeleteModal.set(false);

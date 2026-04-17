@@ -26,7 +26,7 @@ export class AuthorSelectComponents {
       return this.authorService.getAll().pipe(
         map((res) => {
           if (!res.isSuccess) throw new Error(res.message);
-          return res.result;
+          return res.data;
         }),
         catchError(() => of([])),
       );

@@ -24,7 +24,7 @@ export class CommuneSelectComponents {
       this.communeService.getAll().pipe(
         map((res) => {
           if (!res.isSuccess) throw new Error(res.message);
-          return res.result;
+          return res.data;
         }),
         catchError(() => of([])),
       ),

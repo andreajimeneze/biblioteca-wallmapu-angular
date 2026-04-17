@@ -1,8 +1,5 @@
-import { Component, computed, inject, input, output } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
+import { Component, input, output } from '@angular/core';
 import { ReservationStatusModel } from '@features/reservation-status/models/reservation-status-model';
-import { ReservationStatusService } from '@features/reservation-status/services/reservation-status-service';
-import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({

@@ -88,7 +88,7 @@ export class BookFormPage {
       return this.bookService.getDetailById(idBook).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(book => {
           if (!book) {
@@ -123,7 +123,7 @@ export class BookFormPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);
-          return response.result;
+          return response.data;
         }),
         tap((res) => {
           this.getBookRX.reload();
@@ -149,7 +149,7 @@ export class BookFormPage {
       return this.authorStepService.delete(params).pipe(
         map(res => {
           if (!res.isSuccess) throw new Error(res.message);
-          return res.result;
+          return res.data;
         }),
         tap((res) => {
           this.getBookRX.reload();
@@ -175,7 +175,7 @@ export class BookFormPage {
       return this.subjectStepService.delete(params).pipe(
         map(res => {
           if (!res.isSuccess) throw new Error(res.message);
-          return res.result;
+          return res.data;
         }),
         tap(() => {
           this.getBookRX.reload();
@@ -204,7 +204,7 @@ export class BookFormPage {
         map(res => {
           if (!res.isSuccess) throw new Error(res.message);
           this.successMessage.set(res.message);
-          return res.result;
+          return res.data;
         }),
         tap(() => {
           this.getBookRX.reload();

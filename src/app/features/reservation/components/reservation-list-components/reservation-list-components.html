@@ -15,7 +15,6 @@
 
       <div class="flex gap-2 items-center">
         <app-reservation-status-select-components
-          [isLoading]="isLoading()"
           [reservationStatusList]="reservationStatusList()"
           [selectedId]="selectIdStatus()"
           (newSelectedId)="onSelectedIdStatus.emit($event)"
@@ -83,7 +82,7 @@
               }
 
               <td class="whitespace-nowrap p-1">
-                @if (item.reservation_status_id != 3) {
+                @if (item.reservation_status_id === 1) {
                   <app-button-delete-component 
                     (onClick)="onCancelReservation.emit(item.id_reservation)"
                   />
