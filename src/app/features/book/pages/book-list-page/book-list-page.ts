@@ -11,7 +11,7 @@ import { ModalDeleteComponent } from "@shared/components/modal-delete-component/
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { BookDetailModel } from '@features/book/models/book-model';
-import { BookPaginationRequestModel } from '@features/book/models/book-pagination-request-model';
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
 
 @Component({
   selector: 'app-book-list-page',
@@ -42,13 +42,10 @@ export class BookListPage {
 
   readonly bookIdToDeletePayload = signal<number | null>(null)
 
-  private readonly paramsPayload = computed<BookPaginationRequestModel>(() => ({
+  private readonly paramsPayload = computed<PaginationRequestModel>(() => ({
     page: this.currentPage(),
     limit: 10,
-    search: this.search(),
-    id_author: 0,
-    id_editorial: 0,
-    id_genre: 0
+    search: this.search()
   }));  
     
   private readonly bookRX = rxResource({
