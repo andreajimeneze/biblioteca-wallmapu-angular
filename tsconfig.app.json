@@ -7,7 +7,7 @@
     "rootDir": "./src",
     "types": [],
     "baseUrl": "./src",
-    "ignoreDeprecations": "6.0",
+    //"ignoreDeprecations": "6.0",
     "paths": {
       "@core/*": ["app/core/*"],
       "@layouts/*": ["app/layouts/*"],
