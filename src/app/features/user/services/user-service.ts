@@ -4,8 +4,8 @@ import { UserModel } from '@features/user/models/user-model';
 import { ApiResponseModel } from '@core/models/api-response-model';
 import { UserUpdateModel } from '@features/user/models/user-update-model';
 import { UserDetailModel } from '@features/user/models/user-detail-model';
-import { PaginationModel } from '@core/models/pagination-model';
 import { ApiResponseService } from '@core/services/api-response-service';
+import { PaginationResponseModel } from '@core/models/pagination-response-model';
 
 @Injectable({
   providedIn: 'root',
@@ -14,8 +14,8 @@ export class UserService {
   private apiResponseService = inject(ApiResponseService)
   private readonly endpoint = 'users';
 
-  getAllDetails(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationModel<UserDetailModel[]>>> {
-    return this.apiResponseService.getAll<ApiResponseModel<PaginationModel<UserDetailModel[]>>>(
+  getAllDetails(currentPage: number, maxItems:number, search: string = ""): Observable<ApiResponseModel<PaginationResponseModel<UserDetailModel[]>>> {
+    return this.apiResponseService.getAll<ApiResponseModel<PaginationResponseModel<UserDetailModel[]>>>(
       `${this.endpoint}/detailed?page=${currentPage}&limit=${maxItems}&search=${search}`
     );
   }

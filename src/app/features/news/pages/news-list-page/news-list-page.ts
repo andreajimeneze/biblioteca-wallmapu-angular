@@ -64,8 +64,8 @@ export class NewsListPage {
       ).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          this.totalPages.set(response.result.pages);
-          return response.result.result;
+          this.totalPages.set(response.data.pages);
+          return response.data.data;
         }),
         catchError(err => {
           return of(null);
@@ -91,7 +91,7 @@ export class NewsListPage {
       return this.newsGalleryService.delete_all(params).pipe(
         map(r => {
           if (!r.isSuccess) throw new Error(r.message);
-          return r.result;
+          return r.data;
         }),
         tap(() => {
           this.deleteNewsByIdPayload.set(this.deleteAllGalleryByIdNewsPayload());
@@ -115,7 +115,7 @@ export class NewsListPage {
       return this.newsService.delete(payloadId).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         tap(() => {
           this.refreshList()

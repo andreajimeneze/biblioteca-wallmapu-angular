@@ -83,7 +83,7 @@ export class NewsFormPage {
       return request$.pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         tap((result) => {
           const onlyNewImages = this.imagesPreviewVMList().filter(filter => filter.isNew);
@@ -129,7 +129,7 @@ export class NewsFormPage {
       ).pipe(
         map(r => {
           if (!r.isSuccess) throw new Error(r.message);
-          return r.result;
+          return r.data;
         }),
         tap(() => {
           this.routeGoBack();
@@ -152,7 +152,7 @@ export class NewsFormPage {
       return this.newsGaleryService.delete(params).pipe(
         map(r => {
           if (!r.isSuccess) throw new Error(r.message);
-          return r.result;
+          return r.data;
         }),
         tap(() => {
           this.imagesPreviewVMList.update(list =>

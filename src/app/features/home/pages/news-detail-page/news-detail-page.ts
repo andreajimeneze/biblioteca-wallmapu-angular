@@ -37,7 +37,7 @@ export class NewsDetailPage {
       ).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
-          return response.result;
+          return response.data;
         }),
         catchError(err => {
           return of(null);

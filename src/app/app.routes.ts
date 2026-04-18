@@ -31,6 +31,14 @@ export const routes: Routes = [
         loadChildren: () => import('@features/dashboard/admin.routes').then(m => m.DASHBOARD_ROUTES),
       },
       {
+        path: 'reservation',
+        loadChildren: () => import('@features/reservation/reservation.routes').then(m => m.RESERVATION_ROUTES),
+      },
+      {
+        path: 'loan',
+        component: InDevelopmentPage,
+      },
+      {
         path: 'book',
         loadChildren: () => import('@features/book/book.routes').then(m => m.BOOK_ROUTES),
       },
