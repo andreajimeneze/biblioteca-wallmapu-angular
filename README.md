@@ -490,7 +490,8 @@ ng g c features/reservation/components/reservation-list-components --skip-tests 
 
 ng g interface features/reservation/models/reservation-model
 
-ng g c features/reservation/pages/reservation-page --skip-tests --style=none
+ng g c features/reservation/pages/admin-reservation-page --skip-tests --style=none
+ng g c features/reservation/pages/user-reservation-page --skip-tests --style=none
 
 ng g s features/reservation/services/reservation-service --skip-tests
 

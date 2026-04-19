@@ -1,30 +1,28 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ReservationFilterModel, ReservationModel } from '@features/reservation/models/reservation-model';
-import { ReservationService } from '@features/reservation/services/reservation-service';
-import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
-import { catchError, finalize, map, of, tap } from 'rxjs';
-import { ReservationListComponents } from "@features/reservation/components/reservation-list-components/reservation-list-components";
-import { ReservationStatusService } from '@features/reservation-status/services/reservation-status-service';
-import { ReservationStatusModel } from '@features/reservation-status/models/reservation-status-model';
-import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
+import { ReservationFilterModel, ReservationModel } from '@features/reservation/models/reservation-model';
+import { ReservationService } from '@features/reservation/services/reservation-service';
+import { catchError, finalize, map, of, tap } from 'rxjs';
+import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
+import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
+import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { ReservationListComponents } from "@features/reservation/components/reservation-list-components/reservation-list-components";
+import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
 
 @Component({
-  selector: 'app-reservation-page',
+  selector: 'app-admin-reservation-page',
   imports: [
-    SectionHeaderComponent,
-    ReservationListComponents,
-    ModalActionComponent,
-    MessageErrorComponent,
-    MessageSuccessComponent
+    SectionHeaderComponent, 
+    MessageSuccessComponent, 
+    MessageErrorComponent, 
+    ReservationListComponents, 
+    ModalActionComponent
   ],
-  templateUrl: './reservation-page.html',
+  templateUrl: './admin-reservation-page.html',
 })
-export class ReservationPage {
+export class AdminReservationPage {
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isModalOpen = signal<boolean>(false);
@@ -32,12 +30,6 @@ export class ReservationPage {
   protected readonly currentPage = signal<number>(1);
   private readonly limit = signal<number>(10);
   private readonly search = signal<string>('');
-
-  private readonly reservationStatusService = inject(ReservationStatusService);
-  protected readonly computedReservationStatusList = computed<ReservationStatusModel[]>(() => [
-    { id_status: 0, name: 'Todos los Estados' },
-    ...this.getReservationStatusRX.value() ?? []
-  ]);
 
   private readonly reservationService = inject(ReservationService);
   private readonly getPaginationPayload = computed<PaginationRequestModel<ReservationFilterModel>>(() => {
@@ -56,27 +48,11 @@ export class ReservationPage {
 
   protected readonly isLoading = computed(() => 
     [
-      this.getReservationStatusRX,
       this.getReservationRX,
       this.cancelReservationRX,
       this.updateExpiredReservationRX,
     ].some(e => e.isLoading())
   );
-
-  private readonly getReservationStatusRX = rxResource({
-    stream: () => {    
-      return this.reservationStatusService.getAll().pipe(
-        map(response => {
-          if (!response.isSuccess) throw new Error(response.message);
-          return response.data;
-        }),
-        catchError(err => {
-          this.handleError(err);
-          return of(null);
-        })
-      );
-    },
-  });    
 
   private readonly getReservationRX = rxResource({
     params: () => this.getPaginationPayload(),

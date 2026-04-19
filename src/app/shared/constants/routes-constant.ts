@@ -14,6 +14,12 @@ export const ROUTES_CONSTANTS = {
   PROTECTED: {
     USER: {
       DASHBOARD: '/user',
+      RESERVATION: {
+        ROOT: '/user/reservation',
+      },
+      LOAN: {
+        ROOT: '/user/loan',
+      },
       PROFILE: {
         ROOT: '/user/profile',
         FORM: '/user/profile/form',

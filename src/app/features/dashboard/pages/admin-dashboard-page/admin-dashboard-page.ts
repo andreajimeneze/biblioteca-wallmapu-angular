@@ -7,14 +7,11 @@ import { catchError, map, of, tap } from 'rxjs';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { RegisterLoanComponents } from "@features/dashboard/components/register-loan-components/register-loan-components";
 import { RegisterReturnComponents } from "@features/dashboard/components/register-return-components/register-return-components";
-import { ReservationListComponents } from "@features/reservation/components/reservation-list-components/reservation-list-components";
 import { AdminStatsComponents } from "@features/stats/components/admin-stats-components/admin-stats-components";
 import { LoanPoliciesListComponent } from "@features/loan-policies/components/loan-policies-list-component/loan-policies-list-component";
 import { DueLoanListComponent } from "@features/loan/components/due-loan-list-component/due-loan-list-component";
 import { LoanListComponent } from "@features/loan/components/loan-list-component/loan-list-component";
 import { LoanModel } from '@features/loan/models/loan-model';
-import { ReservationModel } from '@features/reservation/models/reservation-model';
-import { ReservationService } from '@features/reservation/services/reservation-service';
 
 @Component({
   selector: 'app-admin-dashboard-page',
@@ -22,7 +19,6 @@ import { ReservationService } from '@features/reservation/services/reservation-s
     SectionHeaderComponent,
     RegisterLoanComponents,
     RegisterReturnComponents,
-    ReservationListComponents,
     AdminStatsComponents,
     LoanPoliciesListComponent,
     DueLoanListComponent,

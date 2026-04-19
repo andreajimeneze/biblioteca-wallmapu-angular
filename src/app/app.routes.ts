@@ -32,7 +32,7 @@ export const routes: Routes = [
       },
       {
         path: 'reservation',
-        loadChildren: () => import('@features/reservation/reservation.routes').then(m => m.RESERVATION_ROUTES),
+        loadChildren: () => import('@features/reservation/admin.reservation.routes').then(m => m.RESERVATION_ROUTES),
       },
       {
         path: 'loan',
@@ -76,6 +76,14 @@ export const routes: Routes = [
     children: [
       {
         path: '',
+        component: InDevelopmentPage,
+      },
+      {
+        path: 'reservation',
+        loadChildren: () => import('@features/reservation/user.reservation.routes').then(m => m.RESERVATION_ROUTES),
+      },
+      {
+        path: 'loan',
         component: InDevelopmentPage,
       },
       {

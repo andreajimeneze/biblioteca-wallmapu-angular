@@ -28,19 +28,35 @@ export class ReservationService {
       `${this.endpoint}/pagination${path}`
     );
   }
-  
-  getAll(): Observable<ApiResponseModel<ReservationModel[]>> {
-    return this.apiResponseService.getAll<ApiResponseModel<ReservationModel[]>>(
-      `${this.endpoint}`
-    );
-  }
 
+  getByUserPagination(params: PaginationRequestModel<ReservationFilterModel>): Observable<ApiResponseModel<PaginationResponseModel<ReservationModel[]>>> {
+    let path = `?page=${params.page}&limit=${params.limit}`
+    
+    if (params.search && params.search.trim() != '')
+      path = `${path}&search=${params.search}`
+   
+    if (params.filter) {
+      if (params.filter.id_status && params.filter.id_status > 0)
+        path = `${path}&id_status=${params.filter.id_status}`
+    }
+
+    return this.apiResponseService.getAll<ApiResponseModel<PaginationResponseModel<ReservationModel[]>>>(
+      `${this.endpoint}/pagination/user${path}`
+    );
+  }  
+  
   getById(id: number): Observable<ApiResponseModel<ReservationModel | null>> {
     return this.apiResponseService.getById<ApiResponseModel<ReservationModel | null>>(
       this.endpoint, id
     );
   }  
 
+  create(item: CreateReservationModel): Observable<ApiResponseModel<any>> {
+    return this.apiResponseService.create<ApiResponseModel<any>, CreateReservationModel>(
+      this.endpoint, item
+    );
+  }
+  
   pickup(id: number, copyId: number): Observable<ApiResponseModel<ReservationModel>> {
     return this.apiResponseService.update<ApiResponseModel<ReservationModel>, { copy_id: number }>(
       this.endpoint, `${id}/pickup`, { copy_id: copyId }
@@ -56,12 +72,6 @@ export class ReservationService {
   expire(): Observable<ApiResponseModel<number>> {
     return this.apiResponseService.update<ApiResponseModel<number>, null>(
       this.endpoint, `expire-overdue`, null
-    );
-  }
-  
-  create(item: CreateReservationModel): Observable<ApiResponseModel<any>> {
-    return this.apiResponseService.create<ApiResponseModel<any>, CreateReservationModel>(
-      this.endpoint, item
     );
   } 
 }

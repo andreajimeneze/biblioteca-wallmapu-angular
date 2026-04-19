@@ -12,6 +12,22 @@ export const NAVIGATION_USER: NavigationModel[] = [
     tooltip: 'Panel'
   },
   {
+    label: 'Reservas',
+    route: ROUTES_CONSTANTS.PROTECTED.USER.RESERVATION.ROOT,
+    iconPaths: [
+      'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z'
+    ],
+    tooltip: 'Reservas'
+  },
+  {
+    label: 'Prestamos',
+    route: ROUTES_CONSTANTS.PROTECTED.USER.LOAN.ROOT,
+    iconPaths: [
+      'M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4'
+    ],
+    tooltip: 'Prestamos'
+  },
+  {
     label: 'Perfil',
     route: ROUTES_CONSTANTS.PROTECTED.USER.PROFILE.ROOT,
     iconPaths: [
