@@ -3,7 +3,7 @@ import { ApiResponseModel } from '@core/models/api-response-model';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
 import { ApiResponseService } from '@core/services/api-response-service';
-import { CreateReservationModel, ReservationFilterModel, ReservationModel } from '@features/reservation/models/reservation-model';
+import { CreateReservationModel, ReservationFilterModel, ReservationModel, ReservationPickupModel } from '@features/reservation/models/reservation-model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -57,9 +57,9 @@ export class ReservationService {
     );
   }
   
-  pickup(id: number, copyId: number): Observable<ApiResponseModel<ReservationModel>> {
+  pickup(params: ReservationPickupModel): Observable<ApiResponseModel<ReservationModel>> {
     return this.apiResponseService.update<ApiResponseModel<ReservationModel>, { copy_id: number }>(
-      this.endpoint, `${id}/pickup`, { copy_id: copyId }
+      this.endpoint, `${params.id_reservation}/pickup`, { copy_id: params.id_copy }
     );
   }
 

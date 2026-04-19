@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
-import { ReservationFilterModel, ReservationModel } from '@features/reservation/models/reservation-model';
+import { ReservationFilterModel, ReservationModel, ReservationPickupModel } from '@features/reservation/models/reservation-model';
 import { ReservationService } from '@features/reservation/services/reservation-service';
 import { catchError, finalize, map, of, tap } from 'rxjs';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
@@ -10,15 +10,17 @@ import { MessageSuccessComponent } from "@shared/components/message-success-comp
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { ReservationListComponents } from "@features/reservation/components/reservation-list-components/reservation-list-components";
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
+import { ReservationToLoanComponents } from "@features/reservation/components/reservation-to-loan-components/reservation-to-loan-components";
 
 @Component({
   selector: 'app-admin-reservation-page',
   imports: [
-    SectionHeaderComponent, 
-    MessageSuccessComponent, 
-    MessageErrorComponent, 
-    ReservationListComponents, 
-    ModalActionComponent
+    SectionHeaderComponent,
+    MessageSuccessComponent,
+    MessageErrorComponent,
+    ReservationListComponents,
+    ModalActionComponent,
+    ReservationToLoanComponents
   ],
   templateUrl: './admin-reservation-page.html',
 })
@@ -32,6 +34,7 @@ export class AdminReservationPage {
   private readonly search = signal<string>('');
 
   private readonly reservationService = inject(ReservationService);
+  private readonly pickupReservationPayload = signal<ReservationPickupModel | null>(null);
   private readonly getPaginationPayload = computed<PaginationRequestModel<ReservationFilterModel>>(() => {
     return {
       page: this.currentPage(),
@@ -51,6 +54,7 @@ export class AdminReservationPage {
       this.getReservationRX,
       this.cancelReservationRX,
       this.updateExpiredReservationRX,
+      this.pickupReservationRX,
     ].some(e => e.isLoading())
   );
 
@@ -112,6 +116,33 @@ export class AdminReservationPage {
       );
     },
   });
+
+  private readonly pickupReservationRX = rxResource({
+    params: () => this.pickupReservationPayload(),
+    stream: ({ params }) => {
+      if (!params) return of(null);
+      this.errorMessage.set(null);
+      
+      return this.reservationService.pickup(params).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message)
+          return response.data;
+        }),
+        tap(() => {
+          this.reloadReservation();
+        }),
+        catchError(err => {
+          this.handleError(err);
+          return of(null);
+        })
+      );
+    },
+  });
+
+  protected onRegisterReservationToLoan(params: ReservationPickupModel): void {
+    this.pickupReservationPayload.set(params);
+  }
 
   protected reloadReservation(): void {
     this.getReservationRX.reload();

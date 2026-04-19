@@ -1,18 +1,24 @@
 <app-section-header-component [title]="'Reservas'" />
 
+<div class="p-4">
+  <app-reservation-to-loan-components
+    (onRegisterReservationToLoan)="onRegisterReservationToLoan($event)"
+  />
+</div>
+
 @if (successMessage()) {
-  <div class="p-4 pb-0">
+  <div class="p-4 pt-0">
     <app-message-success-component [message]="successMessage()" />
   </div>
 }
 
 @if (errorMessage()) {
-  <div class="p-4 pb-0">
+  <div class="p-4 pt-0">
     <app-message-error-component [message]="errorMessage()" />
   </div>
 }
 
-<div class="p-4 flex justify-end">
+<div class="px-4 flex justify-end">
   <button
     (click)="onUpdateExpireReservation()"
     class="btn btn-outline bg-my-yellow hover:bg-my-pink text-my-dark hover:text-my-light" >
@@ -21,7 +27,7 @@
   </button>
 </div>
 
-<div class="px-4">
+<div class="p-4">
   <app-reservation-list-components
     [isLoading]="isLoading()"
     [paginationAndReservationList]="computedPaginationAndReservationList()"
@@ -33,7 +39,6 @@
     (onPrevPage)="prevPage()"
   />
 </div>
-
 
 <app-modal-action-component
   [textTitle]="'Cancelar Reserva'"

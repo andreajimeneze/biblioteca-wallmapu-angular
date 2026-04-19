@@ -1,5 +1,6 @@
 export interface ReservationPickupModel {
-  copy_id: number,
+  id_reservation: number
+  id_copy: number,
 }
 
 export interface CreateReservationModel {

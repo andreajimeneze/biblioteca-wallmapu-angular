@@ -9,6 +9,7 @@ import { MessageSuccessComponent } from "../message-success-component/message-su
   templateUrl: './search-codbar-component.html',
 })
 export class SearchCodbarComponent {
+  readonly disabled = input<boolean>(true);
   readonly textTitle = input<string>('sin titulo')
   readonly errorMessage = input<string | null>(null);
   readonly successMessage = input<string | null>(null);
