@@ -1,7 +1,9 @@
 import { inject, Injectable } from '@angular/core';
 import { ApiResponseModel } from '@core/models/api-response-model';
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
+import { PaginationResponseModel } from '@core/models/pagination-response-model';
 import { ApiResponseService } from '@core/services/api-response-service';
-import { CreateReservationModel, ReservationModel } from '@features/reservation/models/reservation-model';
+import { CreateReservationModel, ReservationFilterModel, ReservationModel } from '@features/reservation/models/reservation-model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -11,6 +13,22 @@ export class ReservationService {
   private apiResponseService = inject(ApiResponseService)
   private readonly endpoint = 'reservations';
 
+  getAllPagination(params: PaginationRequestModel<ReservationFilterModel>): Observable<ApiResponseModel<PaginationResponseModel<ReservationModel[]>>> {
+    let path = `?page=${params.page}&limit=${params.limit}`
+    
+    if (params.search && params.search.trim() != '')
+      path = `${path}&search=${params.search}`
+   
+    if (params.filter) {
+      if (params.filter.id_status && params.filter.id_status > 0)
+        path = `${path}&id_status=${params.filter.id_status}`
+    }
+
+    return this.apiResponseService.getAll<ApiResponseModel<PaginationResponseModel<ReservationModel[]>>>(
+      `${this.endpoint}/pagination${path}`
+    );
+  }
+  
   getAll(): Observable<ApiResponseModel<ReservationModel[]>> {
     return this.apiResponseService.getAll<ApiResponseModel<ReservationModel[]>>(
       `${this.endpoint}`

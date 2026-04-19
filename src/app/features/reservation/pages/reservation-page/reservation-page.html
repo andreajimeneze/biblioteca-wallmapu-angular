@@ -14,13 +14,15 @@
 
 <app-reservation-list-components
   [isLoading]="isLoading()"
-  [reservationList]="filteredReservationList()"
+  [paginationAndReservationList]="computedPaginationAndReservationList()"
   [reservationStatusList]="computedReservationStatusList()"
-  [selectIdStatus]="selectIdStatus()"
+  [selectStatusId]="selectStatusId()"
   (onSelectedIdStatus)="onFilterByIdStatus($event)"
   (onCancelReservation)="onCancelReservation($event)"
   (onUpdateExpireReservation)="onUpdateExpireReservation()"
   (onReload)="reloadReservation()"
+  (onNextPage)="nextPage()"
+  (onPrevPage)="prevPage()"
 />
 
 <app-modal-action-component

@@ -22,3 +22,7 @@ export interface ReservationModel {
   reservation_status_id: number,
   reservation_status_name: string
 }
+
+export interface ReservationFilterModel {
+  id_status: number,
+}
