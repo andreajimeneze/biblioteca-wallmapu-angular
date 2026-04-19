@@ -16,7 +16,7 @@
       <div class="flex gap-2 items-center">
         <app-reservation-status-select-components
           [reservationStatusList]="reservationStatusList()"
-          [selectedId]="selectIdStatus()"
+          [selectedId]="selectStatusId()"
           (newSelectedId)="onSelectedIdStatus.emit($event)"
         />
 
@@ -58,7 +58,7 @@
         </thead>
 
         <tbody class="[&>tr>td]:align-middle">
-          @for(item of reservationList(); track item.id_reservation) {
+          @for(item of paginationAndReservationList()?.data; track item.id_reservation) {
             <tr class="hover:bg-my-purple/10 text-my-purple">
               <td>{{ item.id_reservation }}</td>
               <td>{{ item.book_title }}</td>
@@ -96,7 +96,9 @@
   </div>
   
   <app-pagination-component
-    [currentPage]="1"
-    [totalPages]="1"
+    [currentPage]="paginationAndReservationList()?.page ?? 1"
+    [totalPages]="totalPages()"
+    (prevPage)="onPrevPage.emit()"
+    (nextPage)="onNextPage.emit()"
   />
 </div>

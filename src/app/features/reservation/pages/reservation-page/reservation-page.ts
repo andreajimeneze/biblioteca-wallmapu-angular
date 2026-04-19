@@ -1,7 +1,6 @@
-import { JsonPipe, NgClass } from '@angular/common';
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ReservationModel } from '@features/reservation/models/reservation-model';
+import { ReservationFilterModel, ReservationModel } from '@features/reservation/models/reservation-model';
 import { ReservationService } from '@features/reservation/services/reservation-service';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { catchError, finalize, map, of, tap } from 'rxjs';
@@ -11,6 +10,8 @@ import { ReservationStatusModel } from '@features/reservation-status/models/rese
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
+import { PaginationResponseModel } from '@core/models/pagination-response-model';
 
 @Component({
   selector: 'app-reservation-page',
@@ -27,8 +28,10 @@ export class ReservationPage {
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isModalOpen = signal<boolean>(false);
-  protected readonly selectIdStatus = signal<number>(0);
-  protected readonly filteredReservationList = signal<ReservationModel[]>([]);
+  protected readonly selectStatusId = signal<number>(0);
+  protected readonly currentPage = signal<number>(1);
+  private readonly limit = signal<number>(10);
+  private readonly search = signal<string>('');
 
   private readonly reservationStatusService = inject(ReservationStatusService);
   protected readonly computedReservationStatusList = computed<ReservationStatusModel[]>(() => [
@@ -37,9 +40,19 @@ export class ReservationPage {
   ]);
 
   private readonly reservationService = inject(ReservationService);
+  private readonly getPaginationPayload = computed<PaginationRequestModel<ReservationFilterModel>>(() => {
+    return {
+      page: this.currentPage(),
+      limit: this.limit(),
+      search: this.search(),
+      filter: {
+        id_status: this.selectStatusId(),
+      }
+    }
+  });
   private readonly cancelReservationPayload = signal<number | null>(null);
   private readonly cancelReservationTemp = signal<number | null>(null);
-  protected readonly computedReservationList = computed<ReservationModel[]>(() => this.getReservationRX.value() ?? []);
+  protected readonly computedPaginationAndReservationList = computed<PaginationResponseModel<ReservationModel[]> | null>(() => this.getReservationRX.value() ?? null);
 
   protected readonly isLoading = computed(() => 
     [
@@ -49,13 +62,6 @@ export class ReservationPage {
       this.updateExpiredReservationRX,
     ].some(e => e.isLoading())
   );
-
-  private readonly updateEffect = effect(() => {
-    const data = this.computedReservationList();
-
-    if (data.length > 0)
-      this.filteredReservationList.set(data);
-  });
 
   private readonly getReservationStatusRX = rxResource({
     stream: () => {    
@@ -73,14 +79,13 @@ export class ReservationPage {
   });    
 
   private readonly getReservationRX = rxResource({
-    stream: () => {    
-      return this.reservationService.getAll().pipe(
+    params: () => this.getPaginationPayload(),
+    stream: ({ params }) => { 
+
+      return this.reservationService.getAllPagination(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
-        }),
-        tap(() => {
-          this.onFilterByIdStatus(0);
         }),
         catchError(err => {
           this.handleError(err);
@@ -134,7 +139,6 @@ export class ReservationPage {
 
   protected reloadReservation(): void {
     this.getReservationRX.reload();
-    this.onFilterByIdStatus(0);
   }
 
   protected onUpdateExpireReservation(): void {
@@ -142,15 +146,21 @@ export class ReservationPage {
   }
 
   protected onFilterByIdStatus(id: number): void {
-    this.selectIdStatus.set(id);
+    this.selectStatusId.set(id);
+  }
 
-    if (!id) {
-      this.filteredReservationList.set(this.computedReservationList());
-      return;
-    };
+  nextPage() {
+    const totalPages = this.computedPaginationAndReservationList()?.pages ?? 1
 
-    const filtered = this.computedReservationList().filter(e => e.reservation_status_id == id);
-    this.filteredReservationList.set(filtered);
+    if (this.currentPage() < totalPages){
+      this.currentPage.update(e => e + 1);
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage() > 1){
+      this.currentPage.update(e => e - 1);
+    }
   }
 
   protected onCancelReservation(id_reservation: number): void {
