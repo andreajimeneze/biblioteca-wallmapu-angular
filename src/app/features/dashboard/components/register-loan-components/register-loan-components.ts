@@ -1,7 +1,7 @@
 import { JsonPipe } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { ReservationModel } from '@features/reservation/models/reservation-model';
+import { ReservationModel, ReservationPickupModel } from '@features/reservation/models/reservation-model';
 import { ReservationService } from '@features/reservation/services/reservation-service';
 import { SearchCodbarComponent } from "@shared/components/search-codbar-component/search-codbar-component";
 import { catchError, map, of, tap } from 'rxjs';
@@ -27,7 +27,7 @@ export class RegisterLoanComponents {
   
   private readonly reservationService = inject(ReservationService);
   private readonly getReservationPayload = signal<number | null>(null);
-  private readonly saveReservationPayload = signal<{ id: number; copyId: number } | null>(null);
+  private readonly saveReservationPayload = signal<ReservationPickupModel| null>(null);
 
   protected readonly isLoading = computed<boolean>(() => this.saveReservationRX.isLoading());
   protected readonly isLoadingReservation = computed<boolean>(() => this.getReservationRX.isLoading() || this.saveReservationRX.isLoading());
@@ -60,7 +60,7 @@ export class RegisterLoanComponents {
       this.reservationErrorMessage.set(null);
       this.errorMessage.set(null);
       
-      return this.reservationService.pickup(params.id, params.copyId).pipe(
+      return this.reservationService.pickup(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
@@ -103,8 +103,8 @@ export class RegisterLoanComponents {
     const reservation = this.computedReservation();
     if (reservation && reservation.copy_id) {
       this.saveReservationPayload.set({
-        id: reservation.id_reservation,
-        copyId: reservation.copy_id
+        id_reservation: reservation.id_reservation,
+        id_copy: reservation.copy_id
       });
     }
   }

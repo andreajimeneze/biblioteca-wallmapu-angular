@@ -23,10 +23,8 @@ export class ReservationListComponents {
   readonly isLoading = input<boolean>(false);
   readonly selectStatusId = input<number>(0);
   readonly paginationAndReservationList = input<PaginationResponseModel<ReservationModel[]> | null>(null);
-  readonly reservationStatusList = input<ReservationStatusModel[]>([]);
   protected readonly onSelectedIdStatus = output<number>();
   protected readonly onCancelReservation = output<number>();
-  protected readonly onUpdateExpireReservation = output<void>();
   protected readonly onReload = output<void>();
   protected readonly onNextPage = output<void>();
   protected readonly onPrevPage = output<void>();

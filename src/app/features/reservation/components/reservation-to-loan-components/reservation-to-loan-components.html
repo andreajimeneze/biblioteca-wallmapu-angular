@@ -1,0 +1,52 @@
+<section class="bg-my-light border-base-300 rounded-box border p-6 shadow-xl">
+  <section class="flex justify-between">
+    <div class="py-4">
+      <h3 class="card-title text-xl text-my-purple">Registrar Préstamo</h3>
+      <p class="text-sm text-base-content/60">Convertir reserva a préstamo</p>
+    </div>
+    
+    <app-button-clear-component
+      (onClick)="onClear()"
+    />
+  </section>
+
+  <div class="divider text-base-content/40 max-w-7xl mx-auto my-2">Buscar Reserva</div>
+
+  <app-search-codbar-component 
+    [disabled]="enableButton()"
+    [clearTrigger]="clearCounter()"
+    [textTitle]="'Código de Barra de la Reserva'"
+    [isLoading]="isLoading()"
+    (onSubmit)="onSearchReservation($event)"
+  />
+
+  <app-reservation-detail-components 
+    [reservationModel]="computedReservation()"
+  />
+
+  @if (computedReservation()) {
+    <div class="divider text-base-content/40 max-w-7xl mx-auto my-2">Confirmar Libro</div>
+
+    <app-search-codbar-component 
+      [disabled]="enableButton()"
+      [clearTrigger]="clearCounter()"
+      [textTitle]="'Código de Barra del Libro'"
+      [isLoading]="isLoading()"
+      (onSubmit)="onEnterBookBarCode($event)"
+    />
+  }
+
+  @if (enableButton()) {
+    <button 
+      (click)="onReservationToLoan()" 
+      type="button" class="btn bg-my-purple hover:bg-my-purple/80 text-my-light w-full mt-2">
+      Registrar Préstamo
+    </button> 
+  }
+
+  @if (errorMessage()) {
+    <div class="pt-4">
+      <app-message-error-component [message]="errorMessage()" />
+    </div>
+  }
+</section>

@@ -1,10 +1,10 @@
 import { Component, output } from '@angular/core';
 
 @Component({
-  selector: 'app-button-delete-component',
+  selector: 'app-button-clear-component',
   imports: [],
-  templateUrl: './button-delete-component.html',
+  templateUrl: './button-clear-component.html',
 })
-export class ButtonDeleteComponent {
+export class ButtonClearComponent {
   protected readonly onClick = output<void>();
 }

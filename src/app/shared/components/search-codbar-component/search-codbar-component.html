@@ -11,7 +11,7 @@
 }
 
 @if(isLoading()) {
-  <div class="flex justify-center">
+  <div class="flex justify-center p-4">
     <app-loading-component />
   </div>
 } @else {
@@ -27,6 +27,7 @@
           <input 
             #codeInput
             type="search" class="flex-1 text-center" required placeholder="Código de Barra" 
+            [disabled]="disabled()"
             [value]="formData() ?? ''"
             (input)="updateCode($any($event.target).value, codeInput)"
           />

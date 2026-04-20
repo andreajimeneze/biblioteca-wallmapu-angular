@@ -7,7 +7,7 @@
     (change)="onChange($event)"
     class="select text-my-pink"
   >
-    @for (item of reservationStatusList(); track item.id_status) {
+    @for (item of computedReservationStatusList(); track item.id_status) {
       <option 
         [value]="item.id_status"
         [selected]="item.id_status === selectedId()"

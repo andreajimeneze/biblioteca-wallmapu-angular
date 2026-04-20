@@ -12,18 +12,18 @@
   </div>
 }
 
-<app-reservation-list-components
-  [isLoading]="isLoading()"
-  [paginationAndReservationList]="computedPaginationAndReservationList()"
-  [reservationStatusList]="computedReservationStatusList()"
-  [selectStatusId]="selectStatusId()"
-  (onSelectedIdStatus)="onFilterByIdStatus($event)"
-  (onCancelReservation)="onCancelReservation($event)"
-  (onUpdateExpireReservation)="onUpdateExpireReservation()"
-  (onReload)="reloadReservation()"
-  (onNextPage)="nextPage()"
-  (onPrevPage)="prevPage()"
-/>
+<div class="p-4">
+  <app-reservation-list-components
+    [isLoading]="isLoading()"
+    [paginationAndReservationList]="computedPaginationAndReservationList()"
+    [selectStatusId]="selectStatusId()"
+    (onSelectedIdStatus)="onFilterByIdStatus($event)"
+    (onCancelReservation)="onCancelReservation($event)"
+    (onReload)="reloadReservation()"
+    (onNextPage)="nextPage()"
+    (onPrevPage)="prevPage()"
+  />
+</div>
 
 <app-modal-action-component
   [textTitle]="'Cancelar Reserva'"
