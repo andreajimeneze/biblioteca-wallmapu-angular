@@ -31,6 +31,7 @@
         <p class="text-my-green text-xs">ID Libro: {{ computedBook()?.id_book }}</p>
         <p class="text-my-green text-xs">ID Edición: {{ computedEdition()?.id_edition }}</p>
         <p class="text-my-green text-xs">ID Copia: {{ selectedCopy()?.id_copy ?? 0 }}</p>
+        <p class="text-my-green text-xs">Año de Publicación: {{ computedEdition()?.publication_year }}</p>
         <p class="text-my-green text-xs">{{ selectedCopy()?.created_at | date:'yyyy-MM-dd HH:mm:ss' }} Fecha creación</p>
         <p class="text-my-green text-xs">{{ selectedCopy()?.updated_at | date:'yyyy-MM-dd HH:mm:ss' }} Fecha modificacion</p>
       </div>
