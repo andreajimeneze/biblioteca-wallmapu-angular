@@ -7,9 +7,9 @@
     />
 
     <div class="flex justify-between m-4">
-      <button (click)="refreshList()" class="btn max-w-48 bg-my-purple text-my-light">
-        Refrescar
-      </button>  
+      <app-button-refresh-component 
+        (onClick)="refreshList()"
+      />
     
       <button (click)="onCreate()" class="btn max-w-48 bg-my-pink text-my-light">
         Crear Libro
@@ -43,7 +43,7 @@
 </section>
 
 <app-modal-delete-component
-  title="Eliminar Noticia"
+  title="Eliminar Libro"
   [isOpen]="openDeleteModal()"
   [loading]="isLoading()"
   [itemName]="selectedBookToDelete()?.title"

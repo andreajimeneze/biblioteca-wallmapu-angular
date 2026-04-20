@@ -59,7 +59,7 @@ export class BookFormPage {
     }
   });
 
-  protected readonly isEditMode = signal<boolean>(this.routeId() > 0);
+  protected readonly isEditMode = computed<boolean>(() => this.getBookPayload() > 0);
   protected readonly headerText = computed<string>(() => this.isEditMode() ? "Modificar Libro" : "Crear Libro");
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
@@ -80,23 +80,17 @@ export class BookFormPage {
   private readonly getBookRX = rxResource({
     params: () => this.getBookPayload(),
     stream: ({ params: idBook }) => {
-      if (!idBook) {
-        this.isEditMode.set(false);
-        return of(null);
-      }
+      if (!idBook) return of(null);
 
       return this.bookService.getDetailById(idBook).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
         }),
-        tap(book => {
+        tap((book) => {
           if (!book) {
-            this.isEditMode.set(false);
-            return;
+            this.getBookPayload.set(0);
           }
-
-          this.isEditMode.set(true);
         }),
         catchError(err => {
           const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
@@ -125,7 +119,8 @@ export class BookFormPage {
           this.successMessage.set(response.message);
           return response.data;
         }),
-        tap((res) => {
+        tap((book) => {
+          this.getBookPayload.set(book.id_book);
           this.getBookRX.reload();
         }),
         catchError(err => {
