@@ -1,74 +1,41 @@
-<div class="bg-my-light rounded-md m-4 text-my-dark overflow-x-auto">
-  <div class="min-w-[700px]">
+<ul class="list bg-base-100 rounded-box shadow-md h-full">
 
-    <!-- HEADER -->
-    <div class="flex justify-between items-center p-6 pb-2">
-      <p class="font-bold text-my-purple text-lg">
-        Políticas de Préstamo
-      </p>
-
-      <button (click)="add()" class="btn btn-outline bg-my-purple hover:bg-my-purple/80 text-my-light">
-        + Nuevo
-      </button>
-    </div>
-
-    @if (isLoading()) {
-      <div class="p-4 flex justify-center">
-        <app-loading-component/>
-      </div>
-    } @else {
-      <!-- TABLA -->
-      <table class="table w-full text-center py-4">
-        <thead class="uppercase">
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Máx. Libros</th>
-            <th>Máx. Días</th>
-            <th>Días Reserva</th>
-            <th class="whitespace-nowrap">Acciones</th>
-          </tr>
-        </thead>
-
-        <tbody class="[&>tr>td]:align-middle">
-
-          @for (item of loanPoliciesList(); track item.id_policy) {
-            <tr class="hover:bg-my-purple/10 text-my-purple">
-              <td>{{ item.id_policy }}</td>
-              <td>{{ item.name }}</td>
-              <td>{{ item.max_books }}</td>
-              <td>{{ item.max_days }}</td>
-              <td>{{ item.reservation_days }}</td>
-    
-              <td class="whitespace-nowrap">
-                <div class="flex justify-center gap-2">
-                  <button 
-                    (click)="edit(item)" class="btn bg-my-green hover:bg-my-green/80 fill-my-light">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M18.58 2.944a2 2 0 0 0-2.828 0L14.107 4.59l5.303 5.303l1.645-1.644a2 2 0 0 0 0-2.829zm-.584 8.363l-5.303-5.303l-8.835 8.835l-1.076 6.38l6.38-1.077z"/></svg>
-                  </button>
-    
-                  <button (click)="delete(item)" class="btn bg-my-pink hover:bg-my-pink/80 fill-my-light">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7 21q-.825 0-1.412-.587T5 19V6H4V4h5V3h6v1h5v2h-1v13q0 .825-.587 1.413T17 21zm2-4h2V8H9zm4 0h2V8h-2z"/></svg>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          }
-
-        </tbody>
-
-        <tfoot class="uppercase">
-          <tr>
-            <th>Id</th>
-            <th>Nombre</th>
-            <th>Máx. Libros</th>
-            <th>Máx. Días</th>
-            <th>Reserva</th>
-            <th>Acciones</th>
-          </tr>
-        </tfoot>
-      </table>
-    }
-
+  <div class="p-4">
+    <h3 class="card-title text-xl text-my-purple">Políticas de Préstamo</h3>
+    <p class="text-sm text-base-content/60">Reglas para las reservas y prestamos</p>
   </div>
-</div>
+  
+  @if (isLoading()) {
+    <div class="p-4 flex justify-center items-center">
+      <app-loading-component/>
+    </div>
+  } @else {
+    @for (item of computedLoanPolicies(); track item.id_policy) {
+      <li class="list-row">
+        <div class="font-semibold opacity-60">PERFIL ({{ item.id_policy }}):</div>
+        <div class="font-semibold opacity-60">{{ item.name }}</div>
+      </li>
+    
+      <li class="list-row">
+        <div class="text-lg font-thin opacity-50">01</div>
+        <div class="text-my-green font-bold">Máximo de Libros:</div>
+        <div class="text-my-purple font-bold opacity-60">{{ item.max_books }}</div>
+        <div></div>
+      </li>
+    
+      <li class="list-row">
+        <div class="text-lg font-thin opacity-50">02</div>
+        <div class="text-my-green font-bold">Máximo Días de Prestamo:</div>
+        <div class="text-my-purple font-bold opacity-60">{{ item.max_days }}</div>
+        <div></div>
+      </li>
+    
+      <li class="list-row">
+        <div class="text-lg font-thin opacity-50">03</div>
+        <div class="text-my-green font-bold">Días de Reserva:</div>
+        <div class="text-my-purple font-bold opacity-60">{{ item.reservation_days }}</div>
+        <div></div>
+      </li>
+    }
+  }
+</ul>

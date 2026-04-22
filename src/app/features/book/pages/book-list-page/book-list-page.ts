@@ -12,6 +12,7 @@ import { PaginationComponent } from "@shared/components/pagination-component/pag
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { BookDetailModel } from '@features/book/models/book-model';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
+import { ButtonRefreshComponent } from "@shared/components/button-refresh-component/button-refresh-component";
 
 @Component({
   selector: 'app-book-list-page',
@@ -21,8 +22,9 @@ import { PaginationRequestModel } from '@core/models/pagination-request-model';
     MessageErrorComponent,
     PaginationComponent,
     ModalDeleteComponent,
-    MessageSuccessComponent
-],
+    MessageSuccessComponent,
+    ButtonRefreshComponent
+  ],
   templateUrl: './book-list-page.html',
 })
 export class BookListPage {
@@ -38,7 +40,6 @@ export class BookListPage {
   readonly currentPage = signal(1);
   private readonly search = signal('');
   readonly totalPages = signal<number>(0);
-  private readonly refreshTrigger = signal(0);
 
   readonly bookIdToDeletePayload = signal<number | null>(null)
 
@@ -97,8 +98,8 @@ export class BookListPage {
   protected readonly bookComputedList = computed<BookDetailModel[]>(() => this.bookRX.value() ?? []);
 
   // ─── ACCIONES 
-  refreshList() {
-    this.refreshTrigger.update(v => v + 1);
+  protected refreshList(): void {
+    this.bookRX.reload();
   }
 
   onCreate(){

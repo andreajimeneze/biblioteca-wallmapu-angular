@@ -564,6 +564,7 @@ ng g c layouts/layout-user --skip-tests --style=none
 # SHARED COMPONENTS
 ng g c shared/components/button-clear-component --skip-tests --style=none
 ng g c shared/components/button-delete-component --skip-tests --style=none
+ng g c shared/components/button-refresh-component --skip-tests --style=none
 ng g c shared/components/header-component --skip-tests --style=none
 ng g c shared/components/loading-component --skip-tests --style=none
 ng g c shared/components/message-error-component --skip-tests --style=none

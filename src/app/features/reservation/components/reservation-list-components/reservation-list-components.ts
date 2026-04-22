@@ -3,10 +3,10 @@ import { Component, input, output, signal, effect } from '@angular/core';
 import { ReservationModel } from '@features/reservation/models/reservation-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { ReservationStatusSelectComponents } from "@features/reservation-status/components/reservation-status-select-components/reservation-status-select-components";
-import { ReservationStatusModel } from '@features/reservation-status/models/reservation-status-model';
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
 import { ButtonDeleteComponent } from "@shared/components/button-delete-component/button-delete-component";
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
+import { ButtonRefreshComponent } from "@shared/components/button-refresh-component/button-refresh-component";
 
 @Component({
   selector: 'app-reservation-list-components',
@@ -15,7 +15,8 @@ import { PaginationResponseModel } from '@core/models/pagination-response-model'
     LoadingComponent,
     ReservationStatusSelectComponents,
     PaginationComponent,
-    ButtonDeleteComponent
+    ButtonDeleteComponent,
+    ButtonRefreshComponent
   ],
   templateUrl: './reservation-list-components.html',
 })
