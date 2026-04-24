@@ -29,9 +29,9 @@ export class LoanService {
     );
   }
 
-  getById(id: number): Observable<ApiResponseModel<LoanDetailModel | null>> {
+  getByCopyBarCode(id: string): Observable<ApiResponseModel<LoanDetailModel | null>> {
     return this.apiResponseService.getById<ApiResponseModel<LoanDetailModel | null>>(
-      this.endpoint, id
+      `${this.endpoint}/copy`, id
     );
   }  
 
