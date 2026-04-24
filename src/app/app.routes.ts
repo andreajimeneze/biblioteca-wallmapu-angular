@@ -36,7 +36,7 @@ export const routes: Routes = [
       },
       {
         path: 'loan',
-        component: InDevelopmentPage,
+        loadChildren: () => import('@features/loan/admin.loan.routes').then(m => m.LOAN_ROUTES),
       },
       {
         path: 'book',
@@ -84,7 +84,7 @@ export const routes: Routes = [
       },
       {
         path: 'loan',
-        component: InDevelopmentPage,
+        loadChildren: () => import('@features/loan/user.loan.routes').then(m => m.LOAN_ROUTES),
       },
       {
         path: 'profile',

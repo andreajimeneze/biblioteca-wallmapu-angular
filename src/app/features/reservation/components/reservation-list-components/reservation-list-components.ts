@@ -30,7 +30,7 @@ export class ReservationListComponents {
   protected readonly onNextPage = output<void>();
   protected readonly onPrevPage = output<void>();
 
-  protected readonly totalPages = signal<number>(0);
+  protected readonly totalPages = signal<number>(1);
 
   protected readonly updateTotalPagesEffect = effect(() => {
     const data = this.paginationAndReservationList();

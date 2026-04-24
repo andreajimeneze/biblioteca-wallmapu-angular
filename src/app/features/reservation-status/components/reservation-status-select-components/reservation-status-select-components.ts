@@ -17,13 +17,13 @@ export class ReservationStatusSelectComponents {
   readonly selectedId = input<number>(0);
   readonly newSelectedId = output<number>();
   
-
+  protected readonly isLoading = computed(() => this.getReservationStatusRX.isLoading());
+  
   private readonly reservationStatusService = inject(ReservationStatusService);
   protected readonly computedReservationStatusList = computed<ReservationStatusModel[]>(() => [
     { id_status: 0, name: 'Todos los Estados' },
     ...this.getReservationStatusRX.value() ?? []
   ]);
-  protected readonly isLoading = computed(() => this.getReservationStatusRX.isLoading());
   
   private readonly getReservationStatusRX = rxResource({
     stream: () => {    
@@ -33,7 +33,6 @@ export class ReservationStatusSelectComponents {
           return response.data;
         }),
         catchError(err => {
-          //this.handleError(err);
           return of(null);
         })
       );
