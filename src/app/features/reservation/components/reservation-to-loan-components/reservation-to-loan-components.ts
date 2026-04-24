@@ -26,11 +26,11 @@ export class ReservationToLoanComponents {
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly enableButton = signal<boolean>(false);
   
+  protected readonly isLoading = computed<boolean>(() => this.getReservationRX.isLoading());
+  
   private readonly reservationService = inject(ReservationService);
   private readonly getReservationPayload = signal<number | null>(null);
   protected readonly computedReservation = computed<ReservationModel | null>(() => this.getReservationRX.value() ?? null);
-  
-  protected readonly isLoading = computed<boolean>(() => this.getReservationRX.isLoading());
   
   private readonly getReservationRX = rxResource({
     params: () => this.getReservationPayload(),
@@ -105,6 +105,8 @@ export class ReservationToLoanComponents {
     const message = err instanceof Error 
       ? err.message 
       : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
+    
+    this.successMessage.set(null);
     this.errorMessage.set(message);
   }
 }

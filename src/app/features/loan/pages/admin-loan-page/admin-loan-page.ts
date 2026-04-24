@@ -8,9 +8,10 @@ import { PaginationResponseModel } from '@core/models/pagination-response-model'
 import { rxResource } from '@angular/core/rxjs-interop';
 import { catchError, map, of, tap } from 'rxjs';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
-import { LoanFilterModel } from '@features/loan/models/loan-model';
+import { LoanDetailModel, LoanFilterModel } from '@features/loan/models/loan-model';
 import { LoanService } from '@features/loan/services/loan-service';
 import { LoanPoliciesListComponent } from "@features/loan-policies/components/loan-policies-list-component/loan-policies-list-component";
+import { LoanToReturnComponent } from "@features/loan/components/loan-to-return-component/loan-to-return-component";
 
 @Component({
   selector: 'app-admin-loan-page',
@@ -20,8 +21,9 @@ import { LoanPoliciesListComponent } from "@features/loan-policies/components/lo
     MessageSuccessComponent,
     MessageErrorComponent,
     ModalActionComponent,
-    LoanPoliciesListComponent
-],
+    LoanPoliciesListComponent,
+    LoanToReturnComponent
+  ],
   templateUrl: './admin-loan-page.html',
 })
 export class AdminLoanPage {
@@ -51,7 +53,7 @@ export class AdminLoanPage {
       }
     }
   });
-  protected readonly computedPaginationAndLoanList = computed<PaginationResponseModel<any[]> | null>(() => this.getLoanRX.value() ?? null);
+  protected readonly computedPaginationAndLoanList = computed<PaginationResponseModel<LoanDetailModel[]> | null>(() => this.getLoanRX.value() ?? null);
 
   private readonly getLoanRX = rxResource({
     params: () => this.getLoanPayload(),

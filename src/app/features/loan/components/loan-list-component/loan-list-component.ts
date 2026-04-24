@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, effect, input, output, signal } from '@angular/core';
-import { LoanModel } from '@features/loan/models/loan-model';
+import { LoanDetailModel } from '@features/loan/models/loan-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { ButtonRefreshComponent } from "@shared/components/button-refresh-component/button-refresh-component";
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
@@ -21,7 +21,7 @@ import { LoanStatusSelectComponent } from "@features/loan-status/components/loan
 export class LoanListComponent {
   readonly isLoading = input<boolean>(false);
   readonly selectStatusId = input<number>(0);
-  readonly paginationAndLoanList = input<PaginationResponseModel<LoanModel[]> | null>(null);
+  readonly paginationAndLoanList = input<PaginationResponseModel<LoanDetailModel[]> | null>(null);
   protected readonly onSelectedIdStatus = output<number>();
   protected readonly onReload = output<void>();
   protected readonly onNextPage = output<void>();
