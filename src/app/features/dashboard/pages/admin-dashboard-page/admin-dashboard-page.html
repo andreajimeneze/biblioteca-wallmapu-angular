@@ -1,9 +1,18 @@
 <app-section-header-component [title]="'Panel de Administración'" />
 
-<app-admin-stats-components/>
+<div class="p-4 grid gap-4">
+  <section class="mx-auto">
+    <app-admin-stats-components/>
+  </section>
 
-<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-4">
-  <app-due-loan-list-component />
-  <app-loan-policies-list-component />
-</section>
-
+  <section class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <app-reservation-to-loan-components/>
+    <app-loan-to-return-component/>
+  
+    <app-loan-overdue-list-component
+      [isLoading]="isLoading()"
+      [loanOverdueList]="computedLoanOverdueList()"
+    />
+    <app-loan-policies-list-component />
+  </section>  
+</div>

@@ -1,0 +1,36 @@
+<div class="rounded-box shadow-md flex flex-col bg-my-light h-full">
+    
+  <!-- Título -->
+  <div class="p-4 text-my-pink text-xl tracking-wide">
+    Préstamos Vencidos
+  </div>
+
+  @if (isLoading()) {
+    <div class="flex justify-center items-center h-full p-4">
+      <app-loading-component/>
+    </div>
+  } @else {
+    <!-- Lista scrolleable -->
+    <ul class="flex-1 overflow-y-auto max-h-56">
+      @for (item of loanOverdueList(); track item.id_loan) {
+        <li class="list-row flex justify-between p-4">
+          <div>
+            <div>{{ item.due_date | date:'yyyy-MM-dd' }}</div>
+            <div>Libro: {{ item.book_title }}</div>
+            <div class="text-xs uppercase font-semibold opacity-60">Usuario: {{ item.user_name }}</div>
+          </div>
+          <div class="aspect-square size-10 rounded-md bg-my-pink text-my-light flex items-center justify-center">
+            {{getDaysDiff(item.due_date)}}d
+          </div>
+        </li>
+      } 
+    </ul>
+  
+    <!-- Botón fijo abajo -->
+    <div class="p-4">
+      <button class="btn bg-my-pink text-my-light w-full" type="submit">
+        Ver Todos
+      </button>
+    </div>  
+  }
+</div>

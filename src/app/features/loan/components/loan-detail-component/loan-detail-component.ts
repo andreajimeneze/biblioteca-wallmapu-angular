@@ -10,5 +10,5 @@ import { LoanDetailModel } from '@features/loan/models/loan-model';
   templateUrl: './loan-detail-component.html',
 })
 export class LoanDetailComponent {
-  readonly loanDetailModel = input<LoanDetailModel | null>(null)
+  readonly loanDetailModel = input<LoanDetailModel | null>(null);
 }

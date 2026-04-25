@@ -22,11 +22,12 @@ import { LoanToReturnComponent } from "@features/loan/components/loan-to-return-
     MessageErrorComponent,
     ModalActionComponent,
     LoanPoliciesListComponent,
-    LoanToReturnComponent
+    LoanToReturnComponent,
   ],
   templateUrl: './admin-loan-page.html',
 })
 export class AdminLoanPage {
+  protected readonly clearCounter = signal<number>(0);
   protected readonly isModalOpen = signal<boolean>(false);
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
@@ -35,14 +36,18 @@ export class AdminLoanPage {
   private readonly limit = signal<number>(10);
   private readonly search = signal<string>('');
 
+  protected readonly isLoadingLoan = computed<boolean>(() => this.getLoanByCodebarRX.isLoading());
   protected readonly isLoading = computed<boolean>(() => 
     [
       this.getLoanRX,
-      this.updateExpiredLoanRX,
+      this.returnLoanRX,
+      this.updateExpiredLoanRX,      
     ].some(e => e.isLoading())
   );
 
   private readonly loanService = inject(LoanService);
+  private readonly returnLoanPayload = signal<number | null>(null);
+  private readonly getLoanByCodebarPayload = signal<string | null>(null);
   private readonly getLoanPayload = computed<PaginationRequestModel<LoanFilterModel>>(() => {
     return {
       page: this.currentPage(),
@@ -54,6 +59,7 @@ export class AdminLoanPage {
     }
   });
   protected readonly computedPaginationAndLoanList = computed<PaginationResponseModel<LoanDetailModel[]> | null>(() => this.getLoanRX.value() ?? null);
+  protected readonly computedLoanDetail = computed<LoanDetailModel | null>(() => this.getLoanByCodebarRX.value() ?? null);
 
   private readonly getLoanRX = rxResource({
     params: () => this.getLoanPayload(),
@@ -63,6 +69,51 @@ export class AdminLoanPage {
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
+        }),
+        catchError(err => {
+          this.handleError(err);
+          return of(null);
+        })
+      );
+    },
+  });
+
+  private readonly getLoanByCodebarRX = rxResource({
+    params: () => this.getLoanByCodebarPayload(),
+    stream: ({ params: codebar }) => {
+      if (!codebar) return of(null);
+      this.errorMessage.set(null);
+      
+      return this.loanService.getByCopyBarCode(codebar).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.data;
+        }),
+        tap(() => {
+
+        }),
+        catchError(err => {
+          this.handleError(err);
+          return of(null);
+        })
+      );
+    },
+  });
+
+  private readonly returnLoanRX = rxResource({
+    params: () => this.returnLoanPayload(),
+    stream: ({ params: id_copy }) => {
+      if (!id_copy) return of(null);
+      this.errorMessage.set(null);
+      
+      return this.loanService.return(id_copy).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
+          return response.data;
+        }),
+        tap(() => {
+          this.onReloadLoan();
         }),
         catchError(err => {
           this.handleError(err);
@@ -90,16 +141,32 @@ export class AdminLoanPage {
     },
   });
 
+  protected onClear(): void {
+    this.clearCounter.update(e => e + 1);
+    this.getLoanByCodebarPayload.set(null);
+  }
+
+  protected onGetLoanByBarcode(codebar: string): void {
+    this.getLoanByCodebarPayload.set(codebar);
+  }
+
+  protected onReturnLoan(item: LoanDetailModel): void {
+    this.returnLoanPayload.set(item.copy_id);
+    this.onClear();
+  }
+
   protected closeModal(): void {
     this.isModalOpen.set(false);
   }
 
   protected onReloadLoan(): void {
     this.getLoanRX.reload();
+    this.onClear();
   }
 
   protected onUpdateExpireLoan(): void {
     this.updateExpiredLoanRX.reload();
+    this.onClear();
   }
   
   protected onFilterByIdStatus(id: number): void {

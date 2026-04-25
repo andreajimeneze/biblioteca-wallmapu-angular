@@ -1,29 +1,28 @@
-<div class="bg-my-light rounded-md text-my-dark overflow-x-auto">
-  <div class="min-w-[700px]">
+<div class="bg-my-light rounded-md text-my-dark shadow-xl">
+  <!-- HEADER -->
+  <header class="p-6 pb-2 flex justify-between">
+    <div>
+      <h2 class="font-bold text-my-purple text-lg">
+        Gestión de Prestamos
+      </h2>
+      <p class="text-sm text-my-dark/50">
+        Lista completa de todos los prestamos
+      </p>
+    </div>
 
-    <!-- HEADER -->
-     <header class="p-6 pb-2 flex justify-between">
-        <div>
-          <h2 class="font-bold text-my-purple text-lg">
-            Gestión de Prestamos
-          </h2>
-          <p class="text-sm text-my-dark/50">
-            Lista completa de todos los prestamos
-          </p>
-        </div>
+    <div class="flex gap-2 items-center">
+      <app-loan-status-select-component
+        [selectedId]="selectStatusId()"
+        (newSelectedId)="onSelectedIdStatus.emit($event)"
+      />
 
-        <div class="flex gap-2 items-center">
-          <app-loan-status-select-component
-            [selectedId]="selectStatusId()"
-            (newSelectedId)="onSelectedIdStatus.emit($event)"
-          />
-  
-          <app-button-refresh-component 
-            (onClick)="onReload.emit()"
-          />
-        </div>
-      </header>
+      <app-button-refresh-component 
+        (onClick)="onReload.emit()"
+      />
+    </div>
+  </header>
 
+  <div class="overflow-x-auto">
     @if(isLoading()) {
       <div class="p-4 flex justify-center">
         <app-loading-component/>
@@ -68,5 +67,5 @@
     [totalPages]="totalPages()"
     (prevPage)="onPrevPage.emit()"
     (nextPage)="onNextPage.emit()"
-  />  
+  />
 </div>
