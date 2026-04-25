@@ -1,0 +1,22 @@
+<section class="bg-my-light border-base-300 rounded-box border p-6 shadow-xl">
+  <section class="flex justify-between">
+    <div>
+      <h3 class="card-title text-xl text-my-purple">Registrar Devolucion</h3>
+      <p class="text-sm text-base-content/60">Recepcionar Préstamo para Devolución</p>
+    </div>
+    
+    <app-button-clear-component
+      (onClick)="onClear()"
+    />
+  </section>
+
+  <div class="divider text-base-content/40 max-w-7xl mx-auto">Buscar Préstamo</div>
+
+  <app-search-codbar-component 
+    [disabled]="enableButton()"
+    [clearTrigger]="clearCounter()"
+    [textTitle]="'Código de Barra de la Copia'"
+    [isLoading]="isLoading()"
+    (onSubmit)="onEnterBookBarCode($event)"
+  />
+</section>

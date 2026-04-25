@@ -1,28 +1,28 @@
-<div class="bg-my-light rounded-md m-4 text-my-dark overflow-x-auto">
+<div class="bg-my-light rounded-md text-my-dark overflow-x-auto">
   <div class="min-w-[700px]">
 
     <!-- HEADER -->
      <header class="p-6 pb-2 flex justify-between">
-      <div>
-        <h2 class="font-bold text-my-purple text-lg">
-          Gestión de Prestamos
-        </h2>
-        <p class="text-sm text-my-dark/50">
-          Lista completa de todos los prestamos
-        </p>
-      </div>
-  
+        <div>
+          <h2 class="font-bold text-my-purple text-lg">
+            Gestión de Prestamos
+          </h2>
+          <p class="text-sm text-my-dark/50">
+            Lista completa de todos los prestamos
+          </p>
+        </div>
 
-      <div class="flex gap-2 items-center">        
-        <button 
-          (click)="reload()" 
-          class="btn btn-outline bg-my-purple hover:bg-my-purple/80 text-my-light">
-          
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="currentColor" d="M12 20q-3.35 0-5.675-2.325T4 12t2.325-5.675T12 4q1.725 0 3.3.712T18 6.75V5q0-.425.288-.712T19 4t.713.288T20 5v5q0 .425-.288.713T19 11h-5q-.425 0-.712-.288T13 10t.288-.712T14 9h3.2q-.8-1.4-2.187-2.2T12 6Q9.5 6 7.75 7.75T6 12t1.75 4.25T12 18q1.7 0 3.113-.862t2.187-2.313q.2-.35.563-.487t.737-.013q.4.125.575.525t-.025.75q-1.025 2-2.925 3.2T12 20"/></svg>
-          Refrescar
-        </button>
-      </div>
-     </header>
+        <div class="flex gap-2 items-center">
+          <app-loan-status-select-component
+            [selectedId]="selectStatusId()"
+            (newSelectedId)="onSelectedIdStatus.emit($event)"
+          />
+  
+          <app-button-refresh-component 
+            (onClick)="onReload.emit()"
+          />
+        </div>
+      </header>
 
     @if(isLoading()) {
       <div class="p-4 flex justify-center">
@@ -37,26 +37,36 @@
             <th>Id</th>
             <th>Libro</th>
             <th>Usuario</th>
-            <th>Fecha Reserva</th>
-            <th>Fecha Retorno</th>
+            <th>Fecha Prestamo</th>
             <th>Fecha Deuda</th>
-            <th>Acciones</th>
+            <th>Fecha Retorno</th>
+            <th>Firma</th>
+            <th>Estado</th>
           </tr>
         </thead>
 
         <tbody class="[&>tr>td]:align-middle">
-          @for(item of loanList(); track item.id_loan) {
+          @for(item of paginationAndLoanList()?.data; track item.id_loan) {
             <tr class="hover:bg-my-purple/10 text-my-purple">
               <td>{{ item.id_loan }}</td>
               <td>{{ item.book_title }}</td>
-              <td>{{ item.user_name }} {{ item.user_lastname }}</td>
+              <td>{{ item.user_name }}</td>
               <td>{{ item.loan_date | date:'yyyy-MM-dd' }}</td>
-              <td>{{ item.return_date | date:'yyyy-MM-dd' }}</td>
               <td>{{ item.due_date | date:'yyyy-MM-dd' }}</td>
+              <td>{{ item.return_date | date:'yyyy-MM-dd' }}</td>
+              <td>{{ item.copy_signature }}</td>
+              <td>{{ item.loan_status_name }}</td>
             </tr>
           }
         </tbody>    
       </table>
     }
   </div>
+
+  <app-pagination-component
+    [currentPage]="paginationAndLoanList()?.page ?? 1"
+    [totalPages]="totalPages()"
+    (prevPage)="onPrevPage.emit()"
+    (nextPage)="onNextPage.emit()"
+  />  
 </div>

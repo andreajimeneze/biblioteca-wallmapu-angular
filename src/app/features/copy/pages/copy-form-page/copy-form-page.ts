@@ -203,17 +203,20 @@ export class CopyFormPage {
   }
 
   protected formSubmit(form: CopyModel): void {
+    const edition_id = this.getEditionPayload()
+    if (!edition_id) return
+
     const payload: CreateCopyModel | UpdateCopyModel = form.id_copy > 0
     ? {
         id_copy: form.id_copy,
         signature_topography: form.signature_topography,
-        edition_id: form.edition_id,
+        edition_id: edition_id,
         copy_number: form.copy_number,
         status_id: form.status_id,
       }
     : {
         signature_topography: form.signature_topography,
-        edition_id: form.edition_id,
+        edition_id: edition_id,
         copy_number: form.copy_number,
       };
 

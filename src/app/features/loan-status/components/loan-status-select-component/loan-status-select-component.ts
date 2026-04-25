@@ -7,7 +7,9 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 
 @Component({
   selector: 'app-loan-status-select-component',
-  imports: [LoadingComponent],
+  imports: [
+    LoadingComponent
+  ],
   templateUrl: './loan-status-select-component.html',
 })
 export class LoanStatusSelectComponent {
@@ -15,7 +17,13 @@ export class LoanStatusSelectComponent {
   readonly selectedId = input<number>(0);
   readonly newSelectedId = output<number>();
   
+  protected readonly isLoading = computed(() => this.loanStatusRX.isLoading());
+
   private readonly loanStatusService = inject(LoanStatusService);
+  protected readonly computedLoanStatusList = computed<LoanStatusModel[]>(() => [
+    { id_status: 0, name: 'Todos los Estados' },
+    ...this.loanStatusRX.value() ?? []
+  ]);
 
   private readonly loanStatusRX = rxResource({
     stream: () => {    
@@ -30,9 +38,6 @@ export class LoanStatusSelectComponent {
       );
     },
   });
-
-  protected readonly isLoading = computed(() => this.loanStatusRX.isLoading());
-  protected readonly computedLoanStatusList = computed<LoanStatusModel[]>(() => this.loanStatusRX.value() ?? []);
 
   protected onChange(event: Event): void {
     const select = event.target as HTMLSelectElement;

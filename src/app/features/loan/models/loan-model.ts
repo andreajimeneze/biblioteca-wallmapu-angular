@@ -1,15 +1,37 @@
-export interface LoanModel {
+export interface UpdateLoanModel {
+  copy_id: number;
+}
+
+
+export interface CreateLoanModel extends UpdateLoanModel {
+  user_id: string;
+}
+
+
+export interface LoanModel extends CreateLoanModel {
   id_loan: number;
   loan_date: string;
   due_date: string;
   return_date: string;
-  copy_id: number;
-  user_id: string;
+  loan_status_id: number;
+}
+
+
+export interface LoanDetailModel extends CreateLoanModel {
+  id_loan: number;
+  loan_date: string;
+  due_date: string;
+  return_date: string;
   loan_status_id: number;
   loan_status_name: string;
   user_name: string;
-  user_lastname: string;
+  copy_barcode: string;
+  copy_signature: string;
   book_id: number;
   book_title: string;
-  copy_barcode: string;
+}
+
+
+export interface LoanFilterModel {
+  id_status: number
 }

@@ -7,7 +7,6 @@
     (change)="onChange($event)"
     class="select text-my-pink"
   >      
-    <option disabled>Seleccióne un Estado</option>
     @for (item of computedLoanStatusList(); track item.id_status) {
       <option 
         [value]="item.id_status"
