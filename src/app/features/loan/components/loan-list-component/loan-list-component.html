@@ -54,7 +54,18 @@
               <td>{{ item.due_date | date:'yyyy-MM-dd' }}</td>
               <td>{{ item.return_date | date:'yyyy-MM-dd' }}</td>
               <td>{{ item.copy_signature }}</td>
-              <td>{{ item.loan_status_name }}</td>
+
+              @switch (item.loan_status_id) {
+                @case (1) {
+                  <td><p class="bg-my-purple text-my-light p-1 rounded-md">{{ item.loan_status_name }}</p></td>
+                }
+                @case (2) {
+                  <td><p class="bg-my-green text-my-light p-1 rounded-md">{{ item.loan_status_name }}</p></td>
+                }
+                @default {
+                  <td><p class="bg-my-pink text-my-light p-1 rounded-md">{{ item.loan_status_name }}</p></td>
+                }
+              }
             </tr>
           }
         </tbody>    

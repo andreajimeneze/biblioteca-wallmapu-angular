@@ -89,9 +89,6 @@ export class AdminLoanPage {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
         }),
-        tap(() => {
-
-        }),
         catchError(err => {
           this.handleError(err);
           return of(null);
