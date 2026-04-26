@@ -2,6 +2,10 @@
 
 ### Dependencies
 - [DaisyUI](https://daisyui.com/)
+- bwip-js CodeBar generator
+```
+npm install bwip-js
+```
 
 ### Structure
 ```
@@ -489,6 +493,7 @@ ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES RESERVATION
+ng g c features/reservation/components/reservation-barcode-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-to-loan-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-detail-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-list-components --skip-tests --style=none
@@ -567,6 +572,7 @@ ng g c layouts/layout-user --skip-tests --style=none
 
 # ---------------------------------------------------------------------------------
 # SHARED COMPONENTS
+ng g c shared/components/barcode-generator.component --skip-tests --style=none
 ng g c shared/components/button-clear-component --skip-tests --style=none
 ng g c shared/components/button-delete-component --skip-tests --style=none
 ng g c shared/components/button-refresh-component --skip-tests --style=none

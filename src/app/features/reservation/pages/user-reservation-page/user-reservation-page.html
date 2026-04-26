@@ -1,5 +1,16 @@
 <app-section-header-component [title]="'Reservas'" />
 
+<section class="p-4 grid grid-cols-1 gap-4">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+    <app-reservation-barcode-components
+      [reservationModel]="selectedReservation()"
+    />
+    
+    <app-loan-policies-list-component/>
+  </div>
+</section>
+
+
 @if (successMessage()) {
   <div class="p-4 pb-0">
     <app-message-success-component [message]="successMessage()" />
@@ -17,6 +28,7 @@
     [isLoading]="isLoading()"
     [paginationAndReservationList]="computedPaginationAndReservationList()"
     [selectStatusId]="selectStatusId()"
+    (onSelectedReservation)="onSelectedReservation($event)"
     (onSelectedIdStatus)="onFilterByIdStatus($event)"
     (onCancelReservation)="onCancelReservation($event)"
     (onReload)="reloadReservation()"
