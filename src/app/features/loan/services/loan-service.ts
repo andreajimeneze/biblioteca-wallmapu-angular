@@ -29,11 +29,39 @@ export class LoanService {
     );
   }
 
-  getById(id: number): Observable<ApiResponseModel<LoanDetailModel | null>> {
-    return this.apiResponseService.getById<ApiResponseModel<LoanDetailModel | null>>(
-      this.endpoint, id
+  getAllPaginationByUser(params: PaginationRequestModel<LoanFilterModel>): Observable<ApiResponseModel<PaginationResponseModel<LoanDetailModel[]>>> {
+    let path = `?page=${params.page}&limit=${params.limit}`
+    
+    if (params.search && params.search.trim() != '')
+      path = `${path}&search=${params.search}`
+   
+    if (params.filter) {
+      if (params.filter.id_status && params.filter.id_status > 0)
+        path = `${path}&id_status=${params.filter.id_status}`
+    }
+
+    return this.apiResponseService.getAll<ApiResponseModel<PaginationResponseModel<LoanDetailModel[]>>>(
+      `${this.endpoint}/pagination/user${path}`
     );
   }  
+
+  getAllOverdue(): Observable<ApiResponseModel<LoanDetailModel[]>> {
+    return this.apiResponseService.getAll<ApiResponseModel<LoanDetailModel[]>>(
+      `${this.endpoint}/overdue`
+    );
+  }  
+
+  getByCopyBarCode(codebar: string): Observable<ApiResponseModel<LoanDetailModel | null>> {
+    return this.apiResponseService.getById<ApiResponseModel<LoanDetailModel | null>>(
+      `${this.endpoint}/copy`, codebar
+    );
+  }  
+
+  return(id_copy: number): Observable<ApiResponseModel<LoanModel>> {
+    return this.apiResponseService.update<ApiResponseModel<LoanModel>, null>(
+      `${this.endpoint}/copy`, `${id_copy}/return`, null
+    );
+  } 
 
   expire(): Observable<ApiResponseModel<number>> {
     return this.apiResponseService.update<ApiResponseModel<number>, null>(

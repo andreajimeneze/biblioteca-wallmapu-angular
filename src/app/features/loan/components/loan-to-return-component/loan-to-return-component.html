@@ -6,17 +6,29 @@
     </div>
     
     <app-button-clear-component
-      (onClick)="onClear()"
+      (onClick)="onClear.emit()"
     />
   </section>
 
   <div class="divider text-base-content/40 max-w-7xl mx-auto">Buscar Préstamo</div>
 
-  <app-search-codbar-component 
-    [disabled]="enableButton()"
-    [clearTrigger]="clearCounter()"
+  <app-search-codbar-component
+    [disabled]="!!this.loanDetailModel()"
+    [clearTrigger]="clearTrigger()"  
     [textTitle]="'Código de Barra de la Copia'"
     [isLoading]="isLoading()"
-    (onSubmit)="onEnterBookBarCode($event)"
+    (onSubmit)="onEnterBookBarcode($event)"
   />
+
+  <app-loan-detail-component
+    [loanDetailModel]="loanDetailModel()"
+  />
+
+  @if (loanDetailModel()) {
+    <button 
+      (click)="returnLoan()"
+      type="button" class="btn bg-my-purple hover:bg-my-purple/80 text-my-light w-full mt-2">
+      Registrar Devolución
+    </button>
+  }
 </section>

@@ -1,29 +1,28 @@
-<div class="bg-my-light rounded-md text-my-dark overflow-x-auto">
-  <div class="min-w-[700px]">
+<div class="bg-my-light rounded-md text-my-dark shadow-xl">
+  <!-- HEADER -->
+  <header class="p-6 pb-2 flex justify-between">
+    <div>
+      <h2 class="font-bold text-my-purple text-lg">
+        Gestión de Prestamos
+      </h2>
+      <p class="text-sm text-my-dark/50">
+        Lista completa de todos los prestamos
+      </p>
+    </div>
 
-    <!-- HEADER -->
-     <header class="p-6 pb-2 flex justify-between">
-        <div>
-          <h2 class="font-bold text-my-purple text-lg">
-            Gestión de Prestamos
-          </h2>
-          <p class="text-sm text-my-dark/50">
-            Lista completa de todos los prestamos
-          </p>
-        </div>
+    <div class="flex gap-2 items-center">
+      <app-loan-status-select-component
+        [selectedId]="selectStatusId()"
+        (newSelectedId)="onSelectedIdStatus.emit($event)"
+      />
 
-        <div class="flex gap-2 items-center">
-          <app-loan-status-select-component
-            [selectedId]="selectStatusId()"
-            (newSelectedId)="onSelectedIdStatus.emit($event)"
-          />
-  
-          <app-button-refresh-component 
-            (onClick)="onReload.emit()"
-          />
-        </div>
-      </header>
+      <app-button-refresh-component 
+        (onClick)="onReload.emit()"
+      />
+    </div>
+  </header>
 
+  <div class="overflow-x-auto">
     @if(isLoading()) {
       <div class="p-4 flex justify-center">
         <app-loading-component/>
@@ -55,7 +54,18 @@
               <td>{{ item.due_date | date:'yyyy-MM-dd' }}</td>
               <td>{{ item.return_date | date:'yyyy-MM-dd' }}</td>
               <td>{{ item.copy_signature }}</td>
-              <td>{{ item.loan_status_name }}</td>
+
+              @switch (item.loan_status_id) {
+                @case (1) {
+                  <td><p class="bg-my-purple text-my-light p-1 rounded-md">{{ item.loan_status_name }}</p></td>
+                }
+                @case (2) {
+                  <td><p class="bg-my-green text-my-light p-1 rounded-md">{{ item.loan_status_name }}</p></td>
+                }
+                @default {
+                  <td><p class="bg-my-pink text-my-light p-1 rounded-md">{{ item.loan_status_name }}</p></td>
+                }
+              }
             </tr>
           }
         </tbody>    
@@ -68,5 +78,5 @@
     [totalPages]="totalPages()"
     (prevPage)="onPrevPage.emit()"
     (nextPage)="onNextPage.emit()"
-  />  
+  />
 </div>

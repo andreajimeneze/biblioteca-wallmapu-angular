@@ -10,22 +10,27 @@ import { ReservationListComponents } from "@features/reservation/components/rese
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { LoanPoliciesListComponent } from "@features/loan-policies/components/loan-policies-list-component/loan-policies-list-component";
+import { ReservationBarcodeComponents } from "@features/reservation/components/reservation-barcode-components/reservation-barcode-components";
 
 @Component({
   selector: 'app-user-reservation-page',
   imports: [
-    ModalActionComponent, 
-    ReservationListComponents, 
-    SectionHeaderComponent, 
-    MessageSuccessComponent, 
-    MessageErrorComponent
-  ],
+    ModalActionComponent,
+    ReservationListComponents,
+    SectionHeaderComponent,
+    MessageSuccessComponent,
+    MessageErrorComponent,
+    LoanPoliciesListComponent,
+    ReservationBarcodeComponents,
+],
   templateUrl: './user-reservation-page.html',
 })
 export class UserReservationPage {
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isModalOpen = signal<boolean>(false);
+  protected readonly selectedReservation = signal<ReservationModel | null>(null);
   protected readonly selectStatusId = signal<number>(0);
   protected readonly currentPage = signal<number>(1);
   private readonly limit = signal<number>(10);
@@ -93,6 +98,15 @@ export class UserReservationPage {
       );
     },
   });
+
+  protected onSelectedReservation(item: ReservationModel): void {
+    if (item.reservation_status_id == 1) {
+      this.selectedReservation.set(item);
+      return;
+    }
+
+    this.selectedReservation.set(null);
+  }
 
   protected reloadReservation(): void {
     this.getReservationRX.reload();

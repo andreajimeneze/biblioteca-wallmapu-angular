@@ -24,6 +24,7 @@ export class ReservationListComponents {
   readonly isLoading = input<boolean>(false);
   readonly selectStatusId = input<number>(0);
   readonly paginationAndReservationList = input<PaginationResponseModel<ReservationModel[]> | null>(null);
+  protected readonly onSelectedReservation = output<ReservationModel>();
   protected readonly onSelectedIdStatus = output<number>();
   protected readonly onCancelReservation = output<number>();
   protected readonly onReload = output<void>();
@@ -38,4 +39,8 @@ export class ReservationListComponents {
       this.totalPages.set(data.pages);
     }
   });
+
+  protected selectReservation(item: ReservationModel): void {
+    this.onSelectedReservation.emit(item);
+  }
 }

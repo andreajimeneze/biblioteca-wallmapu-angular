@@ -1,0 +1,56 @@
+@if (loanDetailModel()) {
+  <table class="table text-sm text-my-dark/80 py-4">
+    <tbody>
+      <tr>
+        <td class="p-0">Prestamo:</td>
+        <td class="p-0 pl-2">{{ loanDetailModel()?.loan_date | date:'yyyy-MM-dd' }}</td>
+      </tr>
+      <tr>
+        <td class="p-0">Expira:</td>
+        <td class="p-0 pl-2">{{ loanDetailModel()?.due_date | date:'yyyy-MM-dd' }}</td>
+      </tr>
+      <tr>
+        <td class="p-0">Lector:</td>
+        <td class="p-0 pl-2">{{ loanDetailModel()?.user_name }}</td>
+      </tr>      
+      <tr>
+        <td class="p-0">Libro:</td>
+        <td class="p-0 pl-2">{{ loanDetailModel()?.book_title }}</td>
+      </tr>
+      <tr>
+        <td class="p-0">ID Copia:</td>
+        <td class="p-0 pl-2">{{ loanDetailModel()?.copy_id }}</td>
+      </tr>
+      <tr>
+        <td class="p-0">Cod. Barra:</td>
+        <td class="p-0 pl-2 text-my-purple font-bold">{{ loanDetailModel()?.copy_barcode }}</td>
+      </tr>
+      <tr>
+        <td class="p-0">Estado:</td>
+        @switch (loanDetailModel()?.loan_status_id) {
+          @case (1) {
+            <td class="bg-my-green text-my-light text-center p-1">{{ loanDetailModel()?.loan_status_name }}</td>
+          } 
+          @case (2) {
+            <td class="bg-my-purple text-my-light text-center p-1">{{ loanDetailModel()?.loan_status_name }}</td>  
+          }
+          @case (3) {
+            <td class="bg-my-pink text-my-light text-center p-1">{{ loanDetailModel()?.loan_status_name }}</td>  
+          }
+          @default {
+            <td class="bg-my-yellow text-my-pink text-center p-1">{{ loanDetailModel()?.loan_status_name }}</td>
+          }
+        }
+      </tr>      
+    </tbody>
+  </table>
+} @else {
+  <div class="py-6">
+    <div class="divider text-base-content/40 max-w-7xl mx-auto m-0">RESULTADOS DE BÚSQUEDA</div>
+
+    <!-- Icono de resultados -->
+    <figure class="flex justify-center fill-my-purple p-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24"><path d="M9.5 16q-2.725 0-4.612-1.888T3 9.5t1.888-4.612T9.5 3t4.613 1.888T16 9.5q0 1.1-.35 2.075T14.7 13.3l5.6 5.6q.275.275.275.7t-.275.7t-.7.275t-.7-.275l-5.6-5.6q-.75.6-1.725.95T9.5 16m0-2q1.875 0 3.188-1.312T14 9.5t-1.312-3.187T9.5 5T6.313 6.313T5 9.5t1.313 3.188T9.5 14"/></svg>
+    </figure>
+  </div>
+}
