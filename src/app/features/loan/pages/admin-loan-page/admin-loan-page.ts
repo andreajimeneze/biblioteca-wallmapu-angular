@@ -141,6 +141,7 @@ export class AdminLoanPage {
   protected onClear(): void {
     this.clearCounter.update(e => e + 1);
     this.getLoanByCodebarPayload.set(null);
+    this.errorMessage.set(null);
   }
 
   protected onGetLoanByBarcode(codebar: string): void {

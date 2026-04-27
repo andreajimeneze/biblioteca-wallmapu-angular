@@ -39,7 +39,7 @@
             <th>Fecha Prestamo</th>
             <th>Fecha Deuda</th>
             <th>Fecha Retorno</th>
-            <th>Firma</th>
+            <th>Cod.Barra</th>
             <th>Estado</th>
           </tr>
         </thead>
@@ -53,7 +53,7 @@
               <td>{{ item.loan_date | date:'yyyy-MM-dd' }}</td>
               <td>{{ item.due_date | date:'yyyy-MM-dd' }}</td>
               <td>{{ item.return_date | date:'yyyy-MM-dd' }}</td>
-              <td>{{ item.copy_signature }}</td>
+              <td>{{ item.copy_barcode }}</td>
 
               @switch (item.loan_status_id) {
                 @case (1) {
