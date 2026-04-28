@@ -13,7 +13,7 @@
       </p>
       
       <div class="modal-action">
-        @if (loading()) {
+        @if (isLoading()) {
           <app-loading-component/>
         } @else {
           <button class="btn bg-my-pink text-my-light"(click)="confirm.emit()">{{ title() }}</button>

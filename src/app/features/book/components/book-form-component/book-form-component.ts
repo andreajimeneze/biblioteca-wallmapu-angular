@@ -1,15 +1,18 @@
 import { DatePipe } from '@angular/common';
-import { Component, effect, input, output, signal } from '@angular/core';
+import { Component, effect, inject, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
 import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
 import { SubjectSelectComponents } from "@features/book-subject/components/subject-select-components/subject-select-components";
-import { AuthorListComponents } from "@features/book-author/components/author-list-components/author-list-components";
 import { SubjectListComponents } from "@features/book-subject/components/subject-list-components/subject-list-components";
 import { SubjectModel } from '@features/book-subject/models/subject-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { AuthorModel } from '@features/book-author/models/author-model';
 import { BookFormVM } from '@features/book/models/vm.book-form';
+import { ButtonCreateComponent } from "@shared/components/button-create-component/button-create-component";
+import { Router } from '@angular/router';
+import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
+import { AuthorSelectedListComponents } from "@features/book-author/components/author-selected-list-components/author-selected-list-components";
 
 @Component({
   selector: 'app-book-form-component',
@@ -19,9 +22,10 @@ import { BookFormVM } from '@features/book/models/vm.book-form';
     GenreSelectComponents,
     AuthorSelectComponents,
     SubjectSelectComponents,
-    AuthorListComponents,
     SubjectListComponents,
-    LoadingComponent
+    LoadingComponent,
+    ButtonCreateComponent,
+    AuthorSelectedListComponents
 ],
   templateUrl: './book-form-component.html',
 })
@@ -33,6 +37,7 @@ export class BookFormComponent {
   readonly onDeleteSubject = output<SubjectModel>();
   readonly onFormSubmit = output<BookFormVM>();
 
+  private readonly router = inject(Router);
   readonly errorMessage = signal<string | null>(null);
   readonly formData = signal<Partial<BookFormVM>>({});
 
@@ -162,5 +167,9 @@ export class BookFormComponent {
     if (!data.genre_id || data.genre_id === 0) return 'El género es requerido';
   
     return null; // ✅ sin errores
+  }
+
+  protected navigateToAuthor(): void {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.AUTHOR.ROOT]);
   }
 }

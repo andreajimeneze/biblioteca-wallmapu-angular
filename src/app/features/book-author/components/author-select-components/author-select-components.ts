@@ -16,7 +16,7 @@ import { catchError, map, of } from 'rxjs';
 export class AuthorSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
-  readonly onNewSelectedAuthor = output<AuthorModel>();
+  readonly onNewSelectedAuthor = output<AuthorModel | null>();
   readonly clearTrigger = input<number>(0);
 
   private readonly authorService = inject(AuthorService);
@@ -48,6 +48,6 @@ export class AuthorSelectComponents {
   }
 
   protected onCleared(): void {
-    this.onNewSelectedAuthor.emit({ id_author: 0, name: '', created_at: '', updated_at: '' } as AuthorModel);
+    this.onNewSelectedAuthor.emit(null);
   }
 }

@@ -1,6 +1,14 @@
-export interface AuthorModel {
-  id_author: number,
-  name: string,
-  created_at: string,
-  updated_at: string
+export interface CreateAuthorModel {
+  name: string;
+}
+
+
+export interface UpdateAuthorModel extends CreateAuthorModel {
+  id_author: number;
+}
+
+
+export interface AuthorModel extends UpdateAuthorModel {
+  created_at: string;
+  updated_at: string;
 }

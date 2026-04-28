@@ -41,7 +41,7 @@
 <app-modal-delete-component
   title="Eliminar Copia"
   [isOpen]="openDeleteModal()"
-  [loading]="isLoading()"
+  [isLoading]="isLoading()"
   [itemName]="bookFormVM().title + ' - ' + selectedEditionToDelete()?.edition"
   (confirm)="confirmDelete()"
   (cancel)="closeDeleteModal()"

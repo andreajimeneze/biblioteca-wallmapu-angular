@@ -39,7 +39,7 @@
 <app-modal-delete-component
   title="Eliminar Noticia"
   [isOpen]="openDeleteModal()"
-  [loading]="isLoading()"
+  [isLoading]="isLoading()"
   [itemName]="selectedNewsWithImagesModel()?.title"
   (confirm)="confirmDelete()"
   (cancel)="closeDeleteModal()"

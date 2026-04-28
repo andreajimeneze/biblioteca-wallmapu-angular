@@ -50,29 +50,21 @@
     <div>
       <div class="divider text-base-content/40">Autores</div>
       <label class="label font-semibold">Seleccionar Autor/es</label>
-      <div class="my-2">
-        <app-author-select-components 
-          (onNewSelectedAuthor)="addAuthor($event)"
-        />
+      <div class="my-2 flex gap-2">
+        <app-author-select-components class="flex-1" (onNewSelectedAuthor)="addAuthor($event)" />
+        <app-button-create-component (onClick)="navigateToAuthor()"/>
       </div>
-      <app-author-list-components
-        [authorList]="formData().authors"
-        (onDelete)="deleteAuthor($event)"
-      />
+      <app-author-selected-list-components [authorList]="formData().authors" (onDelete)="deleteAuthor($event)" />
     </div>
 
     <div>
       <div class="divider text-base-content/40">Descriptores</div>
       <label class="label font-semibold">Descriptor/es</label>
-      <div class="my-2">
-        <app-subject-select-components 
-          (onNewSelectedSubject)="addSubject($event)"
-        />
+      <div class="my-2 flex gap-2">
+        <app-subject-select-components class="flex-1" (onNewSelectedSubject)="addSubject($event)" />
+        <app-button-create-component />
       </div>
-      <app-subject-list-components 
-        [subjectList]="formData().subjects"
-        (onDelete)="deleteSubject($event)"
-      />
+      <app-subject-list-components [subjectList]="formData().subjects" (onDelete)="deleteSubject($event)" />
     </div>
 
     @if (isLoading()) {

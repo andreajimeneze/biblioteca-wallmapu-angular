@@ -9,7 +9,7 @@ import { LoadingComponent } from "../loading-component/loading-component";
 export class ModalDeleteComponent {
   // Estado
   readonly isOpen = input.required<boolean>();
-  readonly loading = input.required<boolean>();
+  readonly isLoading = input.required<boolean>();
   
   // Contenido dinámico
   readonly title = input<string>('Confirmar acción');

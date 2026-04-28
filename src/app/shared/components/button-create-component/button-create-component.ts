@@ -6,6 +6,6 @@ import { Component, input, output } from '@angular/core';
   templateUrl: './button-create-component.html',
 })
 export class ButtonCreateComponent {
-  readonly textBtn = input<string>("Crear...")
+  readonly textBtn = input<string>("")
   protected readonly onClick = output<void>();
 }

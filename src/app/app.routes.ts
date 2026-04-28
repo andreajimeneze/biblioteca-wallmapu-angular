@@ -39,6 +39,10 @@ export const routes: Routes = [
         loadChildren: () => import('@features/loan/admin.loan.routes').then(m => m.LOAN_ROUTES),
       },
       {
+        path: 'author',
+        loadChildren: () => import('@features/book-author/book-author.routes').then(m => m.BOOK_AUTHOR_ROUTES),
+      },
+      {
         path: 'book',
         loadChildren: () => import('@features/book/book.routes').then(m => m.BOOK_ROUTES),
       },
