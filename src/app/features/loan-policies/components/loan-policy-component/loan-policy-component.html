@@ -1,0 +1,39 @@
+<ul class="list bg-my-light rounded-box shadow-md h-full">
+
+  <div class="p-4">
+    <h3 class="card-title text-xl text-my-purple">Políticas de Préstamo</h3>
+    <p class="text-sm text-base-content/60">Reglas para las reservas y prestamos</p>
+  </div>
+  
+  @if (isLoading()) {
+    <div class="p-4 flex justify-center items-center h-full">
+      <app-loading-component/>
+    </div>
+  } @else {
+    <li class="list-row">
+      <div class="font-semibold opacity-60">PERFIL ({{ computedLoanPolicy()?.id_policy }}):</div>
+      <div class="font-semibold opacity-60">{{ computedLoanPolicy()?.name }}</div>
+    </li>
+  
+    <li class="list-row">
+      <div class="text-lg font-thin opacity-50">01</div>
+      <div class="text-my-green font-bold">Máximo de Libros:</div>
+      <div class="text-my-purple font-bold opacity-60">{{ computedLoanPolicy()?.max_books }}</div>
+      <div></div>
+    </li>
+  
+    <li class="list-row">
+      <div class="text-lg font-thin opacity-50">02</div>
+      <div class="text-my-green font-bold">Máximo Días de Prestamo:</div>
+      <div class="text-my-purple font-bold opacity-60">{{ computedLoanPolicy()?.max_days }}</div>
+      <div></div>
+    </li>
+  
+    <li class="list-row">
+      <div class="text-lg font-thin opacity-50">03</div>
+      <div class="text-my-green font-bold">Días de Reserva:</div>
+      <div class="text-my-purple font-bold opacity-60">{{ computedLoanPolicy()?.reservation_days }}</div>
+      <div></div>
+    </li>
+  }
+</ul>

@@ -1,0 +1,11 @@
+import { Component, input, output } from '@angular/core';
+
+@Component({
+  selector: 'app-button-goback-component',
+  imports: [],
+  templateUrl: './button-goback-component.html',
+})
+export class ButtonGobackComponent {
+  readonly textBtn = input<string>("Volver...")
+  protected readonly onClick = output<void>();
+}
