@@ -60,7 +60,8 @@ export class BookFormComponent {
     this.formData.update(data => ({ ...data, genre_id: id_genre,  }));
   }
 
-  protected addAuthor(item: AuthorModel) {
+  protected addAuthor(item: AuthorModel | null) {
+    if (!item) return;
     if (!item.id_author || item.id_author === 0) return;
     
     this.formData.update(data => {

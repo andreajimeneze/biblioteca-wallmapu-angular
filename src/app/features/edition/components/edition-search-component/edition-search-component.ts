@@ -63,7 +63,10 @@ export class EditionSearchComponent {
     this.onSearchChange.emit('');
   }
 
-  protected authorSelected(item: AuthorModel) {
+  protected authorSelected(item: AuthorModel | null) {
+    if (!item) return;
+    if (!item.id_author || item.id_author === 0) return;
+
     this.onAuthorIdSelected.emit(item.id_author)
   }
 
