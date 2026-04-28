@@ -11,12 +11,18 @@ import { RegionSelectComponents } from "@features/division-region/components/reg
 import { EditorialSelectComponents } from "@features/book-editorial/components/editorial-select-components/editorial-select-components";
 import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
 import { SubjectSelectComponents } from "@features/book-subject/components/subject-select-components/subject-select-components";
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
 import { CopyStatusSelectComponents } from "@features/copy-status/components/copy-status-select-components/copy-status-select-components";
 import { EditionSearchComponent } from "@features/edition/components/edition-search-component/edition-search-component";
 import { ReservationStatusSelectComponents } from "@features/reservation-status/components/reservation-status-select-components/reservation-status-select-components";
 import { LoanStatusSelectComponent } from "@features/loan-status/components/loan-status-select-component/loan-status-select-component";
+import { ButtonClearComponent } from "@shared/components/button-clear-component/button-clear-component";
+import { ButtonDeleteComponent } from "@shared/components/button-delete-component/button-delete-component";
+import { ButtonRefreshComponent } from "@shared/components/button-refresh-component/button-refresh-component";
+import { ButtonEditComponent } from "@shared/components/button-edit-component/button-edit-component";
+import { ButtonCreateComponent } from "@shared/components/button-create-component/button-create-component";
+import { ButtonGobackComponent } from "@shared/components/button-goback-component/button-goback-component";
+import { ButtonSearchComponent } from "@shared/components/button-search-component/button-search-component";
 
 @Component({
   selector: 'app-stat.page',
@@ -29,12 +35,18 @@ import { LoanStatusSelectComponent } from "@features/loan-status/components/loan
     EditorialSelectComponents,
     AuthorSelectComponents,
     SubjectSelectComponents,
-    MessageErrorComponent,
     GenreSelectComponents,
     CopyStatusSelectComponents,
     EditionSearchComponent,
     ReservationStatusSelectComponents,
-    LoanStatusSelectComponent
+    LoanStatusSelectComponent,
+    ButtonClearComponent,
+    ButtonDeleteComponent,
+    ButtonRefreshComponent,
+    ButtonEditComponent,
+    ButtonCreateComponent,
+    ButtonGobackComponent,
+    ButtonSearchComponent
 ],
   templateUrl: './stat.page.html',
 })

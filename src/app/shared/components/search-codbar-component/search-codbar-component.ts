@@ -2,10 +2,16 @@ import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "../message-error-component/message-error-component";
 import { LoadingComponent } from "../loading-component/loading-component";
 import { MessageSuccessComponent } from "../message-success-component/message-success-component";
+import { ButtonSearchComponent } from "../button-search-component/button-search-component";
 
 @Component({
   selector: 'app-search-codbar-component',
-  imports: [MessageErrorComponent, LoadingComponent, MessageSuccessComponent],
+  imports: [
+    MessageErrorComponent, 
+    LoadingComponent, 
+    MessageSuccessComponent, 
+    ButtonSearchComponent
+  ],
   templateUrl: './search-codbar-component.html',
 })
 export class SearchCodbarComponent {

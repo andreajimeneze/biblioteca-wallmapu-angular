@@ -574,8 +574,12 @@ ng g c layouts/layout-user --skip-tests --style=none
 # SHARED COMPONENTS
 ng g c shared/components/barcode-generator.component --skip-tests --style=none
 ng g c shared/components/button-clear-component --skip-tests --style=none
+ng g c shared/components/button-create-component --skip-tests --style=none
 ng g c shared/components/button-delete-component --skip-tests --style=none
+ng g c shared/components/button-edit-component --skip-tests --style=none
+ng g c shared/components/button-goback-component --skip-tests --style=none
 ng g c shared/components/button-refresh-component --skip-tests --style=none
+ng g c shared/components/button-search-component --skip-tests --style=none
 ng g c shared/components/header-component --skip-tests --style=none
 ng g c shared/components/loading-component --skip-tests --style=none
 ng g c shared/components/message-error-component --skip-tests --style=none
