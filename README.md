@@ -445,7 +445,7 @@ ng g s features/loan/services/loan-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES LOANS POLICIES
-ng g c features/loan-policies/components/loan-policies-list-component --skip-tests --style=none
+ng g c features/loan-policies/components/loan-policy-component --skip-tests --style=none
 
 ng g interface features/loan-policies/models/loan-policies-model
 

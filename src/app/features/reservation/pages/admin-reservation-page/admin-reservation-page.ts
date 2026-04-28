@@ -11,7 +11,7 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { ReservationListComponents } from "@features/reservation/components/reservation-list-components/reservation-list-components";
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
 import { ReservationToLoanComponents } from "@features/reservation/components/reservation-to-loan-components/reservation-to-loan-components";
-import { LoanPoliciesListComponent } from "@features/loan-policies/components/loan-policies-list-component/loan-policies-list-component";
+import { LoanPolicyComponent } from "@features/loan-policies/components/loan-policy-component/loan-policy-component";
 
 @Component({
   selector: 'app-admin-reservation-page',
@@ -22,7 +22,7 @@ import { LoanPoliciesListComponent } from "@features/loan-policies/components/lo
     ReservationListComponents,
     ModalActionComponent,
     ReservationToLoanComponents,
-    LoanPoliciesListComponent,
+    LoanPolicyComponent
   ],
   templateUrl: './admin-reservation-page.html',
 })

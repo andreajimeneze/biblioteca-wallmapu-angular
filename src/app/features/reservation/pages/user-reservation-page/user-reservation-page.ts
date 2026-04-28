@@ -10,8 +10,8 @@ import { ReservationListComponents } from "@features/reservation/components/rese
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { LoanPoliciesListComponent } from "@features/loan-policies/components/loan-policies-list-component/loan-policies-list-component";
 import { ReservationBarcodeComponents } from "@features/reservation/components/reservation-barcode-components/reservation-barcode-components";
+import { LoanPolicyComponent } from "@features/loan-policies/components/loan-policy-component/loan-policy-component";
 
 @Component({
   selector: 'app-user-reservation-page',
@@ -21,9 +21,9 @@ import { ReservationBarcodeComponents } from "@features/reservation/components/r
     SectionHeaderComponent,
     MessageSuccessComponent,
     MessageErrorComponent,
-    LoanPoliciesListComponent,
     ReservationBarcodeComponents,
-],
+    LoanPolicyComponent
+  ],
   templateUrl: './user-reservation-page.html',
 })
 export class UserReservationPage {

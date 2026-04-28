@@ -8,7 +8,7 @@ import { catchError, map, of } from 'rxjs';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { LoanListComponent } from "@features/loan/components/loan-list-component/loan-list-component";
-import { LoanPoliciesListComponent } from "@features/loan-policies/components/loan-policies-list-component/loan-policies-list-component";
+import { LoanPolicyComponent } from "@features/loan-policies/components/loan-policy-component/loan-policy-component";
 
 @Component({
   selector: 'app-user-loan-page',
@@ -16,8 +16,8 @@ import { LoanPoliciesListComponent } from "@features/loan-policies/components/lo
     SectionHeaderComponent,
     MessageErrorComponent,
     LoanListComponent,
-    LoanPoliciesListComponent
-],
+    LoanPolicyComponent,
+  ],
   templateUrl: './user-loan-page.html',
 })
 export class UserLoanPage {
