@@ -1,3 +1,4 @@
+import { Location } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
@@ -27,6 +28,8 @@ import { ModalActionComponent } from "@shared/components/modal-action-component/
   templateUrl: './author-form-page.html',
 })
 export class AuthorFormPage {
+  private location = inject(Location);
+
   protected readonly isModalOpen = signal<boolean>(false);
   protected readonly selectedAuthor = signal<AuthorModel | null>(null);
   protected readonly selectedAuthorToDelete = signal<AuthorModel | null>(null);
@@ -189,6 +192,10 @@ export class AuthorFormPage {
     if (this.currentPage() > 1){
       this.currentPage.update(e => e - 1);
     }
+  }
+
+  protected navigateBack(): void {
+    this.location.back();
   }
 
   private handleError(err: unknown): void {

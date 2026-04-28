@@ -145,7 +145,7 @@ export class UserFormComponents {
     if (data.lastname.length < 2)     return 'El apellido debe tener al menos 2 caracteres';
   
     if (!data.rut?.trim())            return 'El RUT es requerido';
-    if (!this.validateRut(data.rut))  return 'El RUT no es válido';
+    if (!this.validateRut(data.rut))  return 'El Formato del rut no válido';
   
     if (!data.phone?.trim())          return 'El teléfono es requerido';
     if (data.phone.length < 9)        return 'El teléfono debe tener 9 dígitos';

@@ -100,12 +100,15 @@
 
       <fieldset class="fieldset flex flex-col max-w-">
         <label class="label font-semibold mb-1">Rut</label>
-        <input 
-          #rutInput
-          type="text" class="input validator max-w-52" placeholder="12345678-9" required
-          [value]="formData().rut"
-          (input)="updateRut($any($event.target).value, rutInput)"
-        />
+        <div class="flex gap-4">
+          <input 
+            #rutInput
+            type="text" class="input validator max-w-52" placeholder="12345678-9" required
+            [value]="formData().rut"
+            (input)="updateRut($any($event.target).value, rutInput)"
+          />
+          <label class="label text-sm font-bold text-my-purple">Ejemplo: 12345678-9</label>
+        </div>
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>
       

@@ -7,12 +7,10 @@
     </div>
 
     @if (actionText()) {
-      <button
-        class="btn btn-outline bg-my-green text-my-light"
-        (click)="onActionClick()">
-
-        {{ actionText() }}
-      </button>
+      <app-button-goback-component 
+        [textBtn]="actionText() ?? ''"
+        (onClick)="actionClicked.emit()"
+      />
     }
   </div>
 
