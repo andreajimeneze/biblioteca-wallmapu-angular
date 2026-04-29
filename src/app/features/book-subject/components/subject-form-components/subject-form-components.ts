@@ -1,35 +1,35 @@
 import { DatePipe } from '@angular/common';
 import { Component, computed, effect, input, output, signal } from '@angular/core';
-import { AuthorModel } from '@features/book-author/models/author-model';
+import { SubjectModel } from '@features/book-subject/models/subject-model';
 import { ButtonClearComponent } from "@shared/components/button-clear-component/button-clear-component";
 import { ButtonCreateComponent } from "@shared/components/button-create-component/button-create-component";
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 
 @Component({
-  selector: 'app-author-form-components',
+  selector: 'app-subject-form-components',
   imports: [
     DatePipe,
-    ButtonClearComponent,
-    ButtonCreateComponent,
-    LoadingComponent
-],
-  templateUrl: './author-form-components.html',
+    ButtonClearComponent, 
+    ButtonCreateComponent, 
+    LoadingComponent,
+  ],
+  templateUrl: './subject-form-components.html',
 })
-export class AuthorFormComponents {
+export class SubjectFormComponents {
   readonly isLoading = input<boolean>(false);
-  readonly author = input<AuthorModel | null>(null);
-  protected readonly onFormSubmit = output<AuthorModel>();
+  readonly subject = input<SubjectModel | null>(null);
+  protected readonly onFormSubmit = output<SubjectModel>();
   protected readonly onClear = output<void>();
 
   protected readonly errorMessage = signal<string | null>(null); 
-  protected readonly actionText = computed<string>(() => this.author() ? 'Modificar Autor' : 'Crear Autor');
-  protected readonly formData = signal<Partial<AuthorModel>>({});
+  protected readonly actionText = computed<string>(() => this.subject() ? 'Modificar Descriptor' : 'Crear Descriptor');
+  protected readonly formData = signal<Partial<SubjectModel>>({});
 
   private readonly updateFormEffect = effect(() => {
-    const item = this.author();
+    const item = this.subject();
     
     if (!item) {
-      this.formData.set({});
+      this.formData.set({ name: '' });
       return;
     }
 
@@ -40,7 +40,7 @@ export class AuthorFormComponents {
     this.updateField('name', value, input);
   }
 
-  private updateField<K extends keyof AuthorModel>(key: K, value: string, input?: HTMLInputElement) {
+  private updateField<K extends keyof SubjectModel>(key: K, value: string, input?: HTMLInputElement) {
     const sanitized = this.sanitize(key, value);
 
     if (sanitized === null) {
@@ -51,7 +51,7 @@ export class AuthorFormComponents {
     this.formData.update(data => ({ ...data, [key]: sanitized }));
   }
 
-  private sanitize(key: keyof AuthorModel, value: string): string | null {
+  private sanitize(key: keyof SubjectModel, value: string): string | null {
     switch (key){
       case 'name':
         if (value.length > 100) return null;
@@ -72,9 +72,9 @@ export class AuthorFormComponents {
       return;
     }
 
-    const submitData: AuthorModel = {
+    const submitData: SubjectModel = {
       ...data
-    } as AuthorModel;
+    } as SubjectModel;
 
     this.errorMessage.set(null);
     this.onFormSubmit.emit(submitData);
@@ -82,7 +82,7 @@ export class AuthorFormComponents {
     this.clear();
   }
 
-  private validateFormOnSubmit(data: Partial<AuthorModel>): string | null {
+  private validateFormOnSubmit(data: Partial<SubjectModel>): string | null {
     if (data.name == null)
       return 'El nombre es requerido';
 

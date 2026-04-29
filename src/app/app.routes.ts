@@ -43,6 +43,10 @@ export const routes: Routes = [
         loadChildren: () => import('@features/book-author/book-author.routes').then(m => m.BOOK_AUTHOR_ROUTES),
       },
       {
+        path: 'subject',
+        loadChildren: () => import('@features/book-subject/book-subject.routes').then(m => m.BOOK_SUBJECT_ROUTES),
+      },
+      {
         path: 'book',
         loadChildren: () => import('@features/book/book.routes').then(m => m.BOOK_ROUTES),
       },
