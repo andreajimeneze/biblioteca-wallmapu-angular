@@ -45,7 +45,7 @@
 <app-modal-delete-component
   title="Eliminar Libro"
   [isOpen]="openDeleteModal()"
-  [loading]="isLoading()"
+  [isLoading]="isLoading()"
   [itemName]="selectedBookToDelete()?.title"
   (confirm)="confirmDelete()"
   (cancel)="closeDeleteModal()"

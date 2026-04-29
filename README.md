@@ -305,10 +305,14 @@ ng g s features/book/services/book-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK AUTHOR
+ng g c features/book-author/components/author-form-components --skip-tests --style=none
 ng g c features/book-author/components/author-list-components --skip-tests --style=none
 ng g c features/book-author/components/author-select-components --skip-tests --style=none
+ng g c features/book-author/components/author-selected-list-components --skip-tests --style=none
 
 ng g interface features/book-author/models/author-model
+
+ng g c features/book-author/pages/author-form-page --skip-tests --style=none
 
 ng g s features/book-author/services/author-service --skip-tests
 

@@ -39,7 +39,7 @@
 <app-modal-delete-component
   title="Eliminar Copia"
   [isOpen]="openDeleteModal()"
-  [loading]="isLoading()"
+  [isLoading]="isLoading()"
   [itemName]="selectedCopyToDelete()?.signature_topography + ' - Copia N°: ' + selectedCopyToDelete()?.copy_number"
   (confirm)="confirmDelete()"
   (cancel)="closeDeleteModal()"

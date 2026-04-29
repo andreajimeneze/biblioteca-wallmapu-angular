@@ -33,6 +33,9 @@ export const ROUTES_CONSTANTS = {
       LOAN: {
         ROOT: '/admin/loan',
       },
+      AUTHOR: {
+        ROOT: '/admin/author'
+      },
       BOOK: {
         ROOT: '/admin/book/list',
         FORM: (bookId: number) => `/admin/book/form/${bookId}`,

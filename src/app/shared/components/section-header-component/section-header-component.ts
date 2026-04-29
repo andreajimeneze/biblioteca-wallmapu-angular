@@ -1,9 +1,10 @@
 import { Component, input, output } from '@angular/core';
 import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
+import { ButtonGobackComponent } from "../button-goback-component/button-goback-component";
 
 @Component({
   selector: 'app-section-header-component',
-  imports: [],
+  imports: [ButtonGobackComponent],
   templateUrl: './section-header-component.html',
 })
 export class SectionHeaderComponent {
@@ -12,12 +13,8 @@ export class SectionHeaderComponent {
   readonly description = input<string>('');
 
   // ACTION BUTON OPTIONAL
-  readonly actionText = input<string | null>(null);
-  
+  readonly actionText = input<string | null>(null);  
   readonly actionClicked = output<void>();
-  protected onActionClick() {
-    this.actionClicked.emit();
-  }
 
   // SEARCH
   readonly searchPlaceholder = input<string | null>(); // Texto del placeholder
