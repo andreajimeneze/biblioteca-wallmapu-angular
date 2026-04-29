@@ -4,7 +4,6 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { GenreSelectComponents } from "@features/book-genre/components/genre-select-components/genre-select-components";
 import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
 import { SubjectSelectComponents } from "@features/book-subject/components/subject-select-components/subject-select-components";
-import { SubjectListComponents } from "@features/book-subject/components/subject-list-components/subject-list-components";
 import { SubjectModel } from '@features/book-subject/models/subject-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { AuthorModel } from '@features/book-author/models/author-model';
@@ -13,6 +12,7 @@ import { ButtonCreateComponent } from "@shared/components/button-create-componen
 import { Router } from '@angular/router';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
 import { AuthorSelectedListComponents } from "@features/book-author/components/author-selected-list-components/author-selected-list-components";
+import { SubjectSelectedListComponents } from "@features/book-subject/components/subject-selected-list-components/subject-selected-list-components";
 
 @Component({
   selector: 'app-book-form-component',
@@ -22,10 +22,10 @@ import { AuthorSelectedListComponents } from "@features/book-author/components/a
     GenreSelectComponents,
     AuthorSelectComponents,
     SubjectSelectComponents,
-    SubjectListComponents,
     LoadingComponent,
     ButtonCreateComponent,
-    AuthorSelectedListComponents
+    AuthorSelectedListComponents,
+    SubjectSelectedListComponents
 ],
   templateUrl: './book-form-component.html',
 })
@@ -172,5 +172,9 @@ export class BookFormComponent {
 
   protected navigateToAuthor(): void {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.AUTHOR.ROOT]);
+  }
+
+  protected navigateToSubject(): void {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.SUBJECT.ROOT]);
   }
 }

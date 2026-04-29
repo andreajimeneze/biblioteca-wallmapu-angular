@@ -340,11 +340,14 @@ ng g s features/book-genre/services/genre-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK SUBJECT
+ng g c features/book-subject/components/subject-form-components --skip-tests --style=none
 ng g c features/book-subject/components/subject-list-components --skip-tests --style=none
 ng g c features/book-subject/components/subject-select-components --skip-tests --style=none
-ng g c features/book-subject/components/subject-select-with-list-components --skip-tests --style=none
+ng g c features/book-subject/components/subject-selected-list-components --skip-tests --style=none
 
 ng g interface features/book-subject/models/subject-model
+
+ng g c features/book-subject/pages/subject-form-page --skip-tests --style=none
 
 ng g s features/book-subject/services/subject-service --skip-tests
 

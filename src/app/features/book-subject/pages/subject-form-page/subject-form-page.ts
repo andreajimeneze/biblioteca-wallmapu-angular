@@ -1,67 +1,66 @@
 import { Location } from '@angular/common';
 import { Component, computed, inject, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { PaginationRequestModel } from '@core/models/pagination-request-model';
-import { PaginationResponseModel } from '@core/models/pagination-response-model';
-import { AuthorModel, CreateAuthorModel, UpdateAuthorModel } from '@features/book-author/models/author-model';
-import { AuthorService } from '@features/book-author/services/author-service';
-import { catchError, finalize, map, of, tap } from 'rxjs';
-import { AuthorListComponents } from "@features/book-author/components/author-list-components/author-list-components";
+import { CreateSubjectModel, SubjectModel, UpdateSubjectModel } from '@features/book-subject/models/subject-model';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { AuthorFormComponents } from "@features/book-author/components/author-form-components/author-form-components";
+import { SubjectService } from '@features/book-subject/services/subject-service';
+import { PaginationRequestModel } from '@core/models/pagination-request-model';
+import { PaginationResponseModel } from '@core/models/pagination-response-model';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { catchError, finalize, map, of, tap } from 'rxjs';
+import { SubjectListComponents } from "@features/book-subject/components/subject-list-components/subject-list-components";
+import { SubjectFormComponents } from "@features/book-subject/components/subject-form-components/subject-form-components";
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
 
 @Component({
-  selector: 'app-author-form-page',
-  imports: [
-    AuthorListComponents,
-    SectionHeaderComponent,
+  selector: 'app-subject-form-page',
+  imports: [SectionHeaderComponent,
     MessageSuccessComponent,
-    MessageErrorComponent,
-    AuthorFormComponents,
+    MessageErrorComponent, 
+    SubjectListComponents, 
+    SubjectFormComponents, 
     ModalActionComponent,
   ],
-  templateUrl: './author-form-page.html',
+  templateUrl: './subject-form-page.html',
 })
-export class AuthorFormPage {
+export class SubjectFormPage {
   private location = inject(Location);
-
-  protected readonly selectedAuthor = signal<AuthorModel | null>(null);
-  protected readonly selectedAuthorToDelete = signal<AuthorModel | null>(null);
+  
+  protected readonly selectedSubject = signal<SubjectModel | null>(null);
+  protected readonly selectedSubjectToDelete = signal<SubjectModel | null>(null);
   protected readonly isModalOpen = signal<boolean>(false);
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly currentPage = signal<number>(1);
   private readonly limit = signal<number>(10);
   private readonly search = signal<string>('');
-
+  
   protected readonly isLoading = computed<boolean>(() =>
     [
-      this.getAuthorRX,
-      this.saveAuthorRX,
-      this.deleteAuthorRX,
+      this.getSubjectRX,
+      this.saveSubjectRX,
+      this.deleteSubjectRX,
     ].some(e => e.isLoading())
   );
 
-  private readonly authorService = inject(AuthorService);
-  private readonly saveAuthorPayload = signal<CreateAuthorModel | UpdateAuthorModel | null>(null);
-  private readonly deleteAuthorPayload = signal<number | null>(null);
-  private readonly getAuthorPayload = computed<PaginationRequestModel<null>>(() => {
+  private readonly subjectService = inject(SubjectService);
+  private readonly saveSubjectPayload = signal<CreateSubjectModel | UpdateSubjectModel | null>(null);
+  private readonly deleteSubjectPayload = signal<number | null>(null);
+  private readonly getSubjectPayload = computed<PaginationRequestModel<null>>(() => {
     return {
       page: this.currentPage(),
       limit: this.limit(),
       search: this.search(),
     }
   });
-  protected readonly computedPaginationAuthorList = computed<PaginationResponseModel<AuthorModel[]> | null>(() => this.getAuthorRX.value() ?? null);
+  protected readonly computedPaginationSubjectList = computed<PaginationResponseModel<SubjectModel[]> | null>(() => this.getSubjectRX.value() ?? null);
 
-  private readonly getAuthorRX = rxResource({
-    params: () => this.getAuthorPayload(),
+  private readonly getSubjectRX = rxResource({
+    params: () => this.getSubjectPayload(),
     stream: ({ params }) => {
 
-      return this.authorService.getAllPagination(params).pipe(
+      return this.subjectService.getAllPagination(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
@@ -73,15 +72,15 @@ export class AuthorFormPage {
       );
     },
   });
-  
-  private readonly saveAuthorRX = rxResource({
-    params: () => this.saveAuthorPayload(),
+
+  private readonly saveSubjectRX = rxResource({
+    params: () => this.saveSubjectPayload(),
     stream: ({ params }) => {
       if (!params) return of(null);
       
-      const request$ = 'id_author' in params && params.id_author > 0
-        ? this.authorService.update(params.id_author, params)
-        : this.authorService.create(params);
+      const request$ = 'id_subject' in params && params.id_subject > 0
+        ? this.subjectService.update(params.id_subject, params)
+        : this.subjectService.create(params);
 
       return request$.pipe(
         map(response => {
@@ -101,12 +100,12 @@ export class AuthorFormPage {
     }
   });
 
-  private readonly deleteAuthorRX = rxResource({
-    params: () => this.deleteAuthorPayload(),
-    stream: ({ params: id_author }) => { 
-      if (!id_author) return of(null);
+  private readonly deleteSubjectRX = rxResource({
+    params: () => this.deleteSubjectPayload(),
+    stream: ({ params: id_subject }) => { 
+      if (!id_subject) return of(null);
 
-      return this.authorService.delete(id_author).pipe(
+      return this.subjectService.delete(id_subject).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           this.successMessage.set(response.message);
@@ -126,9 +125,9 @@ export class AuthorFormPage {
       );
     },
   });  
-
-  protected onSelectedAuthor(item: AuthorModel): void {
-    this.selectedAuthor.set(item);
+  
+  protected onSelectedSubject(item: SubjectModel): void {
+    this.selectedSubject.set(item);
 
     window.scrollTo({
       top: 0,
@@ -136,22 +135,22 @@ export class AuthorFormPage {
     });
   }
 
-  protected onFormSubmit(form: AuthorModel): void {
-    const payload: CreateAuthorModel | UpdateAuthorModel = form.id_author > 0
+  protected onFormSubmit(form: SubjectModel): void {
+    const payload: CreateSubjectModel | UpdateSubjectModel = form.id_subject > 0
     ? {
-        id_author: form.id_author,
+        id_subject: form.id_subject,
         name: form.name,
-      } as UpdateAuthorModel
+      } as UpdateSubjectModel
     : {
         name: form.name,
-      } as CreateAuthorModel;
+      } as CreateSubjectModel;
 
-    this.saveAuthorPayload.set(payload);
+    this.saveSubjectPayload.set(payload);
   }
 
-  protected onDeleteAuthor(item: AuthorModel): void {
+  protected onDeleteSubject(item: SubjectModel): void {
     this.onOpenModal();
-    this.selectedAuthorToDelete.set(item);
+    this.selectedSubjectToDelete.set(item);
   }
 
   protected onOpenModal(): void {
@@ -163,24 +162,24 @@ export class AuthorFormPage {
   }
 
   protected onConfirmModal(): void {
-    if (!this.selectedAuthorToDelete()) return;
-    const id_author = this.selectedAuthorToDelete()?.id_author ?? null
+    if (!this.selectedSubjectToDelete()) return;
+    const id_author = this.selectedSubjectToDelete()?.id_subject ?? null
 
-    this.deleteAuthorPayload.set(id_author);
+    this.deleteSubjectPayload.set(id_author);
   }
-
+  
   protected onClear(): void{
-    this.selectedAuthorToDelete.set(null);
-    this.selectedAuthor.set(null);
+    this.selectedSubjectToDelete.set(null);
+    this.selectedSubject.set(null);
     this.errorMessage.set(null);
   }
 
   protected onReload(): void {
-    this.getAuthorRX.reload();
+    this.getSubjectRX.reload();
   }
 
   protected onNextPage(): void {
-    const totalPages = this.computedPaginationAuthorList()?.pages ?? 1
+    const totalPages = this.computedPaginationSubjectList()?.pages ?? 1
 
     if (this.currentPage() < totalPages){
       this.currentPage.update(e => e + 1);
