@@ -595,6 +595,7 @@ ng g c shared/components/modal-action-component --skip-tests --style=none
 ng g c shared/components/modal-delete-component --skip-tests --style=none
 ng g c shared/components/modal-error-component --skip-tests --style=none
 ng g c shared/components/modal-image-component --skip-tests --style=none
+ng g c shared/components/search-input-component --skip-tests --style=none
 ng g c shared/components/search-codbar-component --skip-tests --style=none
 ng g c shared/components/Pagination-component --skip-tests --style=none
 ng g c shared/components/section-header-component --skip-tests --style=none

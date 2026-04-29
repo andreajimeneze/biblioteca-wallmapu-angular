@@ -127,6 +127,10 @@ export class AuthorFormPage {
     },
   });  
 
+  protected onSearchFilter(searchText: string): void {
+    this.search.set(searchText);
+  }
+  
   protected onSelectedAuthor(item: AuthorModel): void {
     this.selectedAuthor.set(item);
 

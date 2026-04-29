@@ -7,6 +7,7 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 import { DatePipe } from '@angular/common';
 import { ButtonDeleteComponent } from "@shared/components/button-delete-component/button-delete-component";
 import { ButtonEditComponent } from "@shared/components/button-edit-component/button-edit-component";
+import { SearchInputComponent } from "@shared/components/search-input-component/search-input-component";
 
 @Component({
   selector: 'app-subject-list-components',
@@ -16,7 +17,8 @@ import { ButtonEditComponent } from "@shared/components/button-edit-component/bu
     ButtonRefreshComponent,
     LoadingComponent,
     ButtonDeleteComponent,
-    ButtonEditComponent
+    ButtonEditComponent,
+    SearchInputComponent
 ],
   templateUrl: './subject-list-components.html',
 })
@@ -28,6 +30,7 @@ export class SubjectListComponents {
   protected readonly onPrevPage = output<void>();
   protected readonly onNextPage = output<void>();
   protected readonly onEdit = output<SubjectModel>();
+  protected readonly onSearch = output<string>();
 
   protected readonly totalPages = signal<number>(1);
   
