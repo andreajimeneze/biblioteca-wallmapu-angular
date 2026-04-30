@@ -17,9 +17,9 @@ import { ModalActionComponent } from "@shared/components/modal-action-component/
   selector: 'app-subject-form-page',
   imports: [SectionHeaderComponent,
     MessageSuccessComponent,
-    MessageErrorComponent, 
-    SubjectListComponents, 
-    SubjectFormComponents, 
+    MessageErrorComponent,
+    SubjectListComponents,
+    SubjectFormComponents,
     ModalActionComponent,
   ],
   templateUrl: './subject-form-page.html',
@@ -124,7 +124,11 @@ export class SubjectFormPage {
         }),
       );
     },
-  });  
+  });
+
+  protected onSearchFilter(searchText: string): void {
+    this.search.set(searchText);
+  }
   
   protected onSelectedSubject(item: SubjectModel): void {
     this.selectedSubject.set(item);

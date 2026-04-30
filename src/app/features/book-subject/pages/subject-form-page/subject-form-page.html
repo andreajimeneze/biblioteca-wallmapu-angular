@@ -10,7 +10,7 @@
       [isLoading]="isLoading()"
       [subject]="selectedSubject()"
       (onClear)="onClear()"
-      (onFormSubmit)="onFormSubmit($event)"      
+      (onFormSubmit)="onFormSubmit($event)" 
     />
   </div>  
   
@@ -29,6 +29,7 @@
     (onPrevPage)="onPrevPage()"
     (onEdit)="onSelectedSubject($event)"
     (onDelete)="onDeleteSubject($event)"
+    (onSearch)="onSearchFilter($event)"
   />
 </section>
 
