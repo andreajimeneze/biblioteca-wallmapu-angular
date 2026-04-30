@@ -503,6 +503,14 @@ ng g interface features/news-gallery/models/create-news-gallery-model
 ng g s features/news-gallery/services/news-gallery-service --skip-tests
 
 # ---------------------------------------------------------------------------------
+# FEATURES NOTIFICATION
+ng g c features/notification/components/notification-list-components --skip-tests --style=none
+
+ng g interface features/notification/models/notification-model
+
+ng g s features/notification/services/notification-service --skip-tests
+
+# ---------------------------------------------------------------------------------
 # FEATURES RESERVATION
 ng g c features/reservation/components/reservation-barcode-components --skip-tests --style=none
 ng g c features/reservation/components/reservation-to-loan-components --skip-tests --style=none
