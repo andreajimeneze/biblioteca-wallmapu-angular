@@ -16,11 +16,9 @@
 
       <fieldset class="fieldset flex flex-col">
         <label class="label font-semibold">Género</label>
-        <div class="my-auto">
-          <app-genre-select-components 
-            [selectedId]="formData().genre_id"
-            (newSelectedId)="updateGenre($event)"
-          />
+        <div class="flex gap-2">
+          <app-genre-select-components class="flex-1" [selectedId]="formData().genre_id" (newSelectedId)="updateGenre($event)" />
+          <app-button-create-component (onClick)="navigateToGenre()"/>
         </div>
         <p class="validator-hint hidden mt-1 text-sm text-red-500">Requerido</p>
       </fieldset>

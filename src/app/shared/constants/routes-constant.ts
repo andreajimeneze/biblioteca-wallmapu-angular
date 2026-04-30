@@ -39,6 +39,9 @@ export const ROUTES_CONSTANTS = {
       SUBJECT: {
         ROOT: '/admin/subject'
       },
+      GENRE: {
+        ROOT: '/admin/genre'
+      },
       BOOK: {
         ROOT: '/admin/book/list',
         FORM: (bookId: number) => `/admin/book/form/${bookId}`,
