@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, input, output, signal, effect } from '@angular/core';
-import { ReservationModel } from '@features/reservation/models/reservation-model';
+import { ReservationDetailModel, ReservationModel } from '@features/reservation/models/reservation-model';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
 import { ReservationStatusSelectComponents } from "@features/reservation-status/components/reservation-status-select-components/reservation-status-select-components";
 import { PaginationComponent } from "@shared/components/pagination-component/pagination-component";
@@ -23,8 +23,8 @@ import { ButtonRefreshComponent } from "@shared/components/button-refresh-compon
 export class ReservationListComponents {
   readonly isLoading = input<boolean>(false);
   readonly selectStatusId = input<number>(0);
-  readonly paginationAndReservationList = input<PaginationResponseModel<ReservationModel[]> | null>(null);
-  protected readonly onSelectedReservation = output<ReservationModel>();
+  readonly paginationAndReservationList = input<PaginationResponseModel<ReservationDetailModel[]> | null>(null);
+  protected readonly onSelectedReservation = output<ReservationDetailModel>();
   protected readonly onSelectedIdStatus = output<number>();
   protected readonly onCancelReservation = output<number>();
   protected readonly onReload = output<void>();
@@ -40,7 +40,7 @@ export class ReservationListComponents {
     }
   });
 
-  protected selectReservation(item: ReservationModel): void {
+  protected selectReservation(item: ReservationDetailModel): void {
     this.onSelectedReservation.emit(item);
   }
 }

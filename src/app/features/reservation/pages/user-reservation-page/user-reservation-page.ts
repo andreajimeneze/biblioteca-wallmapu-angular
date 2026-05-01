@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
-import { ReservationFilterModel, ReservationModel } from '@features/reservation/models/reservation-model';
+import { ReservationDetailModel, ReservationFilterModel } from '@features/reservation/models/reservation-model';
 import { ReservationService } from '@features/reservation/services/reservation-service';
 import { catchError, finalize, map, of, tap } from 'rxjs';
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
@@ -30,7 +30,7 @@ export class UserReservationPage {
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isModalOpen = signal<boolean>(false);
-  protected readonly selectedReservation = signal<ReservationModel | null>(null);
+  protected readonly selectedReservation = signal<ReservationDetailModel | null>(null);
   protected readonly selectStatusId = signal<number>(0);
   protected readonly currentPage = signal<number>(1);
   private readonly limit = signal<number>(10);
@@ -49,7 +49,7 @@ export class UserReservationPage {
   });
   private readonly cancelReservationPayload = signal<number | null>(null);
   private readonly cancelReservationTemp = signal<number | null>(null);
-  protected readonly computedPaginationAndReservationList = computed<PaginationResponseModel<ReservationModel[]> | null>(() => this.getReservationRX.value() ?? null);
+  protected readonly computedPaginationAndReservationList = computed<PaginationResponseModel<ReservationDetailModel[]> | null>(() => this.getReservationRX.value() ?? null);
 
   protected readonly isLoading = computed(() => 
     [
@@ -64,6 +64,7 @@ export class UserReservationPage {
 
       return this.reservationService.getByUserPagination(params).pipe(
         map(response => {
+          console.log(response)
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
         }),
@@ -99,7 +100,7 @@ export class UserReservationPage {
     },
   });
 
-  protected onSelectedReservation(item: ReservationModel): void {
+  protected onSelectedReservation(item: ReservationDetailModel): void {
     if (item.reservation_status_id == 1) {
       this.selectedReservation.set(item);
       return;
@@ -110,6 +111,7 @@ export class UserReservationPage {
 
   protected reloadReservation(): void {
     this.getReservationRX.reload();
+    this.selectedReservation.set(null);
   }
 
   protected onFilterByIdStatus(id: number): void {

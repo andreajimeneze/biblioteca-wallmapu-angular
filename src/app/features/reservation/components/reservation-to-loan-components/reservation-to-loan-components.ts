@@ -1,10 +1,7 @@
-import { Component, computed, inject, output, signal } from '@angular/core';
-import { rxResource } from '@angular/core/rxjs-interop';
-import { ReservationService } from '@features/reservation/services/reservation-service';
+import { Component, input, output, signal } from '@angular/core';
 import { SearchCodbarComponent } from "@shared/components/search-codbar-component/search-codbar-component";
-import { catchError, map, of } from 'rxjs';
 import { ReservationDetailComponents } from "../reservation-detail-components/reservation-detail-components";
-import { ReservationModel, ReservationPickupModel } from '@features/reservation/models/reservation-model';
+import { ReservationDetailModel } from '@features/reservation/models/reservation-model';
 import { ButtonClearComponent } from "@shared/components/button-clear-component/button-clear-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 
@@ -19,55 +16,35 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
   templateUrl: './reservation-to-loan-components.html',
 })
 export class ReservationToLoanComponents {
-  readonly onRegisterReservationToLoan = output<ReservationPickupModel>();
+  readonly reservationDetail = input<ReservationDetailModel | null>(null);
+  readonly clearTrigger = input<number>(0);
+  readonly isLoading = input<boolean>(false);
+  protected readonly onGetReservationById = output<number>();
+  protected readonly onReservationToLoan = output<ReservationDetailModel>()
+  protected readonly onClear = output<void>();
 
-  protected readonly clearCounter = signal<number>(0);
-  protected readonly successMessage = signal<string | null>(null);
+  protected readonly disabledInput = signal<boolean>(false);
   protected readonly errorMessage = signal<string | null>(null);
-  protected readonly enableButton = signal<boolean>(false);
-  
-  protected readonly isLoading = computed<boolean>(() => this.getReservationRX.isLoading());
-  
-  private readonly reservationService = inject(ReservationService);
-  private readonly getReservationPayload = signal<number | null>(null);
-  protected readonly computedReservation = computed<ReservationModel | null>(() => this.getReservationRX.value() ?? null);
-  
-  private readonly getReservationRX = rxResource({
-    params: () => this.getReservationPayload(),
-    stream: ({ params: id }) => {
-      if (!id) return of(null);
-      this.errorMessage.set(null);
-      
-      return this.reservationService.getById(id).pipe(
-        map(response => {
-          if (!response.isSuccess) throw new Error(response.message);
-          return response.data;
-        }),
-        catchError(err => {
-          this.handleError(err);
-          return of(null);
-        })
-      );
-    },
-  });
 
   protected onSearchReservation(barcode: string | null): void {
     if (!barcode) return;
-    const clean = barcode.trim();
-    const isNumeric = /^[0-9]+$/.test(clean);
   
-    if (!isNumeric) {
+    const clean = barcode.trim().replace(/-RES$/, '');
+    const id_reservation = Number(clean);
+    
+    if (Number.isNaN(id_reservation)) {
       this.errorMessage.set("El codigo de barra debe ser numerico");
       return;
     }
-
-    this.getReservationPayload.set(Number(clean));
+    
+    this.onGetReservationById.emit(id_reservation);
+    this.disabledInput.set(false);
   }
-
+  
   protected onEnterBookBarCode(barcode: string | null): void {
     this.errorMessage.set(null);
 
-    const reservation = this.computedReservation();
+    const reservation = this.reservationDetail();
     if (!reservation) return;
 
     if (barcode != reservation.copy_barcode) {
@@ -75,38 +52,17 @@ export class ReservationToLoanComponents {
       return;
     }
 
-    this.enableButton.set(true);
+    this.disabledInput.set(true);
   }
 
-  protected onReservationToLoan(): void {
-    const reservation = this.computedReservation();
+  protected reservationToLoan(): void {
+    const reservation = this.reservationDetail();
     
     if (!reservation || !reservation.id_reservation || !reservation.copy_id) {
       this.errorMessage.set("Seleccione una reserva válida");
       return;
     }
 
-    const payload: ReservationPickupModel = {
-      id_reservation: reservation.id_reservation,
-      id_copy: reservation.copy_id
-    };
-
-    this.onRegisterReservationToLoan.emit(payload);
-    this.onClear();
-  }
-
-  protected onClear(): void {
-    this.clearCounter.update(v => v + 1);
-    this.getReservationPayload.set(null);
-    this.enableButton.set(false);
-  }
-
-  private handleError(err: unknown): void {
-    const message = err instanceof Error 
-      ? err.message 
-      : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
-    
-    this.successMessage.set(null);
-    this.errorMessage.set(message);
+    this.onReservationToLoan.emit(reservation);
   }
 }

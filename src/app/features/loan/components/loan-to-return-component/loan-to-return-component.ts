@@ -14,12 +14,12 @@ import { LoanDetailComponent } from "../loan-detail-component/loan-detail-compon
   templateUrl: './loan-to-return-component.html',
 })
 export class LoanToReturnComponent {
+  readonly loanDetailModel = input<LoanDetailModel | null>(null);
   readonly clearTrigger = input<number>(0);
   readonly isLoading = input<boolean>(false);
-  readonly loanDetailModel = input<LoanDetailModel | null>(null);
   protected readonly onGetLoanByBarcode = output<string>();
   protected readonly onReturnLoan = output<LoanDetailModel>()
-  protected onClear = output<void>();
+  protected readonly onClear = output<void>();
     
   protected onEnterBookBarcode(barcode: string | null): void {
     if (!barcode) return;

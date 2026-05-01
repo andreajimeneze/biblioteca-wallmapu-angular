@@ -6,39 +6,39 @@
     </div>
     
     <app-button-clear-component
-      (onClick)="onClear()"
+      (onClick)="onClear.emit()"
     />
   </section>
 
   <div class="divider text-base-content/40 max-w-7xl mx-auto">Buscar Reserva</div>
 
   <app-search-codbar-component 
-    [disabled]="enableButton()"
-    [clearTrigger]="clearCounter()"
+    [disabled]="!!reservationDetail()"
+    [clearTrigger]="clearTrigger()"
     [textTitle]="'Código de Barra de la Reserva'"
     [isLoading]="isLoading()"
     (onSubmit)="onSearchReservation($event)"
   />
 
   <app-reservation-detail-components 
-    [reservationModel]="computedReservation()"
+    [reservationModel]="reservationDetail()"
   />
 
-  @if (computedReservation()) {
+  @if (reservationDetail()) {
     <div class="divider text-base-content/40 max-w-7xl mx-auto my-2">Confirmar Libro</div>
 
     <app-search-codbar-component 
-      [disabled]="enableButton()"
-      [clearTrigger]="clearCounter()"
+      [disabled]="disabledInput()"
+      [clearTrigger]="clearTrigger()"
       [textTitle]="'Código de Barra del Libro'"
       [isLoading]="isLoading()"
       (onSubmit)="onEnterBookBarCode($event)"
     />
   }
 
-  @if (enableButton()) {
+  @if (disabledInput()) {
     <button 
-      (click)="onReservationToLoan()" 
+      (click)="reservationToLoan()" 
       type="button" class="btn bg-my-purple hover:bg-my-purple/80 text-my-light w-full mt-2">
       Registrar Préstamo
     </button> 
