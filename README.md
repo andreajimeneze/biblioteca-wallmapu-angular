@@ -332,9 +332,13 @@ ng g s features/book-editorial/services/editorial-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES BOOK GENRE
+ng g c features/book-genre/components/genre-form-components --skip-tests --style=none
+ng g c features/book-genre/components/genre-list-components --skip-tests --style=none
 ng g c features/book-genre/components/genre-select-components --skip-tests --style=none
 
 ng g interface features/book-genre/models/genre-model
+
+ng g c features/book-genre/pages/genre-form-page --skip-tests --style=none
 
 ng g s features/book-genre/services/genre-service --skip-tests
 
@@ -497,6 +501,14 @@ ng g interface features/news-gallery/models/news-gallery-model
 ng g interface features/news-gallery/models/create-news-gallery-model
 
 ng g s features/news-gallery/services/news-gallery-service --skip-tests
+
+# ---------------------------------------------------------------------------------
+# FEATURES NOTIFICATION
+ng g c features/notification/components/notification-list-components --skip-tests --style=none
+
+ng g interface features/notification/models/notification-model
+
+ng g s features/notification/services/notification-service --skip-tests
 
 # ---------------------------------------------------------------------------------
 # FEATURES RESERVATION

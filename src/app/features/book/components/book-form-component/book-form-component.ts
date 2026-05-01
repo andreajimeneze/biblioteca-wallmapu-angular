@@ -170,6 +170,10 @@ export class BookFormComponent {
     return null; // ✅ sin errores
   }
 
+  protected navigateToGenre(): void {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.GENRE.ROOT]);    
+  }
+
   protected navigateToAuthor(): void {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.AUTHOR.ROOT]);
   }
