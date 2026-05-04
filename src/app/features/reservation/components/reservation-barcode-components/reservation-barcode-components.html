@@ -1,8 +1,8 @@
 <section class="bg-my-light p-4 flex flex-col gap-4 rounded-box shadow-md h-full">
-  @if (reservationModel()) {
+  @if (reservationDetail()) {
     <div class="flex justify-center">
       <app-barcode-generator
-        [value]="reservationModel()?.id_reservation?.toString()?.concat('-RES') ?? 'Sin Reserva'"
+        [value]="reservationDetail()?.id_reservation?.toString()?.concat('-RES') ?? 'Sin Reserva'"
         [format]="'code128'"
       />
     </div>
@@ -10,7 +10,7 @@
     
   <div class="flex justify-center items-center h-full">
     <app-reservation-detail-components
-      [reservationModel]="reservationModel()"
+      [reservationModel]="reservationDetail()"
     />
   </div>
 </section>

@@ -2,7 +2,7 @@ import { Component, computed, inject, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
-import { ReservationFilterModel, ReservationModel, ReservationPickupModel } from '@features/reservation/models/reservation-model';
+import { ReservationDetailModel, ReservationFilterModel, ReservationPickupModel } from '@features/reservation/models/reservation-model';
 import { ReservationService } from '@features/reservation/services/reservation-service';
 import { catchError, finalize, map, of, tap } from 'rxjs';
 import { SectionHeaderComponent } from "@shared/components/section-header-component/section-header-component";
@@ -27,6 +27,7 @@ import { LoanPolicyComponent } from "@features/loan-policies/components/loan-pol
   templateUrl: './admin-reservation-page.html',
 })
 export class AdminReservationPage {
+  protected readonly clearCounter = signal<number>(0);
   protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly isModalOpen = signal<boolean>(false);
@@ -35,8 +36,22 @@ export class AdminReservationPage {
   private readonly limit = signal<number>(10);
   private readonly search = signal<string>('');
 
+  protected readonly isLoadingReservation = computed<boolean>(() => this.getReservationByIdRX.isLoading());
+  protected readonly isLoading = computed(() => 
+    [
+      this.getReservationRX,
+      this.cancelReservationRX,
+      this.updateExpiredReservationRX,
+      this.pickupReservationRX,
+    ].some(e => e.isLoading())
+  );
+
   private readonly reservationService = inject(ReservationService);
+  
+  private readonly getReservationByIdPayload = signal<number | null>(null);
   private readonly pickupReservationPayload = signal<ReservationPickupModel | null>(null);
+  private readonly cancelReservationPayload = signal<number | null>(null);
+  private readonly cancelReservationTemp = signal<number | null>(null);
   private readonly getPaginationPayload = computed<PaginationRequestModel<ReservationFilterModel>>(() => {
     return {
       page: this.currentPage(),
@@ -47,24 +62,33 @@ export class AdminReservationPage {
       }
     }
   });
-  private readonly cancelReservationPayload = signal<number | null>(null);
-  private readonly cancelReservationTemp = signal<number | null>(null);
-  protected readonly computedPaginationAndReservationList = computed<PaginationResponseModel<ReservationModel[]> | null>(() => this.getReservationRX.value() ?? null);
-
-  protected readonly isLoading = computed(() => 
-    [
-      this.getReservationRX,
-      this.cancelReservationRX,
-      this.updateExpiredReservationRX,
-      this.pickupReservationRX,
-    ].some(e => e.isLoading())
-  );
-
+  protected readonly computedPaginationAndReservationList = computed<PaginationResponseModel<ReservationDetailModel[]> | null>(() => this.getReservationRX.value() ?? null);
+  protected readonly computedReservationDetail = computed<ReservationDetailModel | null>(() => this.getReservationByIdRX.value() ?? null);
+  
   private readonly getReservationRX = rxResource({
     params: () => this.getPaginationPayload(),
     stream: ({ params }) => { 
 
       return this.reservationService.getAllPagination(params).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          return response.data;
+        }),
+        catchError(err => {
+          this.handleError(err);
+          return of(null);
+        })
+      );
+    },
+  });
+
+  private readonly getReservationByIdRX = rxResource({
+    params: () => this.getReservationByIdPayload(),
+    stream: ({ params: id_reservation }) => {
+      if (!id_reservation) return of(null);
+      this.errorMessage.set(null);
+      
+      return this.reservationService.getById(id_reservation).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
@@ -142,8 +166,25 @@ export class AdminReservationPage {
     },
   });
 
-  protected onRegisterReservationToLoan(params: ReservationPickupModel): void {
-    this.pickupReservationPayload.set(params);
+  protected onClear(): void {
+    this.clearCounter.update(e => e + 1);
+    this.getReservationByIdPayload.set(null);
+    this.errorMessage.set(null);
+  }
+
+  protected onSearchReservation(id_reservation: number): void {
+    this.getReservationByIdPayload.set(id_reservation);
+  }
+
+  protected onRegisterReservationToLoan(item: ReservationDetailModel): void {
+    console.log(item)
+    const payload: ReservationPickupModel = {
+      id_reservation: item.id_reservation,
+      copy_id: item.copy_id, 
+    }
+
+    this.pickupReservationPayload.set(payload);
+    this.onClear();
   }
 
   protected reloadReservation(): void {

@@ -1,5 +1,7 @@
-<section class="flex flex-wrap gap-4">
-  <div class="stats shadow bg-my-light text-my-purple">
+<section class="flex flex-wrap gap-2 sm:gap-4">
+  <div 
+    (click)="onNavigateToReservations()"
+    class="stats shadow bg-my-light text-my-purple w-full sm:w-auto cursor-pointer">
     <div class="stat">
       @if (isLoading()) {
         <div class="p-2 m-auto">
@@ -17,7 +19,9 @@
     </div>
   </div>
 
-  <div class="stats shadow bg-my-light text-my-green">
+  <div
+    (click)="onNavigateToLoans()"
+    class="stats shadow bg-my-light text-my-green w-full sm:w-auto cursor-pointer">
     <div class="stat">
       @if (isLoading()) {
         <div class="p-2 m-auto">
@@ -35,7 +39,9 @@
     </div>
   </div>  
 
-  <div class="stats shadow bg-my-light text-my-pink">
+  <div 
+    (click)="onNavigateToBooks()"
+    class="stats shadow bg-my-light text-my-pink w-full sm:w-auto cursor-pointer">
     <div class="stat">
       @if (isLoading()) {
         <div class="p-2 m-auto">
@@ -53,7 +59,9 @@
     </div>
   </div>
     
-  <div class="stats shadow bg-my-light text-my-purple">
+  <div 
+    (click)="onNavigateToUsers()"
+    class="stats shadow bg-my-light text-my-purple w-full sm:w-auto cursor-pointer">
     <div class="stat">
       @if (isLoading()) {
         <div class="p-2 m-auto">
@@ -71,7 +79,9 @@
     </div>
   </div>
 
-  <div class="stats shadow bg-my-light text-my-green">
+  <div 
+    (click)="onNavigateToNews()"
+    class="stats shadow bg-my-light text-my-green w-full sm:w-auto cursor-pointer">
     <div class="stat">
       @if (isLoading()) {
         <div class="p-2 m-auto">

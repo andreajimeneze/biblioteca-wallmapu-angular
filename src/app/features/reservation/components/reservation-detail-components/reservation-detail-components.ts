@@ -1,6 +1,6 @@
 import { DatePipe } from '@angular/common';
 import { Component, input } from '@angular/core';
-import { ReservationModel } from '@features/reservation/models/reservation-model';
+import { ReservationDetailModel, ReservationModel } from '@features/reservation/models/reservation-model';
 
 @Component({
   selector: 'app-reservation-detail-components',
@@ -10,5 +10,5 @@ import { ReservationModel } from '@features/reservation/models/reservation-model
   templateUrl: './reservation-detail-components.html',
 })
 export class ReservationDetailComponents {
-  readonly reservationModel = input<ReservationModel | null>(null)
+  readonly reservationModel = input<ReservationDetailModel | null>(null)
 }
