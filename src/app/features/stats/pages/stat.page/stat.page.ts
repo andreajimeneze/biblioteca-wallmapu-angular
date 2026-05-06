@@ -23,6 +23,7 @@ import { ButtonEditComponent } from "@shared/components/button-edit-component/bu
 import { ButtonCreateComponent } from "@shared/components/button-create-component/button-create-component";
 import { ButtonGobackComponent } from "@shared/components/button-goback-component/button-goback-component";
 import { ButtonSearchComponent } from "@shared/components/button-search-component/button-search-component";
+import { ButtonNotificationComponent } from "@shared/components/button-notification-component/button-notification-component";
 
 @Component({
   selector: 'app-stat.page',
@@ -46,7 +47,8 @@ import { ButtonSearchComponent } from "@shared/components/button-search-componen
     ButtonEditComponent,
     ButtonCreateComponent,
     ButtonGobackComponent,
-    ButtonSearchComponent
+    ButtonSearchComponent,
+    ButtonNotificationComponent
 ],
   templateUrl: './stat.page.html',
 })

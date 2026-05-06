@@ -1,32 +1,33 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { UserStatsComponents } from "@features/stats/components/user-stats-components/user-stats-components";
 import { NotificationListComponents } from "@features/notification/components/notification-list-components/notification-list-components";
-import { rxResource } from '@angular/core/rxjs-interop';
-import { NotificationService } from '@features/notification/services/notification-service';
+import { NotificationFormComponents } from "@features/notification/components/notification-form-components/notification-form-components";
+import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
+import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
 import { NotificationDetailModel } from '@features/notification/models/notification-model';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { catchError, map, of } from 'rxjs';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
-import { catchError, EMPTY, finalize, map, of } from 'rxjs';
-import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { NotificationService } from '@features/notification/services/notification-service';
 
 @Component({
-  selector: 'app-user-dashboard-page',
+  selector: 'app-notification-page',
   imports: [
-    UserStatsComponents,
-    NotificationListComponents,
-    MessageErrorComponent,
-],
-  templateUrl: './user-dashboard-page.html',
+    NotificationListComponents, 
+    NotificationFormComponents, 
+    MessageSuccessComponent, 
+    MessageErrorComponent
+  ],
+  templateUrl: './notification-page.html',
 })
-export class UserDashboardPage {
+export class NotificationPage {
+  protected readonly successMessage = signal<string | null>(null);
   protected readonly errorMessage = signal<string | null>(null);
   protected readonly currentPage = signal<number>(1);
   private readonly limit = signal<number>(10);
   private readonly search = signal<string>('');
   
-  protected readonly isLoadingMarkAsRead = signal(false);
-  protected readonly isLoadingMarkAllAsRead = signal(false);
-  protected readonly isLoading = computed<boolean>(() => this.getNotificationRX.isLoading() || this.isLoadingMarkAsRead() || this.isLoadingMarkAllAsRead());
+  protected readonly isLoading = computed<boolean>(() => this.getNotificationRX.isLoading())
 
   private readonly notificationService = inject(NotificationService);
   private readonly getNotificationPayload = computed<PaginationRequestModel<null>>(() => {
@@ -43,7 +44,7 @@ export class UserDashboardPage {
     params: () => this.getNotificationPayload(),
     stream: ({ params }) => { 
 
-      return this.notificationService.getAllPaginationByUser(params).pipe(
+      return this.notificationService.getAllPagination(params).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
@@ -55,38 +56,6 @@ export class UserDashboardPage {
       );
     },
   });
-
-  protected onMarkAsRead(item: NotificationDetailModel): void {
-    this.isLoadingMarkAsRead.set(true);
-
-    this.notificationService.markAsReadByUser(item.id_notification)
-      .pipe(
-        catchError(err => {
-          this.handleError(err);
-          return EMPTY;
-        }),
-        finalize(() => this.isLoadingMarkAsRead.set(false))
-      )
-      .subscribe(() => {
-        this.getNotificationRX.reload();
-      });
-  }
-
-  protected onMarkAllAsRead(): void {
-    this.isLoadingMarkAllAsRead.set(true);
-
-    this.notificationService.markAllAsReadByUser()
-      .pipe(
-        catchError(err => {
-          this.handleError(err);
-          return EMPTY;
-        }),
-        finalize(() => this.isLoadingMarkAllAsRead.set(false))
-      )
-      .subscribe(() => {
-        this.getNotificationRX.reload();
-      });
-  }
 
   protected onReloadNotification(): void {
     this.getNotificationRX.reload();
@@ -112,5 +81,6 @@ export class UserDashboardPage {
       ? err.message 
       : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
     this.errorMessage.set(message);
+    this.successMessage.set(null);
   }
 }

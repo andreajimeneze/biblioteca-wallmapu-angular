@@ -15,3 +15,16 @@ export interface UpdateNotificationModel extends CreateNotificationModel {
 export interface NotificationModel extends UpdateNotificationModel {
   created_at: string;
 }
+
+
+export interface NotificationDetailModel extends NotificationModel {
+  email: string;
+}
+
+
+export interface CreateNotificationByEmailModel {
+  email: string;
+  title: string;
+  message: string;
+  is_priority: boolean;
+}

@@ -1,6 +1,6 @@
-<ul class="list bg-base-100 rounded-box shadow-md">
+<ul class="list bg-base-100 rounded-box shadow-md overflow-hidden">
   
-  <header class="p-6 pb-2 flex gap-4 justify-between flex-wrap">
+  <header class="p-6 pb-2 flex gap-4 justify-between flex-wrap bg-my-light/90">
     <div>
       <h2 class="font-bold text-my-purple text-lg">
         Bandeja de Mensajes
@@ -11,8 +11,10 @@
     </div>
 
     <div class="flex gap-2 items-center">
-      <app-button-notification-component [textBtn]="'Marcar todo como leído'" />
-      <app-button-refresh-component />
+      @if (isUser()) {
+        <app-button-notification-component (onClick)="onMarkAllAsRead.emit()" [textBtn]="'Marcar todo como leído'" />
+      }
+      <app-button-refresh-component (onClick)="onReload.emit()"/>
     </div>
   </header>
   
@@ -42,14 +44,15 @@
         </div>
   
         <div>
-          <div>{{ item.created_at | date:'yyyy-MM-dd' }}</div>
+          <div>{{ item.created_at | date:'yyyy-MM-dd' }} </div>
+          <div>{{ item.email }}</div>
           <div class="text-xs uppercase font-semibold opacity-60">{{ item.title }}</div>
           <p>{{ item.message }}</p>
         </div>
   
-        @if (!item.is_read) {
+        @if (!item.is_read && isUser()) {
           <div class="tooltip tooltip-left tooltip-warning font-bold" data-tip="Marcar como leído">
-            <button class="btn btn-square btn-ghost">
+            <button (click)="onMarkAsRead.emit(item)" class="btn btn-square btn-ghost">
               <svg class="size-[1.2em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g stroke-linejoin="round" stroke-linecap="round" stroke-width="2" fill="none" stroke="currentColor"><path d="M6 3L20 12 6 21 6 3z"></path></g></svg>
             </button>
           </div>
@@ -60,9 +63,9 @@
   }
 
   <app-pagination-component 
-    [currentPage]="1"
-    [totalPages]="1"
-  />
+    [currentPage]="paginationAndNotificationList()?.page ?? 1"
+    [totalPages]="totalPages()"
+    (prevPage)="onPrevPage.emit()"
+    (nextPage)="onNextPage.emit()"
+    />
 </ul>
-
-<pre>{{ paginationAndNotificationList() | json }}</pre>

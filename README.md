@@ -511,6 +511,8 @@ ng g c features/notification/components/notification-list-components --skip-test
 
 ng g interface features/notification/models/notification-model
 
+ng g c features/notification/pages/notification-page --skip-tests --style=none
+
 ng g s features/notification/services/notification-service --skip-tests
 
 # ---------------------------------------------------------------------------------
