@@ -8,8 +8,7 @@
   }
   
   <app-user-profile-components
-    [editRole]="authUser().editRole"
-    [picture]="authUser().picture"
+    [authUser]="authUser()"
     [userDetailModel]="userDetailComputed()"
   />
 
