@@ -10,6 +10,9 @@ export const ROUTES_CONSTANTS = {
       DETAIL: (bookId: number) => `/book/${bookId}`,
       EDITION: (bookId: number, editionId: number) => `/book/${bookId}/edition/${editionId}`
     },
+    RESERVATION: {
+      ROOT: (bookId: number, editionId: number) => `reservation/book/${bookId}/edition/${editionId}`
+    }
   },
   PROTECTED: {
     USER: {
