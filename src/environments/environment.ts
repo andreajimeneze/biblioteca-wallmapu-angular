@@ -4,5 +4,5 @@ export const environment = {
   apiUrl: 'https://biblioteca-wallmapu-python.vercel.app/api',
   //apiUrl: 'https://api-wallmapu-mesana.vercel.app/api',
   googleClientId: '529904203616-e3rl4utugk5ktbeqbv0ou3itj477gsvd.apps.googleusercontent.com',
-  version: '1.0.237',
+  version: '1.0.238',
 };

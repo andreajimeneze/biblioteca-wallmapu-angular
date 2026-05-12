@@ -18,6 +18,7 @@ import { BookModel } from '@features/book/models/book-model';
 import { CopyListForEditionComponents } from "@features/copy/components/copy-list-for-edition-components/copy-list-for-edition-components";
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
 import { extractErrorMessage } from '@core/utils/error-handler';
+import { ButtonCreateComponent } from "@shared/components/button-create-component/button-create-component";
 
 @Component({
   selector: 'app-edition-form-page',
@@ -27,7 +28,8 @@ import { extractErrorMessage } from '@core/utils/error-handler';
     MessageErrorComponent,
     MessageSuccessComponent,
     CopyListForEditionComponents,
-    ModalActionComponent
+    ModalActionComponent,
+    ButtonCreateComponent
 ],
   templateUrl: './edition-form-page.html',
 })

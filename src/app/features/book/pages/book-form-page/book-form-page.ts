@@ -15,11 +15,14 @@ import { BookSubjectStepService } from '@features/book-subject-step/services/boo
 import { BookService } from '@features/book/services/book-service';
 import { EditionListComponents } from "@features/edition/components/edition-list-components/edition-list-components";
 import { EditionService } from '@features/edition/services/edition-service';
-import { BookDetailModel, BookModel, CreateBookModel, UpdateBookModel } from '@features/book/models/book-model';
+import { BookModel, CreateBookModel, UpdateBookModel } from '@features/book/models/book-model';
 import { BookFormVM } from '@features/book/models/vm.book-form';
 import { ModalDeleteComponent } from "@shared/components/modal-delete-component/modal-delete-component";
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { EditionDetailModel } from '@features/edition/models/edition-model';
+import { ButtonCreateComponent } from "@shared/components/button-create-component/button-create-component";
+import { extractErrorMessage } from '@core/utils/error-handler';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-book-form-page',
@@ -29,7 +32,8 @@ import { EditionDetailModel } from '@features/edition/models/edition-model';
     MessageErrorComponent,
     EditionListComponents,
     ModalDeleteComponent,
-    MessageSuccessComponent
+    MessageSuccessComponent,
+    ButtonCreateComponent
 ],
   templateUrl: './book-form-page.html',
 })
@@ -75,9 +79,10 @@ export class BookFormPage {
   );
 
   private readonly bookService = inject(BookService);
-  protected readonly bookDetailComputed = computed<BookDetailModel | null>(() => this.getBookRX.value() ?? null);
+  protected readonly bookDetailComputed = computed<BookModel | null>(() => this.getBookRX.value() ?? null);
   private readonly getBookPayload = signal(this.routeId());
   private readonly saveBookPayload = signal<CreateBookModel | UpdateBookModel | null>(null);
+  protected readonly computedBook = computed<BookModel | null>(() => this.getBookRX.value() ?? null);
 
   private readonly authorStepService = inject(BookAuthorStepService);
   private readonly deleteAuthorStepPayload = signal<BookAuthorStepModel | null>(null);
@@ -94,7 +99,7 @@ export class BookFormPage {
     stream: ({ params: idBook }) => {
       if (!idBook) return of(null);
 
-      return this.bookService.getDetailById(idBook).pipe(
+      return this.bookService.getById(idBook).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
@@ -105,8 +110,7 @@ export class BookFormPage {
           }
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -134,8 +138,7 @@ export class BookFormPage {
           this.getBookRX.reload();
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -157,8 +160,7 @@ export class BookFormPage {
           this.getBookRX.reload();
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -180,8 +182,7 @@ export class BookFormPage {
           this.getBookRX.reload();
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -199,8 +200,7 @@ export class BookFormPage {
           return response.data;
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -226,8 +226,7 @@ export class BookFormPage {
           this.selectedEditionToDelete.set(null);
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -269,6 +268,18 @@ export class BookFormPage {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.BOOK.ROOT]);
   }
 
+  protected navigateToGenre(): void {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.GENRE.ROOT]);
+  }
+
+  protected navigateToAuthor(): void {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.AUTHOR.ROOT]);
+  }
+
+  protected navigateToSubject(): void {
+    this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.SUBJECT.ROOT]);
+  }
+
   protected onCreateEdition(): void {
     this.router.navigate([ROUTES_CONSTANTS.PROTECTED.ADMIN.EDITION.FORM(this.bookFormVM().id_book, 0)]); 
   }
@@ -298,4 +309,9 @@ export class BookFormPage {
     this.openDeleteModal.set(false);
   }
   // -----------------------------------------------------------------
+
+  private handleError(err: unknown): void {
+    this.errorMessage.set(extractErrorMessage(err));
+    this.successMessage.set(null);
+  }
 }
