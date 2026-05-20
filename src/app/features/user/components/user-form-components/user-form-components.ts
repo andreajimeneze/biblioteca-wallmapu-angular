@@ -1,6 +1,6 @@
 import { Component, effect, input, output, signal } from '@angular/core';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
-import { DatePipe, NgOptimizedImage } from '@angular/common';
+import { DatePipe, JsonPipe, NgOptimizedImage } from '@angular/common';
 import { UserStatusSelectComponents } from "@features/user-status/components/user-status-select-components/user-status-select-components";
 import { UserRoleSelectComponents } from "@features/user-role/components/user-role-select-components/user-role-select-components";
 import { UserModel } from '@features/user/models/user-model';
@@ -10,6 +10,7 @@ import { LoadingComponent } from "@shared/components/loading-component/loading-c
 @Component({
   selector: 'app-user-form-components',
   imports: [
+    JsonPipe,
     DatePipe,
     NgOptimizedImage,
     MessageErrorComponent,
@@ -34,13 +35,9 @@ export class UserFormComponents {
     const user = this.userModel();
     if (!user) return; 
 
-    console.log(user)
-
     this.formData.set({
       ...user
     });
-
-    console.log(this.formData())
   });
 
   /* -- Form Updates -------------------------------------- */
@@ -59,8 +56,9 @@ export class UserFormComponents {
   protected updateAddress(value: string, input: HTMLInputElement) { 
     this.updateField('address', value, input); 
   }
-  protected updateCommune(id: number | null) {
-    this.formData.update(data => ({ ...data, commune_id: id ?? 0 }));
+  protected updateCommune(id: number) {
+    if (!id) return;
+    this.formData.update(data => ({ ...data, commune_id: id }));
   }
 
   private updateField<K extends keyof UserModel>(key: K, value: string, input?: HTMLInputElement) {
