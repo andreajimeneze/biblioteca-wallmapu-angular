@@ -22,7 +22,6 @@ import { MessageSuccessComponent } from "@shared/components/message-success-comp
 import { EditionDetailModel } from '@features/edition/models/edition-model';
 import { ButtonCreateComponent } from "@shared/components/button-create-component/button-create-component";
 import { extractErrorMessage } from '@core/utils/error-handler';
-import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-book-form-page',

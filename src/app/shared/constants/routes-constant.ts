@@ -57,7 +57,7 @@ export const ROUTES_CONSTANTS = {
       },
       NEWS: {
         ROOT: '/admin/news',
-        FORM: '/admin/news/form',
+        FORM: (newsId: number) => `/admin/news/form/${newsId}`,
       },
       USERS: {
         ROOT: '/admin/users',
