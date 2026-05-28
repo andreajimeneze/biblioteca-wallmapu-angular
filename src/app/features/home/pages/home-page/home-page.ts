@@ -81,6 +81,7 @@ export class HomePage {
   private readonly id_format = signal<number>(0);
   private readonly id_editorial  = signal<number>(0);
   private readonly id_genre  = signal<number>(0);
+  private readonly id_subject  = signal<number>(0);
   protected readonly editionPayload = computed<PaginationRequestModel<EditionFilterModel>>(() => ({
     page: this.currentPage(),
     limit: this.limit(),
@@ -90,6 +91,7 @@ export class HomePage {
       id_editorial: this.id_editorial(),
       id_genre: this.id_genre(),
       id_format: this.id_format(),
+      id_subject: this.id_subject(),
     }        
   }));
 
@@ -148,6 +150,10 @@ export class HomePage {
 
   protected onGenreIdSelected(id_genre: number): void {
     this.id_genre.set(id_genre);
+  }
+
+  protected onSubjectIdSelected(id_subject: number): void {
+    this.id_subject.set(id_subject);
   }
 
   protected onNavigateTo(item: EditionDetailModel): void {

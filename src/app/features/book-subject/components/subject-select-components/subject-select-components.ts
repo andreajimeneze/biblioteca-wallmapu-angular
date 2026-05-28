@@ -15,6 +15,7 @@ import { catchError, map, of } from 'rxjs';
 export class SubjectSelectComponents {
   readonly disabled = input<boolean>(false);
   readonly selectedId = input<number>(0);
+  readonly clearTrigger = input<number>(0);
   readonly onNewSelectedSubject = output<SubjectModel>();
 
   private readonly subjectService = inject(SubjectService);
@@ -43,5 +44,9 @@ export class SubjectSelectComponents {
     if (subject) {
       this.onNewSelectedSubject.emit(subject);
     }
+  }
+
+  protected onCleared(): void {
+    this.onNewSelectedSubject.emit(null as unknown as SubjectModel);
   }
 }

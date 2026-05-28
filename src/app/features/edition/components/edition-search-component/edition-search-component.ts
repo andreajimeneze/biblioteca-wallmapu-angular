@@ -7,6 +7,8 @@ import { EditorialSelectComponents } from "@features/book-editorial/components/e
 import { AuthorSelectComponents } from "@features/book-author/components/author-select-components/author-select-components";
 import { FormatSelectComponent } from "@features/format/components/format-select-component/format-select-component";
 import { FormatModel } from '@features/format/models/format-model';
+import { SubjectSelectComponents } from "@features/book-subject/components/subject-select-components/subject-select-components";
+import { SubjectModel } from "@features/book-subject/models/subject-model";
 
 @Component({
   selector: 'app-edition-search-component',
@@ -14,7 +16,8 @@ import { FormatModel } from '@features/format/models/format-model';
     GenreSelectComponents,
     EditorialSelectComponents,
     AuthorSelectComponents,
-    FormatSelectComponent
+    FormatSelectComponent,
+    SubjectSelectComponents
   ],
   templateUrl: './edition-search-component.html',
 })
@@ -27,6 +30,7 @@ export class EditionSearchComponent {
   readonly onFormatIdSelected = output<number>();
   readonly onEditorialIdSelected = output<number>();
   readonly onGenreIdSelected = output<number>();
+  readonly onSubjectIdSelected = output<number>();
 
   protected readonly searchText = signal<string>('');
   protected readonly clearTrigger = signal<number>(0);
@@ -54,6 +58,7 @@ export class EditionSearchComponent {
     this.onFormatIdSelected.emit(0);
     this.onEditorialIdSelected.emit(0);
     this.onGenreIdSelected.emit(0);
+    this.onSubjectIdSelected.emit(0);
   }
 
   protected authorSelected(item: AuthorModel | null) {
@@ -76,5 +81,12 @@ export class EditionSearchComponent {
 
   protected genreSelected(id: number) {
     this.onGenreIdSelected.emit(id)
+  }
+
+  protected subjectSelected(item: SubjectModel | null): void {
+    if (!item) return;
+    if (!item.id_subject || item.id_subject === 0) return;
+
+    this.onSubjectIdSelected.emit(item.id_subject)
   }
 }

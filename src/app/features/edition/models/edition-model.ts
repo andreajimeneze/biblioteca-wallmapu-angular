@@ -54,4 +54,5 @@ export interface EditionFilterModel {
   id_editorial?: number;
   id_genre?: number;
   id_format?: number;
+  id_subject?: number;
 }
