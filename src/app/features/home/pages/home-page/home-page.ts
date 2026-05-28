@@ -78,6 +78,7 @@ export class HomePage {
   private readonly limit = signal<number>(20);
   private readonly search = signal<string>('');
   private readonly id_author = signal<number>(0);
+  private readonly id_format = signal<number>(0);
   private readonly id_editorial  = signal<number>(0);
   private readonly id_genre  = signal<number>(0);
   protected readonly editionPayload = computed<PaginationRequestModel<EditionFilterModel>>(() => ({
@@ -87,7 +88,8 @@ export class HomePage {
     filter: {
       id_author: this.id_author(),
       id_editorial: this.id_editorial(),
-      id_genre: this.id_genre()
+      id_genre: this.id_genre(),
+      id_format: this.id_format(),
     }        
   }));
 
@@ -134,6 +136,10 @@ export class HomePage {
 
   protected onAuthorIdSelected(id_author: number): void {
     this.id_author.set(id_author);
+  }
+
+  protected onFormatIdSelected(id_format: number): void {
+    this.id_format.set(id_format);
   }
 
   protected onEditorialIdSelected(id_editorial: number): void {

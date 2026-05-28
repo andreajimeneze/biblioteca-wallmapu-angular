@@ -30,8 +30,17 @@
         [clearTrigger]="clearTrigger()"
         (onNewSelectedAuthor)="authorSelected($event)"
       />
+    </div>   
+    
+    <div>
+      <label class="label mb-1 grid">
+        <span class="label-text text-sm font-semibold">Filtrar por Formato</span>
+      </label>
+      <app-format-select-component
+        [clearTrigger]="clearTrigger()" 
+        (onNewSelectedFormat)="formatSelected($event)"/>
     </div>
-   
+
     <div>
       <label class="label mb-1 grid">
         <span class="label-text text-sm font-semibold">Filtrar por editorial</span>

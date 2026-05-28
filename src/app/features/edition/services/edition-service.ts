@@ -28,6 +28,9 @@ export class EditionService {
       
       if (params.filter.id_genre && params.filter.id_genre > 0)
         path = `${path}&id_genre=${params.filter.id_genre}`
+
+      if (params.filter.id_format && params.filter.id_format > 0)
+        path = `${path}&id_format=${params.filter.id_format}`
     }
 
     return this.apiResponseService.getAll<ApiResponseModel<PaginationResponseModel<EditionDetailModel[]>>>(
