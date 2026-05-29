@@ -1,9 +1,10 @@
 import { DatePipe, NgOptimizedImage } from '@angular/common';
-import { Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, signal } from '@angular/core';
 import { NewsWithImagesModel } from '@features/news/models/news-with-images-model';
 
 @Component({
   selector: 'app-news-detail-component',
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     DatePipe,
     NgOptimizedImage,
@@ -12,4 +13,29 @@ import { NewsWithImagesModel } from '@features/news/models/news-with-images-mode
 })
 export class NewsDetailComponent {
   readonly newsWithImages = input<NewsWithImagesModel | null>(null)
+  readonly shareMessage = signal<string | null>(null)
+
+  async share(): Promise<void> {
+    const news = this.newsWithImages()
+    if (!news) return
+
+    const url = window.location.href
+    const title = news.title
+    const text = news.subtitle
+
+    try {
+      if (navigator.share) {
+        await navigator.share({ title, text, url })
+      } else {
+        await navigator.clipboard.writeText(url)
+        this.shareMessage.set('¡Enlace copiado al portapapeles!')
+        setTimeout(() => this.shareMessage.set(null), 3000)
+      }
+    } catch {
+      if (!navigator.share) {
+        this.shareMessage.set('No se pudo copiar el enlace')
+        setTimeout(() => this.shareMessage.set(null), 3000)
+      }
+    }
+  }
 }
