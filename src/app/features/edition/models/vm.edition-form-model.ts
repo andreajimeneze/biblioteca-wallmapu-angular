@@ -3,7 +3,7 @@ import { FormatModel } from "@features/format/models/format-model";
 export interface EditionFormVM {
   id_edition: number;
   edition: string;
-  isbn: string;
+  isbn: string | null;
   publication_year: number;
   pages: number;
   cover_image: string | null;

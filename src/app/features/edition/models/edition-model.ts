@@ -2,7 +2,7 @@ import { FormatModel } from "@features/format/models/format-model";
 
 export interface CreateEditionModel {
   edition: string;
-  isbn: string;
+  isbn: string | null;
   publication_year: number;
   pages: number;
   cover_image: string | null;
@@ -18,7 +18,7 @@ export interface UpdateEditionModel extends CreateEditionModel {
 export interface EditionModel {
   id_edition: number;
   edition: string;
-  isbn: string;
+  isbn: string | null;
   publication_year: number;
   pages: number;
   cover_image: string | null;
@@ -32,7 +32,7 @@ export interface EditionModel {
 export interface EditionDetailModel {
   id_edition: number;
   edition: string;
-  isbn: string;
+  isbn: string | null;
   publication_year: number;
   pages: number;
   cover_image: string | null;
