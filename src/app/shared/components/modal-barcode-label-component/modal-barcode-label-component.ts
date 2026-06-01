@@ -24,7 +24,6 @@ export class ModalBarcodeLabelComponent {
     if (this.barcode()) {
       this.labelUrl.set(this.buildLabel(2));
       this.combinedUrl.set(this.buildCombined(2));
-      this.combinedSideUrlMyVersion.set(this.buildCombinedSideMyVersion(2));
       this.rowUrl.set(this.buildRow(2));
     }
   });
@@ -67,7 +66,7 @@ export class ModalBarcodeLabelComponent {
     const bc = this.barcodeCanvas(barcode, scale);
     const pad = 6 * scale;
     const gap = 6 * scale;
-    const ts = 10 * scale;
+    const ts = 6 * scale;
     const w = bc.width + pad * 2;
     const h = bc.height + ts + ts + pad * 2 + gap * 2;
 
@@ -118,37 +117,6 @@ export class ModalBarcodeLabelComponent {
     return ctx.canvas.toDataURL('image/png');
   }
 
-  private buildCombinedSideMyVersion(scale: number): string {
-    const barcode = this.barcode();
-    if (!barcode) return '';
-
-    const bc = this.barcodeCanvas(barcode, scale);
-    const qr = this.qrCanvas(this.SITE_URL, scale);
-    
-    const pad = 6 * scale;
-    const ts = 7 * scale;
-    const w_canvas = bc.width + (pad * 2);
-    const h_canvas = bc.height + qr.height + (pad * 3);
-    
-    const ctx = this.newCanvas(w_canvas, h_canvas, '#FFF');
-    if (!ctx) return '';
-    
-    ctx.fillStyle = '#000';
-    ctx.textBaseline = 'top';
-
-    ctx.drawImage(bc, pad, pad);
-    ctx.drawImage(qr, bc.width - qr.width + pad, bc.height + (pad * 2));
-
-    ctx.textBaseline = 'top';
-    ctx.font = `bold ${ts}px sans-serif`;
-    ctx.fillText(this.SITE_PREFIX, pad, bc.height + qr.height/2);
-    ctx.fillText(this.SITE_NAME, pad, bc.height + qr.height/2 + (ts + pad / 2));
-    ctx.font = `${ts}px sans-serif`;
-    ctx.fillText(this.SITE_URL, pad, bc.height + qr.height/2 + (ts + pad * 2));
-
-    return ctx.canvas.toDataURL('image/png');
-  }
-
   private buildRow(scale: number): string {
     const barcode = this.barcode();
     if (!barcode) return '';
@@ -191,6 +159,5 @@ export class ModalBarcodeLabelComponent {
 
   protected downloadLabel(): void { this.doDownload(this.buildLabel(5), '1'); }
   protected downloadCombined(): void { this.doDownload(this.buildCombined(5), '2'); }
-  protected downloadMyVersion(): void { this.doDownload(this.buildCombinedSideMyVersion(5), '3'); }
-  protected downloadRow(): void { this.doDownload(this.buildRow(5), '4'); }
+  protected downloadRow(): void { this.doDownload(this.buildRow(5), '3'); }
 }

@@ -29,5 +29,5 @@ export const authGuard: CanActivateFn = (route, state) => {
     return true;
   }
 
-  return router.navigate([ROUTES_CONSTANTS.FORBIDDEN]);
+  return router.createUrlTree([ROUTES_CONSTANTS.FORBIDDEN]);
 };

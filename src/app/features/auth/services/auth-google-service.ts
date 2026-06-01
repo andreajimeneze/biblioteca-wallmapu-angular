@@ -1,4 +1,4 @@
-import { effect, Injectable, signal } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { environment } from '@environments/environment';
 
 @Injectable({
@@ -70,21 +70,17 @@ export class AuthGoogleService {
     });
   }
 
- // 🔹 Espera interna hasta que scriptReady sea true
+  // 🔹 Espera interna hasta que scriptReady sea true
   private waitForScript(): Promise<void> {
     return new Promise((resolve) => {
-      if (this.scriptReady()) {
-        resolve();
-        return;
-      }
-
-      // Reaccionar a cambios usando effect en lugar de subscribe
-      const effectRef = effect(() => {
+      const check = () => {
         if (this.scriptReady()) {
-          effectRef.destroy(); // ✅ detener el efecto
           resolve();
+        } else {
+          setTimeout(check, 100);
         }
-      });
+      };
+      check();
     });
   }
   
