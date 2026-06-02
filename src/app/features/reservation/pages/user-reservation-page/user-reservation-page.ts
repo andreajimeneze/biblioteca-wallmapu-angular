@@ -12,6 +12,7 @@ import { MessageSuccessComponent } from "@shared/components/message-success-comp
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { ReservationBarcodeComponents } from "@features/reservation/components/reservation-barcode-components/reservation-barcode-components";
 import { LoanPolicyComponent } from "@features/loan-policies/components/loan-policy-component/loan-policy-component";
+import { extractErrorMessage } from '@core/utils/error-handler';
 
 @Component({
   selector: 'app-user-reservation-page',
@@ -64,7 +65,6 @@ export class UserReservationPage {
 
       return this.reservationService.getByUserPagination(params).pipe(
         map(response => {
-          console.log(response)
           if (!response.isSuccess) throw new Error(response.message);
           return response.data;
         }),
@@ -84,6 +84,7 @@ export class UserReservationPage {
       return this.reservationService.cancel(id_reservation).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.data;
         }),
         tap(() => {
@@ -148,10 +149,7 @@ export class UserReservationPage {
   }
 
   private handleError(err: unknown): void {
-    const message = err instanceof Error 
-      ? err.message 
-      : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
+    this.errorMessage.set(extractErrorMessage(err));
     this.successMessage.set(null);
-    this.errorMessage.set(message);
   }
 }

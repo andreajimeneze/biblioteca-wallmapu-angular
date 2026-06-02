@@ -9,6 +9,7 @@ import { SectionHeaderComponent } from "@shared/components/section-header-compon
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { LoanListComponent } from "@features/loan/components/loan-list-component/loan-list-component";
 import { LoanPolicyComponent } from "@features/loan-policies/components/loan-policy-component/loan-policy-component";
+import { extractErrorMessage } from '@core/utils/error-handler';
 
 @Component({
   selector: 'app-user-loan-page',
@@ -82,9 +83,6 @@ export class UserLoanPage {
   }
   
   private handleError(err: unknown): void {
-    const message = err instanceof Error 
-      ? err.message 
-      : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
-    this.errorMessage.set(message);
+    this.errorMessage.set(extractErrorMessage(err));
   }
 }

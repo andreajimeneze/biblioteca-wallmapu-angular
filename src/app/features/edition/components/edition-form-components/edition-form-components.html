@@ -56,7 +56,7 @@
         <input
           [disabled]="isLoading()"
           #titleEdition
-          type="text" class="input validator w-full" placeholder="Edición del Libro" required 
+          type="text" class="input validator w-full" placeholder="Edición del Libro"
           [value]="formData().edition"
           (input)="updateEdition($any($event.target).value, titleEdition)"
         />
@@ -68,7 +68,7 @@
         <input
           [disabled]="isLoading()"
           #isbnInput
-          type="text" class="input validator w-full uppercase" placeholder="Código isbn" required
+          type="text" class="input validator w-full uppercase" placeholder="Código isbn"
           [value]="formData().isbn"
           (input)="updateISBN($any($event.target).value, isbnInput)"
         />

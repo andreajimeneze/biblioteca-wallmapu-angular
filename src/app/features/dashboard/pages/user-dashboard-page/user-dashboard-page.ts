@@ -8,6 +8,7 @@ import { NotificationDetailModel, NotificationFilterModel } from '@features/noti
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { catchError, firstValueFrom, map, of } from 'rxjs';
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
+import { extractErrorMessage } from '@core/utils/error-handler';
 
 @Component({
   selector: 'app-user-dashboard-page',
@@ -110,9 +111,6 @@ export class UserDashboardPage {
   }
 
   private handleError(err: unknown): void {
-    const message = err instanceof Error 
-      ? err.message 
-      : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
-    this.errorMessage.set(message);
+    this.errorMessage.set(extractErrorMessage(err));
   }
 }

@@ -12,6 +12,7 @@ import { MessageSuccessComponent } from "@shared/components/message-success-comp
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { AuthorFormComponents } from "@features/book-author/components/author-form-components/author-form-components";
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
+import { extractErrorMessage } from '@core/utils/error-handler';
 
 @Component({
   selector: 'app-author-form-page',
@@ -202,10 +203,7 @@ export class AuthorFormPage {
   }
 
   private handleError(err: unknown): void {
-    const message = err instanceof Error 
-      ? err.message 
-      : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
+    this.errorMessage.set(extractErrorMessage(err));
     this.successMessage.set(null);
-    this.errorMessage.set(message);
   }
 }
