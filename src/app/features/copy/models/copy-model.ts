@@ -27,7 +27,7 @@ export interface CopyDetailModel {
   edition_id: number;
   edition_name: string;
   edition_isbn: string;
-  edition_cover_image: string;
+  edition_cover_image: string | null;
   editorial_id: number;
   editorial_name: string;
   is_availability: boolean;

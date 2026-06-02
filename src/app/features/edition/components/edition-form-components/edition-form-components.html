@@ -6,7 +6,7 @@
       <div class="relative group overflow-hidden rounded-md shadow-lg">
         <figure class="aspect-7/10">
           <img 
-            [ngSrc]="formData().cover_image || 'images/without_cover.webp'" 
+            [ngSrc]="formData().cover_image ?? 'images/without_cover.webp'" 
             [alt]="'Portada del libro'"
             fill
             priority
@@ -48,7 +48,7 @@
         <p>ID Libro: {{ editionFormVM()?.book_id }}</p>
         <p>ID Edición: {{ editionFormVM()?.id_edition }}</p>
         <p>{{ editionFormVM()?.created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha creación</p>
-        <p>{{ editionFormVM()?.created_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha modificacion</p>
+        <p>{{ editionFormVM()?.updated_at | date:'yyyy-MM-dd HH:mm:ss' }} - Fecha modificacion</p>
       </div>
 
       <fieldset class="fieldset">

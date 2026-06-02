@@ -160,7 +160,8 @@ export class EditionFormPage {
           return response.data;
         }),
         tap(edition => {
-          this.getEditionPayload.set(edition.id_edition); 
+          this.getEditionPayload.set(edition.id_edition);
+          this.getEditionRX.reload();
         }),
         catchError(err => {
           this.handleError(err);
@@ -286,7 +287,7 @@ export class EditionFormPage {
     this.deleteImagePayload.set(id_edition);
   }
 
-  protected onCeateCopy(): void {
+   protected onCreateCopy(): void {
     this.router.navigate(
       [
         ROUTES_CONSTANTS.PROTECTED.ADMIN.COPY.FORM(this.bookId(), this.editionId())
