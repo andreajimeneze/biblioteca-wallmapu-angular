@@ -109,6 +109,7 @@ export class AdminReservationPage {
       return this.reservationService.cancel(id_reservation).pipe(
         map(response => {
           if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
           return response.data;
         }),
         tap(() => {
@@ -177,7 +178,6 @@ export class AdminReservationPage {
   }
 
   protected onRegisterReservationToLoan(item: ReservationDetailModel): void {
-    console.log(item)
     const payload: ReservationPickupModel = {
       id_reservation: item.id_reservation,
       copy_id: item.copy_id, 

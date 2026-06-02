@@ -7,6 +7,8 @@ import { ApiAuthGoogleRequest } from '@features/auth/models/api-auth-google-requ
 import { ApiAuthGoogleResponse } from '@features/auth/models/api-auth-google-response';
 import { firstValueFrom } from 'rxjs';
 import { ROUTES_CONSTANTS } from '@shared/constants/routes-constant';
+import { ErrorModalService } from '@core/services/error-modal-service';
+import { Role } from '@shared/constants/roles-enum';
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +17,7 @@ export class AuthStore {
   private router = inject(Router);
   private googleAuth = inject(AuthGoogleService);
   private apiAuth = inject(AuthService);
+  private errorModal = inject(ErrorModalService);
   
   // 🔹 Signals internas
   private currentUser = signal<AuthUser | null>(this.getStoredUser());
@@ -56,10 +59,10 @@ export class AuthStore {
       let navigateTo = '';
 
       switch(user.role) {
-        case 'Lector':
+        case Role.Reader:
           navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.USER.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.USER.PROFILE.ROOT;
           break;
-        case 'Admin':
+        case Role.Admin:
           navigateTo = user.profileComplete ? ROUTES_CONSTANTS.PROTECTED.ADMIN.DASHBOARD : ROUTES_CONSTANTS.PROTECTED.ADMIN.PROFILE.ROOT;
           break;
         default:
@@ -68,8 +71,7 @@ export class AuthStore {
 
       this.router.navigate([navigateTo]);
     } catch (error: any) {
-      console.error('Error en login:', error);
-      alert(error?.message || 'Error al iniciar sesión. Intenta nuevamente.');
+      this.errorModal.openError(error?.status || 0, error?.message || 'Error al iniciar sesión. Intenta nuevamente.');
     } finally {
       this.isLoading.set(false);
     }

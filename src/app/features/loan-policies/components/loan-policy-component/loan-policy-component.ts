@@ -4,6 +4,7 @@ import { LoanPoliciesModel } from '@features/loan-policies/models/loan-policies-
 import { LoanPoliciesService } from '@features/loan-policies/services/loan-policies-service';
 import { catchError, map, of } from 'rxjs';
 import { LoadingComponent } from "@shared/components/loading-component/loading-component";
+import { extractErrorMessage } from '@core/utils/error-handler';
 
 @Component({
   selector: 'app-loan-policy-component',
@@ -35,9 +36,6 @@ export class LoanPolicyComponent {
   });
   
   private handleError(err: unknown): void {
-    const message = err instanceof Error 
-      ? err.message 
-      : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
-    this.errorMessage.set(message);
+    this.errorMessage.set(extractErrorMessage(err));
   }
 }

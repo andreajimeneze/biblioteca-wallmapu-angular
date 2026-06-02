@@ -12,6 +12,7 @@ import { catchError, finalize, map, of, tap } from 'rxjs';
 import { MessageSuccessComponent } from "@shared/components/message-success-component/message-success-component";
 import { MessageErrorComponent } from "@shared/components/message-error-component/message-error-component";
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
+import { extractErrorMessage } from '@core/utils/error-handler';
 
 @Component({
   selector: 'app-editorial-form-page',
@@ -203,10 +204,7 @@ export class EditorialFormPage {
   }
 
   private handleError(err: unknown): void {
-    const message = err instanceof Error 
-      ? err.message 
-      : (err as any)?.error?.detail || (err as any)?.error?.message || 'Unexpected error';
+    this.errorMessage.set(extractErrorMessage(err));
     this.successMessage.set(null);
-    this.errorMessage.set(message);
   }
 }

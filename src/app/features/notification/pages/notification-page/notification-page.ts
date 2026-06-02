@@ -6,7 +6,7 @@ import { MessageErrorComponent } from "@shared/components/message-error-componen
 import { PaginationResponseModel } from '@core/models/pagination-response-model';
 import { CreateNotificationByEmailModel, NotificationDetailModel, NotificationFilterModel } from '@features/notification/models/notification-model';
 import { rxResource } from '@angular/core/rxjs-interop';
-import { catchError, firstValueFrom, map, of } from 'rxjs';
+import { catchError, map, of, tap } from 'rxjs';
 import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { NotificationService } from '@features/notification/services/notification-service';
 import { extractErrorMessage } from '@core/utils/error-handler';
@@ -30,8 +30,8 @@ export class NotificationPage {
   private readonly limit = signal<number>(10);
   private readonly search = signal<string>('');
   
-  protected readonly isLoadingCreateNotfication = signal<boolean>(false);
-  protected readonly isLoading = computed<boolean>(() => this.getNotificationRX.isLoading())
+  protected readonly isLoading = computed<boolean>(() => this.getNotificationRX.isLoading() || this.saveNotificationRX.isLoading())
+  protected readonly isLoadingCreateNotification = computed<boolean>(() => this.saveNotificationRX.isLoading())
 
   private readonly notificationService = inject(NotificationService);
   private readonly getNotificationPayload = computed<PaginationRequestModel<NotificationFilterModel>>(() => {
@@ -63,23 +63,34 @@ export class NotificationPage {
     },
   });
 
-  protected async onFormSubmit(item: CreateNotificationByEmailModel): Promise<void> {
-    this.isLoadingCreateNotfication.set(true);
+  private readonly saveNotificationPayload = signal<CreateNotificationByEmailModel | null>(null);
 
-    try {
-      const response = await firstValueFrom(
-        this.notificationService.create(item)
-          .pipe(catchError(err => { this.handleError(err); return of(null as any); }))
+  private readonly saveNotificationRX = rxResource({
+    params: () => this.saveNotificationPayload(),
+    stream: ({ params }) => {
+      if (!params) return of(null);
+
+      return this.notificationService.create(params).pipe(
+        map(response => {
+          if (!response.isSuccess) throw new Error(response.message);
+          this.successMessage.set(response.message);
+          return response.data;
+        }),
+        tap(() => {
+          this.cleanFormTrigger.update(e => e + 1);
+          this.getNotificationRX.reload();
+        }),
+        catchError(err => {
+          this.handleError(err);
+          return of(null);
+        })
       );
-
-      if (response?.isSuccess) {
-        this.successMessage.set(response.message);
-        this.cleanFormTrigger.update(e => e + 1);
-        this.getNotificationRX.reload();
-      }
-    } finally {
-      this.isLoadingCreateNotfication.set(false);
     }
+  });
+
+  protected onFormSubmit(item: CreateNotificationByEmailModel): void {
+    this.errorMessage.set(null);
+    this.saveNotificationPayload.set(item);
   }
 
   protected onFilterNotRead(is_read: boolean): void {

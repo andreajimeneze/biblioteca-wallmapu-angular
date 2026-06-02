@@ -184,12 +184,8 @@ export class EditionFormComponents {
   }
 
   private validateFormOnSubmit(data: Partial<EditionFormVM>): string | null {
-    if (!data.edition?.trim())    return 'La edición es requerido';
-    if (data.edition.length < 5)  return 'La edición debe tener al menos 2 caracteres';
-    if (data.edition.length > 50) return 'La edición no debe superar los 50 caracteres';
-    if (!data.isbn?.trim())       return 'El ISBN es requerido';
-    if (data.isbn.length < 5)     return 'El ISBN debe tener al menos 5 caracteres';
-    if (data.isbn.length > 20)    return 'El ISBN no debe superar los 50 caracteres';
+    if (data.edition && data.edition.length > 50) return 'La edición no debe superar los 50 caracteres';
+    if (data.isbn && data.isbn.length > 20)    return 'El ISBN no debe superar los 20 caracteres';
     if (!data.publication_year)   return 'El año es requerido';
     if (data.publication_year < 1800 || data.publication_year > new Date().getFullYear()) return 'El año debe ser valido';
     if (!data.pages)              return 'Las paginas son requerido';

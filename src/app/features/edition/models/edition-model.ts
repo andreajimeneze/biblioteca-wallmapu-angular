@@ -1,8 +1,8 @@
 import { FormatModel } from "@features/format/models/format-model";
 
 export interface CreateEditionModel {
-  edition: string;
-  isbn: string;
+  edition: string | null;
+  isbn: string | null;
   publication_year: number;
   pages: number;
   cover_image: string | null;
