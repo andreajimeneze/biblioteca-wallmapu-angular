@@ -14,6 +14,7 @@ import { PaginationRequestModel } from '@core/models/pagination-request-model';
 import { ButtonRefreshComponent } from "@shared/components/button-refresh-component/button-refresh-component";
 import { ModalActionComponent } from "@shared/components/modal-action-component/modal-action-component";
 import { ButtonCreateComponent } from "@shared/components/button-create-component/button-create-component";
+import { extractErrorMessage } from '@core/utils/error-handler';
 
 @Component({
   selector: 'app-book-list-page',
@@ -62,8 +63,7 @@ export class BookListPage {
           return response.data.data;
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -89,8 +89,7 @@ export class BookListPage {
           this.selectedBookToDelete.set(null);
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         }),
       );
@@ -146,5 +145,10 @@ export class BookListPage {
     if (this.currentPage() > 1){
       this.currentPage.update(e => e - 1);
     }
+  }
+
+  private handleError(err: unknown): void {
+    this.errorMessage.set(extractErrorMessage(err));
+    this.successMessage.set(null);
   }
 }
