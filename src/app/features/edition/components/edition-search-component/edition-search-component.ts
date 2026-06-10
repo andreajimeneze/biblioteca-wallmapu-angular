@@ -62,17 +62,15 @@ export class EditionSearchComponent {
   }
 
   protected authorSelected(item: AuthorModel | null) {
-    if (!item) return;
-    if (!item.id_author || item.id_author === 0) return;
-
-    this.onAuthorIdSelected.emit(item.id_author)
+    this.onAuthorIdSelected.emit(item?.id_author ?? 0)
   }
 
   protected formatSelected(item: FormatModel | null): void {
-    if (!item) return;
-    if (!item.id_format || item.id_format === 0) return;
+    this.onFormatIdSelected.emit(item?.id_format ?? 0)
+  }
 
-    this.onFormatIdSelected.emit(item.id_format)
+  protected subjectSelected(item: SubjectModel | null): void {
+    this.onSubjectIdSelected.emit(item?.id_subject ?? 0)
   }
 
   protected editorialSelected(id: number) {
@@ -81,12 +79,5 @@ export class EditionSearchComponent {
 
   protected genreSelected(id: number) {
     this.onGenreIdSelected.emit(id)
-  }
-
-  protected subjectSelected(item: SubjectModel | null): void {
-    if (!item) return;
-    if (!item.id_subject || item.id_subject === 0) return;
-
-    this.onSubjectIdSelected.emit(item.id_subject)
   }
 }

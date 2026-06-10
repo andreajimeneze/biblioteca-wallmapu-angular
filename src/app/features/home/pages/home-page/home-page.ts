@@ -16,6 +16,7 @@ import { EditionService } from '@features/edition/services/edition-service';
 import { EditionCardListComponent } from "@features/edition/components/edition-card-list-component/edition-card-list-component";
 import { EditionSearchComponent } from "@features/edition/components/edition-search-component/edition-search-component";
 import { EditionDetailModel, EditionFilterModel } from '@features/edition/models/edition-model';
+import { extractErrorMessage } from '@core/utils/error-handler';
 
 @Component({
   selector: 'app-home.page',
@@ -64,8 +65,7 @@ export class HomePage {
           return response.data.data;
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -107,8 +107,7 @@ export class HomePage {
           return response.data.data;
         }),
         catchError(err => {
-          const message = err?.error?.detail || err?.error?.message || err?.message || 'Unexpected error';
-          this.errorMessage.set(message);
+          this.handleError(err);
           return of(null);
         })
       );
@@ -160,4 +159,7 @@ export class HomePage {
     this.router.navigate([ROUTES_CONSTANTS.HOME.RESERVATION.ROOT(item.book_id, item.id_edition)]);
   }
 
+  private handleError(err: unknown): void {
+    this.errorMessage.set(extractErrorMessage(err));
+  }
 }
