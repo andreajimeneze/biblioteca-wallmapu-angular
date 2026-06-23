@@ -84,7 +84,7 @@ export class BookListPage {
           return response.data;
         }),
         tap(() => {
-          this.refreshList()
+          this.refreshList();
           this.bookIdToDeletePayload.set(null);
           this.selectedBookToDelete.set(null);
         }),
